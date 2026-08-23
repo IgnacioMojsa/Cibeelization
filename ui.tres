@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://pe1k6bm7vfnc"]
+
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="1_i6sfk"]
+
+[resource]
+font = ExtResource("1_i6sfk")
+font_size = 37
+shadow_offset = Vector2(0.825, 1.65)

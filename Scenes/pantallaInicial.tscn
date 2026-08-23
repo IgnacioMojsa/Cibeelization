@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://qt17q4ddcx2m"]
+
+[ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
+[ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
+
+[node name="PantallaInicial" type="Control" unique_id=128062121]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Titulo" type="Label" parent="." unique_id=1414714438]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -527.5
+offset_top = -77.0
+offset_right = 527.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CIBEELIZATION"
+label_settings = ExtResource("1_71g57")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1833663844]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -172.0
+offset_top = -78.0
+offset_right = 172.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PlayButton" type="PanelContainer" parent="HBoxContainer" unique_id=1349428790]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PlayButton" unique_id=1666260787]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HBoxContainer/PlayButton/MarginContainer" unique_id=737140488]
+layout_mode = 2
+text = "Jugar"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialButton" type="PanelContainer" parent="HBoxContainer" unique_id=1613145265]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/TutorialButton" unique_id=1206430386]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HBoxContainer/TutorialButton/MarginContainer" unique_id=683723399]
+layout_mode = 2
+text = "Tutorial"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="PanelContainer" parent="HBoxContainer" unique_id=929770029]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SettingsButton" unique_id=300069358]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HBoxContainer/SettingsButton/MarginContainer" unique_id=1725274790]
+layout_mode = 2
+text = "Ajustes"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="PanelContainer" parent="HBoxContainer" unique_id=320194545]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/ExitButton" unique_id=1069439262]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HBoxContainer/ExitButton/MarginContainer" unique_id=1537871213]
+layout_mode = 2
+text = "Salir"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
