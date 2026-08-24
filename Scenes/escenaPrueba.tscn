@@ -2,6 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_21dei"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_gojdn"]
+sky_material = SubResource("ProceduralSkyMaterial_21dei")
+
+[sub_resource type="Environment" id="Environment_6nc1v"]
+background_mode = 2
+sky = SubResource("Sky_gojdn")
+
 [sub_resource type="BoxMesh" id="BoxMesh_8m128"]
 size = Vector3(73.63257, 0.024414063, 74.575195)
 
@@ -9,6 +20,13 @@ size = Vector3(73.63257, 0.024414063, 74.575195)
 data = PackedVector3Array(-36.8163, 0.0122, 37.287598, 36.8163, 0.0122, 37.287598, -36.8163, -0.0122, 37.287598, 36.8163, 0.0122, 37.287598, 36.8163, -0.0122, 37.287598, -36.8163, -0.0122, 37.287598, 36.8163, 0.0122, -37.287598, -36.8163, 0.0122, -37.287598, 36.8163, -0.0122, -37.287598, -36.8163, 0.0122, -37.287598, -36.8163, -0.0122, -37.287598, 36.8163, -0.0122, -37.287598, 36.8163, 0.0122, 37.287598, 36.8163, 0.0122, -37.287598, 36.8163, -0.0122, 37.287598, 36.8163, 0.0122, -37.287598, 36.8163, -0.0122, -37.287598, 36.8163, -0.0122, 37.287598, -36.8163, 0.0122, -37.287598, -36.8163, 0.0122, 37.287598, -36.8163, -0.0122, -37.287598, -36.8163, 0.0122, 37.287598, -36.8163, -0.0122, 37.287598, -36.8163, -0.0122, -37.287598, 36.8163, 0.0122, 37.287598, -36.8163, 0.0122, 37.287598, 36.8163, 0.0122, -37.287598, -36.8163, 0.0122, 37.287598, -36.8163, 0.0122, -37.287598, 36.8163, 0.0122, -37.287598, -36.8163, -0.0122, 37.287598, 36.8163, -0.0122, 37.287598, -36.8163, -0.0122, -37.287598, 36.8163, -0.0122, 37.287598, 36.8163, -0.0122, -37.287598, -36.8163, -0.0122, -37.287598)
 
 [node name="Escena" type="Node3D" unique_id=104624866]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1925802151]
+environment = SubResource("Environment_6nc1v")
 
 [node name="AbejaReina" parent="." unique_id=195569662 instance=ExtResource("1_21dei")]
 transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, 0.30612087, 0, 2.1959457)

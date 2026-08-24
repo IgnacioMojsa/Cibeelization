@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
+[ext_resource type="Script" uid="uid://b2ukmuedaxydq" path="res://Scenes/pantalla_inicial.gd" id="1_jnife"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 
 [node name="PantallaInicial" type="Control" unique_id=128062121]
 layout_mode = 3
@@ -10,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jnife")
 
 [node name="Titulo" type="Label" parent="." unique_id=1414714438]
 layout_mode = 1
@@ -18,9 +21,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -527.5
+offset_left = -535.0
 offset_top = -77.0
-offset_right = 527.5
+offset_right = 520.0
 offset_bottom = 77.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -45,12 +48,22 @@ grow_vertical = 0
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="PlayButton" type="PanelContainer" parent="HBoxContainer" unique_id=1349428790]
+[node name="Play" type="PanelContainer" parent="HBoxContainer" unique_id=1349428790]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PlayButton" unique_id=1666260787]
+[node name="PlayButton" type="Button" parent="HBoxContainer/Play" unique_id=1613627018]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Jugar "
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Play" unique_id=1666260787]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -59,19 +72,29 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="HBoxContainer/PlayButton/MarginContainer" unique_id=737140488]
+[node name="Label" type="Label" parent="HBoxContainer/Play/MarginContainer" unique_id=737140488]
 layout_mode = 2
 text = "Jugar"
 label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TutorialButton" type="PanelContainer" parent="HBoxContainer" unique_id=1613145265]
+[node name="Tutorial" type="PanelContainer" parent="HBoxContainer" unique_id=1613145265]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/TutorialButton" unique_id=1206430386]
+[node name="TutorialButton" type="Button" parent="HBoxContainer/Tutorial" unique_id=1809885054]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Tutorial "
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Tutorial" unique_id=1206430386]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -80,19 +103,29 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="HBoxContainer/TutorialButton/MarginContainer" unique_id=683723399]
+[node name="Label" type="Label" parent="HBoxContainer/Tutorial/MarginContainer" unique_id=683723399]
 layout_mode = 2
 text = "Tutorial"
 label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsButton" type="PanelContainer" parent="HBoxContainer" unique_id=929770029]
+[node name="Settings" type="PanelContainer" parent="HBoxContainer" unique_id=929770029]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/SettingsButton" unique_id=300069358]
+[node name="SettingsButton" type="Button" parent="HBoxContainer/Settings" unique_id=77355305]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Ajustes "
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Settings" unique_id=300069358]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -101,19 +134,29 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="HBoxContainer/SettingsButton/MarginContainer" unique_id=1725274790]
+[node name="Label" type="Label" parent="HBoxContainer/Settings/MarginContainer" unique_id=1725274790]
 layout_mode = 2
 text = "Ajustes"
 label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" type="PanelContainer" parent="HBoxContainer" unique_id=320194545]
+[node name="Exit" type="PanelContainer" parent="HBoxContainer" unique_id=320194545]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/ExitButton" unique_id=1069439262]
+[node name="ExitButton" type="Button" parent="HBoxContainer/Exit" unique_id=1820525158]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Salir "
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Exit" unique_id=1069439262]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -122,9 +165,12 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="HBoxContainer/ExitButton/MarginContainer" unique_id=1537871213]
+[node name="Label" type="Label" parent="HBoxContainer/Exit/MarginContainer" unique_id=1537871213]
 layout_mode = 2
 text = "Salir"
 label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="_on_exit_button_pressed"]
