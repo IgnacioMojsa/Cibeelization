@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://y6w6vdnh10lp"]
+
+[ext_resource type="PackedScene" uid="uid://dox8nom4xtm8c" path="res://Assets/Casillero.glb" id="1_mlaw6"]
+
+[node name="Tiles" type="Node3D" unique_id=264374999]
+
+[node name="Casillero" parent="." unique_id=576686847 instance=ExtResource("1_mlaw6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08024651, 0, -0.24403715)
