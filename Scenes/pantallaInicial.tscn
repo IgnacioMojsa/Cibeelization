@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
-[ext_resource type="Script" uid="uid://b2ukmuedaxydq" path="res://Scenes/pantalla_inicial.gd" id="1_jnife"]
+[ext_resource type="Script" uid="uid://6to5cbuxoc7w" path="res://Scenes/PantallaInicial.cs" id="1_cluwn"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jnife")
+script = ExtResource("1_cluwn")
 
 [node name="Titulo" type="Label" parent="." unique_id=1414714438]
 layout_mode = 1
