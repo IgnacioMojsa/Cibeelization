@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://djv6bcnwwovcg"]
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_21dei"]
+[ext_resource type="Script" uid="uid://14c2ubskpavb" path="res://Scripts/AbejaReina.cs" id="2_6nc1v"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
+sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
@@ -30,7 +32,8 @@ shadow_enabled = true
 environment = SubResource("Environment_6nc1v")
 
 [node name="AbejaReina" parent="." unique_id=195569662 instance=ExtResource("1_21dei")]
-transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, 16.831009, 0, 9.785734)
+transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, 7.3307076, 0, 9.785734)
+script = ExtResource("2_6nc1v")
 
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
 visible = false
@@ -47,7 +50,7 @@ shape = SubResource("ConcavePolygonShape3D_gojdn")
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.686493, 14.551527, 45.250504)
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(-0.70710677, 0.35355338, -0.61237246, 0, 0.8660254, 0.5, 0.70710677, 0.35355338, -0.61237246, 0.48963165, 2.0118275, 18.9121)
+transform = Transform3D(-0.70710677, 0.35355338, -0.61237246, 0, 0.8660254, 0.5, 0.70710677, 0.35355338, -0.61237246, 4.902918, -4.000016, 25.655561)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
 mesh_library = ExtResource("2_gojdn")
