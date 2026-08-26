@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
-[ext_resource type="Script" uid="uid://6to5cbuxoc7w" path="res://Scripts/PantallaInicial.cs" id="1_cluwn"]
+[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Rules/GameUI.cs" id="1_cluwn"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 
-[node name="PantallaInicial" type="Control" unique_id=128062121]
+[node name="GameUI" type="Control" unique_id=128062121]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -172,5 +172,5 @@ label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="ComenzarPartida"]
+[connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]

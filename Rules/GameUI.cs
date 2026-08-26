@@ -1,14 +1,14 @@
 using Godot;
 using System;
 
-public partial class PantallaInicial : Control
+public partial class GameUI : Control
 {
-	private void _on_play_button_pressed(){
+	private void ComenzarPartida(){
 		GD.Print("El botón play ha sido presionado");
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
 	
-	private void _on_exit_button_pressed(){
+	private void SalirDelJuego(){
 		GetTree().Quit();
 	}
 };
