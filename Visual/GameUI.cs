@@ -3,6 +3,12 @@ using System;
 
 public partial class GameUI : Control
 {
+	private Label resultadoDados;
+
+	public override void _Ready(){
+		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+	}
+
 	private void ComenzarPartida(){
 		GD.Print("El botón play ha sido presionado");
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
@@ -13,9 +19,8 @@ public partial class GameUI : Control
 	}
 
 	private void TirarLosDados(){
-		var resultadoDados = HUD/HBoxContainer/NumeroDado;
 		var gameManager = new GameManager();
 
-		resultadoDados.text = gameManager.TirarDado();
+		resultadoDados.Text = gameManager.TirarDado().ToString();
 	}
 };
