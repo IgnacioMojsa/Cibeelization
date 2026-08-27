@@ -11,4 +11,11 @@ public partial class GameUI : Control
 	private void SalirDelJuego(){
 		GetTree().Quit();
 	}
+
+	private void TirarLosDados(){
+		var resultadoDados = HUD/HBoxContainer/NumeroDado;
+		var gameManager = new GameManager();
+
+		resultadoDados.text = gameManager.TirarDado();
+	}
 };

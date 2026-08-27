@@ -6,16 +6,14 @@ public partial class GameManager {
 	
 	public static GameManager Instance { get; private set; }
 	
-	/*
+	
 	public int TirarDado(){
+		int numeroAleatorio = GD.RandRange(1, 6);
 		
+		return numeroAleatorio;
 	}
 
-	public void CanjearRecurso(unRecurso){
-
-	}
-
-	public bool PuedeCanjearRecurso(unRecurso){
+	/*public bool PuedeCanjearRecurso(string unRecurso, Colmena unaColmena){
 
 	}
 
