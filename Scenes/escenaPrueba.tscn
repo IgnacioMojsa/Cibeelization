@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djv6bcnwwovcg"]
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_21dei"]
-[ext_resource type="Script" uid="uid://14c2ubskpavb" path="res://Data/AbejaReina.cs" id="2_6nc1v"]
+[ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Rules/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Visual/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]
@@ -38,7 +38,7 @@ environment = SubResource("Environment_6nc1v")
 
 [node name="AbejaReina" parent="." unique_id=195569662 instance=ExtResource("1_21dei")]
 transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, 7.3307076, 0, 9.785734)
-script = ExtResource("2_6nc1v")
+script = ExtResource("2_2lok1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="AbejaReina" unique_id=450846096]
 
@@ -61,7 +61,7 @@ shape = SubResource("ConcavePolygonShape3D_gojdn")
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.686493, 14.551527, 45.250504)
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(-0.70710677, 0.35355338, -0.61237246, 0, 0.8660254, 0.5, 0.70710677, 0.35355338, -0.61237246, 4.902918, -4.000016, 25.655561)
+transform = Transform3D(-0.9939601, -0.05487117, 0.09503963, 0.008201063, 0.8264644, 0.56292933, -0.10943546, 0.5603087, -0.82102257, 32.614304, 16.198927, -2.7899284)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
 mesh_library = ExtResource("2_gojdn")
