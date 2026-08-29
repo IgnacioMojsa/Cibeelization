@@ -15,6 +15,7 @@ public partial class PlayerManager: Node3D{
             }
 
             ObtenerPosicionNueva();
+            MoverAbeja();
         }
     }
 
@@ -31,6 +32,15 @@ public partial class PlayerManager: Node3D{
         if (result.Count > 0){
             posicionNueva = (Vector3)result["position"];
             GD.Print("Nueva posicion guardada" + posicionNueva);
+        }
+    }
+
+    public void MoverAbeja(){
+        Node3D VisualReina = GetTree().CurrentScene.GetNodeOrNull<Node3D>("AbejaReina"); 
+
+        if (VisualReina != null)
+        {
+            VisualReina.GlobalPosition = posicionNueva;
         }
     }
 }
