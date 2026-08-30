@@ -4,7 +4,8 @@ using System;
 public partial class PlayerManager: Node3D{
     [Export] private Camera3D camera;
     private Vector3 posicionNueva; 
-    private AbejaReina ReinaDelJugador = new AbejaReina(); 
+
+    // private AbejaReina ReinaDelJugador = // ACA TIENE QUE IR EL JUGADOR QUE SE ENCUENTRE EN TURNO // ; 
 
     public override void _Process(double delta){
         if (Input.IsActionJustPressed("move")){

@@ -18,7 +18,7 @@ public partial class Abeja : Node3D{
 		if (@event is not InputEventMouseButton mouse ||
             mouse.ButtonIndex != MouseButton.Left ||
             !mouse.Pressed)
-            return;
+            return; 
 			GD.Print("Hiciste click");
 	}*/
 
