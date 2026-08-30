@@ -9,6 +9,12 @@ public partial class GameUI : Control
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
 	}
 
+	private void Jugar(){
+		PanelContainer UIComienzo = GetNode<PanelContainer>("MenuComienzo");
+
+		UIComienzo.Visible = true;
+	}
+
 	private void ComenzarPartida(){
 		GD.Print("El botón play ha sido presionado");
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");

@@ -5,6 +5,14 @@
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
+bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
 [node name="GameUI" type="Control" unique_id=128062121]
 layout_mode = 3
 anchors_preset = 15
@@ -32,6 +40,116 @@ label_settings = ExtResource("1_71g57")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MenuComienzo" type="PanelContainer" parent="." unique_id=627495092]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.5
+offset_top = -142.0
+offset_right = 160.5
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuComienzo" unique_id=1483819125]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuComienzo/MarginContainer" unique_id=996719737]
+layout_mode = 2
+alignment = 1
+
+[node name="Players" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=620818619]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/Players" unique_id=700794770]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MenuComienzo/MarginContainer/VBoxContainer/Players/MarginContainer" unique_id=702067845]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Jugadores"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=2003910624]
+layout_mode = 2
+theme_override_constants/separation = -33
+
+[node name="2Players" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1514951113]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players" unique_id=797830412]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+text = "2"
+alignment = 1
+icon_alignment = 1
+
+[node name="3Players" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1422393925]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players" unique_id=35158241]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+text = "3"
+alignment = 1
+icon_alignment = 1
+
+[node name="4Players" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer" unique_id=864668242]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players" unique_id=703798753]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+text = "4"
+alignment = 1
+icon_alignment = 1
+
+[node name="Start" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=1643263735]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayButton" type="Button" parent="MenuComienzo/MarginContainer/VBoxContainer/Start" unique_id=805710664]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Comenzar "
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1833663844]
 layout_mode = 1
 anchors_preset = 7
@@ -39,9 +157,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -172.0
+offset_left = -324.5
 offset_top = -78.0
-offset_right = 172.0
+offset_right = 324.5
 offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -172,5 +290,6 @@ label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="ComenzarPartida"]
+[connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
+[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
 [connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]
