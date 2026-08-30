@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Visual/GameUI.cs" id="1_cluwn"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
+[ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
@@ -102,6 +103,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
+button_group = ExtResource("4_8of7i")
 text = "2"
 alignment = 1
 icon_alignment = 1
@@ -117,6 +119,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
+button_group = ExtResource("4_8of7i")
 text = "3"
 alignment = 1
 icon_alignment = 1
@@ -132,6 +135,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
+button_group = ExtResource("4_8of7i")
 text = "4"
 alignment = 1
 icon_alignment = 1
