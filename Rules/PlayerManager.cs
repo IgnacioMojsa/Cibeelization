@@ -7,13 +7,15 @@ public partial class PlayerManager: Node3D{
 
     // private AbejaReina ReinaDelJugador = // ACA TIENE QUE IR EL JUGADOR QUE SE ENCUENTRE EN TURNO // ; 
 
-    public override void _Process(double delta){
-        if (Input.IsActionJustPressed("move")){
-            
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("move"))
+        {
+            if(GetViewport().GuiGetHoveredControl() != null)
+            return;
+
             if (camera == null)
-            {
                 camera = GetViewport().GetCamera3D();
-            }
 
             ObtenerPosicionNueva();
             MoverAbeja();
