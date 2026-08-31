@@ -2,13 +2,16 @@ using Godot;
 using System;
 
 public partial class PlayerManager: Node3D{
+
     [Export] private Camera3D camera;
+
+    private List<Node3D> VisualesJugadores = new List<Node3D>();
+
     private Vector3 posicionNueva; 
 
-    // private AbejaReina ReinaDelJugador = // ACA TIENE QUE IR EL JUGADOR QUE SE ENCUENTRE EN TURNO // ; 
+    private AbejaReina ReinaDelJugador; 
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
+    public override void _UnhandledInput(InputEvent @event){
         if (@event.IsActionPressed("move"))
         {
             if(GetViewport().GuiGetHoveredControl() != null)
@@ -45,5 +48,9 @@ public partial class PlayerManager: Node3D{
         {
             VisualReina.GlobalPosition = posicionNueva;
         }
+    }
+
+    public void InstanciarJugadores(){
+
     }
 }

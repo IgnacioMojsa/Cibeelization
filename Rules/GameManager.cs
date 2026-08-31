@@ -3,16 +3,23 @@ using System.Collections.Generic;
 
 public partial class GameManager {
 	
-	public static GameManager Instance { get; private set; }
+	public static GameManager Instance { get; } = new GameManager();
 
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 
-	public AbejaReina turnoActual ;
+	public AbejaReina jugadorEnTurno ;
+
+	private GameManager(){}
 	
 	public int TirarDado(){
-		int numeroAleatorio = GD.RandRange(1, 6);
-		
-		return numeroAleatorio;
+		if(jugadorEnTurno.EsSuTurno && !jugadorEnTurno.TiroLosDados){
+			int numeroAleatorio = GD.RandRange(1, 6);
+
+			return numeroAleatorio;
+		}
+		else{
+			return 1;
+		}
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena){
@@ -28,11 +35,12 @@ public partial class GameManager {
 			JugadoresEnPartida.Add(NuevoJugador);
 		}	
 	}
-/*
-	public void EstablecerPrimerTurno(){
 
+	public void EstablecerPrimerTurno(){
+		jugadorEnTurno = JugadoresEnPartida[0];
+		jugadorEnTurno.EsSuTurno = true;
 	}
-	
+	/*
 	public void CambiarTurnoASiguienteJugador(){
 
 	}
@@ -48,6 +56,5 @@ public partial class GameManager {
 	public bool PuedeAtacar(unaAbeja, otraAbeja){
 		
 	}
-
 	*/
 }

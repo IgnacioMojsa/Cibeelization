@@ -4,6 +4,8 @@ using System;
 public partial class AbejaReina : Abeja
 {
     public bool EsSuTurno {get; set;} = false;
+    public bool TiroLosDados {get; set;} = false;
+    public int MovimientosDisponibles {get; set;}
     public int Id {get; set;}
 
     public AbejaReina(int id){

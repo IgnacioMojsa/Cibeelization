@@ -4,11 +4,12 @@ using System;
 public partial class GameUI : Control
 {
 	private Label resultadoDados;
+	private Button botonDado;
 	public int cantidadJugadores {get; set;}
-	public GameManager gameManager = new GameManager();
 
 	public override void _Ready(){
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 	}
 
 	private void Jugar(){
@@ -21,9 +22,11 @@ public partial class GameUI : Control
 
 	private void ComenzarPartida(){
 		int cantidadJugadores = ObtenerCantJugadores();
-		gameManager.CargarJugadores(cantidadJugadores);
+		GameManager.Instance.CargarJugadores(cantidadJugadores);
+		GameManager.Instance.EstablecerPrimerTurno();
 		
-		GD.Print("La partida se desarrollara con " + gameManager.JugadoresEnPartida.Count + " jugadores");		
+		GD.Print("La partida se desarrollara con " + GameManager.Instance.JugadoresEnPartida.Count + " jugadores");		
+		GD.Print("Comienza el jugador " + GameManager.Instance.jugadorEnTurno.Id);		
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
@@ -61,6 +64,8 @@ public partial class GameUI : Control
 	}
 
 	private void MostrarResultadoDado(){
-		resultadoDados.Text = gameManager.TirarDado().ToString();
+		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
+
+		botonDado.Disabled = true;
 	} 
 };
