@@ -9,9 +9,10 @@ public partial class AbejaReina : Abeja
     public AbejaReina(int id){
         Id = id;
     }
-
+    /*
     public void Mover(Vector3 nuevaPosicion)
     {
         GlobalPosition = nuevaPosicion;
     }
+    */
 }

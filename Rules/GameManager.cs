@@ -5,7 +5,7 @@ public partial class GameManager {
 	
 	public static GameManager Instance { get; private set; }
 
-	List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
+	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 
 	public AbejaReina turnoActual ;
 	
@@ -22,13 +22,17 @@ public partial class GameManager {
 	}
 
 	public void CargarJugadores(int cantidadDeJugadores){
-		while(cantidadDeJugadores <= JugadoresEnPartida.Count){
-			var NuevoJugador = new AbejaReina(JugadoresEnPartida.Count + 1);
+		for (int i = 1; i <= cantidadDeJugadores; i++){
+			var NuevoJugador = new AbejaReina(i);
 			
 			JugadoresEnPartida.Add(NuevoJugador);
-		}
+		}	
 	}
-	/*
+/*
+	public void EstablecerPrimerTurno(){
+
+	}
+	
 	public void CambiarTurnoASiguienteJugador(){
 
 	}

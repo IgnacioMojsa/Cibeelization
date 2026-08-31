@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Abeja : Node3D{
+public partial class Abeja{
 	public int HP { get; private set; } = 5;
 	public string RecursoDeTransformacion { get ; private set; } 
 	public Vector3I Posicion { get; private set; }

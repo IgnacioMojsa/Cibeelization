@@ -4,7 +4,8 @@ using System;
 public partial class GameUI : Control
 {
 	private Label resultadoDados;
-	private int cantidadJugadores {get; set;}
+	public int cantidadJugadores {get; set;}
+	public GameManager gameManager = new GameManager();
 
 	public override void _Ready(){
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
@@ -19,9 +20,11 @@ public partial class GameUI : Control
 	}
 
 	private void ComenzarPartida(){
-		cantidadJugadores = ObtenerCantJugadores();
+		int cantidadJugadores = ObtenerCantJugadores();
+		gameManager.CargarJugadores(cantidadJugadores);
 		
-		GD.Print("La partida se desarrollara con " + cantidadJugadores + " jugadores");
+		GD.Print("La partida se desarrollara con " + gameManager.JugadoresEnPartida.Count + " jugadores");		
+
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
 	
@@ -57,9 +60,7 @@ public partial class GameUI : Control
 		GetTree().Quit();
 	}
 
-	private void TirarLosDados(){
-		var gameManager = new GameManager();
-
+	private void MostrarResultadoDado(){
 		resultadoDados.Text = gameManager.TirarDado().ToString();
-	}
+	} 
 };
