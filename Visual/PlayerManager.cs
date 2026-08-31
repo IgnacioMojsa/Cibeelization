@@ -13,6 +13,7 @@ public partial class PlayerManager: Node3D{
 
     public override void _Ready(){
         InstanciarJugadores();
+        EstablecerSpawns();
     }
 
     public override void _UnhandledInput(InputEvent @event){
@@ -67,4 +68,12 @@ public partial class PlayerManager: Node3D{
             VisualesJugadores.Add(InstanciaNueva);
         }
     }
+
+    public void EstablecerSpawns(){ 
+		List<Vector3> posiciones = new List<Vector3>() {new Vector3(-6, 0, 2), new Vector3(25, 0, 3), new Vector3(3, 0, 14), new Vector3(19, 0, 19)};
+        for (int i = 0; i < VisualesJugadores.Count; i++)
+        {
+            VisualesJugadores[i].GlobalPosition = posiciones[i];
+        }
+	}
 }

@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://djv6bcnwwovcg"]
 
-[ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_21dei"]
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Visual/GameUI.cs" id="4_2lok1"]
@@ -18,9 +17,6 @@ sky_material = SubResource("ProceduralSkyMaterial_21dei")
 background_mode = 2
 sky = SubResource("Sky_gojdn")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_c1rky"]
-size = Vector3(1.9831543, 6.1029663, 1.5500488)
-
 [sub_resource type="BoxMesh" id="BoxMesh_8m128"]
 size = Vector3(73.63257, 0.024414063, 74.575195)
 
@@ -36,15 +32,9 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1925802151]
 environment = SubResource("Environment_6nc1v")
 
-[node name="AbejaReina" parent="." unique_id=195569662 instance=ExtResource("1_21dei")]
-transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, 7.3307076, 0, 9.785734)
+[node name="AbejaReina" type="Node3D" parent="." unique_id=376051322]
+transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, -6, 0, 2.5)
 script = ExtResource("2_2lok1")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="AbejaReina" unique_id=450846096]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AbejaReina/StaticBody3D" unique_id=799718452]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.079815865, 3.8704977, 0.1723175)
-shape = SubResource("BoxShape3D_c1rky")
 
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
 visible = false
