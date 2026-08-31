@@ -10,6 +10,8 @@ public partial class GameManager {
 	public AbejaReina jugadorEnTurno ;
 
 	private GameManager(){}
+
+	public int cantidadJugadores {get; set;}
 	
 	public int TirarDado(){
 		if(jugadorEnTurno.EsSuTurno && !jugadorEnTurno.TiroLosDados){

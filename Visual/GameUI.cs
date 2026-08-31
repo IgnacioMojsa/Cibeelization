@@ -5,7 +5,6 @@ public partial class GameUI : Control
 {
 	private Label resultadoDados;
 	private Button botonDado;
-	public int cantidadJugadores {get; set;}
 
 	public override void _Ready(){
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
@@ -21,11 +20,11 @@ public partial class GameUI : Control
 	}
 
 	private void ComenzarPartida(){
-		int cantidadJugadores = ObtenerCantJugadores();
-		GameManager.Instance.CargarJugadores(cantidadJugadores);
+		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
+		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
 		GameManager.Instance.EstablecerPrimerTurno();
 		
-		GD.Print("La partida se desarrollara con " + GameManager.Instance.JugadoresEnPartida.Count + " jugadores");		
+		GD.Print("La partida se desarrollara con " + GameManager.Instance.cantidadJugadores + " jugadores");		
 		GD.Print("Comienza el jugador " + GameManager.Instance.jugadorEnTurno.Id);		
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
@@ -35,8 +34,8 @@ public partial class GameUI : Control
 		if (!estaPresionado) return;
 		
 		if (estaPresionado){
-        	cantidadJugadores = ObtenerCantJugadores();
-        	GD.Print($"Cantidad de jugadores seleccionada: {cantidadJugadores}");
+        	GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
+        	GD.Print($"Cantidad de jugadores seleccionada: {GameManager.Instance.cantidadJugadores}");
         }
 	}
 

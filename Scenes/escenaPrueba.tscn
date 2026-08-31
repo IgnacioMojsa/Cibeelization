@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djv6bcnwwovcg"]
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_21dei"]
-[ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Rules/PlayerManager.cs" id="2_2lok1"]
+[ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Visual/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]

@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class PlayerManager: Node3D{
 
@@ -9,7 +9,11 @@ public partial class PlayerManager: Node3D{
 
     private Vector3 posicionNueva; 
 
-    private AbejaReina ReinaDelJugador; 
+    private Node3D ReinaDelJugador; 
+
+    public override void _Ready(){
+        InstanciarJugadores();
+    }
 
     public override void _UnhandledInput(InputEvent @event){
         if (@event.IsActionPressed("move"))
@@ -42,15 +46,25 @@ public partial class PlayerManager: Node3D{
     }
 
     public void MoverAbeja(){
-        Node3D VisualReina = GetTree().CurrentScene.GetNodeOrNull<Node3D>("AbejaReina"); 
+        ReinaDelJugador = VisualesJugadores[0]; 
 
-        if (VisualReina != null)
+        if (ReinaDelJugador != null)
         {
-            VisualReina.GlobalPosition = posicionNueva;
+            ReinaDelJugador.GlobalPosition = posicionNueva;
         }
     }
 
-    public void InstanciarJugadores(){
+    /*public void PrecargarJugadores(){
+        var VisualReina1 = GD.Preload("res://Assets/AbejaReina.glb");
+    }*/
 
+    public void InstanciarJugadores(){
+        var VisualReina1 = GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn");
+        
+        for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++){
+            var InstanciaNueva = VisualReina1.Instantiate<Node3D>();
+            AddChild(InstanciaNueva);
+            VisualesJugadores.Add(InstanciaNueva);
+        }
     }
 }
