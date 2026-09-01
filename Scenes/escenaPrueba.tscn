@@ -114,4 +114,21 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 34
 text = "???"
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="HUD" unique_id=1928245734]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.35
+anchor_top = -14.700001
+anchor_right = 1.6250001
+anchor_bottom = -13.225
+
+[node name="Atacar" type="PanelContainer" parent="HUD/HBoxContainer2" unique_id=120025344]
+layout_mode = 2
+
+[node name="AtacarButton" type="Button" parent="HUD/HBoxContainer2/Atacar" unique_id=968980427]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 40
+text = "Atacar"
+
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]

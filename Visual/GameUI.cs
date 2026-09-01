@@ -3,12 +3,19 @@ using System;
 
 public partial class GameUI : Control
 {
+	[Export] private PlayerManager playerManager;
 	private Label resultadoDados;
 	private Button botonDado;
+	private Button botonAtacar;
 
+	
 	public override void _Ready(){
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
 		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
+
+		botonAtacar = GetNode<Button>("HBoxContainer2/Atacar/AtacarButton");
+
+		botonAtacar.Pressed += OnAtacarPressed;
 	}
 
 	private void Jugar(){
@@ -67,4 +74,11 @@ public partial class GameUI : Control
 
 		botonDado.Disabled = true;
 	} 
+
+	private void OnAtacarPressed()
+	{
+		if(playerManager != null)
+		playerManager.Atacar();
+		GD.Print("Atacó");
+	}
 };

@@ -69,6 +69,12 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+	public void Atacar()
+	{
+		
+	}	
+	
+
 	public void InstanciarJugadores()
 	{
 		var VisualReina1 = GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn");

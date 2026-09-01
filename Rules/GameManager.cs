@@ -42,6 +42,12 @@ public partial class GameManager {
 		jugadorEnTurno = JugadoresEnPartida[0];
 		jugadorEnTurno.EsSuTurno = true;
 	}
+
+	public void CambiarTurno()
+	{
+		jugadorEnTurno = JugadoresEnPartida[0];
+	}
+	
 	/*
 	public void CambiarTurnoASiguienteJugador(){
 
