@@ -71,30 +71,21 @@ public partial class GameManager {
         jugadorEnTurno.AtacoRecien = false;
         jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 
-        indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
-        jugadorEnTurno = JugadoresEnPartida[indiceTurno];
-        jugadorEnTurno.EsSuTurno = true;
-        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
-        jugadorEnTurno.MovimientosDisponibles = 0;
-
 		GD.Print("Terminó su turno");
 
 		CambiarTurnoASiguienteJugador();
     }
 
 	public void CambiarTurnoASiguienteJugador(){
-		if(jugadorEnTurno == JugadoresEnPartida[0] && !(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1])){
-			jugadorEnTurno = JugadoresEnPartida[jugadorEnTurno.Id + 1];
-		}
-		else if(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1]){
+		if(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1]){
 			jugadorEnTurno = JugadoresEnPartida[0];
 		}
-
-		jugadorEnTurno.EsSuTurno = true;
-		jugadorEnTurno.TiroLosDados = false;
-        jugadorEnTurno.SeMovio = false;
-        jugadorEnTurno.AtacoRecien = false;
+		
+		indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
+        jugadorEnTurno = JugadoresEnPartida[indiceTurno];
+        jugadorEnTurno.EsSuTurno = true;
         jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
+        jugadorEnTurno.MovimientosDisponibles = 0;
 
 		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 	}

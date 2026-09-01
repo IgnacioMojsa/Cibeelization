@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bq5drh2secx73"]
+
+[ext_resource type="PackedScene" uid="uid://cenyuxfu2de1u" path="res://Assets/Zangano.glb" id="1_snhb3"]
+
+[node name="Zangano" unique_id=800501426 instance=ExtResource("1_snhb3")]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, -1, 0)

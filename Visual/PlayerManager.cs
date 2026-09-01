@@ -6,6 +6,7 @@ public partial class PlayerManager : Node3D
 	[Export] private Camera3D camera;
 
 	private List<Node3D> VisualesJugadores = new List<Node3D>();
+	private List<PackedScene> Assets = new List<PackedScene>();
 	private Vector3 posicionNueva; 
 	private Node3D ReinaDelJugador; 
 
@@ -66,7 +67,7 @@ public partial class PlayerManager : Node3D
 
 		if (VisualesJugadores.Count > 0)
 		{
-			ReinaDelJugador = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id]; 
+			ReinaDelJugador = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1]; 
 
 			if (ReinaDelJugador != null)
 			{
@@ -79,20 +80,37 @@ public partial class PlayerManager : Node3D
 
 	public void Atacar()
 	{
-    if (!GameManager.Instance.PuedeAtacar())
-        return;
+    	if (!GameManager.Instance.PuedeAtacar())
+    	    return;
 
-    GD.Print("Atacó recién");
-    GameManager.Instance.ConsumirAtaque();
+    	GD.Print("Atacó recién");
+    	GameManager.Instance.ConsumirAtaque();
+	}
+
+	public void CargarAssets(){
+		List<PackedScene> escenas = new List<PackedScene>(){
+        	GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
+        	GD.Load<PackedScene>("res://Scenes/AbejaReina2.tscn"),
+        	GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
+        	GD.Load<PackedScene>("res://Scenes/Zangano.tscn")
+    	};
+
+		for (int i = 0; i < GameManager.Instance.JugadoresEnPartida.Count; i++)
+    	{
+        	if (i < escenas.Count)
+        	{
+            	Assets.Add(escenas[i]);
+        	}
+    	}
 	}
 
 	public void InstanciarJugadores()
 	{
-		var VisualReina1 = GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn");
-		
+		CargarAssets(); 
+
 		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
 		{
-			var InstanciaNueva = VisualReina1.Instantiate<Node3D>();
+			var InstanciaNueva = Assets[j].Instantiate<Node3D>();
 			AddChild(InstanciaNueva);
 			VisualesJugadores.Add(InstanciaNueva);
 		}
