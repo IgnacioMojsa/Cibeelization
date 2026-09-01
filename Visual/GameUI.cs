@@ -34,14 +34,14 @@ public partial class GameUI : Control
 		if (!estaPresionado) return;
 		
 		if (estaPresionado){
-        	GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
-        	GD.Print($"Cantidad de jugadores seleccionada: {GameManager.Instance.cantidadJugadores}");
-        }
+			GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
+			GD.Print($"Cantidad de jugadores seleccionada: {GameManager.Instance.cantidadJugadores}");
+		}
 	}
 
 	private int ObtenerCantJugadores(){
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox");
-    	var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox");
+		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox");
 		var check4 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox");
 		
 		if(check2 != null && check2.ButtonPressed){
@@ -62,7 +62,7 @@ public partial class GameUI : Control
 		GetTree().Quit();
 	}
 
-	private void MostrarResultadoDado(){
+	public void MostrarResultadoDado(){
 		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
 
 		botonDado.Disabled = true;

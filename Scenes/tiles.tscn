@@ -1,8 +1,35 @@
-[gd_scene format=3 uid="uid://y6w6vdnh10lp"]
+[gd_scene format=4 uid="uid://y6w6vdnh10lp"]
 
 [ext_resource type="PackedScene" uid="uid://dox8nom4xtm8c" path="res://Assets/Casillero.glb" id="1_mlaw6"]
+[ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/hexagon_tile.glb" id="2_3p6xg"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1nd0u"]
+_surfaces = [{
+"aabb": AABB(-0.53810424, -0.031237787, -0.53691214, 1.0762085, 0.08753011, 1.0738243),
+"attribute_data": PackedByteArray("AAAAAAAAAD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAAD8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAD8AAIA/AAAAAAAAgD8AAAA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAPwAAgD8AAAA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAPwAAAAAAAAA/AAAAAAAAAAAAAIA/AAAAPwAAgD8AAAAAAACAPwAAAAAAAIA/AAAAPwAAAAAAAAA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAAA/"),
+"format": 34359742487,
+"index_count": 60,
+"index_data": PackedByteArray("AAACAAEAAAABAAMABAAAAAMABAADAAUABgAIAAcABgAHAAkACgAIAAYACgALAAgADAAOAA0ADAANAA8AEAASABEAEAARABMAFAAWABUAFAAVABcAGAAaABkAGAAZABsAHAAeAB0AHAAdAB8AIAAiACEAIAAhACMA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("M8EJv2Pm/7yFSAu8Sq6UPmNx87wTcwm/Sq6UvmNx87wTcwm/M8EJP2Pm/7yFSAs8Sq6UvmNx87wTcwk/TWKaPmNx87yLmwc/M8EJv8aSZj2GSAu8Sq6UPkZYYD0Tcwm/M8EJP8aSZj2GSAs8Sq6UvkZYYD0Tcwm/Sq6UvkZYYD0Tcwk/TWKaPkZYYD2Lmwc/TWKaPmNx87yLmwc/M8EJP8aSZj2GSAs8M8EJP2Pm/7yFSAs8TWKaPkZYYD2Lmwc/Sq6UPmNx87wTcwm/Sq6UvkZYYD0Tcwm/Sq6UvmNx87wTcwm/Sq6UPkZYYD0Tcwm/Sq6UvmNx87wTcwk/TWKaPkZYYD2Lmwc/TWKaPmNx87yLmwc/Sq6UvkZYYD0Tcwk/Sq6UvmNx87wTcwm/M8EJv8aSZj2GSAu8M8EJv2Pm/7yFSAu8Sq6UvkZYYD0Tcwm/M8EJP2Pm/7yFSAs8Sq6UPkZYYD0Tcwm/Sq6UPmNx87wTcwm/M8EJP8aSZj2GSAs8M8EJv2Pm/7yFSAu8Sq6UvkZYYD0Tcwk/Sq6UvmNx87wTcwk/M8EJv8aSZj2GSAu8AIAAAP///z8AgAAA////PwCAAAD///8/AIAAAP///z8AgAAA////PwCAAAD///8/AID//////78AgP//////vwCA//////+/AID//////78AgP//////vwCA//////+/NNj/f////z802P9/////PzTY/3////8/NNj/f////z//////////v/////////+//////////7//////////v/9//3////8//3//f////z//f/9/////P/9//3////8/AADKp////78AAMqn////vwAAyqf///+/AADKp////7///8qn////v///yqf///+////Kp////7///8qn////v8on/3////8/yif/f////z/KJ/9/////P8on/3////8/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lok1"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="Tiles" type="Node3D" unique_id=264374999]
 
 [node name="Casillero" parent="." unique_id=576686847 instance=ExtResource("1_mlaw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08024651, 0, -0.24403715)
+visible = false
+
+[node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
+
+[node name="Outlined" type="MeshInstance3D" parent="hexagon_tile" unique_id=692762696]
+mesh = SubResource("ArrayMesh_1nd0u")
+surface_material_override/0 = SubResource("StandardMaterial3D_2lok1")
+
+[editable path="hexagon_tile"]
