@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dox8nom4xtm8c" path="res://Assets/Casillero.glb" id="1_mlaw6"]
 [ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/hexagon_tile.glb" id="2_3p6xg"]
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3p6xg"]
+data = PackedVector3Array(-0.5, 0, 0, 0.2744, 0, -0.5, -0.2744, 0, -0.5, -0.5, 0, 0, 0.5, 0, 0, 0.2744, 0, -0.5, -0.2744, 0, 0.5, 0.5, 0, 0, -0.5, 0, 0, -0.2744, 0, 0.5, 0.2744, 0, 0.5, 0.5, 0, 0, -0.5, 0.0251, 0, 0.2744, 0.0251, -0.5, 0.5, 0.0251, 0, -0.5, 0.0251, 0, -0.2744, 0.0251, -0.5, 0.2744, 0.0251, -0.5, -0.2744, 0.0251, 0.5, -0.5, 0.0251, 0, 0.5, 0.0251, 0, -0.2744, 0.0251, 0.5, 0.5, 0.0251, 0, 0.2744, 0.0251, 0.5, 0.2744, 0, 0.5, 0.5, 0.0251, 0, 0.5, 0, 0, 0.2744, 0, 0.5, 0.2744, 0.0251, 0.5, 0.5, 0.0251, 0, 0.2744, 0, -0.5, -0.2744, 0.0251, -0.5, -0.2744, 0, -0.5, 0.2744, 0, -0.5, 0.2744, 0.0251, -0.5, -0.2744, 0.0251, -0.5, -0.2744, 0, 0.5, 0.2744, 0.0251, 0.5, 0.2744, 0, 0.5, -0.2744, 0, 0.5, -0.2744, 0.0251, 0.5, 0.2744, 0.0251, 0.5, -0.2744, 0, -0.5, -0.5, 0.0251, 0, -0.5, 0, 0, -0.2744, 0, -0.5, -0.2744, 0.0251, -0.5, -0.5, 0.0251, 0, 0.5, 0, 0, 0.2744, 0.0251, -0.5, 0.2744, 0, -0.5, 0.5, 0, 0, 0.5, 0.0251, 0, 0.2744, 0.0251, -0.5, -0.5, 0, 0, -0.2744, 0.0251, 0.5, -0.2744, 0, 0.5, -0.5, 0, 0, -0.5, 0.0251, 0, -0.2744, 0.0251, 0.5)
+
 [sub_resource type="ArrayMesh" id="ArrayMesh_1nd0u"]
 _surfaces = [{
 "aabb": AABB(-0.53810424, -0.031237787, -0.53691214, 1.0762085, 0.08753011, 1.0738243),
@@ -27,6 +30,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08024651, 0, -0.24403715)
 visible = false
 
 [node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" parent_id_path=PackedInt32Array(1404079147, 1325054803) index="0" unique_id=177514016]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hexagon_tile/Plane/StaticBody3D" unique_id=74064928]
+shape = SubResource("ConcavePolygonShape3D_3p6xg")
 
 [node name="Outlined" type="MeshInstance3D" parent="hexagon_tile" unique_id=692762696]
 mesh = SubResource("ArrayMesh_1nd0u")
