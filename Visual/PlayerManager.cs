@@ -9,8 +9,6 @@ public partial class PlayerManager : Node3D
 	private Vector3 posicionNueva; 
 	private Node3D ReinaDelJugador; 
 
-	public bool YaSeMovio = false;
-
 	public override void _Ready()
 	{
 		InstanciarJugadores();
@@ -19,7 +17,7 @@ public partial class PlayerManager : Node3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if(YaSeMovio)
+		if(!GameManager.Instance.PuedeMover())
 			return;
 
 		if (@event.IsActionPressed("move"))
@@ -34,7 +32,6 @@ public partial class PlayerManager : Node3D
 			if (ObtenerPosicionNueva())
 			{
 				MoverAbeja();
-				YaSeMovio = true;
 			}
 		}
 	}
@@ -64,6 +61,9 @@ public partial class PlayerManager : Node3D
 
 	public void MoverAbeja()
 	{
+		if(!GameManager.Instance.PuedeMover())
+		return;
+
 		if (VisualesJugadores.Count > 0)
 		{
 			ReinaDelJugador = VisualesJugadores[0]; 
@@ -71,6 +71,7 @@ public partial class PlayerManager : Node3D
 			if (ReinaDelJugador != null)
 			{
 				ReinaDelJugador.GlobalPosition = posicionNueva;
+				GameManager.Instance.ConsumirMovimiento();
 			}
 		}
 
@@ -78,9 +79,12 @@ public partial class PlayerManager : Node3D
 
 	public void Atacar()
 	{
-		
-	}	
-	
+    if (!GameManager.Instance.PuedeAtacar())
+        return;
+
+    GD.Print("Atacó recién");
+    GameManager.Instance.ConsumirAtaque();
+	}
 
 	public void InstanciarJugadores()
 	{

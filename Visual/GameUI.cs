@@ -69,10 +69,17 @@ public partial class GameUI : Control
 		GetTree().Quit();
 	}
 
+	private void OnTirarDadoPressed()
+	{	
+    int resultado = GameManager.Instance.TirarDado();
+    resultadoDados.Text = resultado.ToString();
+	}
+
+
 	public void MostrarResultadoDado(){
 		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
 
-		botonDado.Disabled = true;
+		//botonDado.Disabled = true;
 	} 
 
 	private void OnAtacarPressed()

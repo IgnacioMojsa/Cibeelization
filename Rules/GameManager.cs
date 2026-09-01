@@ -9,22 +9,82 @@ public partial class GameManager {
 
 	public AbejaReina jugadorEnTurno ;
 
+	private int indiceTurno = 0;
+
 	private GameManager(){}
 
-	[Export] private PlayerManager playerManager;
+	//[Export] private PlayerManager playerManager;
 
 	public int cantidadJugadores {get; set;}
 	
-	public int TirarDado(){
-		if(jugadorEnTurno.EsSuTurno && !jugadorEnTurno.TiroLosDados){
-			int numeroAleatorio = GD.RandRange(1, 6);
+	public int TirarDado()
+	{
+		if(jugadorEnTurno == null) return 1;
+		if(!jugadorEnTurno.EsSuTurno) return 1;
+		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
+		if(jugadorEnTurno.TiroLosDados) return 1;
+		
+		int numeroAleatorio = GD.RandRange(1, 6);
+		jugadorEnTurno.TiroLosDados = true;
+		//Acá abajo, si sale un 6, te deja mover la abeja 6 veces pq no está definido todavía. Si quieren permitir 1 solo movimiento hay que cambiar numeroAleatorio por 1 ahí abajo.
+		jugadorEnTurno.MovimientosDisponibles = 1;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
 
-			return numeroAleatorio;
-		}
-		else{
-			return 1;
-		}
+		return numeroAleatorio;
 	}
+	
+	public bool PuedeMover()
+    {
+        return jugadorEnTurno != null &&
+               jugadorEnTurno.EsSuTurno &&
+               jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+			   //&&
+			   //Esta otra linea limita los movimientos de la misma abeja
+               //jugadorEnTurno.MovimientosDisponibles > 0;
+    }
+
+	 public bool PuedeAtacar()
+    {
+        return jugadorEnTurno != null &&
+               jugadorEnTurno.EsSuTurno &&
+               jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+    }
+
+	public void ConsumirMovimiento()
+    {
+        if (jugadorEnTurno == null) return;
+
+        jugadorEnTurno.MovimientosDisponibles--;
+        if (jugadorEnTurno.MovimientosDisponibles <= 0)
+            TerminarTurno();
+    }
+
+	public void ConsumirAtaque()
+    {
+        if (jugadorEnTurno == null) return;
+
+        jugadorEnTurno.AtacoRecien = true;
+        TerminarTurno();
+    }
+
+    public void TerminarTurno()
+    {
+        if (jugadorEnTurno == null) return;
+
+        jugadorEnTurno.EsSuTurno = false;
+        jugadorEnTurno.TiroLosDados = false;
+        jugadorEnTurno.SeMovio = false;
+        jugadorEnTurno.AtacoRecien = false;
+        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
+
+        indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
+        jugadorEnTurno = JugadoresEnPartida[indiceTurno];
+        jugadorEnTurno.EsSuTurno = true;
+        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
+        jugadorEnTurno.MovimientosDisponibles = 0;
+
+		GD.Print("Terminó su turno");
+    }
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena){
 		if(unaAbeja.AptaParaTransformar(otraAbeja, unaColmena)){
@@ -32,37 +92,22 @@ public partial class GameManager {
 		}
 	}
 
-	public void CargarJugadores(int cantidadDeJugadores){
+	public void CargarJugadores(int cantidadDeJugadores)
+	{
+		JugadoresEnPartida.Clear();
 		for (int i = 1; i <= cantidadDeJugadores; i++){
 			var NuevoJugador = new AbejaReina(i);
-			
 			JugadoresEnPartida.Add(NuevoJugador);
 		}	
 	}
 
 	public void EstablecerPrimerTurno(){
-		jugadorEnTurno = JugadoresEnPartida[0];
+		indiceTurno = 0;
+		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
 		jugadorEnTurno.EsSuTurno = true;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
 	}
 
-private void VerificarCambioDeTurno()
-{
-	if (jugadorEnTurno.SeMovio || jugadorEnTurno.AtacoRecien)
-	{
-		CambiarTurno();
-
-		jugadorEnTurno.SeMovio = false;
-		jugadorEnTurno.AtacoRecien = false;
-		jugadorEnTurno.TiroLosDados = false;
-	}
-}
-
-
-	public void CambiarTurno()
-	{
-		playerManager.YaSeMovio = false;
-	}
-	
 	/*
 	public void CambiarTurnoASiguienteJugador(){
 
