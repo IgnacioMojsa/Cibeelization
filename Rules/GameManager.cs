@@ -11,6 +11,8 @@ public partial class GameManager {
 
 	private GameManager(){}
 
+	[Export] private PlayerManager playerManager;
+
 	public int cantidadJugadores {get; set;}
 	
 	public int TirarDado(){
@@ -43,9 +45,22 @@ public partial class GameManager {
 		jugadorEnTurno.EsSuTurno = true;
 	}
 
+private void VerificarCambioDeTurno()
+{
+	if (jugadorEnTurno.SeMovio || jugadorEnTurno.AtacoRecien)
+	{
+		CambiarTurno();
+
+		jugadorEnTurno.SeMovio = false;
+		jugadorEnTurno.AtacoRecien = false;
+		jugadorEnTurno.TiroLosDados = false;
+	}
+}
+
+
 	public void CambiarTurno()
 	{
-		jugadorEnTurno = JugadoresEnPartida[0];
+		playerManager.YaSeMovio = false;
 	}
 	
 	/*

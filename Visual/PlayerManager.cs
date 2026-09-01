@@ -9,6 +9,8 @@ public partial class PlayerManager : Node3D
 	private Vector3 posicionNueva; 
 	private Node3D ReinaDelJugador; 
 
+	public bool YaSeMovio = false;
+
 	public override void _Ready()
 	{
 		InstanciarJugadores();
@@ -17,6 +19,9 @@ public partial class PlayerManager : Node3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		if(YaSeMovio)
+			return;
+
 		if (@event.IsActionPressed("move"))
 		{
 			if (GetViewport().GuiGetHoveredControl() != null)
@@ -29,6 +34,7 @@ public partial class PlayerManager : Node3D
 			if (ObtenerPosicionNueva())
 			{
 				MoverAbeja();
+				YaSeMovio = true;
 			}
 		}
 	}
@@ -67,6 +73,7 @@ public partial class PlayerManager : Node3D
 				ReinaDelJugador.GlobalPosition = posicionNueva;
 			}
 		}
+
 	}
 
 	public void Atacar()
