@@ -66,7 +66,7 @@ public partial class PlayerManager : Node3D
 
 		if (VisualesJugadores.Count > 0)
 		{
-			ReinaDelJugador = VisualesJugadores[0]; 
+			ReinaDelJugador = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id]; 
 
 			if (ReinaDelJugador != null)
 			{

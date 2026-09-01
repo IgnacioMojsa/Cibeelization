@@ -17,8 +17,7 @@ public partial class GameManager {
 
 	public int cantidadJugadores {get; set;}
 	
-	public int TirarDado()
-	{
+	public int TirarDado(){
 		if(jugadorEnTurno == null) return 1;
 		if(!jugadorEnTurno.EsSuTurno) return 1;
 		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
@@ -33,8 +32,7 @@ public partial class GameManager {
 		return numeroAleatorio;
 	}
 	
-	public bool PuedeMover()
-    {
+	public bool PuedeMover(){
         return jugadorEnTurno != null &&
                jugadorEnTurno.EsSuTurno &&
                jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
@@ -43,15 +41,13 @@ public partial class GameManager {
                //jugadorEnTurno.MovimientosDisponibles > 0;
     }
 
-	 public bool PuedeAtacar()
-    {
+	 public bool PuedeAtacar(){
         return jugadorEnTurno != null &&
                jugadorEnTurno.EsSuTurno &&
                jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
     }
 
-	public void ConsumirMovimiento()
-    {
+	public void ConsumirMovimiento(){
         if (jugadorEnTurno == null) return;
 
         jugadorEnTurno.MovimientosDisponibles--;
@@ -59,16 +55,14 @@ public partial class GameManager {
             TerminarTurno();
     }
 
-	public void ConsumirAtaque()
-    {
+	public void ConsumirAtaque(){
         if (jugadorEnTurno == null) return;
 
         jugadorEnTurno.AtacoRecien = true;
         TerminarTurno();
     }
 
-    public void TerminarTurno()
-    {
+    public void TerminarTurno(){
         if (jugadorEnTurno == null) return;
 
         jugadorEnTurno.EsSuTurno = false;
@@ -84,7 +78,26 @@ public partial class GameManager {
         jugadorEnTurno.MovimientosDisponibles = 0;
 
 		GD.Print("Terminó su turno");
+
+		CambiarTurnoASiguienteJugador();
     }
+
+	public void CambiarTurnoASiguienteJugador(){
+		if(jugadorEnTurno == JugadoresEnPartida[0] && !(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1])){
+			jugadorEnTurno = JugadoresEnPartida[jugadorEnTurno.Id + 1];
+		}
+		else if(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1]){
+			jugadorEnTurno = JugadoresEnPartida[0];
+		}
+
+		jugadorEnTurno.EsSuTurno = true;
+		jugadorEnTurno.TiroLosDados = false;
+        jugadorEnTurno.SeMovio = false;
+        jugadorEnTurno.AtacoRecien = false;
+        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
+
+		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
+	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena){
 		if(unaAbeja.AptaParaTransformar(otraAbeja, unaColmena)){
@@ -109,9 +122,6 @@ public partial class GameManager {
 	}
 
 	/*
-	public void CambiarTurnoASiguienteJugador(){
-
-	}
 
 	public void RecolectarRecurso(string unRecurso, Colmena unaColmena){
 
