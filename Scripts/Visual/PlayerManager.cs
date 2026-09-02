@@ -6,9 +6,9 @@ public partial class PlayerManager : Node3D
 	[Export] private Camera3D camera;
 	[Export] private Tablero tablero; 
 
-	private List<Node3D> VisualesJugadores = new List<Node3D>();
-	private List<PackedScene> Assets = new List<PackedScene>();
-	private Dictionary<Node3D, Celda> CeldaActualPorJugador = new Dictionary<Node3D, Celda>();
+	private readonly List<Node3D> VisualesJugadores = new();
+	private readonly List<PackedScene> Assets = new();
+	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 
 	private MovimientoManager movimientoManager;
 
@@ -19,6 +19,8 @@ public partial class PlayerManager : Node3D
 
 	public override void _Ready()
 	{
+		movimientoManager = new MovimientoManager(tablero);
+
 		InstanciarJugadores();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 	}
@@ -28,24 +30,23 @@ public partial class PlayerManager : Node3D
 		if (!GameManager.Instance.PuedeMover())
 			return;
 
-		if (@event.IsActionPressed("move"))
-		{
-			if (GetViewport().GuiGetHoveredControl() != null)
+		if (!@event.IsActionPressed("move"))
+		return; 
+
+		if (GetViewport().GuiGetHoveredControl() != null)
 				return;
 
-			if (camera == null)
-				camera = GetViewport().GetCamera3D();
-
-			IntentarMoverJugador();
-		}
+		camera ??= GetViewport().GetCamera3D();
+		IntentarMoverJugador();
+		
 	}
 
 	private void IntentarMoverJugador()
-	{
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-		
+	{		
 		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0)
 			return;
+
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
