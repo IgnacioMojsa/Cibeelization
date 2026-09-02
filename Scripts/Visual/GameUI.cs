@@ -29,7 +29,7 @@ public partial class GameUI : Control
 	private void ComenzarPartida(){
 		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
 		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
-		GameManager.Instance.EstablecerPrimerTurno();
+		GameManager.Instance.TurnManager.EstablecerPrimerTurno();
 		
 		GD.Print("La partida se desarrollara con " + GameManager.Instance.cantidadJugadores + " jugadores");		
 		GD.Print("Comienza el jugador " + GameManager.Instance.jugadorEnTurno.Id);		

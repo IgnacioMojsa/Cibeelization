@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
-[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Visual/GameUI.cs" id="1_cluwn"]
+[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="1_cluwn"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]

@@ -5,11 +5,13 @@ public partial class GameManager {
 	
 	public static GameManager Instance { get; } = new GameManager();
 
+	public TurnManager TurnManager { get; private set; }
+
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 
 	public AbejaReina jugadorEnTurno ;
 
-	private int indiceTurno = 0;
+	//private int indiceTurno = 0;
 
 	private GameManager(){}
 
@@ -60,7 +62,7 @@ public partial class GameManager {
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
-			TerminarTurno();
+			TurnManager.TerminarTurno();
 		}
 	}
 
@@ -91,41 +93,13 @@ public partial class GameManager {
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.AtacoRecien = true;
-		TerminarTurno();
+		TurnManager.TerminarTurno();
 	}
 
 	public void EliminarJugador(int Id){
 		JugadoresEnPartida.RemoveAt(Id);
 		
 		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
-	}
-
-	public void TerminarTurno(){
-		if (jugadorEnTurno == null) return;
-
-		jugadorEnTurno.EsSuTurno = false;
-		jugadorEnTurno.TiroLosDados = false;
-		jugadorEnTurno.SeMovio = false;
-		jugadorEnTurno.AtacoRecien = false;
-		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
-
-		GD.Print("Terminó su turno");
-
-		CambiarTurnoASiguienteJugador();
-	}
-
-	public void CambiarTurnoASiguienteJugador(){
-		if(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1]){
-			jugadorEnTurno = JugadoresEnPartida[0];
-		}
-		
-		indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
-		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
-		jugadorEnTurno.EsSuTurno = true;
-		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
-		jugadorEnTurno.MovimientosDisponibles = 0;
-
-		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena){
@@ -141,14 +115,12 @@ public partial class GameManager {
 			var NuevoJugador = new AbejaReina(i);
 			JugadoresEnPartida.Add(NuevoJugador);
 		}	
+
+		TurnManager = new TurnManager(JugadoresEnPartida);
+		TurnManager.EstablecerPrimerTurno();
+		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
 
-	public void EstablecerPrimerTurno(){
-		indiceTurno = 0;
-		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
-		jugadorEnTurno.EsSuTurno = true;
-		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
-	}
 
 	/*
 
