@@ -9,6 +9,9 @@ public partial class PlayerManager : Node3D
 	private List<Node3D> VisualesJugadores = new List<Node3D>();
 	private List<PackedScene> Assets = new List<PackedScene>();
 	private Dictionary<Node3D, Celda> CeldaActualPorJugador = new Dictionary<Node3D, Celda>();
+
+	private MovimientoManager movimientoManager;
+
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
 	public Celda CeldaCliqueada;
@@ -52,8 +55,11 @@ public partial class PlayerManager : Node3D
 		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
 		var result = spaceState.IntersectRay(query);
 
+		if(result.Count == 0)
+		return;
+
 		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = ObtenerCeldaDesdePosicion(PosicionEnMundo3D);
+		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
 	
 		if (result.Count > 0)
 		{
@@ -64,11 +70,11 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void EstablecerCeldaParaJugadorEnTurno(){
-		if (CeldaCliqueada == null) return;
+		//if (CeldaCliqueada == null) return;
 	
 		if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual))
 		{
-			CeldaActualPorJugador[VisualJugadorActual] = ObtenerCeldaDesdePosicion(VisualJugadorActual.GlobalPosition);
+			CeldaActualPorJugador[VisualJugadorActual] = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, VisualJugadorActual.GlobalPosition);
 		}
 	
 		CeldaOrigen = CeldaActualPorJugador[VisualJugadorActual];
@@ -96,29 +102,6 @@ public partial class PlayerManager : Node3D
 		Celda CeldaOtroJugador = CeldaActualPorJugador[otroJugador];
 
 		return VecinosAdyacentes.Contains(CeldaOtroJugador);
-	}
-
-	private Celda ObtenerCeldaDesdePosicion(Vector3 posicion)
-	{
-		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
-			return null;
-
-		Celda celdaMasCercana = null;
-		float distanciaMinima = float.MaxValue;
-
-		foreach (Celda celda in tablero.Celdas)
-		{
-			if (celda.Tile == null) continue;
-
-			float dist = celda.Tile.GlobalPosition.DistanceTo(posicion);
-			if (dist < distanciaMinima)
-			{
-				distanciaMinima = dist;
-				celdaMasCercana = celda;
-			}
-		}
-
-		return celdaMasCercana;
 	}
 
 	private void MoverAbejaACelda(Node3D reina, Celda celdaDestino)
