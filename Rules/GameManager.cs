@@ -94,6 +94,12 @@ public partial class GameManager {
 		TerminarTurno();
 	}
 
+	public void EliminarJugador(int Id){
+		JugadoresEnPartida.RemoveAt(Id);
+		
+		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
+	}
+
 	public void TerminarTurno(){
 		if (jugadorEnTurno == null) return;
 

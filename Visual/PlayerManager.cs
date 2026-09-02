@@ -143,6 +143,8 @@ public partial class PlayerManager : Node3D
 
 			if(JugadorEnTurnoAdyacenteAOtro(JugadorAEvaluar)){
 				GD.Print("Atacaste al jugador " + GameManager.Instance.JugadoresEnPartida[j].Id);
+				
+				EfectuarAtaque(JugadorAEvaluar, j);
 			}
 			else{
 				GD.Print("No atacaste a nadie");
@@ -150,6 +152,23 @@ public partial class PlayerManager : Node3D
 		}
 
 		GameManager.Instance.ConsumirAtaque();
+	}
+
+	private void EfectuarAtaque(Node3D unJugador, int Id){
+		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
+
+		if(jugador.HP <= 5){
+			EliminarInstanciaDeJugador(unJugador, Id);
+		}
+		else{
+			jugador.RestarVida();
+			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+		}
+	}
+
+	private void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
+		GameManager.Instance.EliminarJugador(Id);
+		unJugador.QueueFree();
 	}
 
 	public void CargarAssets()

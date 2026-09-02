@@ -15,18 +15,17 @@ public partial class AbejaReina : Abeja
 
 	public EstadoTurno Estado {get; set;} = EstadoTurno.EsperandoDado;
  
-	public enum EstadoTurno
+	public enum EstadoTurno 
 	{
-	EsperandoDado,
-	EsperandoAccion,
-	TurnoTerminado
-	}
+		EsperandoDado,
+		EsperandoAccion,
+		TurnoTerminado
+	} 
 
 	public AbejaReina(int id){
 		Id = id;
 	}
 
-	
 	/*
 	public void Mover(Vector3 nuevaPosicion)
 	{

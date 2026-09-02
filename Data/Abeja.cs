@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 public partial class Abeja{
-	public int HP { get; private set; } = 5;
+	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 
 	public Vector3I Posicion { get; private set; }
 
@@ -12,6 +12,10 @@ public partial class Abeja{
 
 	public void CambiarPosicion(Vector3I nuevaPosicion){
 		Posicion = nuevaPosicion;
+	}
+
+	public void RestarVida(){
+		HP -= 5;
 	}
 
 	/*public override void _Input(InputEvent @event){
