@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class GameUI : Control
 {
@@ -13,9 +13,17 @@ public partial class GameUI : Control
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
 		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 
-		botonAtacar = GetNode<Button>("HBoxContainer2/Atacar/AtacarButton");
+		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
 
 		botonAtacar.Pressed += OnAtacarPressed;
+
+		MostrarDataDeJugadores(); 
+	}
+
+	public override void _Process(double delta){
+		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
+			MostrarJugadorEnTurno();
+		}
 	}
 
 	private void Jugar(){
@@ -30,7 +38,7 @@ public partial class GameUI : Control
 		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
 		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
 		GameManager.Instance.TurnManager.EstablecerPrimerTurno();
-		
+
 		GD.Print("La partida se desarrollara con " + GameManager.Instance.cantidadJugadores + " jugadores");		
 		GD.Print("Comienza el jugador " + GameManager.Instance.jugadorEnTurno.Id);		
 
@@ -65,6 +73,21 @@ public partial class GameUI : Control
 		}
 	}
 
+	public void MostrarDataDeJugadores(){
+		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
+		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
+		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
+		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
+
+		if(GameManager.Instance.cantidadJugadores == 3){
+			jugador3.Visible = true;
+		}
+		else if(GameManager.Instance.cantidadJugadores == 4){
+			jugador3.Visible = true;
+			jugador4.Visible = true;
+		}
+	}
+
 	private void SalirDelJuego(){
 		GetTree().Quit();
 	}
@@ -80,6 +103,29 @@ public partial class GameUI : Control
 
 		//botonDado.Disabled = true;
 	} 
+
+	private void MostrarJugadorEnTurno(){ 
+		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+
+		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
+		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
+		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
+		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
+
+		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
+		
+		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+		{
+			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno){
+				UIJugadores[j].Modulate = Color.FromHtml("#ffd01f");
+			}
+			else{
+				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
+			}
+		}
+		
+		//ffd01f
+	}
 
 	private void OnAtacarPressed()
 	{

@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dox8nom4xtm8c" path="res://Assets/Casillero.glb" id="1_mlaw6"]
 [ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/hexagon_tile.glb" id="2_3p6xg"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sii6b"]
+albedo_color = Color(0.5632373, 0.3955579, 0.10653374, 1)
+
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3p6xg"]
 data = PackedVector3Array(-0.5, 0, 0, 0.2744, 0, -0.5, -0.2744, 0, -0.5, -0.5, 0, 0, 0.5, 0, 0, 0.2744, 0, -0.5, -0.2744, 0, 0.5, 0.5, 0, 0, -0.5, 0, 0, -0.2744, 0, 0.5, 0.2744, 0, 0.5, 0.5, 0, 0, -0.5, 0.0251, 0, 0.2744, 0.0251, -0.5, 0.5, 0.0251, 0, -0.5, 0.0251, 0, -0.2744, 0.0251, -0.5, 0.2744, 0.0251, -0.5, -0.2744, 0.0251, 0.5, -0.5, 0.0251, 0, 0.5, 0.0251, 0, -0.2744, 0.0251, 0.5, 0.5, 0.0251, 0, 0.2744, 0.0251, 0.5, 0.2744, 0, 0.5, 0.5, 0.0251, 0, 0.5, 0, 0, 0.2744, 0, 0.5, 0.2744, 0.0251, 0.5, 0.5, 0.0251, 0, 0.2744, 0, -0.5, -0.2744, 0.0251, -0.5, -0.2744, 0, -0.5, 0.2744, 0, -0.5, 0.2744, 0.0251, -0.5, -0.2744, 0.0251, -0.5, -0.2744, 0, 0.5, 0.2744, 0.0251, 0.5, 0.2744, 0, 0.5, -0.2744, 0, 0.5, -0.2744, 0.0251, 0.5, 0.2744, 0.0251, 0.5, -0.2744, 0, -0.5, -0.5, 0.0251, 0, -0.5, 0, 0, -0.2744, 0, -0.5, -0.2744, 0.0251, -0.5, -0.5, 0.0251, 0, 0.5, 0, 0, 0.2744, 0.0251, -0.5, 0.2744, 0, -0.5, 0.5, 0, 0, 0.5, 0.0251, 0, 0.2744, 0.0251, -0.5, -0.5, 0, 0, -0.2744, 0.0251, 0.5, -0.2744, 0, 0.5, -0.5, 0, 0, -0.5, 0.0251, 0, -0.2744, 0.0251, 0.5)
 
@@ -21,7 +24,7 @@ _surfaces = [{
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lok1"]
 shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
+albedo_color = Color(0.5647059, 0.39607844, 0.105882354, 1)
 
 [node name="Tiles" type="Node3D" unique_id=264374999]
 
@@ -31,7 +34,10 @@ visible = false
 
 [node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" parent_id_path=PackedInt32Array(1404079147, 77291424) index="0" unique_id=177514016]
+[node name="Plane" parent="hexagon_tile" index="0" unique_id=77291424]
+surface_material_override/0 = SubResource("StandardMaterial3D_sii6b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" index="0" unique_id=177514016]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="hexagon_tile/Plane/StaticBody3D" unique_id=74064928]
 shape = SubResource("ConcavePolygonShape3D_3p6xg")
