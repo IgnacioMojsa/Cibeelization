@@ -7,12 +7,14 @@ public partial class AbejaReina : Abeja
 	public bool TiroLosDados {get; set;} = false;
 	public bool SeMovio {get; set;} = false;
 
-	public bool AtacoRecien {get; set;}= false;
+	public bool AtacoRecien {get; set;} = false;
 	public int MovimientosDisponibles {get; set;}
 	public int Id {get; set;}
 
-	public EstadoTurno Estado {get; set;}= EstadoTurno.EsperandoDado;
+	public Celda UbicacionActual {get; set;}
 
+	public EstadoTurno Estado {get; set;} = EstadoTurno.EsperandoDado;
+ 
 	public enum EstadoTurno
 	{
 	EsperandoDado,

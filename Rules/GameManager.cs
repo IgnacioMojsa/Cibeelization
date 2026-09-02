@@ -54,7 +54,6 @@ public partial class GameManager {
 	{
 		if (jugadorEnTurno == null) return;
 
-		// Descontamos 1 movimiento por cada paso realizado
 		jugadorEnTurno.MovimientosDisponibles--;
 
 		GD.Print("Movimientos restantes: " + jugadorEnTurno.MovimientosDisponibles);
@@ -148,10 +147,6 @@ public partial class GameManager {
 	/*
 
 	public void RecolectarRecurso(string unRecurso, Colmena unaColmena){
-
-	}
-
-	public void Atacar(unaAbeja, otraAbeja){
 
 	}
 

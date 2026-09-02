@@ -71,10 +71,9 @@ public partial class GameUI : Control
 
 	private void OnTirarDadoPressed()
 	{	
-	int resultado = GameManager.Instance.TirarDado();
-	resultadoDados.Text = resultado.ToString();
+		int resultado = GameManager.Instance.TirarDado();
+		resultadoDados.Text = resultado.ToString();
 	}
-
 
 	public void MostrarResultadoDado(){
 		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
@@ -86,6 +85,5 @@ public partial class GameUI : Control
 	{
 		if(playerManager != null)
 		playerManager.Atacar();
-		GD.Print("Atacó");
 	}
 };

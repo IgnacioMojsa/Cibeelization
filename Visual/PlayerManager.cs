@@ -90,6 +90,14 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+	private bool JugadorEnTurnoAdyacenteAOtro(Node3D otroJugador){
+		List<Celda> VecinosAdyacentes = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+
+		Celda CeldaOtroJugador = CeldaActualPorJugador[otroJugador];
+
+		return VecinosAdyacentes.Contains(CeldaOtroJugador);
+	}
+
 	private Celda ObtenerCeldaDesdePosicion(Vector3 posicion)
 	{
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
@@ -129,7 +137,18 @@ public partial class PlayerManager : Node3D
 		if (!GameManager.Instance.PuedeAtacar())
 			return;
 
-		GD.Print("Atacó recién");
+		for (int j = 0; j < VisualesJugadores.Count; j++) 
+		{
+			Node3D JugadorAEvaluar = VisualesJugadores[j];
+
+			if(JugadorEnTurnoAdyacenteAOtro(JugadorAEvaluar)){
+				GD.Print("Atacaste al jugador " + GameManager.Instance.JugadoresEnPartida[j].Id);
+			}
+			else{
+				GD.Print("No atacaste a nadie");
+			}
+		}
+
 		GameManager.Instance.ConsumirAtaque();
 	}
 
@@ -182,6 +201,14 @@ public partial class PlayerManager : Node3D
 
 			reina.GlobalPosition = targetPos;
 			CeldaActualPorJugador[reina] = celdaInicio;
+			GameManager.Instance.JugadoresEnPartida[i].UbicacionActual = celdaInicio;
+
+			GD.Print(
+				"Jugador " + i + " ubicado en " 
+				+ GameManager.Instance.JugadoresEnPartida[i].UbicacionActual 
+				+ (GameManager.Instance.JugadoresEnPartida[i].UbicacionActual.Q,
+				GameManager.Instance.JugadoresEnPartida[i].UbicacionActual.R)
+			);
 		}
 	}
 }
