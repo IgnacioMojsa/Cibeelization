@@ -32,5 +32,18 @@ public class MovimientoManager
 		return celdaMasCercana;
 	}
 
+	public bool PuedeMoverseEntre(Celda origen, Celda destino)
+	{
+		if(origen == null || destino == null)
+		return false;
+
+		List<Celda> vecinos = tablero.ObtenerVecinos(origen);
+		return vecinos.Contains(destino);
+	}
+
+	public bool EsCeldaOrigenValida(Celda celdaOrigen)
+	{
+		return celdaOrigen != null;
+	}
 
 }

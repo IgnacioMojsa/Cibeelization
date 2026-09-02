@@ -61,12 +61,20 @@ public partial class PlayerManager : Node3D
 		PosicionEnMundo3D = result["position"].AsVector3();
 		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
 	
-		if (result.Count > 0)
-		{
-			EstablecerCeldaParaJugadorEnTurno();
+		if(CeldaCliqueada == null)
+		return;
 
-			MoverJugadorACeldasAdyacentes(VisualJugadorActual, CeldaOrigen);	
+		EstablecerCeldaParaJugadorEnTurno();
+
+		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada))
+		{
+			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
+		else
+		{
+			GD.Print("Solo puedes moverte a una celda contigua o vecina.");
+		}
+
 	}
 
 	private void EstablecerCeldaParaJugadorEnTurno(){
@@ -104,13 +112,13 @@ public partial class PlayerManager : Node3D
 		return VecinosAdyacentes.Contains(CeldaOtroJugador);
 	}
 
-	private void MoverAbejaACelda(Node3D reina, Celda celdaDestino)
+	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
 	{
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;
-		targetPos.Y = reina.GlobalPosition.Y; 
+		targetPos.Y = jugador.GlobalPosition.Y; 
 
-		reina.GlobalPosition = targetPos;
-		CeldaActualPorJugador[reina] = celdaDestino;
+		jugador.GlobalPosition = targetPos;
+		CeldaActualPorJugador[jugador] = celdaDestino;
 
 		GameManager.Instance.ConsumirMovimiento();
 	}
