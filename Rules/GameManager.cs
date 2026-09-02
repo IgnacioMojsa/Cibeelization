@@ -17,7 +17,7 @@ public partial class GameManager {
 
 	public int cantidadJugadores {get; set;}
 	
-	public int TirarDado(){
+	/* public int TirarDado(){
 		if(jugadorEnTurno == null) return 1;
 		if(!jugadorEnTurno.EsSuTurno) return 1;
 		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
@@ -26,55 +26,88 @@ public partial class GameManager {
 		int numeroAleatorio = GD.RandRange(1, 6);
 		jugadorEnTurno.TiroLosDados = true;
 		//Acá abajo, si sale un 6, te deja mover la abeja 6 veces pq no está definido todavía. Si quieren permitir 1 solo movimiento hay que cambiar numeroAleatorio por 1 ahí abajo.
-		jugadorEnTurno.MovimientosDisponibles = 1;
+		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
+		//jugadorEnTurno.MovimientosDisponibles = 1;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
+
+		return numeroAleatorio;
+	} */
+	
+	public int TirarDado()
+	{
+		if(jugadorEnTurno == null) return 1;
+		if(!jugadorEnTurno.EsSuTurno) return 1;
+		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
+		if(jugadorEnTurno.TiroLosDados) return 1;
+
+		int numeroAleatorio = GD.RandRange(1, 6);
+		jugadorEnTurno.TiroLosDados = true;
+
+		// Guardamos la cantidad de pasos que el dado otorgó
+		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
 
 		return numeroAleatorio;
 	}
-	
+
+	public void ConsumirMovimiento()
+	{
+		if (jugadorEnTurno == null) return;
+
+		// Descontamos 1 movimiento por cada paso realizado
+		jugadorEnTurno.MovimientosDisponibles--;
+
+		GD.Print("Movimientos restantes: " + jugadorEnTurno.MovimientosDisponibles);
+
+		if (jugadorEnTurno.MovimientosDisponibles <= 0)
+		{
+			TerminarTurno();
+		}
+	}
+
 	public bool PuedeMover(){
-        return jugadorEnTurno != null &&
-               jugadorEnTurno.EsSuTurno &&
-               jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+		return jugadorEnTurno != null &&
+			   jugadorEnTurno.EsSuTurno &&
+			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 			   //&&
 			   //Esta otra linea limita los movimientos de la misma abeja
-               //jugadorEnTurno.MovimientosDisponibles > 0;
-    }
+			   //jugadorEnTurno.MovimientosDisponibles > 0;
+	}
 
 	 public bool PuedeAtacar(){
-        return jugadorEnTurno != null &&
-               jugadorEnTurno.EsSuTurno &&
-               jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
-    }
+		return jugadorEnTurno != null &&
+			   jugadorEnTurno.EsSuTurno &&
+			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+	}
 
-	public void ConsumirMovimiento(){
-        if (jugadorEnTurno == null) return;
+	/* public void ConsumirMovimiento(){
+		if (jugadorEnTurno == null) return;
 
-        jugadorEnTurno.MovimientosDisponibles--;
-        if (jugadorEnTurno.MovimientosDisponibles <= 0)
-            TerminarTurno();
-    }
+		jugadorEnTurno.MovimientosDisponibles--;
+		if (jugadorEnTurno.MovimientosDisponibles <= 0)
+			TerminarTurno();
+	} */
 
 	public void ConsumirAtaque(){
-        if (jugadorEnTurno == null) return;
+		if (jugadorEnTurno == null) return;
 
-        jugadorEnTurno.AtacoRecien = true;
-        TerminarTurno();
-    }
+		jugadorEnTurno.AtacoRecien = true;
+		TerminarTurno();
+	}
 
-    public void TerminarTurno(){
-        if (jugadorEnTurno == null) return;
+	public void TerminarTurno(){
+		if (jugadorEnTurno == null) return;
 
-        jugadorEnTurno.EsSuTurno = false;
-        jugadorEnTurno.TiroLosDados = false;
-        jugadorEnTurno.SeMovio = false;
-        jugadorEnTurno.AtacoRecien = false;
-        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
+		jugadorEnTurno.EsSuTurno = false;
+		jugadorEnTurno.TiroLosDados = false;
+		jugadorEnTurno.SeMovio = false;
+		jugadorEnTurno.AtacoRecien = false;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 
 		GD.Print("Terminó su turno");
 
 		CambiarTurnoASiguienteJugador();
-    }
+	}
 
 	public void CambiarTurnoASiguienteJugador(){
 		if(jugadorEnTurno == JugadoresEnPartida[JugadoresEnPartida.Count - 1]){
@@ -82,10 +115,10 @@ public partial class GameManager {
 		}
 		
 		indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
-        jugadorEnTurno = JugadoresEnPartida[indiceTurno];
-        jugadorEnTurno.EsSuTurno = true;
-        jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
-        jugadorEnTurno.MovimientosDisponibles = 0;
+		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
+		jugadorEnTurno.EsSuTurno = true;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
+		jugadorEnTurno.MovimientosDisponibles = 0;
 
 		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 	}

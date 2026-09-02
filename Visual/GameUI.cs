@@ -71,8 +71,8 @@ public partial class GameUI : Control
 
 	private void OnTirarDadoPressed()
 	{	
-    int resultado = GameManager.Instance.TirarDado();
-    resultadoDados.Text = resultado.ToString();
+	int resultado = GameManager.Instance.TirarDado();
+	resultadoDados.Text = resultado.ToString();
 	}
 
 

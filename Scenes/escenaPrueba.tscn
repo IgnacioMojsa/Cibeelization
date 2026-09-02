@@ -20,6 +20,11 @@ sky = SubResource("Sky_gojdn")
 
 [node name="Escena" type="Node3D" unique_id=104624866]
 
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero")]
+script = ExtResource("2_2lok1")
+camera = NodePath("../Camara/Camera3D")
+tablero = NodePath("../Tablero")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
@@ -29,7 +34,7 @@ environment = SubResource("Environment_6nc1v")
 
 [node name="AbejaReina" type="Node3D" parent="." unique_id=376051322]
 transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, -6, 0, 2.5)
-script = ExtResource("2_2lok1")
+visible = false
 
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
 transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, -9.080102, 0, -24.80091)
@@ -41,7 +46,7 @@ HeightRows = 16
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.686493, 14.551527, 45.250504)
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(-0.99336666, -0.064731106, 0.09503963, 0.020886607, 0.7111849, 0.70269465, -0.11307695, 0.7000185, -0.7051154, 24.687939, 2.7121754, 18.308079)
+transform = Transform3D(0.9973835, 0.03383284, -0.06388743, 0.020886604, 0.7111849, 0.7026947, 0.069209926, -0.70219046, 0.70861745, 17.78982, 2.7121754, 86.10152)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
 visible = false

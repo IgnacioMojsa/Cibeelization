@@ -15,9 +15,9 @@ public partial class AbejaReina : Abeja
 
 	public enum EstadoTurno
 	{
-    EsperandoDado,
-    EsperandoAccion,
-    TurnoTerminado
+	EsperandoDado,
+	EsperandoAccion,
+	TurnoTerminado
 	}
 
 	public AbejaReina(int id){
