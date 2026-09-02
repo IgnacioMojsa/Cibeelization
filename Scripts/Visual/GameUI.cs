@@ -23,6 +23,7 @@ public partial class GameUI : Control
 	public override void _Process(double delta){
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
 			MostrarJugadorEnTurno();
+			MostrarHPDeJugaores();
 		}
 	}
 
@@ -85,6 +86,20 @@ public partial class GameUI : Control
 		else if(GameManager.Instance.cantidadJugadores == 4){
 			jugador3.Visible = true;
 			jugador4.Visible = true;
+		}
+	}
+
+	public void MostrarHPDeJugaores(){
+		var hpJ1 = GetNode<Label>("VBoxContainer/Jugador1/HBoxContainer/MarginContainer2/Label");
+		var hpJ2 = GetNode<Label>("VBoxContainer/Jugador2/HBoxContainer/MarginContainer2/Label");
+		var hpJ3 = GetNode<Label>("VBoxContainer/Jugador3/HBoxContainer/MarginContainer2/Label");
+		var hpJ4 = GetNode<Label>("VBoxContainer/Jugador4/HBoxContainer/MarginContainer2/Label");
+
+		List<Label> HPJugadores = new List<Label>{ hpJ1, hpJ2, hpJ3, hpJ4};
+
+		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+		{
+			HPJugadores[j].Text = GameManager.Instance.JugadoresEnPartida[j].HP + " HP";
 		}
 	}
 

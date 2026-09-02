@@ -143,63 +143,123 @@ offset_bottom = -552.0
 [node name="Jugador1" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=1132381933]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador1" unique_id=1358184118]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador1" unique_id=1297601638]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador1/HBoxContainer" unique_id=1358184118]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador1/MarginContainer" unique_id=284476018]
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador1/HBoxContainer/MarginContainer" unique_id=284476018]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "Jugador 1"
 
-[node name="Jugador2" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=1138254578]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador2" unique_id=960627956]
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador1/HBoxContainer" unique_id=716443655]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador2/MarginContainer" unique_id=1350464796]
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador1/HBoxContainer/MarginContainer2" unique_id=561325241]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
+
+[node name="Jugador2" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=1138254578]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador2" unique_id=1048336119]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador2/HBoxContainer" unique_id=960627956]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador2/HBoxContainer/MarginContainer" unique_id=1350464796]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "Jugador 2"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador2/HBoxContainer" unique_id=1054669045]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador2/HBoxContainer/MarginContainer2" unique_id=173504459]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
 
 [node name="Jugador3" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=2103990843]
 visible = false
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador3" unique_id=838734596]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador3" unique_id=1377501152]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador3/HBoxContainer" unique_id=838734596]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador3/MarginContainer" unique_id=2093422673]
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador3/HBoxContainer/MarginContainer" unique_id=2093422673]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "Jugador 3"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador3/HBoxContainer" unique_id=42470020]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador3/HBoxContainer/MarginContainer2" unique_id=482819176]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
 
 [node name="Jugador4" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=2018296462]
 visible = false
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador4" unique_id=1677046025]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador4" unique_id=2088387667]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador4/HBoxContainer" unique_id=1677046025]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 2
 
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador4/MarginContainer" unique_id=1844758088]
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador4/HBoxContainer/MarginContainer" unique_id=1844758088]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "Jugador 4"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador4/HBoxContainer" unique_id=1319867542]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador4/HBoxContainer/MarginContainer2" unique_id=1515386668]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
