@@ -112,15 +112,24 @@ public partial class GameUI : Control
 		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
 		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
 
+		var outlineJ1 = playerManager.VisualesJugadores[0].GetNode<Node3D>("Esqueleto/Outline");
+		var outlineJ2 = playerManager.VisualesJugadores[1].GetNode<Node3D>("Outline");
+		var outlineJ3 = playerManager.VisualesJugadores[2].GetNode<Node3D>("Esqueleto/Outline");
+		var outlineJ4 = playerManager.VisualesJugadores[3].GetNode<Node3D>("Outline");
+
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
+		
+		List<Node3D> ContornoJugadores = new List<Node3D>{ outlineJ1, outlineJ2, outlineJ3, outlineJ4};
 		
 		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
 		{
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno){
-				UIJugadores[j].Modulate = Color.FromHtml("#ffd01f");
+				UIJugadores[j].Modulate = Color.FromHtml("#ff0000");
+				ContornoJugadores[j].Visible = true;
 			}
 			else{
 				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
+				ContornoJugadores[j].Visible = false;
 			}
 		}
 		

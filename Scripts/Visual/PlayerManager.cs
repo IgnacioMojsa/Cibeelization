@@ -6,7 +6,7 @@ public partial class PlayerManager : Node3D
 	[Export] private Camera3D camera;
 	[Export] private Tablero tablero; 
 
-	private readonly List<Node3D> VisualesJugadores = new();
+	public readonly List<Node3D> VisualesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 
