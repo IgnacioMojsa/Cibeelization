@@ -31,7 +31,7 @@ visible = false
 
 [node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" parent_id_path=PackedInt32Array(1404079147, 1325054803) index="0" unique_id=177514016]
+[node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" parent_id_path=PackedInt32Array(1404079147, 77291424) index="0" unique_id=177514016]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="hexagon_tile/Plane/StaticBody3D" unique_id=74064928]
 shape = SubResource("ConcavePolygonShape3D_3p6xg")

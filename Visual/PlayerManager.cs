@@ -4,17 +4,19 @@ using System.Collections.Generic;
 public partial class PlayerManager : Node3D
 {
 	[Export] private Camera3D camera;
-	[Export] private Tablero tablero; // Asegúrate de asignarlo en el Inspector de Godot
+	[Export] private Tablero tablero; 
 
 	private List<Node3D> VisualesJugadores = new List<Node3D>();
 	private List<PackedScene> Assets = new List<PackedScene>();
-	
-	private Dictionary<Node3D, Celda> _celdaActualPorJugador = new Dictionary<Node3D, Celda>();
+	private Dictionary<Node3D, Celda> CeldaActualPorJugador = new Dictionary<Node3D, Celda>();
+	public Node3D VisualJugadorActual;
+	public Vector3 PosicionEnMundo3D;
+	public Celda CeldaCliqueada;
+	public Celda CeldaOrigen;
 
 	public override void _Ready()
 	{
 		InstanciarJugadores();
-		// Esperamos un frame a que Tablero ejecute su _Ready y SetTiles
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 	}
 
@@ -37,10 +39,11 @@ public partial class PlayerManager : Node3D
 
 	private void IntentarMoverJugador()
 	{
-		// Si no le quedan movimientos, no intenta procesar nada
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+		
 		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0)
 			return;
-	
+
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
@@ -48,84 +51,44 @@ public partial class PlayerManager : Node3D
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
 		var result = spaceState.IntersectRay(query);
+
+		PosicionEnMundo3D = result["position"].AsVector3();
+		CeldaCliqueada = ObtenerCeldaDesdePosicion(PosicionEnMundo3D);
 	
 		if (result.Count > 0)
 		{
-			Vector3 impactoWorld = result["position"].AsVector3();
-			Celda celdaCliqueada = ObtenerCeldaDesdePosicion(impactoWorld);
-	
-			if (celdaCliqueada == null) return;
-	
-			Node3D reinaActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-	
-			if (!_celdaActualPorJugador.ContainsKey(reinaActual))
-			{
-				_celdaActualPorJugador[reinaActual] = ObtenerCeldaDesdePosicion(reinaActual.GlobalPosition);
-			}
-	
-			Celda celdaOrigen = _celdaActualPorJugador[reinaActual];
-	
-			// No puedes hacer clic sobre la misma celda en la que ya estás parado
-			if (celdaCliqueada == celdaOrigen) return;
-	
-			// Obtenemos únicamente las celdas vecinas a 1 paso de distancia
-			List<Celda> vecinosAdyacentes = tablero.ObtenerVecinos(celdaOrigen);
-	
-			if (vecinosAdyacentes.Contains(celdaCliqueada))
-			{
-				MoverAbejaACelda(reinaActual, celdaCliqueada);
-			}
-			else
-			{
-				GD.Print("Solo puedes moverte a una celda contigua/vecina.");
-			}
+			EstablecerCeldaParaJugadorEnTurno();
+
+			MoverJugadorACeldasAdyacentes(VisualJugadorActual, CeldaOrigen);	
 		}
 	}
 
-	/* private void IntentarMoverJugador()
-	{
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
-
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-		var result = spaceState.IntersectRay(query);
-
-		if (result.Count > 0)
+	private void EstablecerCeldaParaJugadorEnTurno(){
+		if (CeldaCliqueada == null) return;
+	
+		if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual))
 		{
-			Vector3 impactoWorld = result["position"].AsVector3();
-			Celda celdaCliqueada = ObtenerCeldaDesdePosicion(impactoWorld);
-
-			if (celdaCliqueada == null) return;
-
-			Node3D reinaActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-
-			if (!_celdaActualPorJugador.ContainsKey(reinaActual))
-			{
-				// Si por alguna razón no tenía celda asignada, le asignamos la más cercana a su posición actual
-				_celdaActualPorJugador[reinaActual] = ObtenerCeldaDesdePosicion(reinaActual.GlobalPosition);
-			}
-
-			Celda celdaOrigen = _celdaActualPorJugador[reinaActual];
-
-			int valorDado = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles;
-			
-			// Si el dado dio 0 o no se ha tirado, no permite mover
-			if (valorDado <= 0) return;
-
-			List<Celda> celdasValidas = tablero.ObtenerCeldasAlcanzables(celdaOrigen, valorDado);
-
-			if (celdasValidas.Contains(celdaCliqueada))
-			{
-				MoverAbejaACelda(reinaActual, celdaCliqueada);
-			}
-			else
-			{
-				GD.Print("La celda está fuera del rango del dado (" + valorDado + ")");
-			}
+			CeldaActualPorJugador[VisualJugadorActual] = ObtenerCeldaDesdePosicion(VisualJugadorActual.GlobalPosition);
 		}
-	} */
+	
+		CeldaOrigen = CeldaActualPorJugador[VisualJugadorActual];
+	
+		if (CeldaCliqueada == CeldaOrigen) return;
+	}
+
+	private void MoverJugadorACeldasAdyacentes(Node3D jugador,Celda unaCelda)
+	{
+		List<Celda> VecinosAdyacentes = tablero.ObtenerVecinos(unaCelda);
+	
+		if (VecinosAdyacentes.Contains(CeldaCliqueada))
+		{
+			MoverAbejaACelda(jugador, CeldaCliqueada);
+		}
+		else
+		{
+			GD.Print("Solo puedes moverte a una celda contigua/vecina.");
+		}
+	}
 
 	private Celda ObtenerCeldaDesdePosicion(Vector3 posicion)
 	{
@@ -156,7 +119,7 @@ public partial class PlayerManager : Node3D
 		targetPos.Y = reina.GlobalPosition.Y; 
 
 		reina.GlobalPosition = targetPos;
-		_celdaActualPorJugador[reina] = celdaDestino;
+		CeldaActualPorJugador[reina] = celdaDestino;
 
 		GameManager.Instance.ConsumirMovimiento();
 	}
@@ -205,12 +168,10 @@ public partial class PlayerManager : Node3D
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
 			return;
 
-		// Asignamos esquinas opuestas o celdas separadas del tablero para cada jugador
 		int totalCeldas = tablero.Celdas.Count;
 
 		for (int i = 0; i < VisualesJugadores.Count; i++)
 		{
-			// Distribuimos los spawns a lo largo de la lista de celdas para que no aparezcan juntas
 			int indiceCelda = (i * (totalCeldas / VisualesJugadores.Count)) % totalCeldas;
 			
 			Celda celdaInicio = tablero.Celdas[indiceCelda]; 
@@ -220,7 +181,7 @@ public partial class PlayerManager : Node3D
 			targetPos.Y = reina.GlobalPosition.Y;
 
 			reina.GlobalPosition = targetPos;
-			_celdaActualPorJugador[reina] = celdaInicio;
+			CeldaActualPorJugador[reina] = celdaInicio;
 		}
 	}
 }
@@ -360,3 +321,48 @@ public partial class PlayerManager : Node3D
 	}
 }
  */
+
+/* private void IntentarMoverJugador()
+	{
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
+
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+		var result = spaceState.IntersectRay(query);
+
+		if (result.Count > 0)
+		{
+			Vector3 impactoWorld = result["position"].AsVector3();
+			Celda celdaCliqueada = ObtenerCeldaDesdePosicion(impactoWorld);
+
+			if (celdaCliqueada == null) return;
+
+			Node3D reinaActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+			if (!_celdaActualPorJugador.ContainsKey(reinaActual))
+			{
+				// Si por alguna razón no tenía celda asignada, le asignamos la más cercana a su posición actual
+				_celdaActualPorJugador[reinaActual] = ObtenerCeldaDesdePosicion(reinaActual.GlobalPosition);
+			}
+
+			Celda celdaOrigen = _celdaActualPorJugador[reinaActual];
+
+			int valorDado = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles;
+			
+			// Si el dado dio 0 o no se ha tirado, no permite mover
+			if (valorDado <= 0) return;
+
+			List<Celda> celdasValidas = tablero.ObtenerCeldasAlcanzables(celdaOrigen, valorDado);
+
+			if (celdasValidas.Contains(celdaCliqueada))
+			{
+				MoverAbejaACelda(reinaActual, celdaCliqueada);
+			}
+			else
+			{
+				GD.Print("La celda está fuera del rango del dado (" + valorDado + ")");
+			}
+		}
+	} */
