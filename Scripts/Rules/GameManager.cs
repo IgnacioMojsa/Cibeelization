@@ -66,15 +66,6 @@ public partial class GameManager {
 		}
 	}
 
-	public bool PuedeMover(){
-		return jugadorEnTurno != null &&
-			   jugadorEnTurno.EsSuTurno &&
-			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
-			   //&&
-			   //Esta otra linea limita los movimientos de la misma abeja
-			   //jugadorEnTurno.MovimientosDisponibles > 0;
-	}
-
 	 public bool PuedeAtacar(){
 		return jugadorEnTurno != null &&
 			   jugadorEnTurno.EsSuTurno &&

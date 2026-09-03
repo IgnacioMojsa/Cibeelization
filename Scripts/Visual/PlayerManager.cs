@@ -11,6 +11,7 @@ public partial class PlayerManager : Node3D
 	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 
 	private MovimientoManager movimientoManager;
+	private AtaqueManager ataqueManager;
 
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
@@ -20,6 +21,7 @@ public partial class PlayerManager : Node3D
 	public override void _Ready()
 	{
 		movimientoManager = new MovimientoManager(tablero);
+		ataqueManager = new AtaqueManager();
 
 		InstanciarJugadores();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
@@ -27,7 +29,7 @@ public partial class PlayerManager : Node3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (!GameManager.Instance.PuedeMover())
+		if (!movimientoManager.PuedeMover(GameManager.Instance.jugadorEnTurno))
 			return;
 
 		if (!@event.IsActionPressed("move"))
@@ -91,7 +93,7 @@ public partial class PlayerManager : Node3D
 		if (CeldaCliqueada == CeldaOrigen) return;
 	}
 
-	private void MoverJugadorACeldasAdyacentes(Node3D jugador,Celda unaCelda)
+	/* private void MoverJugadorACeldasAdyacentes(Node3D jugador,Celda unaCelda)
 	{
 		List<Celda> VecinosAdyacentes = tablero.ObtenerVecinos(unaCelda);
 	
@@ -103,7 +105,7 @@ public partial class PlayerManager : Node3D
 		{
 			GD.Print("Solo puedes moverte a una celda contigua/vecina.");
 		}
-	}
+	} */
 
 	private bool JugadorEnTurnoAdyacenteAOtro(Node3D otroJugador){
 		List<Celda> VecinosAdyacentes = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
@@ -147,13 +149,14 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void EfectuarAtaque(Node3D unJugador, int Id){
+
 		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
 
-		if(jugador.HP <= 5){
+		if(ataqueManager.JugadorEstaEliminado(jugador)){
 			EliminarInstanciaDeJugador(unJugador, Id);
 		}
 		else{
-			jugador.RestarVida();
+			ataqueManager.DaniarJugador(jugador);
 			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 		}
 	}

@@ -32,6 +32,15 @@ public class MovimientoManager
 		return celdaMasCercana;
 	}
 
+	public bool PuedeMover(AbejaReina jugadorEnTurno){
+		return jugadorEnTurno != null &&
+			   jugadorEnTurno.EsSuTurno &&
+			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+			   //&&
+			   //Esta otra linea limita los movimientos de la misma abeja
+			   //jugadorEnTurno.MovimientosDisponibles > 0;
+	}
+
 	public bool PuedeMoverseEntre(Celda origen, Celda destino)
 	{
 		if(origen == null || destino == null)
