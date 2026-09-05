@@ -231,22 +231,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 [node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="2" unique_id=1523716209]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="Outline" type="Node3D" parent="Esqueleto" parent_id_path=PackedInt32Array(942420397) index="1" unique_id=656949124]
+[node name="Outline" type="Node3D" parent="." index="1" unique_id=656949124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0966535, 0)
 visible = false
 
-[node name="Cube" type="MeshInstance3D" parent="Esqueleto/Outline" index="0" unique_id=109274417]
+[node name="Cube" type="MeshInstance3D" parent="Outline" index="0" unique_id=109274417]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_tfn2w")
 skin = SubResource("Skin_hd1hf")
 surface_material_override/0 = SubResource("StandardMaterial3D_6mnlh")
 
-[node name="Cube_001" type="MeshInstance3D" parent="Esqueleto/Outline" index="1" unique_id=568176025]
+[node name="Cube_001" type="MeshInstance3D" parent="Outline" index="1" unique_id=568176025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_pfr4a")
 skin = SubResource("Skin_hd1hf")
 surface_material_override/0 = SubResource("StandardMaterial3D_6mnlh")
 
-[node name="Plano" type="MeshInstance3D" parent="Esqueleto/Outline" index="2" unique_id=767472568]
+[node name="Plano" type="MeshInstance3D" parent="Outline" index="2" unique_id=767472568]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_70w57")
 skin = SubResource("Skin_hd1hf")

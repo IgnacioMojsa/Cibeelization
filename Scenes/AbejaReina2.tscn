@@ -120,6 +120,7 @@ shadow_mesh = SubResource("ArrayMesh_1svok")
 [node name="AbejaReina2" unique_id=2063009922 instance=ExtResource("1_mfljo")]
 
 [node name="Outline" type="Node3D" parent="." index="3" unique_id=1586954455]
+visible = false
 
 [node name="Plano" type="MeshInstance3D" parent="Outline" index="0" unique_id=1549944313]
 transform = Transform3D(-1, -7.5497915e-08, 8.041464e-08, 7.5497915e-08, 0, 1.0651239, -7.5497915e-08, 1, 6.0711374e-15, -0.57475513, 2.0454404, 1.6344492)

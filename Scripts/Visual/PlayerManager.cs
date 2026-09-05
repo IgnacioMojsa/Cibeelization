@@ -7,6 +7,7 @@ public partial class PlayerManager : Node3D
 	[Export] private Tablero tablero; 
 
 	public readonly List<Node3D> VisualesJugadores = new();
+	public readonly List<Node3D> OutlinesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 
@@ -24,6 +25,7 @@ public partial class PlayerManager : Node3D
 		ataqueManager = new AtaqueManager();
 
 		InstanciarJugadores();
+		GuardarOutlines();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 	}
 
@@ -168,7 +170,7 @@ public partial class PlayerManager : Node3D
 
 	public void CargarAssets()
 	{
-		List<PackedScene> escenas = new List<PackedScene>(){
+		List<PackedScene> meshPlayers = new List<PackedScene>(){
 			GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
 			GD.Load<PackedScene>("res://Scenes/AbejaReina2.tscn"),
 			GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
@@ -177,9 +179,9 @@ public partial class PlayerManager : Node3D
 
 		for (int i = 0; i < GameManager.Instance.JugadoresEnPartida.Count; i++)
 		{
-			if (i < escenas.Count)
+			if (i < meshPlayers.Count)
 			{
-				Assets.Add(escenas[i]);
+				Assets.Add(meshPlayers[i]);
 			}
 		}
 	}
@@ -193,6 +195,14 @@ public partial class PlayerManager : Node3D
 			var InstanciaNueva = Assets[j].Instantiate<Node3D>();
 			AddChild(InstanciaNueva);
 			VisualesJugadores.Add(InstanciaNueva);
+		}
+	}
+
+	public void GuardarOutlines(){
+		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+		{
+			var contornoJugador = VisualesJugadores[j].GetNode<Node3D>("Outline");
+			OutlinesJugadores.Add(contornoJugador);
 		}
 	}
 
