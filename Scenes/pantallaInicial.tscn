@@ -14,6 +14,9 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_8of7i"]
+resource_name = "Size"
+
 [node name="GameUI" type="Control" unique_id=128062121]
 layout_mode = 3
 anchors_preset = 15
@@ -49,10 +52,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.5
-offset_top = -142.0
-offset_right = 160.5
-offset_bottom = 142.0
+offset_left = -201.79999
+offset_top = -228.7
+offset_right = 200.20001
+offset_bottom = 222.29999
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
@@ -137,6 +140,78 @@ theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = ExtResource("4_8of7i")
 text = "4"
+alignment = 1
+icon_alignment = 1
+
+[node name="BoardSize" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=1837303852]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/BoardSize" unique_id=629408992]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MenuComienzo/MarginContainer/VBoxContainer/BoardSize/MarginContainer" unique_id=1461319499]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Tamaño del tablero"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sizes" type="VBoxContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=1629692861]
+layout_mode = 2
+theme_override_constants/separation = -33
+
+[node name="Small" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes" unique_id=649977174]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small" unique_id=1431452816]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+button_group = SubResource("ButtonGroup_8of7i")
+text = "Chico"
+alignment = 1
+icon_alignment = 1
+
+[node name="Mid" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes" unique_id=1936385670]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid" unique_id=1028795721]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+button_group = SubResource("ButtonGroup_8of7i")
+text = "Mediano"
+alignment = 1
+icon_alignment = 1
+
+[node name="Big" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes" unique_id=1222540361]
+layout_mode = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 10
+
+[node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big" unique_id=1324931718]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 27
+button_group = SubResource("ButtonGroup_8of7i")
+text = "Grande"
 alignment = 1
 icon_alignment = 1
 
@@ -297,6 +372,9 @@ vertical_alignment = 1
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
+[connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small/CheckBox" to="." method="SeleccionarSizeTablero"]
+[connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox" to="." method="SeleccionarSizeTablero"]
+[connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
 [connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]

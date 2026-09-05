@@ -35,30 +35,61 @@ public partial class GameUI : Control
 		UIComienzo.Visible = true;
 	}
 
-	private void ComenzarPartida(){
+	private void ComenzarPartida()
+	{
+		// Aseguramos la lectura correcta de la UI
 		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
-		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
-		GameManager.Instance.TurnManager.EstablecerPrimerTurno();
+		GameManager.Instance.sizeTablero = ObtenerSizeTablero();
 
-		GD.Print("La partida se desarrollara con " + GameManager.Instance.cantidadJugadores + " jugadores");		
-		GD.Print("Comienza el jugador " + GameManager.Instance.jugadorEnTurno.Id);		
+		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
+
+		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
+		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
-	
-	private void SeleccionarCantidadDeJugadores(bool estaPresionado){
+
+	private void SeleccionarCantidadDeJugadores(bool estaPresionado)
+	{
+		// Solo actuamos cuando el botón pasa a estado presionado (true)
 		if (!estaPresionado) return;
-		
-		if (estaPresionado){
-			GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
-			GD.Print($"Cantidad de jugadores seleccionada: {GameManager.Instance.cantidadJugadores}");
-		}
+
+		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
+		GD.Print($"Cantidad de jugadores seleccionada: {GameManager.Instance.cantidadJugadores}");
+	}
+
+	private void SeleccionarSizeTablero(bool estaPresionado)
+	{
+		// Solo actuamos cuando el botón pasa a estado presionado (true)
+		if (!estaPresionado) return;
+
+		GameManager.Instance.sizeTablero = ObtenerSizeTablero();
+		GD.Print($"Size del tablero seleccionado: {GameManager.Instance.sizeTablero}");
 	}
 
 	private int ObtenerCantJugadores(){
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox");
 		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox");
 		var check4 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox");
+		
+		if(check2 != null && check2.ButtonPressed){
+			return 2;
+		}
+		else if(check3 != null && check3.ButtonPressed){
+			return 3;
+		}
+		else if(check4 != null && check4.ButtonPressed){
+			return 4;
+		}
+		else{
+			return 2;
+		}
+	}
+
+	private int ObtenerSizeTablero(){
+		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small/CheckBox");
+		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox");
+		var check4 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox");
 		
 		if(check2 != null && check2.ButtonPressed){
 			return 2;

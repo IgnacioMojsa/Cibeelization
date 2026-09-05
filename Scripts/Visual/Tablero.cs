@@ -58,7 +58,28 @@ public partial class Tablero : Node3D
 
 	public override void _Ready()
 	{
+		// Registrar esta instancia en GameManager
+		GameManager.Instance.TableroActual = this;
+
 		_hexagonTile = GD.Load<PackedScene>(HEXAGON_TILE_PATH);
+
+		// Si hay una opción válida seleccionada en el menú, genera el tablero con ese tamaño
+		if (GameManager.Instance.sizeTablero > 0)
+		{
+			GameManager.Instance.SetTiles(GameManager.Instance.sizeTablero);
+		}
+		else
+		{
+			Refresh();
+		}
+	}
+
+	// Método público que asigna las filas y columnas directamente
+	public void GenerarTablero(int filas, int columnas)
+	{
+		_widthRows = filas;
+		_heightRows = columnas;
+
 		Refresh();
 	}
 
@@ -86,6 +107,7 @@ public partial class Tablero : Node3D
 			child.QueueFree();
 		}
 	}
+
 
 	private void SetTiles()
 	{

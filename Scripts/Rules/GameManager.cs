@@ -1,40 +1,56 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class GameManager {
-	
+public partial class GameManager 
+{
 	public static GameManager Instance { get; } = new GameManager();
 
 	public TurnManager TurnManager { get; private set; }
-
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
+	public AbejaReina jugadorEnTurno;
 
-	public AbejaReina jugadorEnTurno ;
-
-	//private int indiceTurno = 0;
+	// Referencia al tablero activo en la escena
+	public Tablero TableroActual { get; set; }
 
 	private GameManager(){}
 
-	//[Export] private PlayerManager playerManager;
+	public int cantidadJugadores { get; set; }
+	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
 
-	public int cantidadJugadores {get; set;}
-	
-	/* public int TirarDado(){
-		if(jugadorEnTurno == null) return 1;
-		if(!jugadorEnTurno.EsSuTurno) return 1;
-		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
-		if(jugadorEnTurno.TiroLosDados) return 1;
-		
-		int numeroAleatorio = GD.RandRange(1, 6);
-		jugadorEnTurno.TiroLosDados = true;
-		//Acá abajo, si sale un 6, te deja mover la abeja 6 veces pq no está definido todavía. Si quieren permitir 1 solo movimiento hay que cambiar numeroAleatorio por 1 ahí abajo.
-		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
-		//jugadorEnTurno.MovimientosDisponibles = 1;
-		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
+	// Referencia al controlador de la cámara
+	public CamaraController CamaraActual { get; set; }
 
-		return numeroAleatorio;
-	} */
+	// Convierte la opción de UI en dimensiones de celdas (WidthRows x HeightRows)
 	
+
+	public void SetTiles(int opcionTamaño)
+	{
+		int dimension = 15; // Valor por defecto (Small)
+	
+		switch (opcionTamaño)
+		{
+			case 2:
+				dimension = 15; // Small: 15x15
+				break;
+			case 3:
+				dimension = 25; // Mid: 25x25
+				break;
+			case 4:
+				dimension = 30; // Big: 30x30
+				break;
+		}
+	
+		if (TableroActual != null)
+		{
+			TableroActual.GenerarTablero(dimension, dimension);
+	
+			if (CamaraActual != null)
+			{
+				CamaraActual.AjustarATablero(dimension, dimension, TableroActual.TileSize);
+			}
+		}
+	}
+
 	public int TirarDado()
 	{
 		if(jugadorEnTurno == null) return 1;
@@ -45,7 +61,6 @@ public partial class GameManager {
 		int numeroAleatorio = GD.RandRange(1, 6);
 		jugadorEnTurno.TiroLosDados = true;
 
-		// Guardamos la cantidad de pasos que el dado otorgó
 		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
 
@@ -66,43 +81,40 @@ public partial class GameManager {
 		}
 	}
 
-	 public bool PuedeAtacar(){
+	public bool PuedeAtacar()
+	{
 		return jugadorEnTurno != null &&
 			   jugadorEnTurno.EsSuTurno &&
 			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
-	/* public void ConsumirMovimiento(){
-		if (jugadorEnTurno == null) return;
-
-		jugadorEnTurno.MovimientosDisponibles--;
-		if (jugadorEnTurno.MovimientosDisponibles <= 0)
-			TerminarTurno();
-	} */
-
-	public void ConsumirAtaque(){
+	public void ConsumirAtaque()
+	{
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.AtacoRecien = true;
 		TurnManager.TerminarTurno();
 	}
 
-	public void EliminarJugador(int Id){
+	public void EliminarJugador(int Id)
+	{
 		JugadoresEnPartida.RemoveAt(Id);
-		
 		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
 	}
 
-	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena){
-		if(unaAbeja.AptaParaTransformar(otraAbeja, unaColmena)){
-			// Deberiamos eliminar la instancia de abeja obrera y crear una nueva instancia con el tipo de abeja seleccionada
+	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)
+	{
+		if(unaAbeja.AptaParaTransformar(otraAbeja, unaColmena))
+		{
+			// Transformación
 		}
 	}
 
 	public void CargarJugadores(int cantidadDeJugadores)
 	{
 		JugadoresEnPartida.Clear();
-		for (int i = 1; i <= cantidadDeJugadores; i++){
+		for (int i = 1; i <= cantidadDeJugadores; i++)
+		{
 			var NuevoJugador = new AbejaReina(i);
 			JugadoresEnPartida.Add(NuevoJugador);
 		}	
@@ -111,16 +123,4 @@ public partial class GameManager {
 		TurnManager.EstablecerPrimerTurno();
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
-
-
-	/*
-
-	public void RecolectarRecurso(string unRecurso, Colmena unaColmena){
-
-	}
-
-	public bool PuedeAtacar(unaAbeja, otraAbeja){
-		
-	}
-	*/
 }

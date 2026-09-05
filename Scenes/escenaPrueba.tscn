@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
+[ext_resource type="Script" uid="uid://c7ncbwx7eb0qd" path="res://Scripts/Visual/CamaraController.cs" id="3_cvlkt"]
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]
 
@@ -37,16 +38,17 @@ transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69
 visible = false
 
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
-transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, -9.080102, 0, -24.80091)
+transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, 0, 0, -27)
 script = ExtResource("2_cvlkt")
-WidthRows = 22
-HeightRows = 16
+WidthRows = 15
+HeightRows = 15
 
-[node name="Camara" type="Node3D" parent="." unique_id=132948044]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.686493, 14.551527, 45.250504)
+[node name="Camara" type="Node3D" parent="." unique_id=132948044 node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(-0.9999615, 0.0011679508, -0.008699837, -0.006959975, 0.49843937, 0.86689687, 0.0053488323, 0.86692435, -0.49841186, 15.563, 19.085, -26.227)
+script = ExtResource("3_cvlkt")
+camera3D = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(0.9997542, -0.009626137, -0.019973835, 0.020886606, 0.7111849, 0.70269465, 0.0074408557, -0.70293915, 0.71121114, 19.595634, 8.5551815, 79.06241)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
 visible = false
