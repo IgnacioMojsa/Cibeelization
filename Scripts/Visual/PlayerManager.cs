@@ -71,13 +71,13 @@ public partial class PlayerManager : Node3D
 
 		EstablecerCeldaParaJugadorEnTurno();
 
-		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada))
+		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual))
 		{
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
 		else
 		{
-			GD.Print("Solo puedes moverte a una celda contigua o vecina.");
+			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
 		}
 
 	}

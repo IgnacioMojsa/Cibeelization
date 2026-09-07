@@ -41,14 +41,22 @@ public class MovimientoManager
 			   //jugadorEnTurno.MovimientosDisponibles > 0;
 	} 
 
-	public bool PuedeMoverseEntre(Celda origen, Celda destino)
+	public bool PuedeMoverseEntre(Celda origen, Celda destino, Dictionary<Node3D, Celda> celdasOcupadas,
+    Node3D jugadorActual)
 	{
 		if(origen == null || destino == null)
 		return false;
 
+		if(!CeldasSonAdyacentes(origen, destino))
+		return false;
 
-		List<Celda> vecinos = tablero.ObtenerVecinos(origen);
-		return vecinos.Contains(destino);
+		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas))
+		return false;
+
+		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
+		//return vecinos.Contains(destino);
+
+		return true;
 	}
 
 	public bool EsCeldaOrigenValida(Celda celdaOrigen)
@@ -65,11 +73,11 @@ public class MovimientoManager
 		return vecinos.Contains(celdaDestino);
 	}
 
-	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdaActualPorJugador)
+	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas)
 	{
-		foreach (var kvp in celdaActualPorJugador)
+		foreach (var keyValuePair in celdasOcupadas)
 		{
-			if (kvp.Key != jugadorActual && kvp.Value == celda)
+			if (keyValuePair.Key != jugadorActual && keyValuePair.Value == celda)
 				return true;
 		}
 
