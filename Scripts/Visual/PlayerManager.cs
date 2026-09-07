@@ -116,7 +116,6 @@ public partial class PlayerManager : Node3D
 
 		return VecinosAdyacentes.Contains(CeldaOtroJugador);
 	}
-
 	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
 	{
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;

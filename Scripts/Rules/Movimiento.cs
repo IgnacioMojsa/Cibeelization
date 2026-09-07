@@ -39,12 +39,13 @@ public class MovimientoManager
 			   //&&
 			   //Esta otra linea limita los movimientos de la misma abeja
 			   //jugadorEnTurno.MovimientosDisponibles > 0;
-	}
+	} 
 
 	public bool PuedeMoverseEntre(Celda origen, Celda destino)
 	{
 		if(origen == null || destino == null)
 		return false;
+
 
 		List<Celda> vecinos = tablero.ObtenerVecinos(origen);
 		return vecinos.Contains(destino);
@@ -55,4 +56,23 @@ public class MovimientoManager
 		return celdaOrigen != null;
 	}
 
+	public bool CeldasSonAdyacentes(Celda celdaOrigen, Celda celdaDestino)
+	{
+		if (celdaOrigen == null || celdaDestino == null)
+			return false;
+
+		List<Celda> vecinos = tablero.ObtenerVecinos(celdaOrigen);
+		return vecinos.Contains(celdaDestino);
+	}
+
+	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdaActualPorJugador)
+	{
+		foreach (var kvp in celdaActualPorJugador)
+		{
+			if (kvp.Key != jugadorActual && kvp.Value == celda)
+				return true;
+		}
+
+		return false;
+	}
 }
