@@ -118,6 +118,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1svok")
 
 [node name="AbejaReina2" unique_id=2063009922 instance=ExtResource("1_mfljo")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Outline" type="Node3D" parent="." index="3" unique_id=1586954455]
 visible = false

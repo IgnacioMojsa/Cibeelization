@@ -47,6 +47,7 @@ HeightRows = 15
 transform = Transform3D(-0.9999615, 0.0011679508, -0.008699837, -0.006959975, 0.49843937, 0.86689687, 0.0053488323, 0.86692435, -0.49841186, 15.563, 19.085, -26.227)
 script = ExtResource("3_cvlkt")
 camera3D = NodePath("Camera3D")
+paddingFactor = 1.5
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
 

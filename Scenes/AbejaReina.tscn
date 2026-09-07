@@ -221,14 +221,15 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="0" unique_id=406742339]
+[node name="Cube" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="0" unique_id=87826615]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="1" unique_id=311431417]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="1" unique_id=742016414]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="2" unique_id=1523716209]
+[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="2" unique_id=1968951774]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
 [node name="Outline" type="Node3D" parent="." index="1" unique_id=656949124]

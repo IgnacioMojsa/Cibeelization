@@ -23,32 +23,33 @@ public partial class GameManager
 	// Convierte la opción de UI en dimensiones de celdas (WidthRows x HeightRows)
 	
 
+	public int DimensionActual { get; private set; } = 15;
+
 	public void SetTiles(int opcionTamaño)
 	{
-		int dimension = 15; // Valor por defecto (Small)
+	    switch (opcionTamaño)
+	    {
+	        case 2: DimensionActual = 15; break; // Small
+	        case 3: DimensionActual = 25; break; // Mid
+	        case 4: DimensionActual = 30; break; // Big
+	        default: DimensionActual = 15; break;
+	    }
 	
-		switch (opcionTamaño)
-		{
-			case 2:
-				dimension = 15; // Small: 15x15
-				break;
-			case 3:
-				dimension = 25; // Mid: 25x25
-				break;
-			case 4:
-				dimension = 30; // Big: 30x30
-				break;
-		}
+	    // Intentamos actualizar si los nodos ya están presentes
+	    ActualizarTableroYCamara();
+	}
 	
-		if (TableroActual != null)
-		{
-			TableroActual.GenerarTablero(dimension, dimension);
+	public void ActualizarTableroYCamara()
+	{
+	    if (TableroActual != null)
+	    {
+	        TableroActual.GenerarTablero(DimensionActual, DimensionActual);
 	
-			if (CamaraActual != null)
-			{
-				CamaraActual.AjustarATablero(dimension, dimension, TableroActual.TileSize);
-			}
-		}
+	        if (CamaraActual != null)
+	        {
+	            CamaraActual.AjustarATablero(DimensionActual, DimensionActual, TableroActual.TileSize);
+	        }
+	    }
 	}
 
 	public int TirarDado()
