@@ -71,7 +71,7 @@ public partial class PlayerManager : Node3D
 
 		EstablecerCeldaParaJugadorEnTurno();
 
-		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual))
+		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
@@ -116,6 +116,7 @@ public partial class PlayerManager : Node3D
 
 		return VecinosAdyacentes.Contains(CeldaOtroJugador);
 	}
+
 	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
 	{
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;
@@ -153,18 +154,17 @@ public partial class PlayerManager : Node3D
 
 		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
 
+		ataqueManager.DaniarJugador(jugador);
+		GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+
 		if(ataqueManager.JugadorEstaEliminado(jugador)){
 			EliminarInstanciaDeJugador(unJugador, Id);
-		}
-		else{
-			ataqueManager.DaniarJugador(jugador);
-			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 		}
 	}
 
 	private void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
 		GameManager.Instance.EliminarJugador(Id);
-		unJugador.QueueFree();
+		unJugador.Visible = false;
 	}
 
 	public void CargarAssets()

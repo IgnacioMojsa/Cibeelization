@@ -169,11 +169,14 @@ public partial class GameUI : Control
 
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
 		
-		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
 		{
-			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno){
+			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
 				UIJugadores[j].Modulate = Color.FromHtml("#ff0000");
 				playerManager.OutlinesJugadores[j].Visible = true;
+			}
+			else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
+				UIJugadores[j].Visible = false;
 			}
 			else{
 				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");

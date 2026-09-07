@@ -38,11 +38,21 @@ public class TurnManager
 		CambiarTurnoASiguienteJugador();
 	}
 
-	public void CambiarTurnoASiguienteJugador(){
+	private void BuscarSiguienteJugadorActivo()
+	{
+		int intentos = 0;
+		int totalJugadores = JugadoresEnPartida.Count;
 
-		if(JugadoresEnPartida == null || JugadoresEnPartida.Count == 0) return;
-		
-		indiceTurno = (indiceTurno + 1) % JugadoresEnPartida.Count;
+		do
+		{
+			indiceTurno = (indiceTurno + 1) % totalJugadores;
+			intentos++;
+		} 
+		while (JugadoresEnPartida[indiceTurno].FueraDeJuego && intentos < totalJugadores);
+	}
+
+	private void IniciarTurnoJugadorActual()
+	{
 		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
 		jugadorEnTurno.EsSuTurno = true;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
@@ -51,5 +61,13 @@ public class TurnManager
 		GameManager.Instance.jugadorEnTurno = jugadorEnTurno;
 
 		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
+	}
+
+	public void CambiarTurnoASiguienteJugador(){
+
+		if(JugadoresEnPartida == null || JugadoresEnPartida.Count == 0) return;
+		
+		BuscarSiguienteJugadorActivo();
+		IniciarTurnoJugadorActual();
 	}
 }

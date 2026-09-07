@@ -99,7 +99,7 @@ public partial class GameManager
 
 	public void EliminarJugador(int Id)
 	{
-		JugadoresEnPartida.RemoveAt(Id);
+		JugadoresEnPartida[Id].FueraDeJuego = true;
 		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
 	}
 

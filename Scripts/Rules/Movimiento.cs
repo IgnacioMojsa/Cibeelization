@@ -42,7 +42,7 @@ public class MovimientoManager
 	} 
 
 	public bool PuedeMoverseEntre(Celda origen, Celda destino, Dictionary<Node3D, Celda> celdasOcupadas,
-    Node3D jugadorActual)
+    Node3D jugadorActual, List<Node3D> visualesJugadores)
 	{
 		if(origen == null || destino == null)
 		return false;
@@ -50,7 +50,7 @@ public class MovimientoManager
 		if(!CeldasSonAdyacentes(origen, destino))
 		return false;
 
-		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas))
+		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas, visualesJugadores))
 		return false;
 
 		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
@@ -73,12 +73,29 @@ public class MovimientoManager
 		return vecinos.Contains(celdaDestino);
 	}
 
-	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas)
+	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas, List<Node3D> visualesJugadores)
 	{
 		foreach (var keyValuePair in celdasOcupadas)
 		{
-			if (keyValuePair.Key != jugadorActual && keyValuePair.Value == celda)
-				return true;
+			if (keyValuePair.Key == jugadorActual)
+            continue;
+
+        	if (keyValuePair.Value == celda)
+        	{
+            	int indexJugador = visualesJugadores.IndexOf(keyValuePair.Key);
+
+            	if (indexJugador != -1)
+            	{
+            	    AbejaReina jugadorOcupante = GameManager.Instance.JugadoresEnPartida[indexJugador];
+
+            	    if (jugadorOcupante.FueraDeJuego)
+            	    {
+            	        continue; 
+            	    }
+            	}
+
+            	return true;
+        	}
 		}
 
 		return false;

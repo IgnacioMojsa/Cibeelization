@@ -123,11 +123,26 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 34
 text = "???"
 
+[node name="Subdito" type="PanelContainer" parent="HUD" unique_id=885164177]
+layout_mode = 0
+offset_left = 20.0
+offset_top = -592.0
+offset_right = 139.0
+offset_bottom = -533.0
+scale = Vector2(1.0799975, 1)
+
+[node name="SubditoButton" type="Button" parent="HUD/Subdito" unique_id=1363124327]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 19
+text = "Invocar 
+subdito"
+
 [node name="Atacar" type="PanelContainer" parent="HUD" unique_id=120025344]
 layout_mode = 0
-offset_left = -40.0
+offset_left = -108.0
 offset_top = -592.0
-offset_right = 79.0
+offset_right = 11.0
 offset_bottom = -533.0
 
 [node name="AtacarButton" type="Button" parent="HUD/Atacar" unique_id=968980427]
