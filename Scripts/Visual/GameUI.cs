@@ -24,6 +24,7 @@ public partial class GameUI : Control
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
 			MostrarJugadorEnTurno();
 			MostrarHPDeJugaores();
+			DeshabilitarDado();
 		}
 	}
 
@@ -138,10 +139,18 @@ public partial class GameUI : Control
 		GetTree().Quit();
 	}
 
-	private void OnTirarDadoPressed()
-	{	
+	private void OnTirarDadoPressed(){	
 		int resultado = GameManager.Instance.TirarDado();
 		resultadoDados.Text = resultado.ToString();
+	}
+
+	private void DeshabilitarDado(){
+		if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
+			botonDado.Disabled = true;
+		}
+		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
+			botonDado.Disabled = false;
+		}
 	}
 
 	public void MostrarResultadoDado(){
