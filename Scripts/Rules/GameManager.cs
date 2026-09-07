@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameManager 
 {
@@ -22,6 +23,12 @@ public partial class GameManager
 
 	// Convierte la opción de UI en dimensiones de celdas (WidthRows x HeightRows)
 	
+	public bool CondicionVictoria(){
+		var jugadoresFueraDeJuego = JugadoresEnPartida.Where(j => j.FueraDeJuego).ToList();
+		var jugadorGanador = JugadoresEnPartida.Find(j => !j.FueraDeJuego);
+
+		return jugadoresFueraDeJuego.Count == cantidadJugadores - 1;
+	}  
 
 	public int DimensionActual { get; private set; } = 15;
 

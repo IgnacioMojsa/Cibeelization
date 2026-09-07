@@ -10,7 +10,7 @@ public class AtaqueManager
 
     public bool JugadorEstaEliminado(AbejaReina jugador)
     {
-        return jugador != null && jugador.HP <= 5;
+        return jugador != null && jugador.HP < 5;
     }
 
     public void DaniarJugador(AbejaReina jugador)

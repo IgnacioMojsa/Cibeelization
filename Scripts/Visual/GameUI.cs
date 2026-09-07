@@ -10,14 +10,20 @@ public partial class GameUI : Control
 
 	
 	public override void _Ready(){
-		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
-		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
+		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
+			resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+			botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 
-		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+			botonAtacar = GetNode<Button>("Atacar/AtacarButton");
 
-		botonAtacar.Pressed += OnAtacarPressed;
+			botonAtacar.Pressed += OnAtacarPressed;
 
-		MostrarDataDeJugadores(); 
+			MostrarDataDeJugadores(); 	
+		}
+
+		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
+			MostrarMensajeVictoria();
+		}
 	}
 
 	public override void _Process(double delta){
@@ -25,6 +31,7 @@ public partial class GameUI : Control
 			MostrarJugadorEnTurno();
 			MostrarHPDeJugaores();
 			DeshabilitarDado();
+			FinalizarPartida();
 		}
 	}
 
@@ -48,6 +55,24 @@ public partial class GameUI : Control
 		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+	}
+
+	private void FinalizarPartida(){
+		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
+		
+		if(GameManager.Instance.CondicionVictoria()){
+			GD.Print("La partida ha finalizado, el jugador " + jugadorGanador.Id + " es el ganador");
+
+			GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn"); 
+		}
+	}
+
+	private void MostrarMensajeVictoria(){
+		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
+
+		var mensajeVictoria = GetNode<Label>("Titulo");
+		
+		mensajeVictoria.Text = "EL JUGADOR  " + jugadorGanador.Id + "  ES EL GANADOR";
 	}
 
 	private void SeleccionarCantidadDeJugadores(bool estaPresionado)
