@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public class TurnManager
@@ -11,6 +12,8 @@ public class TurnManager
 	{
 		JugadoresEnPartida = jugadores;
 	}
+
+	public event Action<string> OnTextoInstrucciones;
 
 	public void EstablecerPrimerTurno(){
 		if(JugadoresEnPartida == null || JugadoresEnPartida.Count == 0) return;
@@ -69,5 +72,7 @@ public class TurnManager
 		
 		BuscarSiguienteJugadorActivo();
 		IniciarTurnoJugadorActual();
+
+		OnTextoInstrucciones?.Invoke("Tirá los dados o ataca a un jugador cercano.");
 	}
 }

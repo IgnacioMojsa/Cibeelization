@@ -17,7 +17,7 @@ public class AtaqueManager
     {
         if(jugador == null) return;
         jugador.RestarVida();
-    }
+    }/* 
 
     public bool JugadorEnTurnoAdyacenteAOtro(
 		Node3D jugadorActual,
@@ -43,5 +43,5 @@ public class AtaqueManager
 		GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 	}
 
-
+ */
 }

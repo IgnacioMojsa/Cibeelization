@@ -5,13 +5,16 @@ public partial class GameUI : Control
 {
 	[Export] private PlayerManager playerManager;
 	private Label resultadoDados;
+	public Label feedback;
 	private Button botonDado;
 	private Button botonAtacar;
-
 	
 	public override void _Ready(){
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
 			resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+			feedback = GetNode<Label>("Feedback");
+			MostrarTextoInstrucciones("Tirá los dados para comenzar");
+
 			botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 
 			botonAtacar = GetNode<Button>("Atacar/AtacarButton");
@@ -19,6 +22,8 @@ public partial class GameUI : Control
 			botonAtacar.Pressed += OnAtacarPressed;
 
 			MostrarDataDeJugadores(); 	
+
+			GameManager.Instance.TurnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
 		}
 
 		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
@@ -172,6 +177,7 @@ public partial class GameUI : Control
 	private void DeshabilitarDado(){
 		if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
 			botonDado.Disabled = true;
+			MostrarTextoInstrucciones("Haz clic en las celdas vecinas para moverte.");
 		}
 		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
 			botonDado.Disabled = false;
@@ -180,7 +186,6 @@ public partial class GameUI : Control
 
 	public void MostrarResultadoDado(){
 		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
-
 		//botonDado.Disabled = true;
 	} 
 
@@ -216,5 +221,10 @@ public partial class GameUI : Control
 	{
 		if(playerManager != null)
 		playerManager.Atacar();
+	}
+
+	public void MostrarTextoInstrucciones(string texto)
+	{
+		feedback.Text = texto;
 	}
 };

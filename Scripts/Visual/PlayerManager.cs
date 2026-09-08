@@ -139,7 +139,6 @@ public partial class PlayerManager : Node3D
 
 			if(JugadorEnTurnoAdyacenteAOtro(JugadorAEvaluar)){
 				GD.Print("Atacaste al jugador " + GameManager.Instance.JugadoresEnPartida[j].Id);
-				
 				EfectuarAtaque(JugadorAEvaluar, j);
 			}
 			else{
