@@ -20,3 +20,17 @@ Contiene el MDA actualizado
 - Cuando tu turno acabe, el siguiente jugador podrá elegir si tirar los dados o atacar en caso de que sea posible.
 - Para atacar a otro jugador, los dos deben estar en celdas vecinas, lindantes o contiguas.
 - Cada ataque restará 5 de HP. El primer jugador en eliminar a todos los demás jugadores será el ganador.
+
+## MDA Framework
+
+- Mecánicas:
+    - Tirar dados
+    - Atacar
+    - Invocar súbdito
+
+- Dinámicas:
+    - Planificar estrategia básica
+    - Competir contra otros jugadores
+
+- Estéticas:
+    - Desafío
