@@ -118,7 +118,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_di4x3")
 
 [node name="Zangano" unique_id=800501426 instance=ExtResource("1_snhb3")]
-transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, 0.09356356, 0)
+transform = Transform3D(-0.59, 0, 5.1579438e-08, 0, 0.59, 0, -5.1579438e-08, 0, -0.59, 0, 0.09356356, 0)
 
 [node name="Cube" parent="." index="0" unique_id=89738154]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4178157, 0.4491285)

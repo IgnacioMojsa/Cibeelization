@@ -172,7 +172,7 @@ public partial class PlayerManager : Node3D
 		List<PackedScene> meshPlayers = new List<PackedScene>(){
 			GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
 			GD.Load<PackedScene>("res://Scenes/AbejaReina2.tscn"),
-			GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
+			GD.Load<PackedScene>("res://Scenes/AbejaReina3.tscn"),
 			GD.Load<PackedScene>("res://Scenes/Zangano.tscn")
 		};
 
