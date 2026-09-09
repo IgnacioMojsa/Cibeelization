@@ -40,8 +40,9 @@ tropasManager = NodePath("../TroopsManager")
 script = ExtResource("2_qqnew")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
+light_energy = 3.059
+light_indirect_energy = 1.23
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1925802151]
 environment = SubResource("Environment_6nc1v")

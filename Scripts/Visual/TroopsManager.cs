@@ -32,6 +32,7 @@ public partial class TroopsManager : Node3D
 		var InstanciaNueva = Assets[0].Instantiate<Node3D>();
 
 		abejaNueva.CeldaActual = celdaCliqueada;
+		abejaNueva.InstanciaVisual = InstanciaNueva;
 		GameManager.Instance.GenerarAbejaNueva(abejaNueva);
 
 		TropasJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);

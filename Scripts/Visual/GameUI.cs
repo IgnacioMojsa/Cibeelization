@@ -294,7 +294,8 @@ public partial class GameUI : Control
 	private void OnAtacarPressed()
 	{
 		if(playerManager != null)
-		playerManager.Atacar();
+		playerManager.MostrarAbejasObjetivo();
+		//playerManager.Atacar();
 	}
 
 	private void InvocarSubdito()

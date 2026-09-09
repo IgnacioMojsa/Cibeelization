@@ -84,6 +84,7 @@ public partial class PlayerManager : Node3D
 		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
 			OcultarCeldasDisponiblesParaInvocar();
+			OcultarAbejasObjetivo();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
 		else
@@ -155,11 +156,6 @@ public partial class PlayerManager : Node3D
 			else{
 				GD.Print("No atacaste a nadie");
 			}
-		}
-
-		for (int abeja = 0; abeja < GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Count; abeja++)
-		{
-			// Chequear los TroopManager de cada jugador y evaluar si existe alguna abeja (QUE NO SEA LA PROPIA) cerca del jugador
 		}
 
 		GameManager.Instance.ConsumirAtaque();
@@ -250,6 +246,65 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+	public void MostrarAbejasObjetivo(){
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		
+		List<Node3D> abejasObjetivo = new List<Node3D>();
+
+		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
+		{
+			if(jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego){
+				continue;
+			}
+
+			BuscarAbejasObjetivo(jugador, abejasObjetivo);
+		}
+
+		foreach (var abejaVisual in abejasObjetivo)
+		{
+			if(abejaVisual != null && abejaVisual.HasNode("Outline"))
+        	{
+            	abejaVisual.GetNode<Node3D>("Outline").Visible = true;
+        	} 
+		}
+	}
+
+	public void OcultarAbejasObjetivo(){
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		
+		List<Node3D> abejasObjetivo = new List<Node3D>();
+
+		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
+		{
+			if(jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego){
+				continue;
+			}
+
+			BuscarAbejasObjetivo(jugador, abejasObjetivo);
+		}
+
+		foreach (var abejaVisual in abejasObjetivo)
+		{
+			if(abejaVisual != null && abejaVisual.HasNode("Outline"))
+        	{
+            	abejaVisual.GetNode<Node3D>("Outline").Visible = false;
+        	} 
+		}
+	}
+
+	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Node3D> listaDeAbejas){
+		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
+		{
+			if(CeldasDisponibles.Contains(abejaActual.CeldaActual)){
+				listaDeAbejas.Add(abejaActual.InstanciaVisual);
+			}
+		}
+	}
+
 	public void MostrarCeldasDisponiblesParaInvocar(){
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
@@ -303,6 +358,7 @@ public partial class PlayerManager : Node3D
 
 		if(CeldasDisponibles.Contains(CeldaCliqueada)){
 			OcultarCeldasDisponiblesParaInvocar();	
+			OcultarAbejasObjetivo();
 			tropasManager.InstanciarAbeja(PosicionEnMundo3D, CeldaCliqueada);
 		}
 		else{
