@@ -13,6 +13,7 @@ public partial class PlayerManager : Node3D
 
 	private MovimientoManager movimientoManager;
 	private AtaqueManager ataqueManager;
+	private TroopsManager tropasManager;
 
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
@@ -23,6 +24,7 @@ public partial class PlayerManager : Node3D
 	{
 		movimientoManager = new MovimientoManager(tablero);
 		ataqueManager = new AtaqueManager();
+		tropasManager = new TroopsManager();  
 
 		InstanciarJugadores();
 		GuardarOutlines();
@@ -73,6 +75,7 @@ public partial class PlayerManager : Node3D
 
 		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
+			OcultarCeldasDisponiblesParaInvocar();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
 		else
@@ -232,6 +235,32 @@ public partial class PlayerManager : Node3D
 				GameManager.Instance.JugadoresEnPartida[i].UbicacionActual.R)
 			);
 		}
+	}
+
+	public void MostrarCeldasDisponiblesParaInvocar(){
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+		var celdasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+
+		foreach (var celda in celdasDisponibles)
+		{
+			celda.Tile.GetNode<Node3D>("Outline").Visible = true;
+		}
+	}
+
+	public void OcultarCeldasDisponiblesParaInvocar(){
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+		var celdasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+
+		foreach (var celda in celdasDisponibles)
+		{
+			celda.Tile.GetNode<Node3D>("Outline").Visible = false;
+		}
+	}
+
+	public void InvocarAbejaNueva(){
+		tropasManager.InstanciarAbeja();
 	}
 }
 

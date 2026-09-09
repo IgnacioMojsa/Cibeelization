@@ -10,8 +10,11 @@ public partial class AbejaReina : Abeja
 	public bool FueraDeJuego {get; set;} = false;
 
 	public bool AtacoRecien {get; set;} = false;
+	public bool InvocoRecien {get; set;} = false;
 	public int MovimientosDisponibles {get; set;}
 	public int Id {get; set;}
+
+	public Colmena ColmenaDeReina = new Colmena();
 
 	public Celda UbicacionActual {get; set;}
 

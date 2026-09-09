@@ -53,6 +53,9 @@ public class MovimientoManager
 		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas, visualesJugadores))
 		return false;
 
+		if(GameManager.Instance.jugadorEnTurno.InvocoRecien)
+		return false; 
+
 		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
 		//return vecinos.Contains(destino);
 

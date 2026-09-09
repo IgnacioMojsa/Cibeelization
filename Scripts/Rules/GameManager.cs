@@ -7,6 +7,7 @@ public partial class GameManager
 	public static GameManager Instance { get; } = new GameManager();
 
 	public TurnManager TurnManager { get; private set; }
+	public List<Abeja> TiposDeAbejas = new List<Abeja>();
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 	public AbejaReina jugadorEnTurno;
 
@@ -108,6 +109,13 @@ public partial class GameManager
 	{
 		JugadoresEnPartida[Id].FueraDeJuego = true;
 		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
+	}
+
+	public void GenerarAbejaNueva(Abeja unaAbeja){
+		var abejaNueva = unaAbeja;
+
+		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(abejaNueva);
+		jugadorEnTurno.InvocoRecien = true;
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)

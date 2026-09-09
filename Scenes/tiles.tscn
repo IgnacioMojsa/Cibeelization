@@ -26,6 +26,45 @@ _surfaces = [{
 shading_mode = 0
 albedo_color = Color(0.5647059, 0.39607844, 0.105882354, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3i8m5"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_3m87p"]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.025054531, 1),
+"format": 34359742465,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAgADAAQAAgAEAAAAAQAFAAMABAADAAUABgAFAAEAAAAGAAEABAAFAAcABgAHAAUAAAAEAAgACAAEAAcACQAGAAAAAAAIAAkACQAKAAYACgAHAAYACQAIAAsACQALAAoACAAHAAsACgALAAcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("AAAAvwAAAAAAAACAxYOMPgAAAAAAAAC/xYOMvgAAAAAAAAC/xYOMvik/zTwAAAC/AAAAvyk/zTwAAACAxYOMPik/zTwAAAC/AAAAPwAAAAAAAACAAAAAPyk/zTwAAACAxYOMvik/zTwAAAA/xYOMvgAAAAAAAAA/xYOMPgAAAAAAAAA/xYOMPik/zTwAAAA/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cj3ef"]
+resource_name = "hexagon_tile_Plane"
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.025054531, 1),
+"attribute_data": PackedByteArray("AAAAAAAAAD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAAD8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAD8AAIA/AAAAAAAAgD8AAAA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAPwAAgD8AAAA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAPwAAAAAAAAA/AAAAAAAAAAAAAIA/AAAAPwAAgD8AAAAAAACAPwAAAAAAAIA/AAAAPwAAAAAAAAA/AAAAAAAAgD8AAAAAAACAPwAAAAAAAAA/"),
+"format": 34359742487,
+"index_count": 60,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAADAAAABAAFAAMABgAHAAgABgAJAAcACgAGAAgACgAIAAsADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEA"),
+"material": SubResource("StandardMaterial3D_3i8m5"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AAAAvwAAAAAAAACAxYOMPgAAAAAAAAC/xYOMvgAAAAAAAAC/AAAAPwAAAAAAAACAxYOMvgAAAAAAAAA/xYOMPgAAAAAAAAA/AAAAvyk/zTwAAACAxYOMPik/zTwAAAC/AAAAPyk/zTwAAACAxYOMvik/zTwAAAC/xYOMvik/zTwAAAA/xYOMPik/zTwAAAA/xYOMPgAAAAAAAAA/AAAAPyk/zTwAAACAAAAAPwAAAAAAAACAxYOMPik/zTwAAAA/xYOMPgAAAAAAAAC/xYOMvik/zTwAAAC/xYOMvgAAAAAAAAC/xYOMPik/zTwAAAC/xYOMvgAAAAAAAAA/xYOMPik/zTwAAAA/xYOMPgAAAAAAAAA/xYOMvik/zTwAAAA/xYOMvgAAAAAAAAC/AAAAvyk/zTwAAACAAAAAvwAAAAAAAACAxYOMvik/zTwAAAC/AAAAPwAAAAAAAACAxYOMPik/zTwAAAC/xYOMPgAAAAAAAAC/AAAAPyk/zTwAAACAAAAAvwAAAAAAAACAxYOMvik/zTwAAAA/xYOMvgAAAAAAAAA/AAAAvyk/zTwAAACA/38AAP///z//fwAA////P/9/AAD///8//38AAP///z//fwAA////P/9/AAD///8//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+/NNj/f////z802P9/////PzTY/3////8/NNj/f////z//////////v/////////+//////////7//////////v/9//3////8//3//f////z//f/9/////P/9//3////8/AADKp////78AAMqn////vwAAyqf///+/AADKp////7///8qn////v///yqf///+////Kp////7///8qn////v8on/3////8/yif/f////z/KJ/9/////P8on/3////8/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_3m87p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3p6xg"]
+albedo_color = Color(0.8426396, 0.18505341, 6.738305e-07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
 [node name="Tiles" type="Node3D" unique_id=264374999]
 
 [node name="Casillero" parent="." unique_id=576686847 instance=ExtResource("1_mlaw6")]
@@ -45,5 +84,21 @@ shape = SubResource("ConcavePolygonShape3D_3p6xg")
 [node name="Outlined" type="MeshInstance3D" parent="hexagon_tile" unique_id=692762696]
 mesh = SubResource("ArrayMesh_1nd0u")
 surface_material_override/0 = SubResource("StandardMaterial3D_2lok1")
+
+[node name="Outline" type="Node3D" parent="." unique_id=468051916]
+visible = false
+
+[node name="Plane" type="MeshInstance3D" parent="Outline" unique_id=52799960]
+mesh = SubResource("ArrayMesh_cj3ef")
+surface_material_override/0 = SubResource("StandardMaterial3D_3p6xg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Outline/Plane" unique_id=1750692193]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Outline/Plane/StaticBody3D" unique_id=463731927]
+shape = SubResource("ConcavePolygonShape3D_3p6xg")
+
+[node name="Outlined" type="MeshInstance3D" parent="Outline" unique_id=1875546996]
+mesh = SubResource("ArrayMesh_1nd0u")
+surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
 [editable path="hexagon_tile"]

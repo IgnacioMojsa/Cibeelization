@@ -223,6 +223,13 @@ public partial class GameUI : Control
 		playerManager.Atacar();
 	}
 
+	private void InvocarSubdito()
+	{
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados){	
+			playerManager.MostrarCeldasDisponiblesParaInvocar();
+		}
+	}
+
 	public void MostrarTextoInstrucciones(string texto)
 	{
 		feedback.Text = texto;
