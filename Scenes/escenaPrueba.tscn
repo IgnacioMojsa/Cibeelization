@@ -19,6 +19,14 @@ sky_material = SubResource("ProceduralSkyMaterial_21dei")
 background_mode = 2
 sky = SubResource("Sky_gojdn")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvlkt"]
+bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
 [node name="Escena" type="Node3D" unique_id=104624866]
 
 [node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero")]
@@ -151,6 +159,19 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 40
 text = "Atacar"
 
+[node name="Pausa" type="PanelContainer" parent="HUD" unique_id=830340097]
+layout_mode = 0
+offset_left = 428.0
+offset_top = -592.0
+offset_right = 547.0
+offset_bottom = -533.0
+
+[node name="PausaButton" type="Button" parent="HUD/Pausa" unique_id=134833338]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 40
+text = "Pausa"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=230355480]
 layout_mode = 0
 offset_left = -540.0
@@ -280,6 +301,137 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "HP"
 
+<<<<<<< HEAD
+[node name="MenuPausa" type="HBoxContainer" parent="HUD" unique_id=832009898]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -337.0
+offset_top = -543.0
+offset_right = 312.0
+offset_bottom = -399.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.0400013, 1.2800001)
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="MenuComienzo" type="PanelContainer" parent="HUD/MenuPausa" unique_id=2092116473]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cvlkt")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MenuPausa/MenuComienzo" unique_id=1616475637]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer" unique_id=1862946613]
+layout_mode = 2
+alignment = 1
+
+[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer" unique_id=262796824]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Continuar"
+
+[node name="MenuPrincipal" type="PanelContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer" unique_id=594455706]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MenuPrincipalButton" type="Button" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer/MenuPrincipal" unique_id=2081269028]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Menu Principal"
+
+[node name="ConfirmacionSalir" type="HBoxContainer" parent="HUD" unique_id=1227622045]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -229.0
+offset_top = -371.0
+offset_right = 343.0
+offset_bottom = -262.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.0386251, 2.3508615)
+theme_override_constants/separation = 60
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/ConfirmacionSalir" unique_id=324063824]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/ConfirmacionSalir/MarginContainer" unique_id=1487914755]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=516725222]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 24
+text = "Confirma que desear regresar al menú principal? "
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=425151996]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 19
+text = "Se perderá todo el progreso de la partida"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=1273051555]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Si" type="PanelContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer" unique_id=496943924]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="SiButton" type="Button" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=1954623220]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "Si"
+
+[node name="No" type="PanelContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer" unique_id=804935335]
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1994413517]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "No"
+=======
 [node name="Feedback" type="Label" parent="HUD" unique_id=2069663858]
 layout_mode = 0
 offset_left = -88.0
@@ -291,6 +443,7 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 text = "Texto texto texto texto"
 horizontal_alignment = 1
+>>>>>>> a2759d8389417202577d2bd4f4e691bf77232e0d
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
