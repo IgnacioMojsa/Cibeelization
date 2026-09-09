@@ -8,6 +8,14 @@ public partial class GameUI : Control
 	public Label feedback;
 	private Button botonDado;
 	private Button botonAtacar;
+
+	private Button botonPausa;
+
+	private PanelContainer containerPausa;
+	private Button botonContinuar;
+	private Button botonMenuPrincipal;
+	private HBoxContainer uiPausa;
+	private HBoxContainer confirmacionSalir;
 	
 	public override void _Ready(){
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
@@ -20,6 +28,28 @@ public partial class GameUI : Control
 			botonAtacar = GetNode<Button>("Atacar/AtacarButton");
 
 			botonAtacar.Pressed += OnAtacarPressed;
+
+			botonPausa = GetNode<Button>("Pausa/PausaButton");
+
+			containerPausa = GetNode<PanelContainer>("Pausa");
+
+			botonPausa.Pressed += PausarPartida;
+
+			uiPausa = GetNode<HBoxContainer>("MenuPausa");
+        	confirmacionSalir = GetNode<HBoxContainer>("ConfirmacionSalir");
+
+        	// Referencias del menú de pausa
+        	botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
+        	botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+
+        	// Suscripción de eventos
+        	botonPausa.Pressed += PausarPartida;
+        	botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
+        	botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
+
+        	// Botones del cuadro de confirmación
+        	GetNode<Button>("ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+        	GetNode<Button>("ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
 
 			MostrarDataDeJugadores(); 	
 
@@ -60,6 +90,48 @@ public partial class GameUI : Control
 		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+	}
+
+	private void PausarPartida()
+	{
+	    // Alterna el estado de pausa
+	    GetTree().Paused = !GetTree().Paused;
+	
+	    // Muestra u oculta el menú principal de pausa
+	    uiPausa.Visible = GetTree().Paused;
+
+		if (GetTree().Paused)
+	    {
+			GD.Print("Pausa activada");
+
+	        containerPausa.Visible = false;
+	    }
+
+	    // Si quitamos la pausa, aseguramos limpiar ventanas secundarias
+	    if (!GetTree().Paused)
+	    {
+			GD.Print("Juego Reanudado");
+	        containerPausa.Visible = true;
+	    }
+	}
+
+	private void MostrarConfirmacionSalir()
+	{
+	    uiPausa.Visible = false;
+	    confirmacionSalir.Visible = true;
+	}
+
+	private void OcultarConfirmacionSalir()
+	{
+	    confirmacionSalir.Visible = false;
+	    uiPausa.Visible = true;
+	}
+
+	private void IrAlMenuPrincipal()
+	{
+		GD.Print("Regresando al menu principal");
+	    GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
+	    GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
 	}
 
 	private void FinalizarPartida(){

@@ -167,6 +167,7 @@ offset_right = 547.0
 offset_bottom = -533.0
 
 [node name="PausaButton" type="Button" parent="HUD/Pausa" unique_id=134833338]
+process_mode = 3
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 40
@@ -302,6 +303,7 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "HP"
 
 [node name="MenuPausa" type="HBoxContainer" parent="HUD" unique_id=832009898]
+process_mode = 3
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -319,27 +321,28 @@ scale = Vector2(1.0400013, 1.2800001)
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="MenuComienzo" type="PanelContainer" parent="HUD/MenuPausa" unique_id=2092116473]
+[node name="PausaBorder" type="PanelContainer" parent="HUD/MenuPausa" unique_id=2092116473]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cvlkt")
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/MenuPausa/MenuComienzo" unique_id=1616475637]
+[node name="MarginContainer" type="MarginContainer" parent="HUD/MenuPausa/PausaBorder" unique_id=1616475637]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer" unique_id=1862946613]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer" unique_id=1862946613]
 layout_mode = 2
 alignment = 1
 
-[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer" unique_id=262796824]
+[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -348,12 +351,12 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Continuar"
 
-[node name="MenuPrincipal" type="PanelContainer" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer" unique_id=594455706]
+[node name="MenuPrincipal" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=594455706]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MenuPrincipalButton" type="Button" parent="HUD/MenuPausa/MenuComienzo/MarginContainer/VBoxContainer/MenuPrincipal" unique_id=2081269028]
+[node name="MenuPrincipalButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal" unique_id=2081269028]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -370,46 +373,54 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -229.0
-offset_top = -371.0
-offset_right = 343.0
-offset_bottom = -262.0
+offset_left = -245.0
+offset_top = -431.0
+offset_right = 327.0
+offset_bottom = -322.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.0386251, 2.3508615)
 theme_override_constants/separation = 60
 
-[node name="MarginContainer" type="MarginContainer" parent="HUD/ConfirmacionSalir" unique_id=324063824]
+[node name="PanelContainer" type="PanelContainer" parent="HUD/ConfirmacionSalir" unique_id=1678650996]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/ConfirmacionSalir/MarginContainer" unique_id=1487914755]
+[node name="MarginContainer" type="MarginContainer" parent="HUD/ConfirmacionSalir/PanelContainer" unique_id=324063824]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer" unique_id=1487914755]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=516725222]
+[node name="Label" type="Label" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer" unique_id=516725222]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 24
 text = "Confirma que desear regresar al menú principal? "
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=425151996]
+[node name="Label2" type="Label" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer" unique_id=425151996]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 19
 text = "Se perderá todo el progreso de la partida"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer" unique_id=1273051555]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer" unique_id=1273051555]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 50
 
-[node name="Si" type="PanelContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer" unique_id=496943924]
+[node name="Si" type="PanelContainer" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=496943924]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 
-[node name="SiButton" type="Button" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=1954623220]
+[node name="SiButton" type="Button" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=1954623220]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -419,10 +430,11 @@ theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "Si"
 
-[node name="No" type="PanelContainer" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer" unique_id=804935335]
+[node name="No" type="PanelContainer" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=804935335]
 layout_mode = 2
 
-[node name="NoButton" type="Button" parent="HUD/ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1994413517]
+[node name="NoButton" type="Button" parent="HUD/ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1994413517]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
