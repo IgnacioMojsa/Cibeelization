@@ -183,7 +183,7 @@ public partial class PlayerManager : Node3D
 			GD.Load<PackedScene>("res://Scenes/AbejaReina.tscn"),
 			GD.Load<PackedScene>("res://Scenes/AbejaReina2.tscn"),
 			GD.Load<PackedScene>("res://Scenes/AbejaReina3.tscn"),
-			GD.Load<PackedScene>("res://Scenes/Zangano.tscn")
+			GD.Load<PackedScene>("res://Scenes/AbejaReina4.tscn")
 		};
 
 		for (int i = 0; i < GameManager.Instance.JugadoresEnPartida.Count; i++)
