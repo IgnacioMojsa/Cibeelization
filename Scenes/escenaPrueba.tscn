@@ -301,7 +301,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 text = "HP"
 
-<<<<<<< HEAD
 [node name="MenuPausa" type="HBoxContainer" parent="HUD" unique_id=832009898]
 visible = false
 layout_mode = 1
@@ -431,7 +430,7 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "No"
-=======
+
 [node name="Feedback" type="Label" parent="HUD" unique_id=2069663858]
 layout_mode = 0
 offset_left = -88.0
@@ -443,7 +442,6 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 text = "Texto texto texto texto"
 horizontal_alignment = 1
->>>>>>> a2759d8389417202577d2bd4f4e691bf77232e0d
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
