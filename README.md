@@ -16,21 +16,23 @@ Contiene el MDA actualizado
 ## Instrucciones de juego
 - Elige la cantidad de jugadores y el tamaño del tablero (opcional).
 - Al comenzar la partida, una abeja será asignada a cada jugador, y se indicará su turno con un borde color rojo.
-- Para comenzar la partida, tirá los dados, y mové tu abeja  la cantidad de celdas vecinas como indique el resultado.
-- Cuando tu turno acabe, el siguiente jugador podrá elegir si tirar los dados o atacar en caso de que sea posible.
-- Para atacar a otro jugador, los dos deben estar en celdas vecinas, lindantes o contiguas.
-- Cada ataque restará 5 de HP. El primer jugador en eliminar a todos los demás jugadores será el ganador.
+- Cada jugador en su turno deberá tirar los dados y desplazarse, invocar un subdito o atacar en caso de que sea posible según su elección. Si solo elige desplazarse, deberá consumir los movimientos disponibles. Las otras dos acciones terminan el turno inmediatamente.
+- Un subdito sólo podrá ser invocado en una de las celdas contiguas al jugador.
+- Para atacar a otro jugador, los dos deben estar en celdas contiguas.
+- Cada ataque restará 5 de HP. El último jugador que quede con vida será el ganador.
 
 ## MDA Framework
 
 - Mecánicas:
     - Tirar dados
+    - Desplazarse
     - Atacar
     - Invocar súbdito
 
 - Dinámicas:
-    - Planificar estrategia básica
+    - Planificar estrategia básica (posicionamiento)
     - Competir contra otros jugadores
 
 - Estéticas:
     - Desafío
+    - Azar
