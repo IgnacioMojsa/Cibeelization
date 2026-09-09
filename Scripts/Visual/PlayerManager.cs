@@ -157,6 +157,11 @@ public partial class PlayerManager : Node3D
 			}
 		}
 
+		for (int abeja = 0; abeja < GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Count; abeja++)
+		{
+			// Chequear los TroopManager de cada jugador y evaluar si existe alguna abeja (QUE NO SEA LA PROPIA) cerca del jugador
+		}
+
 		GameManager.Instance.ConsumirAtaque();
 	}
 

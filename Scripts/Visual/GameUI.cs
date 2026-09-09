@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public partial class GameUI : Control
 {
 	[Export] private PlayerManager playerManager;
+	[Export] private TroopsManager tropasManager;
 	private Label resultadoDados;
 	public Label feedback;
 	private Button botonDado;

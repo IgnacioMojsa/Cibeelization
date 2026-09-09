@@ -17,7 +17,15 @@ public class AtaqueManager
     {
         if(jugador == null) return;
         jugador.RestarVida();
-    }/* 
+    }
+	
+	public void DaniarAbeja(Abeja unaAbeja)
+    {
+        if(unaAbeja == null) return;
+        unaAbeja.RestarVida();
+    }
+
+	/* 
 
     public bool JugadorEnTurnoAdyacenteAOtro(
 		Node3D jugadorActual,

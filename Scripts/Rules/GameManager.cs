@@ -142,7 +142,7 @@ public partial class GameManager
 		}	
 
 		TurnManager = new TurnManager(JugadoresEnPartida);
-		TurnManager.EstablecerPrimerTurno();
+		TurnManager.EstablecerPrimerTurno(); 
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
 }
