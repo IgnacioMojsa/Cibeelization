@@ -15,7 +15,7 @@ public partial class GameUI : Control
 	private Button botonContinuar;
 	private Button botonMenuPrincipal;
 	private HBoxContainer uiPausa;
-	private HBoxContainer confirmacionSalir;
+	private PanelContainer confirmacionSalir;
 	
 	public override void _Ready(){
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
@@ -36,7 +36,7 @@ public partial class GameUI : Control
 			botonPausa.Pressed += PausarPartida;
 
 			uiPausa = GetNode<HBoxContainer>("MenuPausa");
-        	confirmacionSalir = GetNode<HBoxContainer>("ConfirmacionSalir");
+        	confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 
         	// Referencias del menú de pausa
         	botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
@@ -48,8 +48,8 @@ public partial class GameUI : Control
         	botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
 
         	// Botones del cuadro de confirmación
-        	GetNode<Button>("ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-        	GetNode<Button>("ConfirmacionSalir/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
+        	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+        	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
 
 			MostrarDataDeJugadores(); 	
 
