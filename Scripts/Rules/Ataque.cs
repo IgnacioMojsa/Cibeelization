@@ -5,7 +5,7 @@ public class AtaqueManager
 {
     public bool PuedeAtacar(AbejaReina jugador)
     {
-		return jugador != null && jugador.MovimientosDisponibles >= 0;
+		return jugador != null && jugador.MovimientosDisponibles >= 0 && jugador.ModoAtaque;
 	}
 
     public bool JugadorEstaEliminado(AbejaReina jugador)

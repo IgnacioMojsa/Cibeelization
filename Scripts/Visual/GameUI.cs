@@ -294,8 +294,8 @@ public partial class GameUI : Control
 	private void OnAtacarPressed()
 	{
 		if(playerManager != null)
+		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		playerManager.MostrarAbejasObjetivo();
-		//playerManager.Atacar();
 	}
 
 	private void InvocarSubdito()

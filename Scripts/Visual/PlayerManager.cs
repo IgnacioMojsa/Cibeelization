@@ -45,12 +45,16 @@ public partial class PlayerManager : Node3D
 
 		camera ??= GetViewport().GetCamera3D();
 		
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion){
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){
 			IntentarMoverJugador();
 		}
 		
 		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
 			InvocarAbejaNueva();
+		}
+
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAtaque){
+			Atacar();
 		}
 		
 	}
@@ -137,6 +141,12 @@ public partial class PlayerManager : Node3D
 		jugador.GlobalPosition = targetPos;
 		CeldaActualPorJugador[jugador] = celdaDestino;
 
+		int index = VisualesJugadores.IndexOf(jugador);
+    	if (index != -1)
+    	{
+    	    GameManager.Instance.JugadoresEnPartida[index].UbicacionActual = celdaDestino;
+    	}
+
 		GameManager.Instance.ConsumirMovimiento();
 	}
 
@@ -145,20 +155,58 @@ public partial class PlayerManager : Node3D
 		if (!GameManager.Instance.PuedeAtacar())
 			return;
 
-		for (int j = 0; j < VisualesJugadores.Count; j++) 
-		{
-			Node3D JugadorAEvaluar = VisualesJugadores[j];
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
+	
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+		var result = spaceState.IntersectRay(query);
 
-			if(JugadorEnTurnoAdyacenteAOtro(JugadorAEvaluar)){
-				GD.Print("Atacaste al jugador " + GameManager.Instance.JugadoresEnPartida[j].Id);
-				EfectuarAtaque(JugadorAEvaluar, j);
-			}
-			else{
-				GD.Print("No atacaste a nadie");
-			}
+		if(result.Count == 0)
+		return;
+
+		PosicionEnMundo3D = result["position"].AsVector3();
+		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+
+		if (CeldaCliqueada == null)
+        return;
+	
+		AtacarJugador();
+	
+		//AtacarAbeja();
+	}
+
+	private void AtacarJugador(){
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+
+    	Celda celdaAtacante = CeldaActualPorJugador[VisualJugadorActual];
+
+    	List<Celda> celdasAdyacentes = tablero.ObtenerVecinos(celdaAtacante);
+
+    	AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego && j != GameManager.Instance.jugadorEnTurno && j.UbicacionActual == CeldaCliqueada);
+
+		if (reinaObjetivo != null){
+			if (celdasAdyacentes.Any(c => c == reinaObjetivo.UbicacionActual))
+        	{
+        	    Node3D visualRival = VisualesJugadores[reinaObjetivo.Id - 1];
+
+        	    GD.Print("¡Ataque exitoso al jugador " + reinaObjetivo.Id + "!");
+	
+        	    EfectuarAtaque(visualRival, reinaObjetivo.Id - 1);
+
+        	    OcultarAbejasObjetivo();
+        	    GameManager.Instance.ConsumirAtaque();
+        	}
+        	else
+        	{
+        	    GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
+        	}
 		}
-
-		GameManager.Instance.ConsumirAtaque();
+		else
+    	{
+    	    GD.Print("No hay ninguna Abeja Reina rival en la celda seleccionada.");
+    	}
 	}
 
 	private void EfectuarAtaque(Node3D unJugador, int Id){

@@ -10,6 +10,7 @@ public partial class AbejaReina : Abeja
 	public bool FueraDeJuego {get; set;} = false;
 
 	public bool AtacoRecien {get; set;} = false;
+	public bool ModoAtaque {get; set;} = false;
 	public bool ModoInvocacion {get; set;} = false;
 	public bool InvocoRecien {get; set;} = false;
 	public int MovimientosDisponibles {get; set;}

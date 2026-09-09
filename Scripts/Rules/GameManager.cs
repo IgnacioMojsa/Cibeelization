@@ -101,6 +101,7 @@ public partial class GameManager
 	{
 		if (jugadorEnTurno == null) return;
 
+		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
 		TurnManager.TerminarTurno();
 	}
