@@ -5,6 +5,7 @@ public partial class Abeja{
 	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 
 	public Vector3I Posicion { get; private set; }
+	public Celda CeldaActual { get; set; }
 
 	public bool AptaParaTransformar(Abeja otraAbeja, Colmena unaColmena){
 		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion);

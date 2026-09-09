@@ -298,7 +298,7 @@ public partial class PlayerManager : Node3D
 
 		if(CeldasDisponibles.Contains(CeldaCliqueada)){
 			OcultarCeldasDisponiblesParaInvocar();	
-			tropasManager.InstanciarAbeja(PosicionEnMundo3D);
+			tropasManager.InstanciarAbeja(PosicionEnMundo3D, CeldaCliqueada);
 		}
 		else{
 			GD.Print("No se puede invocar una abeja sobre esta celda");

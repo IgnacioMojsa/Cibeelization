@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MovimientoManager
 {
@@ -53,6 +54,9 @@ public class MovimientoManager
 		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas, visualesJugadores))
 		return false;
 
+		if(CeldaTieneOtraAbeja(destino))
+		return false;
+
 		if(GameManager.Instance.jugadorEnTurno.ModoInvocacion)
 		return false; 
 
@@ -102,5 +106,17 @@ public class MovimientoManager
 		}
 
 		return false;
+	}
+
+	public bool CeldaTieneOtraAbeja(Celda celdaDestino)
+	{
+		if(GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Any(abeja => abeja.CeldaActual == celdaDestino)){
+			GD.Print("Esta celda esta ocupada por otra abeja");
+
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }
