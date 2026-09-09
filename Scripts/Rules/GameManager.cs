@@ -7,7 +7,7 @@ public partial class GameManager
 	public static GameManager Instance { get; } = new GameManager();
 
 	public TurnManager TurnManager { get; private set; }
-	public List<Abeja> TiposDeAbejas = new List<Abeja>();
+	public List<string> TiposDeAbejas = new List<string>();
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 	public AbejaReina jugadorEnTurno;
 
@@ -116,6 +116,8 @@ public partial class GameManager
 
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(abejaNueva);
 		jugadorEnTurno.InvocoRecien = true;
+		
+		TurnManager.TerminarTurno();
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)
@@ -124,6 +126,10 @@ public partial class GameManager
 		{
 			// Transformación
 		}
+	}
+
+	public void CargarTipoDeAbejas(){
+		TiposDeAbejas.Add("Abeja");
 	}
 
 	public void CargarJugadores(int cantidadDeJugadores)

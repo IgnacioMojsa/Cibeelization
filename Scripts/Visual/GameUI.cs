@@ -85,6 +85,7 @@ public partial class GameUI : Control
 		GameManager.Instance.sizeTablero = ObtenerSizeTablero();
 
 		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
+		GameManager.Instance.CargarTipoDeAbejas();
 
 		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
 		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
@@ -298,6 +299,7 @@ public partial class GameUI : Control
 	private void InvocarSubdito()
 	{
 		if(GameManager.Instance.jugadorEnTurno.TiroLosDados){	
+			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 			playerManager.MostrarCeldasDisponiblesParaInvocar();
 		}
 	}

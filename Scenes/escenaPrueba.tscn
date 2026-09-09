@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
+[ext_resource type="Script" uid="uid://6cd1daexkf3j" path="res://Scripts/Visual/TroopsManager.cs" id="2_qqnew"]
 [ext_resource type="Script" uid="uid://c7ncbwx7eb0qd" path="res://Scripts/Visual/CamaraController.cs" id="3_cvlkt"]
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]
@@ -29,10 +30,14 @@ border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 
 [node name="Escena" type="Node3D" unique_id=104624866]
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero")]
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
+tropasManager = NodePath("../TroopsManager")
+
+[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133]
+script = ExtResource("2_qqnew")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)

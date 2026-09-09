@@ -25,17 +25,19 @@ public partial class TroopsManager : Node3D
 		}
 	}
 
-    public void InstanciarAbeja(){
+    public void InstanciarAbeja(Vector3 posicion){
         GameManager.Instance.GenerarAbejaNueva(new Abeja());
 
         var InstanciaNueva = Assets[0].Instantiate<Node3D>();
 
 		AddChild(InstanciaNueva);
 
-        EstablecerPosicionDeAbeja();
+        EstablecerPosicionDeAbeja(InstanciaNueva, posicion);
+
+		GD.Print("Abeja instanciada en " + posicion);
     }
 
-    public void EstablecerPosicionDeAbeja(){
-
+    public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){
+		instanciaNueva.GlobalPosition = posicion;
     }
 }

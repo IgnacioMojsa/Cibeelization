@@ -1,19 +1,21 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class PlayerManager : Node3D
 {
 	[Export] private Camera3D camera;
 	[Export] private Tablero tablero; 
+	[Export] public TroopsManager tropasManager; 
 
 	public readonly List<Node3D> VisualesJugadores = new();
 	public readonly List<Node3D> OutlinesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
+	private List<Celda> CeldasDisponibles = new();
 
 	private MovimientoManager movimientoManager;
 	private AtaqueManager ataqueManager;
-	private TroopsManager tropasManager;
 
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
@@ -24,7 +26,6 @@ public partial class PlayerManager : Node3D
 	{
 		movimientoManager = new MovimientoManager(tablero);
 		ataqueManager = new AtaqueManager();
-		tropasManager = new TroopsManager();  
 
 		InstanciarJugadores();
 		GuardarOutlines();
@@ -43,7 +44,14 @@ public partial class PlayerManager : Node3D
 				return;
 
 		camera ??= GetViewport().GetCamera3D();
-		IntentarMoverJugador();
+		
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion){
+			IntentarMoverJugador();
+		}
+		
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
+			InvocarAbejaNueva();
+		}
 		
 	}
 
@@ -240,9 +248,20 @@ public partial class PlayerManager : Node3D
 	public void MostrarCeldasDisponiblesParaInvocar(){
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
-		var celdasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		
+		foreach (var jugador in VisualesJugadores)
+		{
+			if(JugadorEnTurnoAdyacenteAOtro(jugador)){
+				var celdaOcupada = CeldaActualPorJugador[jugador];
 
-		foreach (var celda in celdasDisponibles)
+				CeldasDisponibles = CeldasDisponibles.Where(c => c != celdaOcupada).ToList();
+
+				GD.Print("Hay otro jugador cerca");
+			}
+		}
+
+		foreach (var celda in CeldasDisponibles)
 		{
 			celda.Tile.GetNode<Node3D>("Outline").Visible = true;
 		}
@@ -260,7 +279,30 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void InvocarAbejaNueva(){
-		tropasManager.InstanciarAbeja();
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
+	
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+		var result = spaceState.IntersectRay(query);
+
+		if(result.Count == 0)
+		return;
+
+		PosicionEnMundo3D = result["position"].AsVector3();
+		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+	
+		if(CeldaCliqueada == null)
+		return;
+
+		if(CeldasDisponibles.Contains(CeldaCliqueada)){
+			OcultarCeldasDisponiblesParaInvocar();	
+			tropasManager.InstanciarAbeja(PosicionEnMundo3D);
+		}
+		else{
+			GD.Print("No se puede invocar una abeja sobre esta celda");
+		}
 	}
 }
 
