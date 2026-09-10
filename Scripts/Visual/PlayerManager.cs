@@ -13,6 +13,7 @@ public partial class PlayerManager : Node3D
 	private readonly List<PackedScene> Assets = new();
 	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 	private List<Celda> CeldasDisponibles = new();
+	private List<Abeja> AbejasObjetivo = new();
 
 	private MovimientoManager movimientoManager;
 	private AtaqueManager ataqueManager;
@@ -174,7 +175,13 @@ public partial class PlayerManager : Node3D
 	
 		AtacarJugador();
 	
-		//AtacarAbeja();
+		AtacarAbeja();
+	}
+
+	private void AtacarAbeja(){
+		var abejaObjetivo = AbejasObjetivo.Find(a => a.CeldaActual == CeldaCliqueada);
+
+		ataqueManager.DaniarAbeja(abejaObjetivo);
 	}
 
 	private void AtacarJugador(){
@@ -209,15 +216,16 @@ public partial class PlayerManager : Node3D
     	}
 	}
 
-	private void EfectuarAtaque(Node3D unJugador, int Id){
-
+	private void EfectuarAtaque(Node3D enemigo, int Id){
 		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
 
-		ataqueManager.DaniarJugador(jugador);
-		GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+		if(jugador is AbejaReina){
+			ataqueManager.DaniarJugador(jugador);
+			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+		}
 
 		if(ataqueManager.JugadorEstaEliminado(jugador)){
-			EliminarInstanciaDeJugador(unJugador, Id);
+			EliminarInstanciaDeJugador(enemigo, Id);
 		}
 	}
 
@@ -298,8 +306,6 @@ public partial class PlayerManager : Node3D
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
 		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-		
-		List<Node3D> abejasObjetivo = new List<Node3D>();
 
 		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
 		{
@@ -307,14 +313,14 @@ public partial class PlayerManager : Node3D
 				continue;
 			}
 
-			BuscarAbejasObjetivo(jugador, abejasObjetivo);
+			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
 		}
 
-		foreach (var abejaVisual in abejasObjetivo)
+		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual != null && abejaVisual.HasNode("Outline"))
+			if(abejaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
         	{
-            	abejaVisual.GetNode<Node3D>("Outline").Visible = true;
+            	abejaVisual.InstanciaVisual.GetNode<Node3D>("Outline").Visible = true;
         	} 
 		}
 	}
@@ -323,8 +329,6 @@ public partial class PlayerManager : Node3D
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
 		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-		
-		List<Node3D> abejasObjetivo = new List<Node3D>();
 
 		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
 		{
@@ -332,23 +336,23 @@ public partial class PlayerManager : Node3D
 				continue;
 			}
 
-			BuscarAbejasObjetivo(jugador, abejasObjetivo);
+			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
 		}
 
-		foreach (var abejaVisual in abejasObjetivo)
+		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual != null && abejaVisual.HasNode("Outline"))
+			if(abejaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
         	{
-            	abejaVisual.GetNode<Node3D>("Outline").Visible = false;
+            	abejaVisual.InstanciaVisual.GetNode<Node3D>("Outline").Visible = false;
         	} 
 		}
 	}
 
-	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Node3D> listaDeAbejas){
+	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
 		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
 		{
 			if(CeldasDisponibles.Contains(abejaActual.CeldaActual)){
-				listaDeAbejas.Add(abejaActual.InstanciaVisual);
+				listaDeAbejas.Add(abejaActual);
 			}
 		}
 	}

@@ -22,7 +22,11 @@ public class AtaqueManager
 	public void DaniarAbeja(Abeja unaAbeja)
     {
         if(unaAbeja == null) return;
-        unaAbeja.RestarVida();
+
+		// Aca hay que usar unaAbeja.RestarVida(), el actual es solamente provsiorio;
+
+		unaAbeja.InstanciaVisual.Visible = false;
+		unaAbeja.MatarAbeja();
     }
 
 	/* 

@@ -4,6 +4,7 @@ using System;
 public partial class Abeja{
 	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 
+	public bool FueraDeJuego {get; set;} = false;
 	public Vector3I Posicion { get; private set; }
 	public Celda CeldaActual { get; set; }
 	public Node3D InstanciaVisual {get; set;}
@@ -18,6 +19,11 @@ public partial class Abeja{
 
 	public void RestarVida(){
 		HP -= 5;
+	}
+
+	public void MatarAbeja(){
+		HP -= 15;
+		FueraDeJuego = true;
 	}
 
 	/*public override void _Input(InputEvent @event){
