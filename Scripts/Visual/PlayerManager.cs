@@ -349,9 +349,14 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
+		var jugadorActual = GameManager.Instance.jugadorEnTurno;
+		
 		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
 		{
-			if(CeldasDisponibles.Contains(abejaActual.CeldaActual)){
+			if (CeldasDisponibles.Contains(abejaActual.CeldaActual) 
+			&& movimientoManager.CeldasSonAdyacentes(jugadorActual.UbicacionActual, abejaActual.CeldaActual) 
+			&& !abejaActual.FueraDeJuego)
+			{
 				listaDeAbejas.Add(abejaActual);
 			}
 		}
@@ -377,7 +382,7 @@ public partial class PlayerManager : Node3D
 		{
 			for (int e = 0; e < CeldasDisponibles.Count; e++)
 			{
-				var abejasEnCeldas = reina.ColmenaDeReina.AbejasDeColmena.Where(a => a.CeldaActual == CeldasDisponibles[e]).ToList();
+				var abejasEnCeldas = reina.ColmenaDeReina.AbejasDeColmena.Where(a => a.CeldaActual == CeldasDisponibles[e] && !a.FueraDeJuego).ToList();
 
 				foreach (var abeja in abejasEnCeldas)
 				{

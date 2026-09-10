@@ -111,7 +111,7 @@ public class MovimientoManager
 
 	public bool CeldaTieneOtraAbeja(Celda celdaDestino)
 	{
-		if(GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Any(abeja => abeja.CeldaActual == celdaDestino)){
+		if(GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Any(abeja => abeja.CeldaActual == celdaDestino && !abeja.FueraDeJuego)){
 			GD.Print("Esta celda esta ocupada por otra abeja");
 
 			return true;
