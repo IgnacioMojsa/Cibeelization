@@ -373,6 +373,21 @@ public partial class PlayerManager : Node3D
 			}
 		}
 
+		foreach (var reina in GameManager.Instance.JugadoresEnPartida)
+		{
+			for (int e = 0; e < CeldasDisponibles.Count; e++)
+			{
+				var abejasEnCeldas = reina.ColmenaDeReina.AbejasDeColmena.Where(a => a.CeldaActual == CeldasDisponibles[e]).ToList();
+
+				foreach (var abeja in abejasEnCeldas)
+				{
+					var celdaOcupada = CeldasDisponibles.Find(c => c == abeja.CeldaActual);
+
+					CeldasDisponibles.Remove(celdaOcupada);
+				}
+			}
+		}
+
 		foreach (var celda in CeldasDisponibles)
 		{
 			celda.Tile.GetNode<Node3D>("Outline").Visible = true;
@@ -380,11 +395,7 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void OcultarCeldasDisponiblesParaInvocar(){
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-
-		var celdasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-
-		foreach (var celda in celdasDisponibles)
+		foreach (var celda in CeldasDisponibles)
 		{
 			celda.Tile.GetNode<Node3D>("Outline").Visible = false;
 		}

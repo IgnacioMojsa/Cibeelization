@@ -22,7 +22,7 @@ public partial class Abeja{
 	}
 
 	public void MatarAbeja(){
-		HP -= 15;
+		HP -= HP;
 		FueraDeJuego = true;
 	}
 

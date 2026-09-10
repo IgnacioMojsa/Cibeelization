@@ -5,12 +5,13 @@ using System.Linq;
 public class MovimientoManager
 {
     private readonly Tablero tablero;
+
     public MovimientoManager(Tablero tablero)
     {
         this.tablero = tablero;
     }
 
-    public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion)
+    public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion) 
 	{
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
 			return null;
