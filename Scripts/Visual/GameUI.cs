@@ -20,56 +20,58 @@ public partial class GameUI : Control
 	
 	public override void _Ready(){
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
-			resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
-			feedback = GetNode<Label>("Feedback");
-			MostrarTextoInstrucciones("Tirá los dados para comenzar");
-
-			botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
-
-			botonAtacar = GetNode<Button>("Atacar/AtacarButton");
-
-			botonAtacar.Pressed += OnAtacarPressed;
-
-			botonPausa = GetNode<Button>("Pausa/PausaButton");
-
-			containerPausa = GetNode<PanelContainer>("Pausa");
-
-			botonPausa.Pressed += PausarPartida;
-
-			uiPausa = GetNode<HBoxContainer>("MenuPausa");
-        	confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
-
-        	// Referencias del menú de pausa
-        	botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
-        	botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
-
-        	// Suscripción de eventos
-        	botonPausa.Pressed += PausarPartida;
-        	botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
-        	botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
-
-        	// Botones del cuadro de confirmación
-        	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-        	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
-
-			MostrarDataDeJugadores(); 	
-
-			GameManager.Instance.TurnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
-		}
-
-		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
+			
+			InicializarUI();
+			SuscribirAEventos();
+			MostrarDataDeJugadores();
+			ActualizarUI();
+			}
+		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/PantallaVictoria.tscn")
+			{
 			MostrarMensajeVictoria();
-		}
+			}
+		}		
+
+	public void InicializarUI()
+	{
+		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+		feedback = GetNode<Label>("Feedback");
+		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
+		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+		botonPausa = GetNode<Button>("Pausa/PausaButton");
+		containerPausa = GetNode<PanelContainer>("Pausa");
+		uiPausa = GetNode<HBoxContainer>("MenuPausa");
+        confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
+        botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+
+		//Suscripciones de godot
+		botonAtacar.Pressed += OnAtacarPressed;
+		botonPausa.Pressed += PausarPartida;
+        botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
+        botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
+
+        // Botones del cuadro de confirmación
+        GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+        GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
 	}
 
-	public override void _Process(double delta){
-		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
-			MostrarJugadorEnTurno();
-			MostrarHPDeJugaores();
-			DeshabilitarDado();
-			FinalizarPartida();
-		}
+	private void SuscribirAEventos()
+	{
+		var turnManager = GameManager.Instance.TurnManager;
+		turnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
+		turnManager.OnCambioDeTurnoJugador += _ => ActualizarUI();
+		turnManager.OnTurnoCambiado += ActualizarUI;
 	}
+
+	private void ActualizarUI()
+	{
+		MostrarJugadorEnTurno();
+		MostrarHPDeJugaores();
+		DeshabilitarDado();
+	}
+	
+	
 
 	private void Jugar(){
 		PanelContainer UIComienzo = GetNode<PanelContainer>("MenuComienzo");
@@ -105,13 +107,10 @@ public partial class GameUI : Control
 		if (GetTree().Paused)
 	    {
 			GD.Print("Pausa activada");
-
 	        containerPausa.Visible = false;
 	    }
-
-	    // Si quitamos la pausa, aseguramos limpiar ventanas secundarias
-	    if (!GetTree().Paused)
-	    {
+		else
+		{
 			GD.Print("Juego Reanudado");
 	        containerPausa.Visible = true;
 	    }
@@ -216,6 +215,9 @@ public partial class GameUI : Control
 		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
 		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
 
+		jugador1.Visible = true;
+		jugador2.Visible = true;
+
 		if(GameManager.Instance.cantidadJugadores == 3){
 			jugador3.Visible = true;
 		}
@@ -248,10 +250,17 @@ public partial class GameUI : Control
 		resultadoDados.Text = resultado.ToString();
 	}
 
+	private void OnAtacarPressed()
+	{
+		if(playerManager == null)
+		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		playerManager.MostrarAbejasObjetivo();
+	}
+
 	private void DeshabilitarDado(){
 		if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
 			botonDado.Disabled = true;
-			MostrarTextoInstrucciones("Haz clic en las celdas vecinas para moverte.");
+			MostrarTextoInstrucciones("Tiraste el dado: Solo podés hacer clic en las celdas vecinas para moverte.");
 		}
 		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
 			botonDado.Disabled = false;
@@ -261,7 +270,7 @@ public partial class GameUI : Control
 	public void MostrarResultadoDado(){
 		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
 		//botonDado.Disabled = true;
-	} 
+	}
 
 	private void MostrarJugadorEnTurno(){ 
 		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
@@ -291,12 +300,6 @@ public partial class GameUI : Control
 		//ffd01f
 	}
 
-	private void OnAtacarPressed()
-	{
-		if(playerManager != null)
-		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-		playerManager.MostrarAbejasObjetivo();
-	}
 
 	private void InvocarSubdito()
 	{

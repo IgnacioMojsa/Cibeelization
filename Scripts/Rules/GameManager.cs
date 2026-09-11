@@ -62,7 +62,7 @@ public partial class GameManager
 
 	public int TirarDado()
 	{
-		if(jugadorEnTurno == null) return 1;
+		//if(jugadorEnTurno == null) return 1; esta línea hacía que mostrara un 1 en la primera tirada pero se pudieran hacer más movimientos
 		if(!jugadorEnTurno.EsSuTurno) return 1;
 		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return 1;
 		if(jugadorEnTurno.TiroLosDados) return 1;
