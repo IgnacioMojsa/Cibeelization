@@ -50,11 +50,11 @@ public partial class PlayerManager : Node3D
 			IntentarMoverJugador();
 		}
 		
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){
 			InvocarAbejaNueva();
 		}
 
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAtaque){
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoInvocacion){
 			Atacar();
 		}
 		
@@ -181,7 +181,20 @@ public partial class PlayerManager : Node3D
 	private void AtacarAbeja(){
 		var abejaObjetivo = AbejasObjetivo.Find(a => a.CeldaActual == CeldaCliqueada);
 
+		if(abejaObjetivo == null){
+			GD.Print("No hay ninguna abeja objetivo en la celda seleccionada.");
+        	return;
+		}
+
 		ataqueManager.DaniarAbeja(abejaObjetivo);
+		
+		if (abejaObjetivo.InstanciaVisual != null && IsInstanceValid(abejaObjetivo.InstanciaVisual))
+    	{
+    	    abejaObjetivo.InstanciaVisual.QueueFree();
+    	}
+
+		LimpiarAbejasObjetivo();
+		GameManager.Instance.ConsumirAtaque();
 	}
 
 	private void AtacarJugador(){
@@ -318,7 +331,7 @@ public partial class PlayerManager : Node3D
 
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
+			if(abejaVisual.InstanciaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
         	{
             	abejaVisual.InstanciaVisual.GetNode<Node3D>("Outline").Visible = true;
         	} 
@@ -359,6 +372,18 @@ public partial class PlayerManager : Node3D
 			{
 				listaDeAbejas.Add(abejaActual);
 			}
+		}
+	}
+
+	public void LimpiarAbejasObjetivo(){
+		foreach (var abeja in AbejasObjetivo.Where(a => a.FueraDeJuego).ToList())
+		{
+			if(abeja.FueraDeJuego){
+				AbejasObjetivo.Remove(abeja);
+				abeja.ColmenaHogar.AbejasDeColmena.Remove(abeja);
+			}
+
+			AbejasObjetivo.RemoveAll(a => a.FueraDeJuego);
 		}
 	}
 

@@ -61,6 +61,9 @@ public class MovimientoManager
 		if(GameManager.Instance.jugadorEnTurno.ModoInvocacion)
 		return false; 
 
+		if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		return false; 
+
 		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
 		//return vecinos.Contains(destino);
 

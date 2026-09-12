@@ -31,7 +31,7 @@ public partial class GameUI : Control
 			{
 			MostrarMensajeVictoria();
 			}
-		}		
+	}		
 
 	public void InicializarUI()
 	{
@@ -253,6 +253,8 @@ public partial class GameUI : Control
 	private void OnAtacarPressed()
 	{
 		if(playerManager == null)
+		return;
+		
 		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		playerManager.MostrarAbejasObjetivo();
 	}
@@ -300,7 +302,6 @@ public partial class GameUI : Control
 		
 		//ffd01f
 	}
-
 
 	private void InvocarSubdito()
 	{

@@ -15,7 +15,7 @@ public partial class AbejaReina : Abeja
 	public int MovimientosDisponibles {get; set;}
 	public int Id {get; set;}
 
-	public Colmena ColmenaDeReina = new Colmena();
+	public Colmena ColmenaDeReina;
 
 	public Celda UbicacionActual {get; set;}
 
@@ -30,6 +30,7 @@ public partial class AbejaReina : Abeja
 
 	public AbejaReina(int id){
 		Id = id;
+		ColmenaDeReina = new Colmena(this);
 	}
 
 	/*

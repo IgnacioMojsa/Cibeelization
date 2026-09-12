@@ -24,8 +24,7 @@ public class AtaqueManager
         if(unaAbeja == null) return;
 
 		// Aca hay que usar unaAbeja.RestarVida(), el actual es solamente provsiorio;
-
-		unaAbeja.InstanciaVisual.Visible = false;
+		
 		unaAbeja.MatarAbeja();
     }
 

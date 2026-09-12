@@ -5,6 +5,7 @@ public partial class Abeja{
 	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 
 	public bool FueraDeJuego {get; set;} = false;
+	public Colmena ColmenaHogar {get; set;}
 	public Vector3I Posicion { get; private set; }
 	public Celda CeldaActual { get; set; }
 	public Node3D InstanciaVisual {get; set;}

@@ -31,6 +31,7 @@ public partial class TroopsManager : Node3D
 		var abejaNueva = new Abeja();
 		var InstanciaNueva = Assets[0].Instantiate<Node3D>();
 
+		abejaNueva.ColmenaHogar = GameManager.Instance.jugadorEnTurno.ColmenaDeReina;
 		abejaNueva.CeldaActual = celdaCliqueada;
 		abejaNueva.InstanciaVisual = InstanciaNueva;
 		GameManager.Instance.GenerarAbejaNueva(abejaNueva);
