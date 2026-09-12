@@ -25,6 +25,7 @@ public partial class GameUI : Control
 			SuscribirAEventos();
 			MostrarDataDeJugadores();
 			ActualizarUI();
+			MostrarTextoInstrucciones("Tirá el dado para comenzar.");
 			}
 		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/PantallaVictoria.tscn")
 			{
@@ -41,19 +42,19 @@ public partial class GameUI : Control
 		botonPausa = GetNode<Button>("Pausa/PausaButton");
 		containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
-        confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
-        botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
 
 		//Suscripciones de godot
 		botonAtacar.Pressed += OnAtacarPressed;
 		botonPausa.Pressed += PausarPartida;
-        botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
-        botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
+		botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
+		botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
 
-        // Botones del cuadro de confirmación
-        GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-        GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
+		// Botones del cuadro de confirmación
+		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
 	}
 
 	private void SuscribirAEventos()
@@ -71,8 +72,6 @@ public partial class GameUI : Control
 		DeshabilitarDado();
 	}
 	
-	
-
 	private void Jugar(){
 		PanelContainer UIComienzo = GetNode<PanelContainer>("MenuComienzo");
 
@@ -94,45 +93,46 @@ public partial class GameUI : Control
 		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+		
 	}
 
 	private void PausarPartida()
 	{
-	    // Alterna el estado de pausa
-	    GetTree().Paused = !GetTree().Paused;
+		// Alterna el estado de pausa
+		GetTree().Paused = !GetTree().Paused;
 	
-	    // Muestra u oculta el menú principal de pausa
-	    uiPausa.Visible = GetTree().Paused;
+		// Muestra u oculta el menú principal de pausa
+		uiPausa.Visible = GetTree().Paused;
 
 		if (GetTree().Paused)
-	    {
+		{
 			GD.Print("Pausa activada");
-	        containerPausa.Visible = false;
-	    }
+			containerPausa.Visible = false;
+		}
 		else
 		{
 			GD.Print("Juego Reanudado");
-	        containerPausa.Visible = true;
-	    }
+			containerPausa.Visible = true;
+		}
 	}
 
 	private void MostrarConfirmacionSalir()
 	{
-	    uiPausa.Visible = false;
-	    confirmacionSalir.Visible = true;
+		uiPausa.Visible = false;
+		confirmacionSalir.Visible = true;
 	}
 
 	private void OcultarConfirmacionSalir()
 	{
-	    confirmacionSalir.Visible = false;
-	    uiPausa.Visible = true;
+		confirmacionSalir.Visible = false;
+		uiPausa.Visible = true;
 	}
 
 	private void IrAlMenuPrincipal()
 	{
 		GD.Print("Regresando al menu principal");
-	    GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
-	    GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
+		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
+		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
 	}
 
 	private void FinalizarPartida(){
@@ -268,8 +268,9 @@ public partial class GameUI : Control
 	}
 
 	public void MostrarResultadoDado(){
-		resultadoDados.Text = GameManager.Instance.TirarDado().ToString();
-		//botonDado.Disabled = true;
+		int resultado = GameManager.Instance.TirarDado();
+	if (resultado != -1)
+		resultadoDados.Text = resultado.ToString();
 	}
 
 	private void MostrarJugadorEnTurno(){ 
