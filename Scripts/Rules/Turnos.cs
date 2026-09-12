@@ -26,7 +26,6 @@ public class TurnManager
 		GD.Print("Es turno del jugador " + jugadorEnTurno.Id);
 
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
-		OnTextoInstrucciones?.Invoke("Tirá los dados");
 
 		// jugadorEnTurno.EsSuTurno = true;
 		// jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
@@ -81,7 +80,7 @@ public class TurnManager
 		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
-		OnTextoInstrucciones?.Invoke("Tirá los dados o atacá a un jugador cercano");
+		OnTextoInstrucciones?.Invoke("Tirá el dado para continuar.");
 		OnTurnoCambiado?.Invoke();
 
 		// jugadorEnTurno.EsSuTurno = true;

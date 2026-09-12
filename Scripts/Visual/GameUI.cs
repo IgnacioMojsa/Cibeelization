@@ -260,7 +260,6 @@ public partial class GameUI : Control
 	private void DeshabilitarDado(){
 		if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
 			botonDado.Disabled = true;
-			MostrarTextoInstrucciones("Tiraste el dado: Solo podés hacer clic en las celdas vecinas para moverte.");
 		}
 		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
 			botonDado.Disabled = false;
@@ -269,8 +268,9 @@ public partial class GameUI : Control
 
 	public void MostrarResultadoDado(){
 		int resultado = GameManager.Instance.TirarDado();
-	if (resultado != -1)
+		if (resultado != -1)
 		resultadoDados.Text = resultado.ToString();
+		MostrarTextoInstrucciones("Podés moverte por las celdas, atacar o invocar un súbdito.");
 	}
 
 	private void MostrarJugadorEnTurno(){ 
