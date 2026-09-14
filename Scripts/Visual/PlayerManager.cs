@@ -245,6 +245,10 @@ public partial class PlayerManager : Node3D
 	private void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
 		GameManager.Instance.EliminarJugador(Id);
 		unJugador.Visible = false;
+
+		if(GameManager.Instance.CondicionVictoria()){
+			GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn"); 
+		};
 	}
 
 	public void CargarAssets()

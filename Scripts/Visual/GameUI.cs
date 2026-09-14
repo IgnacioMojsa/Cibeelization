@@ -135,16 +135,6 @@ public partial class GameUI : Control
 		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
 	}
 
-	private void FinalizarPartida(){
-		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
-		
-		if(GameManager.Instance.CondicionVictoria()){
-			GD.Print("La partida ha finalizado, el jugador " + jugadorGanador.Id + " es el ganador");
-
-			GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn"); 
-		}
-	}
-
 	private void MostrarMensajeVictoria(){
 		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
 

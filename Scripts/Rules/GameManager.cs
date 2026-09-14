@@ -26,7 +26,6 @@ public partial class GameManager
 	
 	public bool CondicionVictoria(){
 		var jugadoresFueraDeJuego = JugadoresEnPartida.Where(j => j.FueraDeJuego).ToList();
-		var jugadorGanador = JugadoresEnPartida.Find(j => !j.FueraDeJuego);
 
 		return jugadoresFueraDeJuego.Count == cantidadJugadores - 1;
 	}  
