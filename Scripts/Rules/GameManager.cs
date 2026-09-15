@@ -10,6 +10,7 @@ public partial class GameManager
 	public List<string> TiposDeAbejas = new List<string>();
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 	public AbejaReina jugadorEnTurno;
+	public AbejaReina JugadorGanador {get; private set;}
 
 	// Referencia al tablero activo en la escena
 	public Tablero TableroActual { get; set; }
@@ -29,6 +30,12 @@ public partial class GameManager
 
 		return jugadoresFueraDeJuego.Count == cantidadJugadores - 1;
 	}  
+
+	public void EstablecerJugadorGanador(){
+		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
+
+		JugadorGanador = jugadorGanador;
+	}
 
 	public int DimensionActual { get; private set; } = 15;
 

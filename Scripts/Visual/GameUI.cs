@@ -27,7 +27,7 @@ public partial class GameUI : Control
 			ActualizarUI();
 			MostrarTextoInstrucciones("Tirá el dado para comenzar.");
 			}
-		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/PantallaVictoria.tscn")
+		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn")
 			{
 			MostrarMensajeVictoria();
 			}
@@ -136,11 +136,9 @@ public partial class GameUI : Control
 	}
 
 	private void MostrarMensajeVictoria(){
-		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
-
 		var mensajeVictoria = GetNode<Label>("Titulo");
 		
-		mensajeVictoria.Text = "EL JUGADOR  " + jugadorGanador.Id + "  ES EL GANADOR";
+		mensajeVictoria.Text = "EL  JUGADOR   " + GameManager.Instance.JugadorGanador.Id + "   ES  EL  GANADOR";
 	}
 
 	private void SeleccionarCantidadDeJugadores(bool estaPresionado)

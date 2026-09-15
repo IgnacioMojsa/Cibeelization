@@ -247,6 +247,7 @@ public partial class PlayerManager : Node3D
 		unJugador.Visible = false;
 
 		if(GameManager.Instance.CondicionVictoria()){
+			GameManager.Instance.EstablecerJugadorGanador();
 			GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn"); 
 		};
 	}
