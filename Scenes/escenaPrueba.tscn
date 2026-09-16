@@ -54,6 +54,7 @@ visible = false
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
 transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, 0, 0, -27)
 script = ExtResource("2_cvlkt")
+TileSize = 2.0
 WidthRows = 15
 HeightRows = 15
 

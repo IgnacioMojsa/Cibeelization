@@ -179,6 +179,33 @@ public partial class PlayerManager : Node3D
 		AtacarAbeja();
 	}
 
+	public void MostrarJugadoresObjetivo(){
+		var materialNuevo = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+
+		var jugadoresObjetivo = VisualesJugadores.Where(j => JugadorEnTurnoAdyacenteAOtro(j)).ToList();
+
+		foreach (var jugador in jugadoresObjetivo)
+		{
+			var outlineDeJugador = jugador.GetNode<Node3D>("Outline");
+
+			for (int h = 0; h < outlineDeJugador.GetChildCount(); h++)
+			{
+				outlineDeJugador.GetChild<MeshInstance3D>(h).SetSurfaceOverrideMaterial(0, materialNuevo);
+			}
+
+			outlineDeJugador.Visible = true;
+		}
+	}
+
+	public void OutlineJugadorEnTurno(Node3D unOutline){
+		var materialNuevo = GD.Load<StandardMaterial3D>("res://outlineTurnoActual.tres");
+		
+		for (int h = 0; h < unOutline.GetChildCount(); h++)
+		{
+			unOutline.GetChild<MeshInstance3D>(h).SetSurfaceOverrideMaterial(0, materialNuevo);
+		}
+	}
+
 	public bool TieneObjetivosCerca(){
 		var otroJugadorCerca = VisualesJugadores.Any(v => JugadorEnTurnoAdyacenteAOtro(v));
 		

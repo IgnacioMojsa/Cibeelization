@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cw0cc53xhs7lw"]
 
 [ext_resource type="PackedScene" uid="uid://31y60fwa2hd1" path="res://Assets/AbejaReina2.glb" id="1_mfljo"]
+[ext_resource type="Material" uid="uid://7apu6dov7eti" path="res://outlineTurnoActual.tres" id="2_gmiq5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ya340"]
 
@@ -35,13 +36,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_bjgm8")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-grow = true
-grow_amount = 0.12
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1hgdg"]
 resource_name = "Material.001"
@@ -126,14 +120,14 @@ visible = false
 [node name="Plano" type="MeshInstance3D" parent="Outline" index="0" unique_id=1549944313]
 transform = Transform3D(-1, -7.5497915e-08, 8.041464e-08, 7.5497915e-08, 0, 1.0651239, -7.5497915e-08, 1, 6.0711374e-15, -0.57475513, 2.0454404, 1.6344492)
 mesh = SubResource("ArrayMesh_yn4va")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_gmiq5")
 
 [node name="Cube_001" type="MeshInstance3D" parent="Outline" index="1" unique_id=909423832]
 transform = Transform3D(0.32098562, 0, 0, 0, 0.27213302, 0, 0, 0, 0.3010224, -0.49897754, 6.0197554, -0.60268056)
 mesh = SubResource("ArrayMesh_rg8sq")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_gmiq5")
 
 [node name="Cube" type="MeshInstance3D" parent="Outline" index="2" unique_id=1706289836]
 transform = Transform3D(1.066318, 0, 0, 0, 0.9040291, 0, 0, 0, 1, 0.0046047587, 3.8869705, 0.29818723)
 mesh = SubResource("ArrayMesh_nbmsu")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_gmiq5")

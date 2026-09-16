@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://be5yc5wwbd0uv"]
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_3g5vb"]
+[ext_resource type="Material" uid="uid://7apu6dov7eti" path="res://outlineTurnoActual.tres" id="2_m5opc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
 
@@ -172,13 +173,6 @@ bind/45/name = &"Hueso.024.L"
 bind/45/bone = -1
 bind/45/pose = Transform3D(-0.465264, -0.68472767, 0.56096077, 0.8271236, -0.5620202, 0, 0.31527126, 0.4639838, 0.8278424, 5.159687, -0.22598618, -3.7859888)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mnlh"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-grow = true
-grow_amount = 0.1
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_pfr4a"]
 resource_name = "AbejaReina_Cube_001"
 _surfaces = [{
@@ -223,13 +217,13 @@ blend_shape_mode = 0
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="0" unique_id=87826615]
+[node name="Cube" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="0" unique_id=406742339]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="1" unique_id=742016414]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="1" unique_id=311431417]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1795367275) index="2" unique_id=1968951774]
+[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(904284901) index="2" unique_id=1523716209]
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
 [node name="Outline" type="Node3D" parent="." index="1" unique_id=656949124]
@@ -240,16 +234,16 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_tfn2w")
 skin = SubResource("Skin_hd1hf")
-surface_material_override/0 = SubResource("StandardMaterial3D_6mnlh")
+surface_material_override/0 = ExtResource("2_m5opc")
 
 [node name="Cube_001" type="MeshInstance3D" parent="Outline" index="1" unique_id=568176025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_pfr4a")
 skin = SubResource("Skin_hd1hf")
-surface_material_override/0 = SubResource("StandardMaterial3D_6mnlh")
+surface_material_override/0 = ExtResource("2_m5opc")
 
 [node name="Plano" type="MeshInstance3D" parent="Outline" index="2" unique_id=767472568]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.0966535, 0)
 mesh = SubResource("ArrayMesh_70w57")
 skin = SubResource("Skin_hd1hf")
-surface_material_override/0 = SubResource("StandardMaterial3D_6mnlh")
+surface_material_override/0 = ExtResource("2_m5opc")

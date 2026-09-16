@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dxew122gj1ci6"]
 
 [ext_resource type="PackedScene" uid="uid://buppbncamca7f" path="res://Assets/AbejaReina4.glb" id="1_4qnwh"]
+[ext_resource type="Material" uid="uid://7apu6dov7eti" path="res://outlineTurnoActual.tres" id="2_heyax"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vikw"]
 
@@ -37,13 +38,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_myglh")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-grow = true
-grow_amount = 0.12
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuckd"]
 
@@ -149,20 +143,19 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0
 surface_material_override/1 = SubResource("StandardMaterial3D_4vikw")
 
 [node name="Outline" type="Node3D" parent="." index="3" unique_id=851414409]
-visible = false
 
 [node name="Cubo_001" type="MeshInstance3D" parent="Outline" index="0" unique_id=1893128485]
 transform = Transform3D(0.99629474, 0, 0, 0, 0.99629474, 0, 0, 0, 0.99629474, 0.021407025, 5.5086856, 0.21708721)
 mesh = SubResource("ArrayMesh_t4d0g")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_heyax")
 
 [node name="Cubo_002" type="MeshInstance3D" parent="Outline" index="1" unique_id=512634767]
 transform = Transform3D(0.42875746, 0, 0, 0, 0.4174526, 0.09780733, 0, -0.09780733, 0.4174526, -0.3666703, 5.572295, -0.597674)
 mesh = SubResource("ArrayMesh_ts7ac")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_heyax")
 surface_material_override/1 = SubResource("StandardMaterial3D_4vikw")
 
 [node name="Plano" type="MeshInstance3D" parent="Outline" index="2" unique_id=1109652502]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7303799, 0, 3.3735936)
 mesh = SubResource("ArrayMesh_s2ww2")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
+surface_material_override/0 = ExtResource("2_heyax")

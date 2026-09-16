@@ -265,6 +265,10 @@ public partial class GameUI : Control
 		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca();
 
 		botonAtacar.Disabled = !puedeAtacar;
+
+		if(puedeAtacar){
+			playerManager.MostrarJugadoresObjetivo();
+		}
 	}
 
 	public void MostrarResultadoDado(){
@@ -283,11 +287,12 @@ public partial class GameUI : Control
 		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
 
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
-		
+
 		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
 		{
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
-				UIJugadores[j].Modulate = Color.FromHtml("#ff0000");
+				UIJugadores[j].Modulate = Color.FromHtml("#9005F2");
+				playerManager.OutlineJugadorEnTurno(playerManager.OutlinesJugadores[j]);
 				playerManager.OutlinesJugadores[j].Visible = true;
 			}
 			else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
