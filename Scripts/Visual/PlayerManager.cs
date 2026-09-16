@@ -31,6 +31,11 @@ public partial class PlayerManager : Node3D
 		InstanciarJugadores();
 		GuardarOutlines();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
+
+		if (GameManager.Instance.TurnManager != null)
+		{
+			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador += OnCambioDeTurnoJugador;
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -91,6 +96,7 @@ public partial class PlayerManager : Node3D
 			OcultarCeldasDisponiblesParaInvocar();
 			OcultarAbejasObjetivo();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
+
 		}
 		else
 		{
@@ -146,6 +152,7 @@ public partial class PlayerManager : Node3D
     	if (index != -1)
     	{
     	    GameManager.Instance.JugadoresEnPartida[index].UbicacionActual = celdaDestino;
+			GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual);
     	}
 
 		GameManager.Instance.ConsumirMovimiento();
@@ -495,6 +502,26 @@ public partial class PlayerManager : Node3D
 		}
 		else{
 			GD.Print("No se puede invocar una abeja sobre esta celda");
+		}
+	}
+
+	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
+	{
+		if (jugadorNuevo == null) return;
+
+		Node3D visualJugador = VisualesJugadores[jugadorNuevo.Id - 1]; 
+
+		if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador))
+		{
+			GameManager.Instance.CamaraActual.EnfocarNodo(visualJugador);
+		}
+	}		
+
+	public override void _ExitTree()
+	{
+		if (GameManager.Instance.TurnManager != null)
+		{
+			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= OnCambioDeTurnoJugador;
 		}
 	}
 }

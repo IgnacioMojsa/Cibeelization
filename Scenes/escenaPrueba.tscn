@@ -54,7 +54,7 @@ visible = false
 [node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
 transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, 0, 0, -27)
 script = ExtResource("2_cvlkt")
-TileSize = 2.0
+TileSize = 2.08
 WidthRows = 15
 HeightRows = 15
 
@@ -65,6 +65,7 @@ camera3D = NodePath("Camera3D")
 paddingFactor = 1.5
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
+transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802322e-08, -2.3283064e-10, 0, 0.9999999, -0.03760624, -6.095132, 3.5042114)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
 visible = false
