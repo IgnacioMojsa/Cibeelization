@@ -149,6 +149,7 @@ public partial class PlayerManager : Node3D
     	}
 
 		GameManager.Instance.ConsumirMovimiento();
+		GameManager.Instance.NotificarCambioDeEstado();
 	}
 
 	public void Atacar()
@@ -176,6 +177,12 @@ public partial class PlayerManager : Node3D
 		AtacarJugador();
 	
 		AtacarAbeja();
+	}
+
+	public bool TieneObjetivosCerca(){
+		var otroJugadorCerca = VisualesJugadores.Any(v => JugadorEnTurnoAdyacenteAOtro(v));
+		
+		return (AbejasObjetivo.Count > 0) || otroJugadorCerca;
 	}
 
 	private void AtacarAbeja(){

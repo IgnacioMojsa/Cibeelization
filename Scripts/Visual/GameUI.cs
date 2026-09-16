@@ -63,6 +63,8 @@ public partial class GameUI : Control
 		turnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
 		turnManager.OnCambioDeTurnoJugador += _ => ActualizarUI();
 		turnManager.OnTurnoCambiado += ActualizarUI;
+		
+		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 	}
 
 	private void ActualizarUI()
@@ -70,6 +72,7 @@ public partial class GameUI : Control
 		MostrarJugadorEnTurno();
 		MostrarHPDeJugaores();
 		DeshabilitarDado();
+		AlternarEstadoDeAtaque();
 	}
 	
 	private void Jugar(){
@@ -254,6 +257,14 @@ public partial class GameUI : Control
 		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
 			botonDado.Disabled = false;
 		}
+	}
+
+	private void AlternarEstadoDeAtaque(){
+		if (playerManager == null) return;
+		
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca();
+
+		botonAtacar.Disabled = !puedeAtacar;
 	}
 
 	public void MostrarResultadoDado(){

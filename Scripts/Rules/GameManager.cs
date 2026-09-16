@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,20 +12,22 @@ public partial class GameManager
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 	public AbejaReina jugadorEnTurno;
 	public AbejaReina JugadorGanador {get; private set;}
-
-	// Referencia al tablero activo en la escena
 	public Tablero TableroActual { get; set; }
+	public CamaraController CamaraActual { get; set; }
 
 	private GameManager(){}
 
 	public int cantidadJugadores { get; set; }
 	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
+	public int DimensionActual { get; private set; } = 15;
 
-	// Referencia al controlador de la cámara
-	public CamaraController CamaraActual { get; set; }
-
-	// Convierte la opción de UI en dimensiones de celdas (WidthRows x HeightRows)
+	public event Action OnEstadoAccionesCambiado;
 	
+	public void NotificarCambioDeEstado()
+	{
+	    OnEstadoAccionesCambiado?.Invoke();
+	}	
+
 	public bool CondicionVictoria(){
 		var jugadoresFueraDeJuego = JugadoresEnPartida.Where(j => j.FueraDeJuego).ToList();
 
@@ -36,8 +39,6 @@ public partial class GameManager
 
 		JugadorGanador = jugadorGanador;
 	}
-
-	public int DimensionActual { get; private set; } = 15;
 
 	public void SetTiles(int opcionTamaño)
 	{
