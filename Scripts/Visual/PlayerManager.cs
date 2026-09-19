@@ -157,6 +157,9 @@ public partial class PlayerManager : Node3D
 
 		GameManager.Instance.ConsumirMovimiento();
 		GameManager.Instance.NotificarCambioDeEstado();
+		
+		var sound = AudioManager.Instance.GameAudio.Sound2;
+		AudioManager.Instance.PlaySound(sound);
 	}
 
 	public void Atacar()
@@ -499,6 +502,8 @@ public partial class PlayerManager : Node3D
 			OcultarCeldasDisponiblesParaInvocar();	
 			OcultarAbejasObjetivo();
 			tropasManager.InstanciarAbeja(PosicionEnMundo3D, CeldaCliqueada);
+			var bee1 = AudioManager.Instance.GameAudio.Sound5;
+			AudioManager.Instance.PlaySound(bee1);
 		}
 		else{
 			GD.Print("No se puede invocar una abeja sobre esta celda");
