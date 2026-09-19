@@ -281,6 +281,10 @@ public partial class GameUI : Control
 		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		playerManager.MostrarAbejasObjetivo();
 		
+		if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
+			playerManager.MostrarJugadoresObjetivo();
+		}
+		
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
@@ -305,10 +309,6 @@ public partial class GameUI : Control
 		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca();
 
 		botonAtacar.Disabled = !puedeAtacar;
-
-		if(puedeAtacar){
-			playerManager.MostrarJugadoresObjetivo();
-		}
 	}
 
 	public void MostrarResultadoDado(){
