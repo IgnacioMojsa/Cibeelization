@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 public partial class GameManager 
@@ -22,6 +23,7 @@ public partial class GameManager
 	public int DimensionActual { get; private set; } = 15;
 
 	public event Action OnEstadoAccionesCambiado;
+	
 	
 	public void NotificarCambioDeEstado()
 	{
@@ -79,7 +81,7 @@ public partial class GameManager
 
 		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
-
+		
 		return numeroAleatorio;
 	}
 
@@ -153,4 +155,25 @@ public partial class GameManager
 		TurnManager.EstablecerPrimerTurno(); 
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
+
+	public void ResetearEstadoPartida()
+	{
+		GD.Print("Reseteando la partida");
+		JugadoresEnPartida.Clear();
+		jugadorEnTurno = null;
+		JugadorGanador = null;
+		OnEstadoAccionesCambiado = null;
+
+		if(TurnManager != null)
+		{
+			TurnManager.ReiniciarTurnos();
+		}
+		else
+		{
+			TurnManager = new TurnManager(JugadoresEnPartida);
+			cantidadJugadores = 0;
+			sizeTablero = 0;
+		}
+	}
+
 }
