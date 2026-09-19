@@ -2,10 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://buppbncamca7f" path="res://Assets/AbejaReina4.glb" id="1_4qnwh"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvyen"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vikw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jqpis"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dopi"]
 
 [node name="AbejaReina4" unique_id=1816187034 instance=ExtResource("1_4qnwh")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Cubo_002" parent="." index="1" unique_id=1271413065]
-surface_material_override/1 = SubResource("StandardMaterial3D_4vikw")
+[node name="Cubo_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="0" unique_id=2056319873]
+surface_material_override/0 = SubResource("StandardMaterial3D_bvyen")
+
+[node name="Cubo_002" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="1" unique_id=973322442]
+surface_material_override/0 = SubResource("StandardMaterial3D_4vikw")
+surface_material_override/1 = SubResource("StandardMaterial3D_jqpis")
+
+[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="2" unique_id=578597221]
+surface_material_override/0 = SubResource("StandardMaterial3D_2dopi")
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=1982564683]
+autoplay = &"Idle"
