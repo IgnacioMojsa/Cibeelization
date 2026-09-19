@@ -12,14 +12,32 @@ public partial class GameUI : Control
 
 	private Button botonPausa;
 
+	//private PanelContainer UIComienzo;
+
 	private PanelContainer containerPausa;
 	private Button botonContinuar;
+	private Button botonReiniciarPartida;
 	private Button botonMenuPrincipal;
 	private HBoxContainer uiPausa;
 	private PanelContainer confirmacionSalir;
+	private PanelContainer confirmacionReiniciar;
+	private bool reinicioConfirmado = false;
 	
 	public override void _Ready(){
+		
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
+
+			var root = GetTree().CurrentScene; 
+
+			GameManager.Instance.TableroActual = root.GetNodeOrNull<Tablero>("Tablero");
+				if (GameManager.Instance.TableroActual == null)
+					GD.PrintErr("No se encontró Tablero en la escena");
+
+			GameManager.Instance.CamaraActual = root.GetNode<CamaraController>("Camara");
+			playerManager = root.GetNode<PlayerManager>("PlayerManager");
+
+			//Tablero válido:
+			GameManager.Instance.SetTiles(GameManager.Instance.sizeTablero);
 			
 			InicializarUI();
 			SuscribirAEventos();
@@ -43,29 +61,55 @@ public partial class GameUI : Control
 		containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
 		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+		botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
 
 		//Suscripciones de godot
 		botonAtacar.Pressed += OnAtacarPressed;
 		botonPausa.Pressed += PausarPartida;
 		botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
 		botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
+		botonReiniciarPartida.Pressed += MostrarConfirmacionReiniciar;
 
-		// Botones del cuadro de confirmación
+		// Botones del cuadro de confirmación para regresar al menu principal
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
+
+		// Botones del cuadro de confirmación para reiniciar la partida
+		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
+		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionReiniciar;
+
 	}
 
 	private void SuscribirAEventos()
 	{
+		// Primero limpiar suscripciones viejas
+		_ExitTree();
+
 		var turnManager = GameManager.Instance.TurnManager;
 		turnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
 		turnManager.OnCambioDeTurnoJugador += _ => ActualizarUI();
 		turnManager.OnTurnoCambiado += ActualizarUI;
-		
+
+		//GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 	}
+
+	public override void _ExitTree()
+	{
+		
+		if (GameManager.Instance.TurnManager != null)
+		{
+			GameManager.Instance.TurnManager.OnTextoInstrucciones -= MostrarTextoInstrucciones;
+			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= _ => ActualizarUI();
+			GameManager.Instance.TurnManager.OnTurnoCambiado -= ActualizarUI;
+		}
+		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+	}
+
+
 
 	private void ActualizarUI()
 	{
@@ -85,19 +129,21 @@ public partial class GameUI : Control
 
 	private void ComenzarPartida()
 	{
-		// Aseguramos la lectura correcta de la UI
-		GameManager.Instance.cantidadJugadores = ObtenerCantJugadores();
-		GameManager.Instance.sizeTablero = ObtenerSizeTablero();
-
-		GameManager.Instance.CargarJugadores(GameManager.Instance.cantidadJugadores);
-		GameManager.Instance.CargarTipoDeAbejas();
-
-		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
-		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
-
-		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 		
+		int jugadores = ObtenerCantJugadores();
+		int size = ObtenerSizeTablero();
+	
+		GameManager.Instance.IniciarPartida(jugadores, size);
+
+		GD.Print("La partida se desarrollará con " + jugadores + " jugadores");
+		GD.Print("Opción de tamaño seleccionada: " + size);
+
+
+		reinicioConfirmado = false;
+		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+	
 	}
+
 
 	private void PausarPartida()
 	{
@@ -119,6 +165,19 @@ public partial class GameUI : Control
 		}
 	}
 
+	private void MostrarConfirmacionReiniciar()
+	{
+		uiPausa.Visible = false;
+		confirmacionReiniciar.Visible = true;
+	}
+
+	private void OcultarConfirmacionReiniciar()
+	{
+		confirmacionReiniciar.Visible = false;
+		uiPausa.Visible = true;
+	}
+
+
 	private void MostrarConfirmacionSalir()
 	{
 		uiPausa.Visible = false;
@@ -131,10 +190,29 @@ public partial class GameUI : Control
 		uiPausa.Visible = true;
 	}
 
+	private void Reiniciar()
+	{
+		GD.Print("Reiniciando la partida");
+		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
+		confirmacionReiniciar.Visible = false;
+		containerPausa.Visible = true;
+		reinicioConfirmado = true;
+		ComenzarPartida(); // Llama a la función para reiniciar la partida
+		//InicializarUI();
+		//SuscribirAEventos();
+		MostrarDataDeJugadores();
+		ActualizarUI();
+		MostrarTextoInstrucciones("Tirá el dado para comenzar.");
+
+
+	}
+
 	private void IrAlMenuPrincipal()
 	{
 		GD.Print("Regresando al menu principal");
 		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
+		//GameManager.Instance.ResetearEstadoPartida();
+
 		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
 	}
 
@@ -163,6 +241,8 @@ public partial class GameUI : Control
 	}
 
 	private int ObtenerCantJugadores(){
+		if (GameManager.Instance.PartidaActual != null && reinicioConfirmado)
+			return GameManager.Instance.PartidaActual.CantidadJugadores;
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox");
 		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox");
 		var check4 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox");
@@ -182,6 +262,8 @@ public partial class GameUI : Control
 	}
 
 	private int ObtenerSizeTablero(){
+		if (GameManager.Instance.PartidaActual != null && reinicioConfirmado)
+			return GameManager.Instance.PartidaActual.SizeTablero;
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small/CheckBox");
 		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox");
 		var check4 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox");

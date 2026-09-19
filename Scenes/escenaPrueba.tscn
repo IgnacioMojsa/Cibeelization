@@ -362,6 +362,21 @@ theme_override_font_sizes/font_size = 32
 action_mode = 0
 text = "Continuar"
 
+[node name="Reiniciar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1336349814]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ReiniciarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar" unique_id=266559482]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 32
+action_mode = 0
+text = "Reiniciar"
+
 [node name="MenuPrincipal" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=594455706]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -375,6 +390,72 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Menu Principal"
+
+[node name="ConfirmacionReiniciar" type="PanelContainer" parent="HUD" unique_id=738415298]
+visible = false
+layout_mode = 0
+offset_left = -225.0
+offset_top = -391.0
+offset_right = 235.0
+offset_bottom = -282.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/ConfirmacionReiniciar" unique_id=1014768353]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/ConfirmacionReiniciar/MarginContainer" unique_id=360644793]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer" unique_id=1926046426]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 24
+text = "Confirma que desea reiniciar la partida actual? "
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer" unique_id=1716504027]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 19
+text = "Se perderá todo el progreso de la partida"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer" unique_id=1763868257]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Si" type="PanelContainer" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer" unique_id=497943520]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="SiButton" type="Button" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=624818673]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "Si"
+
+[node name="No" type="PanelContainer" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2069013964]
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="HUD/ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1149011036]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "No"
 
 [node name="ConfirmacionSalir" type="PanelContainer" parent="HUD" unique_id=1678650996]
 visible = false

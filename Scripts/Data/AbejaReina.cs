@@ -8,7 +8,6 @@ public partial class AbejaReina : Abeja
 	public bool SeMovio {get; set;} = false;
 	public bool EstaViva {get; set;} = true;
 
-	// public bool PuedeAtacar {get; set;} = false;
 	public bool AtacoRecien {get; set;} = false;
 	public bool ModoAtaque {get; set;} = false;
 	public bool ModoInvocacion {get; set;} = false;
@@ -34,10 +33,17 @@ public partial class AbejaReina : Abeja
 		ColmenaDeReina = new Colmena(this);
 	}
 
-	/*
-	public void Mover(Vector3 nuevaPosicion)
+	public void PosicionarEnCelda(Celda celda)
 	{
-		GlobalPosition = nuevaPosicion;
+	    UbicacionActual = celda;
+
+	    // Resetear estados de turno
+	    EsSuTurno = false;
+	    TiroLosDados = false;
+	    SeMovio = false;
+	    AtacoRecien = false;
+	    InvocoRecien = false;
+	    Estado = EstadoTurno.EsperandoDado;
 	}
-	*/
+
 }

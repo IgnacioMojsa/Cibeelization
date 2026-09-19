@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JuegoAbeja.Scripts.Data;
 
 public partial class GameManager 
 {
@@ -20,6 +21,24 @@ public partial class GameManager
 	public int cantidadJugadores { get; set; }
 	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
 	public int DimensionActual { get; private set; } = 15;
+
+	public Partida PartidaActual { get; private set; }
+
+    // Método para iniciar la partida con datos
+    public void IniciarPartida(int cantidadJugadores, int sizeTablero)
+    {
+        PartidaActual = new Partida(cantidadJugadores, sizeTablero);
+
+        this.cantidadJugadores = cantidadJugadores;
+        this.sizeTablero = sizeTablero;
+
+        // Generar jugadores
+        CargarJugadores(cantidadJugadores);
+
+        // Generar tablero
+        //SetTiles(sizeTablero);
+    }
+
 
 	public event Action OnEstadoAccionesCambiado;
 	
@@ -54,7 +73,7 @@ public partial class GameManager
 	    ActualizarTableroYCamara();
 	}
 	
-	public void ActualizarTableroYCamara()
+	/* public void ActualizarTableroYCamara()
 	{
 	    if (TableroActual != null)
 	    {
@@ -65,7 +84,21 @@ public partial class GameManager
 	            CamaraActual.AjustarATablero(DimensionActual, DimensionActual, TableroActual.TileSize);
 	        }
 	    }
+	} */
+
+	public void ActualizarTableroYCamara()
+	{
+	    if (TableroActual != null)
+	    {
+	        TableroActual.GenerarTablero(DimensionActual, DimensionActual);
+
+	        if (CamaraActual != null)
+	        {
+	            CamaraActual.AjustarATablero(DimensionActual, DimensionActual, TableroActual.TileSize);
+	        }
+	    }
 	}
+
 
 	public int TirarDado()
 	{
@@ -153,4 +186,24 @@ public partial class GameManager
 		TurnManager.EstablecerPrimerTurno(); 
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
+
+	/* public void ResetearEstadoPartida()
+	{
+		GD.Print("Reseteando la partida");
+		JugadoresEnPartida.Clear();
+		jugadorEnTurno = null;
+		JugadorGanador = null;
+		OnEstadoAccionesCambiado = null;
+
+		if(TurnManager != null)
+		{
+			TurnManager.ReiniciarTurnos();
+		}
+		else
+		{
+			TurnManager = new TurnManager(JugadoresEnPartida);
+			cantidadJugadores = 0;
+			sizeTablero = 0;
+		}
+	} */
 }
