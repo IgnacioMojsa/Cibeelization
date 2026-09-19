@@ -204,21 +204,29 @@ public partial class PlayerManager : Node3D
 	    return meshes;
 	}
 
-	private void EstablecerNextPass(Node3D visual, Material materialOutline){
-	    var meshes = ObtenerTodosLosMeshes(visual);
+	private void EstablecerNextPass(Node3D visual, Material materialOutline)
+	{
+    	var meshes = ObtenerTodosLosMeshes(visual);
 
     	foreach (var mesh in meshes)
     	{
-    	    var materialBase = mesh.GetActiveMaterial(0);
-    	    if (materialBase == null) continue;
+        	if (mesh.Mesh == null) continue;
 
-     	   if (materialOutline != null && materialBase == materialOutline)
-    	    {
-    	        GD.PrintErr($"[PlayerManager] Conflicto de material en {mesh.Name}: El material base y el outline son la misma instancia.");
-    	        continue;
-    	    }
+        	int cantidadSuperficies = mesh.Mesh.GetSurfaceCount();
 
-    	    materialBase.NextPass = materialOutline;
+        	for (int i = 0; i < cantidadSuperficies; i++)
+        	{
+        	    var materialBase = mesh.GetActiveMaterial(i);
+        	    if (materialBase == null) continue;
+
+        	    if (materialOutline != null && materialBase == materialOutline)
+        	    {
+        	        GD.PrintErr($"[PlayerManager] Conflicto de material en {mesh.Name} (Superficie {i}): El material base y el outline son la misma instancia.");
+        	        continue;
+        	    }
+
+        	    materialBase.NextPass = materialOutline;
+        	}
     	}
 	}
 
