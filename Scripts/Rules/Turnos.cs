@@ -69,7 +69,9 @@ public class TurnManager
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoDado;
 		jugadorEnTurno.MovimientosDisponibles = 0;
 
-		GameManager.Instance.jugadorEnTurno = jugadorEnTurno;
+		if(GameManager.Instance != null){
+			GameManager.Instance.jugadorEnTurno = jugadorEnTurno;
+		}
 	}
 
 	private void IniciarTurnoJugadorActual()

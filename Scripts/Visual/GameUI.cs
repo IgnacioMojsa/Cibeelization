@@ -5,6 +5,7 @@ public partial class GameUI : Control
 {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
+	
 	private Label resultadoDados;
 	public Label feedback;
 	private AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
@@ -343,19 +344,20 @@ public partial class GameUI : Control
 		{
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
 				UIJugadores[j].Modulate = Color.FromHtml("#9005F2");
-				playerManager.OutlineJugadorEnTurno(playerManager.OutlinesJugadores[j]);
-				playerManager.OutlinesJugadores[j].Visible = true;
 			}
 			else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
 				UIJugadores[j].Visible = false;
 			}
 			else{
 				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
-				playerManager.OutlinesJugadores[j].Visible = false;
 			}
 		}
-		
-		//ffd01f
+
+		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id)
+    	{
+    	    playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
+    	    playerManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
+    	}
 	}
 
 	private void InvocarSubdito()

@@ -29,7 +29,7 @@ public partial class PlayerManager : Node3D
 		ataqueManager = new AtaqueManager();
 
 		InstanciarJugadores();
-		GuardarOutlines();
+		//GuardarOutlines();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 
 		if (GameManager.Instance.TurnManager != null)
@@ -189,30 +189,68 @@ public partial class PlayerManager : Node3D
 		AtacarAbeja();
 	}
 
-	public void MostrarJugadoresObjetivo(){
-		var materialNuevo = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+	private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
+	    var meshes = new List<MeshInstance3D>();
 
+	    if (visual == null) return meshes;
+
+	    foreach (var node in visual.FindChildren("*", "MeshInstance3D"))
+	    {
+	        if (node is MeshInstance3D mesh)
+	        {
+	            meshes.Add(mesh);
+	        }
+	    }
+	    return meshes;
+	}
+
+	private void EstablecerNextPass(Node3D visual, Material materialOutline){
+	    var meshes = ObtenerTodosLosMeshes(visual);
+
+    	foreach (var mesh in meshes)
+    	{
+    	    var materialBase = mesh.GetActiveMaterial(0);
+    	    if (materialBase == null) continue;
+
+     	   if (materialOutline != null && materialBase == materialOutline)
+    	    {
+    	        GD.PrintErr($"[PlayerManager] Conflicto de material en {mesh.Name}: El material base y el outline son la misma instancia.");
+    	        continue;
+    	    }
+
+    	    materialBase.NextPass = materialOutline;
+    	}
+	}
+
+	public void MostrarJugadoresObjetivo(){
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 		var jugadoresObjetivo = VisualesJugadores.Where(j => JugadorEnTurnoAdyacenteAOtro(j)).ToList();
 
 		foreach (var jugador in jugadoresObjetivo)
 		{
-			var outlineDeJugador = jugador.GetNode<Node3D>("Outline");
-
-			for (int h = 0; h < outlineDeJugador.GetChildCount(); h++)
-			{
-				outlineDeJugador.GetChild<MeshInstance3D>(h).SetSurfaceOverrideMaterial(0, materialNuevo);
-			}
-
-			outlineDeJugador.Visible = true;
+			if (jugador != VisualJugadorActual)
+        	{
+        	    EstablecerNextPass(jugador, materialAtaque);
+        	}
 		}
 	}
 
-	public void OutlineJugadorEnTurno(Node3D unOutline){
-		var materialNuevo = GD.Load<StandardMaterial3D>("res://outlineTurnoActual.tres");
-		
-		for (int h = 0; h < unOutline.GetChildCount(); h++)
+	public void OutlineJugadorEnTurno(Node3D visualActual){
+		var materialTurno = GD.Load<StandardMaterial3D>("res://outlineTurnoActual.tres");
+
+    	EsconderOutlineDeJugadores();
+
+    	if (visualActual != null)
+    	{
+    	    EstablecerNextPass(visualActual, materialTurno);
+    	}
+	}
+
+	public void EsconderOutlineDeJugadores()
+	{
+		foreach (var visual in VisualesJugadores)
 		{
-			unOutline.GetChild<MeshInstance3D>(h).SetSurfaceOverrideMaterial(0, materialNuevo);
+			EstablecerNextPass(visual, null);
 		}
 	}
 
