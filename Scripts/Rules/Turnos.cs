@@ -97,4 +97,11 @@ public class TurnManager
 		BuscarSiguienteJugadorActivo();
 		IniciarTurnoJugadorActual();
 	}
+
+	public void ReiniciarTurnos()
+	{
+		OnTextoInstrucciones = null;
+		OnCambioDeTurnoJugador = null;
+		OnTurnoCambiado = null;
+	}
 }
