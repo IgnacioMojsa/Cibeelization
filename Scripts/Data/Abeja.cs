@@ -6,16 +6,11 @@ public partial class Abeja{
 	public string RecursoDeTransformacion { get ; private set; } 
 	public bool FueraDeJuego {get; set;} = false;
 	public Colmena ColmenaHogar {get; set;}
-	public Vector3I Posicion { get; private set; }
 	public Celda CeldaActual { get; set; }
 	public Node3D InstanciaVisual {get; set;}
 
 	public bool AptaParaTransformar(Abeja otraAbeja, Colmena unaColmena){
 		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion);
-	}
-
-	public void CambiarPosicion(Vector3I nuevaPosicion){
-		Posicion = nuevaPosicion;
 	}
 
 	public void RestarVida(){

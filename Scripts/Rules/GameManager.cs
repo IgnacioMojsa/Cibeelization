@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using JuegoAbeja.Scripts.Data;
 
@@ -41,6 +42,7 @@ public partial class GameManager
 
 
 	public event Action OnEstadoAccionesCambiado;
+	
 	
 	public void NotificarCambioDeEstado()
 	{
@@ -112,7 +114,7 @@ public partial class GameManager
 
 		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
-
+		
 		return numeroAleatorio;
 	}
 
@@ -187,7 +189,7 @@ public partial class GameManager
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
 
-	/* public void ResetearEstadoPartida()
+	public void ResetearEstadoPartida()
 	{
 		GD.Print("Reseteando la partida");
 		JugadoresEnPartida.Clear();
@@ -205,5 +207,6 @@ public partial class GameManager
 			cantidadJugadores = 0;
 			sizeTablero = 0;
 		}
-	} */
+	}
+
 }

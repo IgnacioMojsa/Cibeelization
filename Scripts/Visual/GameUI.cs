@@ -5,14 +5,14 @@ public partial class GameUI : Control
 {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
+	
 	private Label resultadoDados;
 	public Label feedback;
+	private AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
 
 	private Button botonPausa;
-
-	//private PanelContainer UIComienzo;
 
 	private PanelContainer containerPausa;
 	private Button botonContinuar;
@@ -50,6 +50,24 @@ public partial class GameUI : Control
 			MostrarMensajeVictoria();
 			}
 	}		
+
+	public override void _ExitTree()
+	{
+		if (GameManager.Instance != null)
+		{
+			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+
+			if (GameManager.Instance.TurnManager != null)
+			{
+				var turnManager = GameManager.Instance.TurnManager;
+				turnManager.OnTextoInstrucciones -= MostrarTextoInstrucciones;
+				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
+				turnManager.OnTurnoCambiado -= ActualizarUI;
+			}
+		}
+	}
+
+	private void OnCambioDeTurno(object _) => ActualizarUI();
 
 	public void InicializarUI()
 	{
@@ -90,24 +108,13 @@ public partial class GameUI : Control
 
 		var turnManager = GameManager.Instance.TurnManager;
 		turnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
-		turnManager.OnCambioDeTurnoJugador += _ => ActualizarUI();
+		turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
 		turnManager.OnTurnoCambiado += ActualizarUI;
 
 		//GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 	}
 
-	public override void _ExitTree()
-	{
-		
-		if (GameManager.Instance.TurnManager != null)
-		{
-			GameManager.Instance.TurnManager.OnTextoInstrucciones -= MostrarTextoInstrucciones;
-			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= _ => ActualizarUI();
-			GameManager.Instance.TurnManager.OnTurnoCambiado -= ActualizarUI;
-		}
-		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
-	}
 
 
 
@@ -121,6 +128,7 @@ public partial class GameUI : Control
 	
 	private void Jugar(){
 		PanelContainer UIComienzo = GetNode<PanelContainer>("MenuComienzo");
+		AudioManager.Instance.PlaySound(UiSound1);
 
 		GD.Print("El botón play ha sido presionado");
 
@@ -135,11 +143,13 @@ public partial class GameUI : Control
 	
 		GameManager.Instance.IniciarPartida(jugadores, size);
 
-		GD.Print("La partida se desarrollará con " + jugadores + " jugadores");
-		GD.Print("Opción de tamaño seleccionada: " + size);
+		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
+		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
 
+		AudioManager.Instance.PlaySound(UiSound1);
 
 		reinicioConfirmado = false;
+
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	
 	}
@@ -152,6 +162,8 @@ public partial class GameUI : Control
 	
 		// Muestra u oculta el menú principal de pausa
 		uiPausa.Visible = GetTree().Paused;
+
+		AudioManager.Instance.PlaySound(UiSound1);
 
 		if (GetTree().Paused)
 		{
@@ -182,12 +194,14 @@ public partial class GameUI : Control
 	{
 		uiPausa.Visible = false;
 		confirmacionSalir.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void OcultarConfirmacionSalir()
 	{
 		confirmacionSalir.Visible = false;
 		uiPausa.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void Reiniciar()
@@ -211,7 +225,9 @@ public partial class GameUI : Control
 	{
 		GD.Print("Regresando al menu principal");
 		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
-		//GameManager.Instance.ResetearEstadoPartida();
+		GameManager.Instance.ResetearEstadoPartida();
+		
+		AudioManager.Instance.PlaySound(UiSound1);
 
 		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
 	}
@@ -315,6 +331,7 @@ public partial class GameUI : Control
 	}
 
 	private void SalirDelJuego(){
+		AudioManager.Instance.PlaySound(UiSound1);
 		GetTree().Quit();
 	}
 
@@ -330,15 +347,27 @@ public partial class GameUI : Control
 		
 		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		playerManager.MostrarAbejasObjetivo();
+		
+		if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
+			playerManager.MostrarJugadoresObjetivo();
+		}
+		
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void DeshabilitarDado(){
-		if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
+		/* if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
 			botonDado.Disabled = true;
 		}
 		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
 			botonDado.Disabled = false;
-		}
+		} */
+
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return;
+
+		bool yaTiro = jugador.TiroLosDados || jugador.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+		botonDado.Disabled = !jugador.EsSuTurno || yaTiro;
 	}
 
 	private void AlternarEstadoDeAtaque(){
@@ -350,10 +379,22 @@ public partial class GameUI : Control
 	}
 
 	public void MostrarResultadoDado(){
+		if (botonDado.Disabled) return;
+
 		int resultado = GameManager.Instance.TirarDado();
+
 		if (resultado != -1)
-		resultadoDados.Text = resultado.ToString();
-		MostrarTextoInstrucciones("Podés moverte por las celdas, atacar o invocar un súbdito.");
+		{
+			resultadoDados.Text = resultado.ToString();
+			MostrarTextoInstrucciones("Podés moverte por las celdas, atacar o invocar un súbdito.");
+			botonDado.Disabled = true;
+
+			if(AudioManager.Instance?.GameAudio?.Sound4 != null)
+			{
+				var dado = AudioManager.Instance.GameAudio.Sound4;
+				AudioManager.Instance.PlaySound(dado);
+			}
+		}
 	}
 
 	private void MostrarJugadorEnTurno(){ 
@@ -365,23 +406,25 @@ public partial class GameUI : Control
 		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
 
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
-		
+
 		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
 		{
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
-				UIJugadores[j].Modulate = Color.FromHtml("#ff0000");
-				playerManager.OutlinesJugadores[j].Visible = true;
+				UIJugadores[j].Modulate = Color.FromHtml("#9005F2");
 			}
 			else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
 				UIJugadores[j].Visible = false;
 			}
 			else{
 				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
-				playerManager.OutlinesJugadores[j].Visible = false;
 			}
 		}
-		
-		//ffd01f
+
+		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id)
+    	{
+    	    playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
+    	    playerManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
+    	}
 	}
 
 	private void InvocarSubdito()
@@ -390,6 +433,7 @@ public partial class GameUI : Control
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 			playerManager.MostrarCeldasDisponiblesParaInvocar();
 		}
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	public void MostrarTextoInstrucciones(string texto)

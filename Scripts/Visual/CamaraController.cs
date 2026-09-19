@@ -7,6 +7,15 @@ public partial class CamaraController : Node3D
 	[Export] private float paddingFactor = 1.25f; // Margen de seguridad alrededor del tablero
 	[Export] private float anguloInclinacionDeg = -70.0f; // Grados de inclinación de la cámara
 
+	[Export] private float alturaZoomTurno = 11.0f;  
+	[Export] private float offsetZTurno = 6.0f;     
+	[Export] private float duracionAnimacion = 0.8f;
+	[Export] private float velocidadRotacion = 0.07f;
+
+	private bool enModoOrbita = false;
+
+	private Tween tweenCamara;
+
 	public override void _Ready()
 	{
 		if (camera3D == null)
@@ -28,6 +37,12 @@ public partial class CamaraController : Node3D
 		CallDeferred(nameof(AjustarAlInicio));
 	}
 
+	public override void _Process(double delta){
+		if(enModoOrbita){
+			RotateY((float)delta * velocidadRotacion);
+		}
+	}
+
 	private void AjustarAlInicio()
 	{
 		if (GameManager.Instance.TableroActual != null)
@@ -43,6 +58,8 @@ public partial class CamaraController : Node3D
 	public void AjustarATablero(int filas, int columnas, float tileSize)
 	{
 		if (camera3D == null) return;
+
+		enModoOrbita = false;
 	
 		// 1. Calcular el tamaño total real del tablero en unidades 3D
 		// Para hexágonos en orientacion vertical:
@@ -106,5 +123,31 @@ public partial class CamaraController : Node3D
 	
 		// 7. Forzar a la cámara a mirar directamente al centro del tablero
 		camera3D.LookAt(centroTablero, Vector3.Up);
+	}
+
+	public void EnfocarNodo(Node3D objetivo)
+	{
+		if (objetivo == null || camera3D == null) return;
+
+		enModoOrbita = false;
+
+		if (tweenCamara != null && tweenCamara.IsValid())
+		{
+			tweenCamara.Kill();
+		}
+
+		tweenCamara = CreateTween().SetParallel(true).SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
+
+		Vector3 posicionObjetivoPivote = objetivo.GlobalPosition;
+		posicionObjetivoPivote.Y = 0;
+		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion);
+
+		Vector3 posicionObjetivoCamara = new Vector3(0f, alturaZoomTurno, offsetZTurno);
+		tweenCamara.TweenProperty(camera3D, "position", posicionObjetivoCamara, duracionAnimacion);
+
+		tweenCamara.Chain().TweenCallback(Callable.From(() => 
+		{
+			enModoOrbita = true;
+		}));
 	}
 }

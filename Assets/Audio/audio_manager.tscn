@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dr1xh7hw27fyp"]
+
+[ext_resource type="Script" uid="uid://0al4lubu7phv" path="res://Assets/Audio/AudioManager.cs" id="1_sm2tf"]
+[ext_resource type="Resource" uid="uid://33yi3qdgu3bv" path="res://Assets/Audio/GameAudio.tres" id="2_81o5i"]
+[ext_resource type="AudioStream" uid="uid://jsflbqht7ljc" path="res://Assets/Audio/Music/loopeable_1.mp3" id="2_l7d0f"]
+
+[node name="AudioManager" type="Node" unique_id=995646800]
+script = ExtResource("1_sm2tf")
+GameAudio = ExtResource("2_81o5i")
+
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=293319229]
+stream = ExtResource("2_l7d0f")
+volume_db = -20.0
+autoplay = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1367224849]

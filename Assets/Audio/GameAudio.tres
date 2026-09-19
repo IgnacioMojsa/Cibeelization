@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="GameAudio" format=3 uid="uid://33yi3qdgu3bv"]
+
+[ext_resource type="Script" uid="uid://dfkdnyfl5ssgp" path="res://Assets/Audio/GameAudio.cs" id="1_iu2c2"]
+[ext_resource type="AudioStream" uid="uid://4qdq7ch7ojhy" path="res://Assets/Audio/SFX/click_sound.mp3" id="1_xabau"]
+[ext_resource type="Script" uid="uid://eat4rg48x2ck" path="res://Assets/Audio/AudioSetting.cs" id="2_lbn20"]
+[ext_resource type="AudioStream" uid="uid://cdvm6br1efhuk" path="res://Assets/Audio/SFX/pop_sound.mp3" id="3_guub6"]
+[ext_resource type="AudioStream" uid="uid://byu73pyxdxv4o" path="res://Assets/Audio/SFX/punch_sound.mp3" id="4_hbx5o"]
+[ext_resource type="AudioStream" uid="uid://pjfi2mwg50nn" path="res://Assets/Audio/SFX/dice_sound.mp3" id="5_guub6"]
+[ext_resource type="AudioStream" uid="uid://coqiaapacn5g2" path="res://Assets/Audio/SFX/bee_sound1.mp3" id="6_guub6"]
+
+[sub_resource type="Resource" id="Resource_s3c6i"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("1_xabau")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_dx6wn"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("3_guub6")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_t607e"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("4_hbx5o")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_f40p2"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("5_guub6")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_ysso3"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("6_guub6")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[resource]
+script = ExtResource("1_iu2c2")
+Sound1 = SubResource("Resource_s3c6i")
+Sound2 = SubResource("Resource_dx6wn")
+Sound3 = SubResource("Resource_t607e")
+Sound4 = SubResource("Resource_f40p2")
+Sound5 = SubResource("Resource_ysso3")
+metadata/_custom_type_script = "uid://dfkdnyfl5ssgp"
