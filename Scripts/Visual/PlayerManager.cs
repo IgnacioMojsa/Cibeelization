@@ -29,8 +29,13 @@ public partial class PlayerManager : Node3D
         ataqueManager = new AtaqueManager();
 
         InstanciarJugadores();
-        GuardarOutlines();
+        //GuardarOutlines();
         CallDeferred(nameof(EstablecerSpawnsEnCeldas));
+
+		if (GameManager.Instance.TurnManager != null)
+		{
+			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador += OnCambioDeTurnoJugador;
+		}
     }
 
     public override void _UnhandledInput(InputEvent @event)
