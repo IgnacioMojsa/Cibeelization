@@ -400,6 +400,8 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void MostrarAbejasObjetivo(){
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+		
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
 		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
@@ -417,7 +419,7 @@ public partial class PlayerManager : Node3D
 		{
 			if(abejaVisual.InstanciaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
         	{
-            	abejaVisual.InstanciaVisual.GetNode<Node3D>("Outline").Visible = true;
+            	EstablecerNextPass(abejaVisual.InstanciaVisual, materialAtaque);
         	} 
 		}
 	}
@@ -440,7 +442,7 @@ public partial class PlayerManager : Node3D
 		{
 			if(abejaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
         	{
-            	abejaVisual.InstanciaVisual.GetNode<Node3D>("Outline").Visible = false;
+            	EstablecerNextPass(abejaVisual.InstanciaVisual, null);
         	} 
 		}
 	}

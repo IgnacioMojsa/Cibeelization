@@ -42,13 +42,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_kicnq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
-cull_mode = 1
-shading_mode = 0
-albedo_color = Color(1, 0, 0, 1)
-grow = true
-grow_amount = 0.1
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_u66xv"]
 _surfaces = [{
 "aabb": AABB(-4.156718, -4.801202, -1.2366335, 8.313436, 6.6322184, 2.5423074),
@@ -120,29 +113,56 @@ shadow_mesh = SubResource("ArrayMesh_di4x3")
 [node name="Zangano" unique_id=800501426 instance=ExtResource("1_snhb3")]
 transform = Transform3D(-0.59, 0, 5.1579438e-08, 0, 0.59, 0, -5.1579438e-08, 0, -0.59, 0, 0.09356356, 0)
 
-[node name="Cube" parent="." index="0" unique_id=89738154]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4178157, 0.4491285)
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1712882943) index="0" unique_id=294367650]
+bones/0/position = Vector3(0, -0.17747472, 0)
+bones/1/scale = Vector3(1, 0.9372579, 1)
+bones/4/rotation = Quaternion(-0.6769439, -0.0028963725, 0.69866, 0.2315444)
+bones/5/rotation = Quaternion(-0.18618077, 0.02045297, 0.0028835584, 0.9822984)
+bones/6/rotation = Quaternion(-0.10770864, 0.0066453395, 0.0054262485, 0.9941455)
+bones/8/rotation = Quaternion(0.676944, -0.002896062, 0.6986599, -0.23154455)
+bones/9/rotation = Quaternion(-0.1861811, -0.020452907, -0.0028835775, 0.9822983)
+bones/10/rotation = Quaternion(-0.107708804, -0.006645346, -0.00542621, 0.9941455)
+bones/11/position = Vector3(-1.2487259, 0.83837503, 0.0593786)
+bones/11/rotation = Quaternion(1.17775066e-07, -1.6538084e-07, 0.92774916, 0.37320438)
+bones/12/rotation = Quaternion(3.7883737e-08, -4.608788e-09, 0.08022698, 0.99677664)
+bones/13/rotation = Quaternion(1.039603e-07, -8.338137e-09, 0.2239736, 0.97459525)
+bones/14/rotation = Quaternion(-1.4904298e-09, 2.4955935e-07, -0.0077300444, 0.9999702)
+bones/16/rotation = Quaternion(-0.66882205, 0.30321488, 0.6787754, -0.0013838317)
+bones/19/position = Vector3(1.2487259, 0.83837503, 0.059379198)
+bones/19/rotation = Quaternion(3.388932e-07, 7.6437644e-08, -0.92774916, 0.37320438)
+bones/20/rotation = Quaternion(3.79661e-08, 4.6154316e-09, -0.08022697, 0.99677664)
+bones/21/rotation = Quaternion(1.0396034e-07, 8.338115e-09, -0.22397359, 0.9745952)
+bones/22/rotation = Quaternion(-1.4904272e-09, -2.495593e-07, 0.0077300407, 0.9999702)
+bones/27/position = Vector3(1.2984967e-16, -0.17747475, -8.0838114e-16)
+bones/28/rotation = Quaternion(0.3286335, 3.952394e-14, 7.835232e-08, 0.9444576)
+bones/29/rotation = Quaternion(0.28751922, 1.3322678e-15, 6.854993e-08, 0.95777494)
+bones/30/position = Vector3(-1.1648788, 0.02044464, -0.12973338)
+bones/30/rotation = Quaternion(0.023106784, -0.014491193, 0.3303523, 0.9434635)
+bones/31/rotation = Quaternion(0.015259104, 0.0011594765, -0.21809593, 0.97580737)
+bones/32/rotation = Quaternion(0.0008411057, -2.4042496e-08, -0.24095726, 0.9705354)
+bones/33/rotation = Quaternion(0.039988317, -0.010677952, 0.2666736, 0.96289784)
+bones/34/rotation = Quaternion(-0.0013437852, -0.0005291619, -0.42996225, 0.90284574)
+bones/35/position = Vector3(1.164879, 0.020444613, -0.12973285)
+bones/35/rotation = Quaternion(0.023106866, 0.014490968, -0.3303523, 0.9434635)
+bones/36/rotation = Quaternion(0.015259098, -0.0011594767, 0.21809596, 0.97580737)
+bones/37/rotation = Quaternion(0.00084110675, 2.4349678e-08, 0.24095729, 0.97053546)
+bones/38/rotation = Quaternion(0.03998837, 0.010677723, -0.2666736, 0.9628978)
+bones/39/rotation = Quaternion(-0.0013437859, 0.0005291611, 0.42996228, 0.9028457)
 
-[node name="Cube_001" parent="." index="1" unique_id=1041033644]
-transform = Transform3D(1, 0, 0, 0, 1, -0.000241467, 0, 0.000241467, 1, 0, 4.6263237, -0.16446617)
+[node name="AnimationPlayer" parent="." index="1" unique_id=2021428085]
+autoplay = &"Idle"
 
-[node name="Plano" parent="." index="2" unique_id=2085201276]
-transform = Transform3D(0.9961947, -0.08715573, -1.1175873e-08, 3.7252903e-09, 1.7881396e-07, -1, 0.08715573, 0.9961947, 1.7881396e-07, -1.0268515, 2.3691053, 2.1261077)
-
-[node name="Outline" type="Node3D" parent="." index="3" unique_id=190157903]
+[node name="Outline" type="Node3D" parent="." index="2" unique_id=190157903]
 visible = false
 
 [node name="Cube" type="MeshInstance3D" parent="Outline" index="0" unique_id=1093453631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4178157, 0.4491285)
 mesh = SubResource("ArrayMesh_2hvjq")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
 [node name="Cube_001" type="MeshInstance3D" parent="Outline" index="1" unique_id=1574326563]
 transform = Transform3D(1, 0, 0, 0, 1, -0.000241467, 0, 0.000241467, 1, 0, 4.6263237, -0.16446617)
 mesh = SubResource("ArrayMesh_74mtj")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
 [node name="Plano" type="MeshInstance3D" parent="Outline" index="2" unique_id=1001819675]
 transform = Transform3D(0.9961947, -0.08715573, -1.1175873e-08, 3.7252903e-09, 1.7881396e-07, -1, 0.08715573, 0.9961947, 1.7881396e-07, -1.0268515, 2.3691053, 2.1261077)
 mesh = SubResource("ArrayMesh_74oea")
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
