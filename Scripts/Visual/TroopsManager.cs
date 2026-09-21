@@ -14,22 +14,6 @@ public partial class TroopsManager : Node3D
 	        CargarAlmacenDeTropasPara(GameManager.Instance.cantidadJugadores);
 	}
 
-
-    /* public void CargarAssets()
-	{
-		List<PackedScene> meshAbejas = new List<PackedScene>(){
-			GD.Load<PackedScene>("res://Scenes/Zangano.tscn")
-		};
-
-		for (int i = 0; i < GameManager.Instance.TiposDeAbejas.Count; i++)
-		{
-			if (i < meshAbejas.Count)
-			{
-				Assets.Add(meshAbejas[i]);
-			}
-		}
-	} */
-
 	public void CargarAssets()
 	{
 	    // Limpiamos la lista por si venimos de un reinicio

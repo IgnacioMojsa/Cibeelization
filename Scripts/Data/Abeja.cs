@@ -21,13 +21,4 @@ public partial class Abeja{
 		HP -= HP;
 		FueraDeJuego = true;
 	}
-
-	/*public override void _Input(InputEvent @event){
-		if (@event is not InputEventMouseButton mouse ||
-			mouse.ButtonIndex != MouseButton.Left ||
-			!mouse.Pressed)
-			return; 
-			GD.Print("Hiciste click");
-	}*/
-
 }

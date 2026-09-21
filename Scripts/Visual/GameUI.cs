@@ -115,9 +115,6 @@ public partial class GameUI : Control
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 	}
 
-
-
-
 	private void ActualizarUI()
 	{
 		MostrarJugadorEnTurno();
@@ -217,8 +214,6 @@ public partial class GameUI : Control
 		MostrarDataDeJugadores();
 		ActualizarUI();
 		MostrarTextoInstrucciones("Tirá el dado para comenzar.");
-
-
 	}
 
 	private void IrAlMenuPrincipal()
@@ -356,13 +351,6 @@ public partial class GameUI : Control
 	}
 
 	private void DeshabilitarDado(){
-		/* if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion){
-			botonDado.Disabled = true;
-		}
-		else if(GameManager.Instance.jugadorEnTurno.EsSuTurno && GameManager.Instance.jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoDado){
-			botonDado.Disabled = false;
-		} */
-
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (jugador == null) return;
 
