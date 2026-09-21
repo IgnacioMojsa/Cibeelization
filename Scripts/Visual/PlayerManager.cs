@@ -206,7 +206,14 @@ public partial class PlayerManager : Node3D
         	for (int i = 0; i < cantidadSuperficies; i++)
         	{
         	    var materialBase = mesh.GetActiveMaterial(i);
-        	    if (materialBase == null) continue;
+        	    
+				if (materialBase == null) continue;
+
+				if (!materialBase.IsLocalToScene())
+            	{
+            	    materialBase = (Material)materialBase.Duplicate();
+            	    mesh.SetSurfaceOverrideMaterial(i, materialBase);
+            	}
 
         	    if (materialOutline != null && materialBase == materialOutline)
         	    {
@@ -272,7 +279,7 @@ public partial class PlayerManager : Node3D
     	    abejaObjetivo.InstanciaVisual.QueueFree();
     	}
 
-		LimpiarAbejasObjetivo();
+		LimpiarAbejasEliminadas();
 		GameManager.Instance.ConsumirAtaque();
 	}
 
@@ -401,6 +408,8 @@ public partial class PlayerManager : Node3D
 
 	public void MostrarAbejasObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+
+		AbejasObjetivo.Clear();
 		
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
@@ -417,7 +426,7 @@ public partial class PlayerManager : Node3D
 
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual.InstanciaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
+			if(abejaVisual.InstanciaVisual != null)
         	{
             	EstablecerNextPass(abejaVisual.InstanciaVisual, materialAtaque);
         	} 
@@ -440,7 +449,7 @@ public partial class PlayerManager : Node3D
 
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual != null && abejaVisual.InstanciaVisual.HasNode("Outline"))
+			if(abejaVisual != null)
         	{
             	EstablecerNextPass(abejaVisual.InstanciaVisual, null);
         	} 
@@ -454,14 +463,15 @@ public partial class PlayerManager : Node3D
 		{
 			if (CeldasDisponibles.Contains(abejaActual.CeldaActual) 
 			&& movimientoManager.CeldasSonAdyacentes(jugadorActual.UbicacionActual, abejaActual.CeldaActual) 
-			&& !abejaActual.FueraDeJuego)
+			&& !abejaActual.FueraDeJuego
+			&& !jugadorActual.ColmenaDeReina.AbejasDeColmena.Contains(abejaActual))
 			{
 				listaDeAbejas.Add(abejaActual);
 			}
 		}
 	}
 
-	public void LimpiarAbejasObjetivo(){
+	public void LimpiarAbejasEliminadas(){
 		foreach (var abeja in AbejasObjetivo.Where(a => a.FueraDeJuego).ToList())
 		{
 			if(abeja.FueraDeJuego){
@@ -557,6 +567,8 @@ public partial class PlayerManager : Node3D
 		{
 			GameManager.Instance.CamaraActual.EnfocarNodo(visualJugador);
 		}
+		
+		LimpiarAbejasEliminadas();
 	}		
 
 	public override void _ExitTree()

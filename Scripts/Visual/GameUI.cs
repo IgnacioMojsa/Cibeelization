@@ -346,10 +346,10 @@ public partial class GameUI : Control
 		return;
 		
 		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-		playerManager.MostrarAbejasObjetivo();
 		
 		if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
 			playerManager.MostrarJugadoresObjetivo();
+			playerManager.MostrarAbejasObjetivo();
 		}
 		
 		AudioManager.Instance.PlaySound(UiSound1);
