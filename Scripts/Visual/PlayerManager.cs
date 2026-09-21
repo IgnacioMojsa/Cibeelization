@@ -274,9 +274,9 @@ public partial class PlayerManager : Node3D
 
 		ataqueManager.DaniarAbeja(abejaObjetivo);
 		
-		if (abejaObjetivo.InstanciaVisual != null && IsInstanceValid(abejaObjetivo.InstanciaVisual))
+		if (tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(tropasManager.VisualAbejas[abejaObjetivo]))
     	{
-    	    abejaObjetivo.InstanciaVisual.QueueFree();
+    	    tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
     	}
 
 		LimpiarAbejasEliminadas();
@@ -426,9 +426,9 @@ public partial class PlayerManager : Node3D
 
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
-			if(abejaVisual.InstanciaVisual != null)
+			if(tropasManager.VisualAbejas[abejaVisual] != null)
         	{
-            	EstablecerNextPass(abejaVisual.InstanciaVisual, materialAtaque);
+            	EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], materialAtaque);
         	} 
 		}
 	}
@@ -451,7 +451,7 @@ public partial class PlayerManager : Node3D
 		{
 			if(abejaVisual != null)
         	{
-            	EstablecerNextPass(abejaVisual.InstanciaVisual, null);
+            	EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], null);
         	} 
 		}
 	}

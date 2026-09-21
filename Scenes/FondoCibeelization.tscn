@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c01fhiijvlqft"]
+
+[ext_resource type="PackedScene" uid="uid://bk8nalj4a55yl" path="res://Assets/FondoCibeelization.glb" id="1_r0mwa"]
+
+[node name="FondoCibeelization" unique_id=1028333430 instance=ExtResource("1_r0mwa")]
+
+[node name="Trayectoria_NURBS_001" parent="." index="1" unique_id=1275448561]
+transform = Transform3D(-17.085344, 0, -10.585513, 0, 20.098806, 0, 10.585513, 0, -17.085344, 195.1291, 8.609848, -248.87788)
+
+[node name="Trayectoria_NURBS" parent="." index="2" unique_id=214441995]
+transform = Transform3D(0, 21.726044, 20.252785, -29.70179, -1.2071602e-06, 1.2949731e-06, 1.7703646e-06, -20.252787, 21.726044, -186.02283, 57.17138, -252.89719)
+
+[node name="Plano_003" parent="." index="3" unique_id=846789148]
+transform = Transform3D(14.382137, -7.377611, 7.886637, 4.5615754, 16.055218, 6.700447, -9.788782, -3.3577957, 14.709826, -212.23671, 7.4402275, 146.14835)
+
+[node name="Plano_001" parent="." index="4" unique_id=1527123514]
+transform = Transform3D(6.897862, 1.0580404, -0.721139, -0.7390699, 6.516569, 2.491604, 1.045594, -2.3737867, 6.518579, -162.96028, 12.202332, 145.08786)
+
+[node name="Trayectoria_NURBS_002" parent="." index="5" unique_id=791712353]
+transform = Transform3D(8.004958e-06, 42.221874, -14.879319, -44.766964, 7.7715795e-06, -2.0314749e-06, 6.670798e-07, 14.879319, 42.221874, -186.02283, 84.30246, -240.51291)
+
+[node name="Trayectoria_NURBS_003" parent="." index="6" unique_id=1116766123]
+transform = Transform3D(-11.105372, 0, 15.751445, 0, 19.272707, 0, -15.751445, 0, -11.105372, 21.205078, 8.609848, 249.52298)
+
+[node name="Plano_004" parent="." index="7" unique_id=33855545]
+transform = Transform3D(1.6080472, -0.4039046, 2.086875, 0.060454667, 2.6244042, 0.46135736, -2.1247432, -0.23101167, 1.5925152, 262.28354, 10.514853, 257.77618)
+
+[node name="Plano_002" parent="." index="8" unique_id=1545996049]
+transform = Transform3D(1.5180194, -0.10776567, 0.71833384, -0.007689763, 1.6617533, 0.265549, -0.72633195, -0.24282092, 1.498492, 184.76857, 5.872986, 253.19708)
+
+[node name="Plano_005" parent="." index="9" unique_id=1006547026]
+transform = Transform3D(1.209957, 0.034700166, -0.014531679, -0.034655947, 1.210039, 0.003874613, 0.01463674, -0.003456721, 1.2104479, 264.98175, 3.6274204, 193.34964)
