@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class AbejaReina : Abeja
 {
 	public bool EsSuTurno {get; set;} = false;

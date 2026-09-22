@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class Abeja{
 	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 

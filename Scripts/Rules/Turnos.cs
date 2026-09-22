@@ -1,4 +1,4 @@
-using Godot;
+//using Godot;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +23,7 @@ public class TurnManager
 		indiceTurno = 0;
 		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
 		PrepararJugadorParaTurno();
-		GD.Print("Es turno del jugador " + jugadorEnTurno.Id);
+		//GD.Print("Es turno del jugador " + jugadorEnTurno.Id);
 
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
 
@@ -45,7 +45,7 @@ public class TurnManager
 		jugadorEnTurno.InvocoRecien = false; 
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 
-		GD.Print("Terminó su turno");
+		//GD.Print("Terminó su turno");
 
 		CambiarTurnoASiguienteJugador();
 	}
@@ -79,7 +79,7 @@ public class TurnManager
 		jugadorEnTurno = JugadoresEnPartida[indiceTurno];
 		PrepararJugadorParaTurno();
 
-		GD.Print("Turno del jugador " + jugadorEnTurno.Id);
+		//GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
 		OnTextoInstrucciones?.Invoke("Tirá el dado para continuar.");
