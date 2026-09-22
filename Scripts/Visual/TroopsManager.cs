@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public partial class TroopsManager : Node3D
 {
     private readonly List<PackedScene> Assets = new();
-	public Dictionary<AbejaReina, Node3D> TropasJugadores = new();
-
+	public Dictionary<Abeja, Node3D> VisualAbejas = new();
+	public Dictionary<AbejaReina, Node3D> AlmacenJugadores = new();
     public override void _Ready()
 	{
-	    TropasJugadores.Clear();
+	    AlmacenJugadores.Clear();
 	    CargarAssets();
 	    if (GameManager.Instance.JugadoresEnPartida.Count > 0)
 	        CargarAlmacenDeTropasPara(GameManager.Instance.cantidadJugadores);
@@ -27,7 +27,6 @@ public partial class TroopsManager : Node3D
 	    // Assets.Add(GD.Load<PackedScene>("res://Scenes/AbejaSanadora.tscn"));
 	}
 
-
     public void InstanciarAbeja(Vector3 posicion, Celda celdaCliqueada)
 	{
 	    if (Assets.Count == 0)
@@ -36,7 +35,7 @@ public partial class TroopsManager : Node3D
 	        return;
 	    }
 
-	    if (!TropasJugadores.ContainsKey(GameManager.Instance.jugadorEnTurno))
+	    if (!AlmacenJugadores.ContainsKey(GameManager.Instance.jugadorEnTurno))
 	    {
 	        GD.PrintErr("No existe almacén de tropas para este jugador");
 	        return;
@@ -47,16 +46,14 @@ public partial class TroopsManager : Node3D
 
 	    abejaNueva.ColmenaHogar = GameManager.Instance.jugadorEnTurno.ColmenaDeReina;
 	    abejaNueva.CeldaActual = celdaCliqueada;
-	    abejaNueva.InstanciaVisual = InstanciaNueva;
 	    GameManager.Instance.GenerarAbejaNueva(abejaNueva);
 
-	    TropasJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);
+	    VisualAbejas.Add(abejaNueva, InstanciaNueva);
+		AlmacenJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);
 	    EstablecerPosicionDeAbeja(InstanciaNueva, posicion);
 
 	    GD.Print("Abeja instanciada en " + posicion);
 	}
-
-
 
     public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){
 		instanciaNueva.GlobalPosition = posicion;
@@ -68,7 +65,7 @@ public partial class TroopsManager : Node3D
 			var almacenJugador = new Node3D();
 			almacenJugador.Name = "AlmacenJugador" + GameManager.Instance.JugadoresEnPartida[j].Id;
 
-			TropasJugadores.Add(GameManager.Instance.JugadoresEnPartida[j], almacenJugador);
+			AlmacenJugadores.Add(GameManager.Instance.JugadoresEnPartida[j], almacenJugador);
 
 			AddChild(almacenJugador);
 		}

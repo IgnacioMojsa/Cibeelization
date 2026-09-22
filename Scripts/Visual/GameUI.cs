@@ -419,6 +419,7 @@ public partial class GameUI : Control
 		if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
 			playerManager.MostrarJugadoresObjetivo();
 			playerManager.MostrarAbejasObjetivo();
+			GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
 		}
 		
 		AudioManager.Instance.PlaySound(UiSound1);

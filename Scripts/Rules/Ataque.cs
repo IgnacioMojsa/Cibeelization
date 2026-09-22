@@ -15,7 +15,14 @@ public class AtaqueManager
 	public void DaniarJugador(AbejaReina jugador)
 	{
 		if (jugador == null) return;
-		jugador.RestarVida();
+		
+		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+			jugador.RestarVida(10);
+		}
+		else
+		{
+			jugador.RestarVida(5);
+		}
 
 		AudioManager.Instance.PlaySound(punchSound);
 	}

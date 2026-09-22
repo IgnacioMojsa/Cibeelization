@@ -8,7 +8,6 @@ using JuegoAbeja.Scripts.Data;
 public partial class GameManager 
 {
 	public static GameManager Instance { get; } = new GameManager();
-
 	public TurnManager TurnManager { get; private set; }
 	public List<string> TiposDeAbejas = new List<string>();
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
@@ -53,7 +52,7 @@ public partial class GameManager
 		var jugadoresFueraDeJuego = JugadoresEnPartida.Where(j => j.FueraDeJuego).ToList();
 
 		return jugadoresFueraDeJuego.Count == cantidadJugadores - 1;
-	}  
+	}
 
 	public void EstablecerJugadorGanador(){
 		var jugadorGanador = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego);
@@ -100,7 +99,6 @@ public partial class GameManager
 	        }
 	    }
 	}
-
 
 	public int TirarDado()
 	{
@@ -187,6 +185,24 @@ public partial class GameManager
 		TurnManager = new TurnManager(JugadoresEnPartida);
 		TurnManager.EstablecerPrimerTurno(); 
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
+	}
+
+	public List<Abeja> SubditosAdyacentes()
+	{
+		var celdasAdyacentes = TableroActual.ObtenerVecinos(jugadorEnTurno.UbicacionActual);
+		
+		return jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Any(c => c == a.CeldaActual)).ToList();
+	}
+
+	public void PotenciarAtaqueDeJugadorEnTurno()
+	{
+		var subditosAdyacentes = SubditosAdyacentes();
+
+		if(subditosAdyacentes.Count() > 2)
+		{
+			GD.Print("Ataque de jugador " + jugadorEnTurno.Id + " potenciado"); 
+			jugadorEnTurno.AtaquePotenciado = true;
+		}
 	}
 
 	public void ResetearEstadoPartida()
