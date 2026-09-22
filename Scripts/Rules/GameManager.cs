@@ -73,19 +73,6 @@ public partial class GameManager
 		// Intentamos actualizar si los nodos ya están presentes
 		ActualizarTableroYCamara();
 	}
-	
-	/* public void ActualizarTableroYCamara()
-	{
-		if (TableroActual != null)
-		{
-			TableroActual.GenerarTablero(DimensionActual, DimensionActual);
-	
-			if (CamaraActual != null)
-			{
-				CamaraActual.AjustarATablero(DimensionActual, DimensionActual, TableroActual.TileSize);
-			}
-		}
-	} */
 
 	public void ActualizarTableroYCamara()
 	{
