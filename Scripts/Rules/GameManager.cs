@@ -209,4 +209,25 @@ public partial class GameManager
 		}
 	}
 
+	public void ReiniciarPartida()
+	{
+	    if (PartidaActual == null)
+	    {
+	        GD.PrintErr("No hay partida inicializada para reiniciar.");
+	        return;
+	    }
+	
+	    JugadoresEnPartida.Clear();
+	    jugadorEnTurno = null;
+	    JugadorGanador = null;
+	
+	    // Volver a cargar jugadores con los mismos parámetros
+	    CargarJugadores(PartidaActual.CantidadJugadores);
+	
+	    // NO llamar a SetTiles acá → el nuevo Tablero lo hará en su _Ready()
+	    GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
+	}
+
+
+
 }

@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="1_jtq2n"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="2_jtq2n"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtq2n"]
+bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
 [node name="PantallaVictoria" type="Control" unique_id=1127230668]
 layout_mode = 3
 anchors_preset = 15
@@ -29,3 +37,185 @@ theme_override_fonts/font = ExtResource("2_jtq2n")
 theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MenuVictoria" type="HBoxContainer" parent="." unique_id=1500203610]
+process_mode = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.54887795
+anchor_top = 0.079802334
+anchor_right = -0.27653757
+anchor_bottom = 0.4978046
+offset_left = 1064.3074
+offset_top = 336.2881
+offset_right = 1055.7473
+offset_bottom = 300.72803
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.232)
+pivot_offset = Vector2(107, 63.5)
+theme_override_constants/separation = 50
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="VictoriaBorder" type="PanelContainer" parent="MenuVictoria" unique_id=306507696]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_jtq2n")
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuVictoria/VictoriaBorder" unique_id=1323212888]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuVictoria/VictoriaBorder/MarginContainer" unique_id=993229266]
+layout_mode = 2
+alignment = 1
+
+[node name="Reiniciar" type="PanelContainer" parent="MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer" unique_id=1915486439]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ReiniciarButton" type="Button" parent="MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/Reiniciar" unique_id=1162727880]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 32
+action_mode = 0
+text = "Reiniciar"
+
+[node name="MenuPrincipal" type="PanelContainer" parent="MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer" unique_id=428544494]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MenuPrincipalButton" type="Button" parent="MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/MenuPrincipal" unique_id=1644714386]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = "Menu Principal"
+
+[node name="ConfirmacionReiniciarVictoria" type="PanelContainer" parent="." unique_id=1866400172]
+visible = false
+layout_mode = 0
+offset_left = 350.0
+offset_top = 499.0
+offset_right = 810.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmacionReiniciarVictoria" unique_id=1727308090]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmacionReiniciarVictoria/MarginContainer" unique_id=1088756687]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer" unique_id=1440566692]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 24
+text = "Confirma que desea reiniciar la partida? "
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer" unique_id=975280577]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Si" type="PanelContainer" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1359080731]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="SiButton" type="Button" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=608353199]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "Si"
+
+[node name="No" type="PanelContainer" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer" unique_id=829447078]
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1906118292]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "No"
+
+[node name="ConfirmacionSalirVictoria" type="PanelContainer" parent="." unique_id=1909384621]
+visible = false
+layout_mode = 0
+offset_left = 350.0
+offset_top = 499.0
+offset_right = 810.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfirmacionSalirVictoria" unique_id=821412715]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmacionSalirVictoria/MarginContainer" unique_id=569460882]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer" unique_id=455756042]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 24
+text = "Confirma que desear regresar al menú principal? "
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer" unique_id=1456255363]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Si" type="PanelContainer" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1526210176]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="SiButton" type="Button" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=1030138883]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "Si"
+
+[node name="No" type="PanelContainer" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1515701382]
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=1646121582]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_jtq2n")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "No"

@@ -11,7 +11,6 @@ public partial class GameUI : Control
 	private AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
-
 	private Button botonPausa;
 
 	private PanelContainer containerPausa;
@@ -22,6 +21,18 @@ public partial class GameUI : Control
 	private PanelContainer confirmacionSalir;
 	private PanelContainer confirmacionReiniciar;
 	private bool reinicioConfirmado = false;
+
+	private bool hayJugadorVictorioso = false;
+
+	private HBoxContainer MenuVictoria;
+
+	private Button botonSalirVictoria;
+
+	private Button botonReiniciarPartidaVictoria;
+
+	private PanelContainer confirmacionSalirVictoria;
+	private PanelContainer confirmacionReiniciarVictoria;
+
 	
 	public override void _Ready(){
 		
@@ -47,7 +58,9 @@ public partial class GameUI : Control
 			}
 		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn")
 			{
-			MostrarMensajeVictoria();
+				hayJugadorVictorioso = true;
+				MostrarMensajeVictoria();
+				UIVictoria();
 			}
 	}		
 
@@ -101,6 +114,54 @@ public partial class GameUI : Control
 
 	}
 
+	public void UIVictoria()
+	{
+		MenuVictoria = GetNode<HBoxContainer>("MenuVictoria");
+		botonSalirVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+		botonReiniciarPartidaVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+		confirmacionReiniciarVictoria = GetNode<PanelContainer>("ConfirmacionReiniciarVictoria");
+		confirmacionSalirVictoria = GetNode<PanelContainer>("ConfirmacionSalirVictoria");
+
+		botonSalirVictoria.Pressed += MostrarConfirmacionSalirVictoria;
+		botonReiniciarPartidaVictoria.Pressed += MostrarConfirmacionReiniciarVictoria;
+
+		// Botones del cuadro de confirmación para regresar al menu principal
+		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalirVictoria;
+
+		// Botones del cuadro de confirmación para reiniciar la partida
+		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
+		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionReiniciarVictoria;
+	}
+
+	private void MostrarConfirmacionSalirVictoria()
+	{
+		MenuVictoria.Visible = false;
+		confirmacionSalirVictoria.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	private void OcultarConfirmacionSalirVictoria()
+	{
+		confirmacionSalirVictoria.Visible = false;
+		MenuVictoria.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	private void MostrarConfirmacionReiniciarVictoria()
+	{
+		MenuVictoria.Visible = false;
+		confirmacionReiniciarVictoria.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	private void OcultarConfirmacionReiniciarVictoria()
+	{
+		confirmacionReiniciarVictoria.Visible = false;
+		MenuVictoria.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
 	private void SuscribirAEventos()
 	{
 		// Primero limpiar suscripciones viejas
@@ -146,6 +207,7 @@ public partial class GameUI : Control
 		AudioManager.Instance.PlaySound(UiSound1);
 
 		reinicioConfirmado = false;
+		hayJugadorVictorioso = false;
 
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	
@@ -203,28 +265,40 @@ public partial class GameUI : Control
 
 	private void Reiniciar()
 	{
-		GD.Print("Reiniciando la partida");
-		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
-		confirmacionReiniciar.Visible = false;
-		containerPausa.Visible = true;
+		GetTree().Paused = false;
+
+		// Reinicia la partida con los mismos parámetros guardados en PartidaActual
+		GameManager.Instance.ReiniciarPartida();
+
 		reinicioConfirmado = true;
-		ComenzarPartida(); // Llama a la función para reiniciar la partida
-		//InicializarUI();
-		//SuscribirAEventos();
-		MostrarDataDeJugadores();
-		ActualizarUI();
-		MostrarTextoInstrucciones("Tirá el dado para comenzar.");
+		hayJugadorVictorioso = false;
+
+		// Ocultar confirmaciones si existen
+		if (confirmacionReiniciar != null) confirmacionReiniciar.Visible = false;
+		if (confirmacionReiniciarVictoria != null) confirmacionReiniciarVictoria.Visible = false;
+		if (containerPausa != null) containerPausa.Visible = true;
+
+		GD.Print("Comienza nueva partida");
+		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
 
 	private void IrAlMenuPrincipal()
 	{
-		GD.Print("Regresando al menu principal");
-		GetTree().Paused = false; // ¡Importante! Despausar antes de cambiar de escena
+		GetTree().Paused = false;
+	
+		// Limpia todo para volver al menú principal
 		GameManager.Instance.ResetearEstadoPartida();
-		
-		AudioManager.Instance.PlaySound(UiSound1);
-
-		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn"); // Ajusta a la ruta de tu menú 
+	
+		reinicioConfirmado = false;
+		hayJugadorVictorioso = false;
+	
+		// Ocultar confirmaciones si existen
+		if (confirmacionSalir != null) confirmacionSalir.Visible = false;
+		if (confirmacionSalirVictoria != null) confirmacionSalirVictoria.Visible = false;
+		if (containerPausa != null) containerPausa.Visible = true;
+	
+		GD.Print("Regresando al menú principal");
+		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
 	}
 
 	private void MostrarMensajeVictoria(){
@@ -252,7 +326,7 @@ public partial class GameUI : Control
 	}
 
 	private int ObtenerCantJugadores(){
-		if (GameManager.Instance.PartidaActual != null && reinicioConfirmado)
+		if (GameManager.Instance.PartidaActual != null && (reinicioConfirmado || hayJugadorVictorioso))
 			return GameManager.Instance.PartidaActual.CantidadJugadores;
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox");
 		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox");
@@ -273,7 +347,7 @@ public partial class GameUI : Control
 	}
 
 	private int ObtenerSizeTablero(){
-		if (GameManager.Instance.PartidaActual != null && reinicioConfirmado)
+		if (GameManager.Instance.PartidaActual != null && (reinicioConfirmado || hayJugadorVictorioso))
 			return GameManager.Instance.PartidaActual.SizeTablero;
 		var check2 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small/CheckBox");
 		var check3 = GetNode<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox");
@@ -409,10 +483,10 @@ public partial class GameUI : Control
 		}
 
 		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id)
-    	{
-    	    playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
-    	    playerManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
-    	}
+		{
+			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
+			playerManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
+		}
 	}
 
 	private void InvocarSubdito()
