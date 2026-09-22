@@ -7,6 +7,7 @@ public partial class AbejaReina : Abeja
 	public bool TiroLosDados {get; set;} = false;
 	public bool SeMovio {get; set;} = false;
 	public bool EstaViva {get; set;} = true;
+	public bool AtaquePotenciado {get; set;} = false;
 
 	public bool AtacoRecien {get; set;} = false;
 	public bool ModoAtaque {get; set;} = false;

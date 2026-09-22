@@ -12,8 +12,8 @@ public partial class Abeja{
 		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion);
 	}
 
-	public void RestarVida(){
-		HP -= 5;
+	public void RestarVida(int cantidad){
+		HP -= cantidad;
 	}
 
 	public void MatarAbeja(){
