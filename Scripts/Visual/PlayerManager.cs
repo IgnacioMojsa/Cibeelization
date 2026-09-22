@@ -64,6 +64,81 @@ public partial class PlayerManager : Node3D
         }
     }
 
+	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas, List<Node3D> visualesJugadores)
+	{
+		foreach (var keyValuePair in celdasOcupadas)
+		{
+			if (keyValuePair.Key == jugadorActual)
+            continue;
+
+        	if (keyValuePair.Value == celda)
+        	{
+            	int indexJugador = visualesJugadores.IndexOf(keyValuePair.Key);
+            	if (indexJugador != -1)
+            	{
+            	    AbejaReina jugadorOcupante = GameManager.Instance.JugadoresEnPartida[indexJugador];
+
+            	    if (jugadorOcupante.FueraDeJuego)
+            	    {
+            	        continue; 
+            	    }
+            	}
+            	return true;
+        	}
+		}
+		return false;
+	}
+
+	public bool PuedeMoverseEntre(Celda origen, Celda destino, Dictionary<Node3D, Celda> celdasOcupadas,
+    Node3D jugadorActual, List<Node3D> visualesJugadores)
+	{
+		if(origen == null || destino == null)
+		return false;
+
+		if(!movimientoManager.CeldasSonAdyacentes(origen, destino))
+		return false;
+
+		if(CeldaTieneOtraReina(destino, jugadorActual, celdasOcupadas, visualesJugadores))
+		return false;
+
+		if(movimientoManager.CeldaTieneOtraAbeja(destino))
+		return false;
+
+		if(GameManager.Instance.jugadorEnTurno.ModoInvocacion)
+		return false; 
+
+		if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		return false; 
+
+		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
+		//return vecinos.Contains(destino);
+
+		return true;
+	}
+
+	public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion) 
+	{
+		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
+			return null;
+
+		Celda celdaMasCercana = null;
+		float distanciaMinima = float.MaxValue;
+
+		foreach (Celda celda in tablero.Celdas)
+		{
+			if (celda.Tile == null) continue;
+
+			float dist = celda.Tile.GlobalPosition.DistanceTo(posicion);
+			if (dist < distanciaMinima)
+			{
+				distanciaMinima = dist;
+				celdaMasCercana = celda;
+			}
+		}
+
+		return celdaMasCercana;
+	}
+
     private void IntentarMoverJugador()
     {       
         if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0)
@@ -90,14 +165,14 @@ public partial class PlayerManager : Node3D
             return;
 
         PosicionEnMundo3D = result["position"].AsVector3();
-        CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+        CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
     
         if(CeldaCliqueada == null)
             return;
 
         EstablecerCeldaParaJugadorEnTurno();
 
-		if(movimientoManager.PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
+		if(PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
 			OcultarCeldasDisponiblesParaInvocar();
 			OcultarAbejasObjetivo();
@@ -115,7 +190,7 @@ public partial class PlayerManager : Node3D
     {
         if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual))
         {
-            CeldaActualPorJugador[VisualJugadorActual] = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, VisualJugadorActual.GlobalPosition);
+            CeldaActualPorJugador[VisualJugadorActual] = ObtenerCeldaDesdePosicion(tablero.Celdas, VisualJugadorActual.GlobalPosition);
         }
     
         CeldaOrigen = CeldaActualPorJugador[VisualJugadorActual];
@@ -168,7 +243,7 @@ public partial class PlayerManager : Node3D
 		return;
 
 		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
 
 		if (CeldaCliqueada == null)
         return;
@@ -540,7 +615,7 @@ public partial class PlayerManager : Node3D
 		return;
 
 		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = movimientoManager.ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
 	
 		if(CeldaCliqueada == null)
 		return;
