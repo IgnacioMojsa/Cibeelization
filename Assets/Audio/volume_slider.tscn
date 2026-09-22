@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cdsqdaw3fv52u"]
 
-[ext_resource type="Script" path="res://Assets/Audio/VolumeSlider.cs" id="1_wn0vq"]
+[ext_resource type="Script" uid="uid://cdm6vgabo8gfx" path="res://Scripts/Visual/Audio Scripts/VolumeSlider.cs" id="1_wn0vq"]
 
 [node name="HSlider" type="HSlider" unique_id=1666788886]
 process_mode = 3
