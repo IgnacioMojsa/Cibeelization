@@ -340,6 +340,21 @@ label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Credits" type="PanelContainer" parent="HBoxContainer" unique_id=1366396267]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CreditsButton" type="Button" parent="HBoxContainer/Credits" unique_id=1265861417]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Créditos
+"
+
 [node name="Exit" type="PanelContainer" parent="HBoxContainer" unique_id=320194545]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -468,6 +483,70 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Aceptar"
 
+[node name="PantallaCreditos" type="PanelContainer" parent="." unique_id=1670162436]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.5
+offset_top = -181.5
+offset_right = 261.5
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PantallaCreditos" unique_id=1340098653]
+layout_mode = 2
+
+[node name="Margin0" type="MarginContainer" parent="PantallaCreditos/VBoxContainer" unique_id=538604942]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="Creditos" type="Label" parent="PantallaCreditos/VBoxContainer/Margin0" unique_id=2098884909]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 40
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="Nombres" type="Label" parent="PantallaCreditos/VBoxContainer" unique_id=13987058]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 35
+text = "Marcos Monescao
+Ignacio Mojsa
+Maitena Pochyly"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PantallaCreditos/VBoxContainer" unique_id=1104256104]
+layout_mode = 2
+theme_override_constants/margin_top = 15
+
+[node name="Volver" type="PanelContainer" parent="PantallaCreditos/VBoxContainer/MarginContainer" unique_id=138201833]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VolverButton" type="Button" parent="PantallaCreditos/VBoxContainer/MarginContainer/Volver" unique_id=963518408]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Volver
+"
+
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
@@ -477,5 +556,7 @@ text = "Aceptar"
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
 [connection signal="pressed" from="HBoxContainer/Settings/SettingsButton" to="." method="Ajustes"]
+[connection signal="pressed" from="HBoxContainer/Credits/CreditsButton" to="." method="Creditos"]
 [connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
+[connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]

@@ -516,4 +516,18 @@ public partial class GameUI : Control
 		AudioManager.Instance.PlaySound(UiSound1);
 		UIAjustesMenuPrincipal.Visible = false;
 	}
+
+	private void Creditos()
+	{
+		PanelContainer UICreditos = GetNode<PanelContainer>("PantallaCreditos");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UICreditos.Visible = true;
+	}
+
+	private void CerrarCreditos()
+	{
+		PanelContainer UICreditos = GetNode<PanelContainer>("PantallaCreditos");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UICreditos.Visible = false;
+	}
 };
