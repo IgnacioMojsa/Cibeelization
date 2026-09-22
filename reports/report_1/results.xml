@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites id="2026-09-21" name="report_1" tests="1" failures="0" skipped="0" flaky="0" time="0.000">
-	<testsuite id="0" name="TurnManagerTests" package="Scripts/Tests" timestamp="2026-09-21T21:12:38" hostname="localhost" tests="1" failures="0" errors="0" skipped="0" flaky="0" time="0.274">
-		<testcase name="EstablecerPrimerTurno_AsignaJugadorCorrecto" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.167">
+<testsuites id="2026-09-22" name="report_1" tests="6" failures="1" skipped="0" flaky="0" time="0.000">
+	<testsuite id="0" name="TurnManagerTests" package="Scripts/Tests" timestamp="2026-09-22T07:03:44" hostname="localhost" tests="2" failures="0" errors="0" skipped="0" flaky="0" time="0.297">
+		<testcase name="AsignarJugadorCorrectoEnElPrimerTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.184">
+		</testcase>
+		<testcase name="OmitirJugadorFueraDeJuegoAlCambiarDeTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.005">
+		</testcase>
+	</testsuite>
+	<testsuite id="1" name="GameManagerTests" package="Scripts/Tests" timestamp="2026-09-22T07:03:45" hostname="localhost" tests="4" failures="1" errors="0" skipped="0" flaky="0" time="0.096">
+		<testcase name="ConsumirMovimientosEnUnTurnoYPasarAlSiguienteJugador" classname="GameManagerTests" time="0.005">
+		</testcase>
+		<testcase name="QuedaUnJugadorEnPieYSeCumpleLaCondicionDeVictoria" classname="GameManagerTests" time="0.068">
+			<failure message="FAILED: res://Scripts/Tests/GameManagerTests.cs:46" type="FAILURE">
+<![CDATA[
+Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+]]>
+			</failure>
+		</testcase>
+		<testcase name="SetTiles_AsignaDimensionesSegunOpcion" classname="GameManagerTests" time="0.002">
+		</testcase>
+		<testcase name="ResetearEstadoPartida_LimpiaListasYReferencias" classname="GameManagerTests" time="0.006">
 		</testcase>
 	</testsuite>
 </testsuites>

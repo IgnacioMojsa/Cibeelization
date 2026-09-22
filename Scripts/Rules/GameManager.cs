@@ -1,4 +1,4 @@
-using Godot;
+//using Godot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -112,7 +112,7 @@ public partial class GameManager
 
 		jugadorEnTurno.MovimientosDisponibles--;
 
-		GD.Print("Movimientos restantes: " + jugadorEnTurno.MovimientosDisponibles);
+		//GD.Print("Movimientos restantes: " + jugadorEnTurno.MovimientosDisponibles);
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
@@ -139,7 +139,7 @@ public partial class GameManager
 	public void EliminarJugador(int Id)
 	{
 		JugadoresEnPartida[Id].FueraDeJuego = true;
-		GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
+		//GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
 	}
 
 	public void GenerarAbejaNueva(Abeja unaAbeja){
@@ -190,14 +190,14 @@ public partial class GameManager
 
 		if(subditosAdyacentes.Count() > 2)
 		{
-			GD.Print("Ataque de jugador " + jugadorEnTurno.Id + " potenciado"); 
+			//GD.Print("Ataque de jugador " + jugadorEnTurno.Id + " potenciado"); 
 			jugadorEnTurno.AtaquePotenciado = true;
 		}
 	}
 
 	public void ResetearEstadoPartida()
 	{
-		GD.Print("Reseteando la partida");
+		//GD.Print("Reseteando la partida");
 		JugadoresEnPartida.Clear();
 		jugadorEnTurno = null;
 		JugadorGanador = null;
@@ -219,7 +219,7 @@ public partial class GameManager
 	{
 		if (PartidaActual == null)
 		{
-			GD.PrintErr("No hay partida inicializada para reiniciar.");
+			//GD.PrintErr("No hay partida inicializada para reiniciar.");
 			return;
 		}
 	
@@ -231,7 +231,7 @@ public partial class GameManager
 		CargarJugadores(PartidaActual.CantidadJugadores);
 	
 		// NO llamar a SetTiles acá → el nuevo Tablero lo hará en su _Ready()
-		GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
+		//GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
 	}
 
 
