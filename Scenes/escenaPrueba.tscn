@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
+[ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -22,6 +23,14 @@ background_mode = 2
 sky = SubResource("Sky_gojdn")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvlkt"]
+bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ap8h6"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
 border_width_left = 5
 border_width_top = 5
@@ -356,47 +365,45 @@ alignment = 1
 
 [node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
 process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Continuar"
 
 [node name="Reiniciar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1336349814]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="ReiniciarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar" unique_id=266559482]
 process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Reiniciar"
 
 [node name="MenuPrincipal" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=594455706]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="MenuPrincipalButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal" unique_id=2081269028]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Menu Principal"
+
+[node name="Ajustes" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1048416280]
+layout_mode = 2
+
+[node name="AjustesButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes" unique_id=378474905]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = "Ajustes"
 
 [node name="ConfirmacionReiniciar" type="PanelContainer" parent="HUD" unique_id=738415298]
 visible = false
@@ -542,5 +549,104 @@ theme_override_font_sizes/font_size = 25
 text = "Texto texto texto texto"
 horizontal_alignment = 1
 
+[node name="Ajustes" type="PanelContainer" parent="HUD" unique_id=109946770]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.5
+offset_top = -477.5
+offset_right = 261.5
+offset_bottom = -114.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ap8h6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Ajustes" unique_id=1676763436]
+layout_mode = 2
+
+[node name="Margin0" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1616871098]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Ajustes" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin0" unique_id=2071688744]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 40
+text = "Ajustes"
+horizontal_alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=2035642877]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin1" unique_id=975765891]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "General"
+horizontal_alignment = 1
+
+[node name="Master" parent="HUD/Ajustes/VBoxContainer" unique_id=1666788886 instance=ExtResource("9_y8nye")]
+layout_mode = 2
+BusName = "Master"
+
+[node name="Margin2" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1465954372]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Musica" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin2" unique_id=224127065]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Música"
+horizontal_alignment = 1
+
+[node name="Music" parent="HUD/Ajustes/VBoxContainer" unique_id=823332244 instance=ExtResource("9_y8nye")]
+layout_mode = 2
+BusName = "Music"
+
+[node name="Margin3" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1472759120]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="SFX" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin3" unique_id=122344324]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Efectos de sonido"
+horizontal_alignment = 1
+
+[node name="SFX" parent="HUD/Ajustes/VBoxContainer" unique_id=1898905141 instance=ExtResource("9_y8nye")]
+layout_mode = 2
+BusName = "SFX"
+
+[node name="Margin4" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=2089517757]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Aceptar" type="PanelContainer" parent="HUD/Ajustes/VBoxContainer/Margin4" unique_id=1704037575]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AceptarButton" type="Button" parent="HUD/Ajustes/VBoxContainer/Margin4/Aceptar" unique_id=81269994]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Aceptar"
+
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
+[connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
+[connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]

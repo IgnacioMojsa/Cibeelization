@@ -503,4 +503,17 @@ public partial class GameUI : Control
 	{
 		feedback.Text = texto;
 	}
+
+	private void Ajustes(){
+		PanelContainer UIAjustes = GetNode<PanelContainer>("Ajustes");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UIAjustes.Visible = true;
+	}
+
+	private void AceptarConfigAudio()
+	{
+		PanelContainer UIAjustesMenuPrincipal = GetNode<PanelContainer>("Ajustes");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UIAjustesMenuPrincipal.Visible = false;
+	}
 };

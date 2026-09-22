@@ -5,6 +5,7 @@
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
+[ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="6_e1fak"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
@@ -242,6 +243,7 @@ offset_right = 324.5
 offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_horizontal = 4
 theme_override_constants/separation = 50
 alignment = 1
 
@@ -369,6 +371,103 @@ label_settings = ExtResource("1_uuyxf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Ajustes" type="PanelContainer" parent="." unique_id=519198103]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.5
+offset_top = -181.5
+offset_right = 261.5
+offset_bottom = 181.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ajustes" unique_id=1014494023]
+layout_mode = 2
+
+[node name="Margin0" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1951913037]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Ajustes" type="Label" parent="Ajustes/VBoxContainer/Margin0" unique_id=962221034]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 40
+text = "Ajustes"
+horizontal_alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=513525099]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="Ajustes/VBoxContainer/Margin1" unique_id=1440001933]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "General"
+horizontal_alignment = 1
+
+[node name="Master" parent="Ajustes/VBoxContainer" unique_id=1666788886 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+BusName = "Master"
+
+[node name="Margin2" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=353060220]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Musica" type="Label" parent="Ajustes/VBoxContainer/Margin2" unique_id=109880240]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Música"
+horizontal_alignment = 1
+
+[node name="Music" parent="Ajustes/VBoxContainer" unique_id=1579628621 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+BusName = "Music"
+
+[node name="Margin3" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1527308630]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="SFX" type="Label" parent="Ajustes/VBoxContainer/Margin3" unique_id=1390652517]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Efectos de sonido"
+horizontal_alignment = 1
+
+[node name="SFX" parent="Ajustes/VBoxContainer" unique_id=543925765 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+BusName = "SFX"
+
+[node name="Margin4" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1691293215]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Aceptar" type="PanelContainer" parent="Ajustes/VBoxContainer/Margin4" unique_id=89151631]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AceptarButton" type="Button" parent="Ajustes/VBoxContainer/Margin4/Aceptar" unique_id=27290165]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Aceptar"
+
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
@@ -377,4 +476,6 @@ vertical_alignment = 1
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
+[connection signal="pressed" from="HBoxContainer/Settings/SettingsButton" to="." method="Ajustes"]
 [connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]
+[connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]

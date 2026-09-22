@@ -29,12 +29,13 @@ public partial class AudioManager : Node
 	{
 		sfx_stream.Stream = setting.Source;
 		sfx_stream.VolumeDb = setting.Volume_db;
+		sfx_stream.Bus = "SFX";
 		sfx_stream.Play();
 	}
 
 	public void PlayMusic(AudioSetting setting)
 	{
-		if (music_stream.Playing)
+		if(music_stream.Playing)
 			return;
 
 		music_stream.Stream = setting.Source;

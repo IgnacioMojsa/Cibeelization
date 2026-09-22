@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="GameAudio" format=3 uid="uid://33yi3qdgu3bv"]
 
-[ext_resource type="Script" uid="uid://dfkdnyfl5ssgp" path="res://Scripts/Audio Scripts/GameAudio.cs" id="1_iu2c2"]
+[ext_resource type="Script" uid="uid://dfkdnyfl5ssgp" path="res://Scripts/Visual/Audio Scripts/GameAudio.cs" id="1_iu2c2"]
 [ext_resource type="AudioStream" uid="uid://4qdq7ch7ojhy" path="res://Assets/Audio/SFX/click_sound.mp3" id="1_xabau"]
-[ext_resource type="Script" uid="uid://eat4rg48x2ck" path="res://Scripts/Audio Scripts/AudioSetting.cs" id="2_lbn20"]
+[ext_resource type="Script" uid="uid://eat4rg48x2ck" path="res://Scripts/Visual/Audio Scripts/AudioSetting.cs" id="2_lbn20"]
 [ext_resource type="AudioStream" uid="uid://cdvm6br1efhuk" path="res://Assets/Audio/SFX/pop_sound.mp3" id="3_guub6"]
 [ext_resource type="AudioStream" uid="uid://byu73pyxdxv4o" path="res://Assets/Audio/SFX/punch_sound.mp3" id="4_hbx5o"]
 [ext_resource type="AudioStream" uid="uid://pjfi2mwg50nn" path="res://Assets/Audio/SFX/dice_sound.mp3" id="5_guub6"]
