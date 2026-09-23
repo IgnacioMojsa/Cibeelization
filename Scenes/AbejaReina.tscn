@@ -15,7 +15,7 @@
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(505416301) index="0" unique_id=969713281]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1316668008) index="0" unique_id=574538970]
 bones/0/rotation = Quaternion(0.9942587, 1.27558355e-08, 1.18524866e-07, 0.10700372)
 bones/1/rotation = Quaternion(0.07742586, 1.7704717e-14, 1.845976e-08, 0.9969982)
 bones/2/rotation = Quaternion(0.022922367, -1.42007056e-14, 5.4651186e-09, 0.9997373)
@@ -45,18 +45,21 @@ bones/36/rotation = Quaternion(-0.17097801, 0.15627985, 0.32385558, 0.91731167)
 bones/41/rotation = Quaternion(-0.073036134, -0.18091635, -0.37767434, 0.9051504)
 bones/42/rotation = Quaternion(-0.17097805, -0.1562799, -0.32385573, 0.9173116)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1582330831]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=83675366]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 surface_material_override/1 = SubResource("StandardMaterial3D_mvxwy")
 surface_material_override/2 = SubResource("StandardMaterial3D_i22ah")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=2129644581]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1124348751]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 surface_material_override/1 = SubResource("StandardMaterial3D_3g5vb")
 surface_material_override/2 = SubResource("StandardMaterial3D_m5opc")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=788664651]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=450606816]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1425067299]
+[node name="AnimationPlayer" parent="." index="1" unique_id=929064527]
 autoplay = &"Idle"

@@ -69,7 +69,8 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
 
-[node name="Plane" parent="hexagon_tile" index="0" unique_id=77291424]
+[node name="Plane" parent="hexagon_tile" index="0" unique_id=1634828158]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_sii6b")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="hexagon_tile/Plane" index="0" unique_id=177514016]
@@ -85,6 +86,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2lok1")
 visible = false
 
 [node name="Plane" type="MeshInstance3D" parent="Outline" unique_id=52799960]
+lod_bias = 0.1
 mesh = SubResource("ArrayMesh_cj3ef")
 surface_material_override/0 = SubResource("StandardMaterial3D_3p6xg")
 

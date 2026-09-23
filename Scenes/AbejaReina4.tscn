@@ -13,15 +13,18 @@
 [node name="AbejaReina4" unique_id=1816187034 instance=ExtResource("1_4qnwh")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Cubo_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="0" unique_id=2056319873]
+[node name="Cubo_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="0" unique_id=1888406471]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_bvyen")
 
-[node name="Cubo_002" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="1" unique_id=973322442]
+[node name="Cubo_002" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="1" unique_id=2018850786]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_4vikw")
 surface_material_override/1 = SubResource("StandardMaterial3D_jqpis")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1504842117) index="2" unique_id=578597221]
+[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="2" unique_id=912501394]
+lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_2dopi")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1982564683]
+[node name="AnimationPlayer" parent="." index="1" unique_id=504294686]
 autoplay = &"Idle"
