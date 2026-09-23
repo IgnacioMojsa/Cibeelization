@@ -318,13 +318,20 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void OutlineJugadorEnTurno(Node3D visualActual){
-		var materialTurno = GD.Load<StandardMaterial3D>("res://outlineTurnoActual.tres");
+		var IndiceDeJugadorEnTurno = GameManager.Instance.jugadorEnTurno.Id - 1;
+		
+		var materialTurnoJ1 = GD.Load<StandardMaterial3D>("res://outlineJugador1.tres");
+		var materialTurnoJ2 = GD.Load<StandardMaterial3D>("res://outlineJugador2.tres");
+		var materialTurnoJ3 = GD.Load<StandardMaterial3D>("res://outlineJugador3.tres");
+		var materialTurnoJ4 = GD.Load<StandardMaterial3D>("res://outlineJugador4.tres");
+
+		List<StandardMaterial3D> OutlinesJugadores = new List<StandardMaterial3D>{ materialTurnoJ1, materialTurnoJ2, materialTurnoJ3, materialTurnoJ4 };
 
 		EsconderOutlineDeJugadores();
 
 		if (visualActual != null)
 		{
-			EstablecerNextPass(visualActual, materialTurno);
+			EstablecerNextPass(visualActual, OutlinesJugadores[IndiceDeJugadorEnTurno]);
 		}
 	}
 
@@ -357,6 +364,7 @@ public partial class PlayerManager : Node3D
 		
 		if (tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(tropasManager.VisualAbejas[abejaObjetivo]))
 		{
+			tropasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual, abejaObjetivo);
 			tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
 		}
 

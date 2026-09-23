@@ -476,12 +476,18 @@ public partial class GameUI : Control
 		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
 		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
 
+		var colorJ1 = Color.FromHtml("#6a268f");
+		var colorJ2 = Color.FromHtml("#4c1dae");
+		var colorJ3 = Color.FromHtml("#b33671");
+		var colorJ4 = Color.FromHtml("#8260e5");
+
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
+		List<Color> ColorJugadores = new List<Color>{ colorJ1, colorJ2, colorJ3, colorJ4};
 
 		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
 		{
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
-				UIJugadores[j].Modulate = Color.FromHtml("#9005F2");
+				UIJugadores[j].Modulate = ColorJugadores[j];
 			}
 			else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
 				UIJugadores[j].Visible = false;

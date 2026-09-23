@@ -3,6 +3,6 @@
 [resource]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.6627451, 0.003921569, 0.96862745, 1)
+albedo_color = Color(0.41568628, 0.14901961, 0.56078434, 1)
 grow = true
 grow_amount = 0.08
