@@ -201,6 +201,7 @@ public partial class GameManager
 		jugadorEnTurno = null;
 		JugadorGanador = null;
 		OnEstadoAccionesCambiado = null;
+		CamaraActual = null;
 
 		if(TurnManager != null)
 		{
@@ -225,6 +226,7 @@ public partial class GameManager
 		JugadoresEnPartida.Clear();
 		jugadorEnTurno = null;
 		JugadorGanador = null;
+		CamaraActual = null;
 	
 		// Volver a cargar jugadores con los mismos parámetros
 		CargarJugadores(PartidaActual.CantidadJugadores);
@@ -232,7 +234,4 @@ public partial class GameManager
 		// NO llamar a SetTiles acá → el nuevo Tablero lo hará en su _Ready()
 		//GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
 	}
-
-
-
 }
