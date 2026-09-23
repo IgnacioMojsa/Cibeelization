@@ -125,7 +125,7 @@ public partial class CamaraController : Node3D
 		camera3D.LookAt(centroTablero, Vector3.Up);
 	}
 
-	public void EnfocarNodo(Node3D objetivo)
+	public void EnfocarNodo(Node3D objetivo, float multiplicadorPivote, float multiplicadorCamara)
 	{
 		if (objetivo == null || camera3D == null) return;
 
@@ -140,10 +140,11 @@ public partial class CamaraController : Node3D
 
 		Vector3 posicionObjetivoPivote = objetivo.GlobalPosition;
 		posicionObjetivoPivote.Y = 0;
-		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion*2);
+
+		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion*multiplicadorPivote);
 
 		Vector3 posicionObjetivoCamara = new Vector3(0f, alturaZoomTurno, offsetZTurno);
-		tweenCamara.TweenProperty(camera3D, "position", posicionObjetivoCamara, duracionAnimacion);
+		tweenCamara.TweenProperty(camera3D, "position", posicionObjetivoCamara, duracionAnimacion*multiplicadorCamara);
 
 		tweenCamara.Chain().TweenCallback(Callable.From(() => 
 		{
