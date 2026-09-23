@@ -11,7 +11,7 @@
 [node name="AbejaReina3" unique_id=669288535 instance=ExtResource("1_dlw1h")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(639216760) index="0" unique_id=1849847018]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1415992793) index="0" unique_id=1623540012]
 bones/0/rotation = Quaternion(-0.06633021, 1.1894674e-07, -7.907175e-09, 0.9977977)
 bones/1/rotation = Quaternion(-0.03575623, 2.7255975e-14, -8.524951e-09, 0.99936056)
 bones/2/rotation = Quaternion(-0.19664343, -2.2315486e-14, -4.688345e-08, 0.9804751)
@@ -42,19 +42,19 @@ bones/38/rotation = Quaternion(0.2662519, -0.62995684, 0.22775978, 0.6931016)
 bones/42/rotation = Quaternion(0.26076034, 0.71426135, -0.30908087, 0.57123005)
 bones/47/rotation = Quaternion(0.266252, 0.6299566, -0.2277597, 0.69310176)
 
-[node name="Cube_002" parent="Esqueleto/Skeleton3D" index="0" unique_id=431210252]
+[node name="Cube_002" parent="Esqueleto/Skeleton3D" index="0" unique_id=596611495]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_amv1e")
 surface_material_override/1 = SubResource("StandardMaterial3D_ia8m1")
 surface_material_override/2 = SubResource("StandardMaterial3D_m1b46")
 
-[node name="Cubo" parent="Esqueleto/Skeleton3D" index="1" unique_id=1465727286]
+[node name="Cubo" parent="Esqueleto/Skeleton3D" index="1" unique_id=391852558]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_amv1e")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=844685869]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=376455834]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_amv1e")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1122643874]
+[node name="AnimationPlayer" parent="." index="1" unique_id=705025870]
 autoplay = &"Idle"

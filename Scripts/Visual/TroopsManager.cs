@@ -27,7 +27,7 @@ public partial class TroopsManager : Node3D
 	    // Assets.Add(GD.Load<PackedScene>("res://Scenes/AbejaSanadora.tscn"));
 	}
 
-    public void InstanciarAbeja(Vector3 posicion, Celda celdaCliqueada)
+    public void InstanciarAbeja(Celda celdaCliqueada)
 	{
 	    if (Assets.Count == 0)
 	    {
@@ -50,9 +50,9 @@ public partial class TroopsManager : Node3D
 
 	    VisualAbejas.Add(abejaNueva, InstanciaNueva);
 		AlmacenJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);
-	    EstablecerPosicionDeAbeja(InstanciaNueva, posicion);
+	    EstablecerPosicionDeAbeja(InstanciaNueva, celdaCliqueada.Tile.GlobalPosition);
 
-	    GD.Print("Abeja instanciada en " + posicion);
+	    GD.Print("Abeja instanciada en " + celdaCliqueada);
 	}
 
     public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){

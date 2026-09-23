@@ -626,7 +626,7 @@ public partial class PlayerManager : Node3D
 		if(CeldasDisponibles.Contains(CeldaCliqueada)){
 			OcultarCeldasDisponiblesParaInvocar();	
 			OcultarAbejasObjetivo();
-			tropasManager.InstanciarAbeja(PosicionEnMundo3D, CeldaCliqueada);
+			tropasManager.InstanciarAbeja(CeldaCliqueada);
 			var bee1 = AudioManager.Instance.GameAudio.Sound5;
 			AudioManager.Instance.PlaySound(bee1);
 		}
