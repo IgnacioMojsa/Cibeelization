@@ -332,7 +332,10 @@ public partial class PlayerManager : Node3D
 	{
 		foreach (var visual in VisualesJugadores)
 		{
-			EstablecerNextPass(visual, null);
+			if (visual != VisualJugadorActual)
+			{
+				EstablecerNextPass(visual, null);
+			}
 		}
 	}
 

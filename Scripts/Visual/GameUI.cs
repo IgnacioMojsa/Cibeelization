@@ -213,7 +213,6 @@ public partial class GameUI : Control
 	
 	}
 
-
 	private void PausarPartida()
 	{
 		// Alterna el estado de pausa
@@ -247,7 +246,6 @@ public partial class GameUI : Control
 		confirmacionReiniciar.Visible = false;
 		uiPausa.Visible = true;
 	}
-
 
 	private void MostrarConfirmacionSalir()
 	{
@@ -413,13 +411,23 @@ public partial class GameUI : Control
 	{
 		if(playerManager == null)
 		return;
+
+		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		{
+			GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		
-		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-		
-		if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
-			playerManager.MostrarJugadoresObjetivo();
-			playerManager.MostrarAbejasObjetivo();
-			GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
+			if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
+				playerManager.MostrarJugadoresObjetivo();
+				playerManager.MostrarAbejasObjetivo();
+				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
+			}
+		}
+		else if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		{
+			GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+
+			playerManager.EsconderOutlineDeJugadores();
+			playerManager.OcultarAbejasObjetivo();
 		}
 		
 		AudioManager.Instance.PlaySound(UiSound1);
@@ -436,7 +444,7 @@ public partial class GameUI : Control
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null) return;
 		
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca();
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
 
 		botonAtacar.Disabled = !puedeAtacar;
 	}
@@ -492,10 +500,18 @@ public partial class GameUI : Control
 
 	private void InvocarSubdito()
 	{
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados){	
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
+			AlternarEstadoDeAtaque();
 			playerManager.MostrarCeldasDisponiblesParaInvocar();
 		}
+		else if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion)
+		{
+			GameManager.Instance.jugadorEnTurno.ModoInvocacion = false;
+			AlternarEstadoDeAtaque();
+			playerManager.OcultarCeldasDisponiblesParaInvocar();
+		}
+
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
