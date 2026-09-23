@@ -140,7 +140,7 @@ public partial class CamaraController : Node3D
 
 		Vector3 posicionObjetivoPivote = objetivo.GlobalPosition;
 		posicionObjetivoPivote.Y = 0;
-		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion);
+		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion*2);
 
 		Vector3 posicionObjetivoCamara = new Vector3(0f, alturaZoomTurno, offsetZTurno);
 		tweenCamara.TweenProperty(camera3D, "position", posicionObjetivoCamara, duracionAnimacion);
