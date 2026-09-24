@@ -152,7 +152,6 @@ public void InvocarAbejaNueva(){
 		}
 	}
 ```
-
 ## Integración de Audio, BGM, UISFX y SFX
 Se implementó un Audio Manager global que permite manejar AudioStreamPlayer y MusicStreamPlayer.
 - Música de fondo: [Watermill in the old town (loopeable) por HarumachiMusic.](https://pixabay.com/nl/music/modern-klassiek-watermill-in-the-old-town-loopable-325123/)
