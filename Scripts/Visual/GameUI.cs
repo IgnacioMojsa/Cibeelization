@@ -5,9 +5,9 @@ public partial class GameUI : Control
 {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
+	[Export] public Label feedback;
 	
 	private Label resultadoDados;
-	public Label feedback;
 	private AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
@@ -54,7 +54,7 @@ public partial class GameUI : Control
 			SuscribirAEventos();
 			MostrarDataDeJugadores();
 			ActualizarUI();
-			MostrarTextoInstrucciones("Tirá el dado para comenzar.");
+			ActualizarInstrucciones("Tirá el dado para comenzar.");
 			}
 		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn")
 			{
@@ -73,7 +73,7 @@ public partial class GameUI : Control
 			if (GameManager.Instance.TurnManager != null)
 			{
 				var turnManager = GameManager.Instance.TurnManager;
-				turnManager.OnTextoInstrucciones -= MostrarTextoInstrucciones;
+				EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
 				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
 				turnManager.OnTurnoCambiado -= ActualizarUI;
 			}
@@ -168,7 +168,7 @@ public partial class GameUI : Control
 		_ExitTree();
 
 		var turnManager = GameManager.Instance.TurnManager;
-		turnManager.OnTextoInstrucciones += MostrarTextoInstrucciones;
+		EventosUI.OnMensajeAMostrar += ActualizarInstrucciones;
 		turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
 		turnManager.OnTurnoCambiado += ActualizarUI;
 
@@ -457,7 +457,7 @@ public partial class GameUI : Control
 		if (resultado != -1)
 		{
 			resultadoDados.Text = resultado.ToString();
-			MostrarTextoInstrucciones("Podés moverte por las celdas, atacar o invocar un súbdito.");
+			ActualizarInstrucciones("Debes moverte antes de atacar o invocar.");
 			botonDado.Disabled = true;
 
 			if(AudioManager.Instance?.GameAudio?.Sound4 != null)
@@ -521,9 +521,12 @@ public partial class GameUI : Control
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
-	public void MostrarTextoInstrucciones(string texto)
+	public void ActualizarInstrucciones(string texto)
 	{
+		if(feedback != null)
+		{
 		feedback.Text = texto;
+		}
 	}
 
 	private void Ajustes(){

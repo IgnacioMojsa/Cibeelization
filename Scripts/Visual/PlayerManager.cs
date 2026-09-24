@@ -185,6 +185,7 @@ public partial class PlayerManager : Node3D
 		else
 		{
 			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
+			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}
 
 	}
@@ -357,6 +358,7 @@ public partial class PlayerManager : Node3D
 
 		if(abejaObjetivo == null){
 			GD.Print("No hay ninguna abeja objetivo en la celda seleccionada.");
+			EventosUI.MostrarMensaje("No hay ninguna abeja enemiga para atacar ahí.");
 			return;
 		}
 
@@ -396,11 +398,13 @@ public partial class PlayerManager : Node3D
 			else
 			{
 				GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
+				EventosUI.MostrarMensaje("Esa abeja enemiga está muy lejos.");
 			}
 		}
 		else
 		{
 			GD.Print("No hay ninguna Abeja Reina rival en la celda seleccionada.");
+			EventosUI.MostrarMensaje("No hay ninguna abeja enemiga para atacar ahí.");
 		}
 	}
 
@@ -643,6 +647,7 @@ public partial class PlayerManager : Node3D
 		}
 		else{
 			GD.Print("No se puede invocar una abeja sobre esta celda");
+			EventosUI.MostrarMensaje("No se puede invocar una abeja sobre esta celda");
 		}
 	}
 

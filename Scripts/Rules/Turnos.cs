@@ -9,7 +9,6 @@ public class TurnManager
 	public AbejaReina jugadorEnTurno {get; set;}
 
 	public event Action<AbejaReina> OnCambioDeTurnoJugador;
-	public event Action<string> OnTextoInstrucciones;
 	public event Action OnTurnoCambiado;
 
 	public TurnManager(List<AbejaReina> jugadores)
@@ -77,7 +76,7 @@ public class TurnManager
 		//GD.Print("Turno del jugador " + jugadorEnTurno.Id);
 
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
-		OnTextoInstrucciones?.Invoke("Tirá el dado para continuar.");
+		EventosUI.MostrarMensaje("Tirá el dado para continuar.");
 		OnTurnoCambiado?.Invoke();
 	}
 
@@ -91,7 +90,6 @@ public class TurnManager
 
 	public void ReiniciarTurnos()
 	{
-		OnTextoInstrucciones = null;
 		OnCambioDeTurnoJugador = null;
 		OnTurnoCambiado = null;
 	}
