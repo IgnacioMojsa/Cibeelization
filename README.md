@@ -103,7 +103,7 @@ Del mismo modo usamos el método _UnhandledInput (clicks) para notificar a Playe
 public override void _UnhandledInput(InputEvent @event){...}
 ```
 
-## Mediador
+### Mediador
 Implementamos el patrón mediador en nuestro PlayerManager para poder administrar diferentes subsistemas mediante él sin que haya un acoplamiento excesivo en nuestro código.
 PlayerManager permite la coordinación de los subsistemas de Tablero, Movimiento, Ataque, Cámara y Tropas con el GameManager global.
 
