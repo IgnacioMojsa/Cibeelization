@@ -3,28 +3,51 @@
 [ext_resource type="PackedScene" uid="uid://buppbncamca7f" path="res://Assets/AbejaReina4.glb" id="1_4qnwh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvyen"]
+shading_mode = 0
+albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jawny"]
+shading_mode = 0
+albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bycmn"]
+shading_mode = 0
+albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vikw"]
+shading_mode = 0
+albedo_color = Color(0.98039216, 0.38039216, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jqpis"]
+shading_mode = 0
+albedo_color = Color(0.80784315, 0.24705882, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwfaq"]
+shading_mode = 0
+albedo_color = Color(1, 0.5686275, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dopi"]
+shading_mode = 0
+albedo_color = Color(1, 0.5686275, 0, 1)
 
 [node name="AbejaReina4" unique_id=1816187034 instance=ExtResource("1_4qnwh")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Cubo_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="0" unique_id=1888406471]
+[node name="Cubo_001" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1187904330) index="0" unique_id=260653161]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_bvyen")
+surface_material_override/1 = SubResource("StandardMaterial3D_jawny")
+surface_material_override/2 = SubResource("StandardMaterial3D_bycmn")
 
-[node name="Cubo_002" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="1" unique_id=2018850786]
+[node name="Cubo_002" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1187904330) index="1" unique_id=2069697095]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_4vikw")
 surface_material_override/1 = SubResource("StandardMaterial3D_jqpis")
+surface_material_override/2 = SubResource("StandardMaterial3D_uwfaq")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(2012428821) index="2" unique_id=912501394]
+[node name="Plano" parent="Esqueleto/Skeleton3D" parent_id_path=PackedInt32Array(1187904330) index="2" unique_id=894492677]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_2dopi")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=504294686]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1687081630]
 autoplay = &"Idle"

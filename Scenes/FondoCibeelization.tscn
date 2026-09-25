@@ -4,6 +4,9 @@
 
 [node name="FondoCibeelization" unique_id=1028333430 instance=ExtResource("1_r0mwa")]
 
+[node name="Plano" parent="." index="0" unique_id=291022046]
+transform = Transform3D(-106.801, 0, 0, 0, -106.801, 0, 0, 0, -106.801, 0, 0, 0)
+
 [node name="Trayectoria_NURBS_001" parent="." index="1" unique_id=1275448561]
 transform = Transform3D(-17.085344, 0, -10.585513, 0, 20.098806, 0, 10.585513, 0, -17.085344, 195.1291, 8.609848, -248.87788)
 

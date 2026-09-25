@@ -88,7 +88,7 @@ data = {
 }
 
 [node name="FondoCibeelization" parent="." unique_id=1028333430 instance=ExtResource("6_3642x")]
-transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.842468, -2.0266418, 9.000723)
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.842468, -2.0266418, 13.976545)
 visible = false
 
 [node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager")]

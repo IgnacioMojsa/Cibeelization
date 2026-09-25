@@ -60,27 +60,22 @@ public partial class CamaraController : Node3D
 	            {
 	                controlJugador = true;
 	                enModoOrbita = false;
-	                ultimaPosMouse = mouseEvent.Position; // guardamos posición inicial
+	                ultimaPosMouse = mouseEvent.Position; 
 	            }
 	            else
 	            {
-	                controlJugador = false; // al soltar, se termina el control
+	                controlJugador = false; 
 	            }
 	        }
 	    }
 	    else if (@event is InputEventMouseMotion motionEvent && controlJugador)
 	    {
-	        // Diferencia horizontal del mouse
 	        float deltaX = motionEvent.Position.X - ultimaPosMouse.X;
 	        ultimaPosMouse = motionEvent.Position;
 
-	        // Si movés a la derecha → rota antihorario, izquierda → horario
 	        RotateY(deltaX * velocidadManual * -1f);
 	    }
 	}
-
-
-
 
 	private void AjustarAlInicio()
 	{
@@ -100,39 +95,29 @@ public partial class CamaraController : Node3D
 
 		enModoOrbita = false;
 	
-		// 1. Calcular el tamaño total real del tablero en unidades 3D
-		// Para hexágonos en orientacion vertical:
 		float anchoTablero = columnas * (tileSize * 1.732f); 
 		float profundidadTablero = filas * (tileSize * 1.5f);
 		float valorFloat;
 
 		if(filas == 15)
 		{
-			valorFloat = 40.0f;// Small
+			valorFloat = 40.0f;
 		}
 		else if(filas == 25)
 		{
-			valorFloat = 2.5f; // Mid
+			valorFloat = 2.5f; 
 		}
 		else if(filas == 30)
 		{
-			valorFloat = 2.0f; // Big
+			valorFloat = 2.0f;
 		}
 		else
 		{
-			valorFloat = 40.0f; // Default
+			valorFloat = 40.0f;
 		}
 
-
-	
-		// 2. Calcular el centro exacto del tablero.
-		// Si tu tablero se instancia en el origen (0,0,0) hacia coordenadas positivas:
 		Vector3 centroTablero = new Vector3(anchoTablero / 2.0f, 0f, profundidadTablero / valorFloat);
-	
-		// NOTA: Si tu tablero se genera hacia el eje -Z (negativo), usa esta línea en su lugar:
-		// Vector3 centroTablero = new Vector3(anchoTablero / 2.0f, 0f, -profundidadTablero / 2.0f);
-	
-		// 3. Tomar la dimensión más grande del tablero para definir el tamaño
+
 		float dimensionMaxima = Mathf.Max(anchoTablero, profundidadTablero);
 	
 		// 4. Calcular la distancia (altura) en base al FOV de la cámara
