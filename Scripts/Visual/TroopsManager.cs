@@ -102,7 +102,7 @@ public partial class TroopsManager : Node3D
 		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
 
 		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = Color.Color8(144, 101, 27, 255);
+		nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
 	}

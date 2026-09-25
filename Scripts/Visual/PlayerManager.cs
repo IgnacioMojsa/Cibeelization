@@ -290,10 +290,16 @@ public partial class PlayerManager : Node3D
 		return;
 
 		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
-	
-		AtacarJugador();
-	
-		AtacarAbeja();
+
+		if(OtroJugadorCerca())
+		{
+			AtacarJugador();
+		}
+		else if(AbejasObjetivo.Count > 0)
+		{
+			AtacarAbeja();
+		}
+		
 	}
 
 	private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
@@ -386,10 +392,13 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public bool TieneObjetivosCerca(){
-		var otroJugadorCerca = VisualesJugadores.Any(v => JugadorEnTurnoAdyacenteAOtro(v));
-		
-		return (AbejasObjetivo.Count > 0) || otroJugadorCerca;
+	public bool OtroJugadorCerca()
+	{
+		return VisualesJugadores.Any(v => JugadorEnTurnoAdyacenteAOtro(v));
+	}
+
+	public bool TieneObjetivosCerca(){	
+		return (AbejasObjetivo.Count > 0) || OtroJugadorCerca();
 	}
 
 	private void AtacarAbeja(){
