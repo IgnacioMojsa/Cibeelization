@@ -19,6 +19,12 @@
 - Para atacar a otro jugador, los dos deben estar en celdas contiguas.
 - Cada ataque restará 5 de HP. El último jugador que quede con vida será el ganador.
 
+#### Controles
+Mouse.
+Click derecho para realizar acciones (Botones de la UI) y para realizar movimientos sobre el tablero.
+Click izquierdo y arrastre para mover la dirección de la cámara.
+<img width="1226" height="267" alt="Image" src="https://github.com/user-attachments/assets/f327d144-96cf-493e-a771-361ff502464a" />
+
 #### MDA Framework
 - Mecánicas:
     - Tirar dados
