@@ -12,6 +12,10 @@ public partial class CamaraController : Node3D
 	[Export] private float duracionAnimacion = 0.8f;
 	[Export] private float velocidadRotacion = 0.07f;
 
+	private bool controlJugador = false;
+	private Vector2 ultimaPosMouse;
+	[Export] private float velocidadManual = 0.04f;
+
 	private bool enModoOrbita = false;
 
 	private Tween tweenCamara;
@@ -37,11 +41,46 @@ public partial class CamaraController : Node3D
 		CallDeferred(nameof(AjustarAlInicio));
 	}
 
-	public override void _Process(double delta){
-		if(enModoOrbita){
-			RotateY((float)delta * velocidadRotacion);
-		}
+	public override void _Process(double delta)
+	{
+	    if (!controlJugador && enModoOrbita)
+	    {
+	        RotateY((float)delta * velocidadRotacion);
+	    }
 	}
+
+
+	public override void _Input(InputEvent @event)
+	{
+	    if (@event is InputEventMouseButton mouseEvent)
+	    {
+	        if (mouseEvent.ButtonIndex == MouseButton.Right)
+	        {
+	            if (mouseEvent.Pressed)
+	            {
+	                controlJugador = true;
+	                enModoOrbita = false;
+	                ultimaPosMouse = mouseEvent.Position; // guardamos posición inicial
+	            }
+	            else
+	            {
+	                controlJugador = false; // al soltar, se termina el control
+	            }
+	        }
+	    }
+	    else if (@event is InputEventMouseMotion motionEvent && controlJugador)
+	    {
+	        // Diferencia horizontal del mouse
+	        float deltaX = motionEvent.Position.X - ultimaPosMouse.X;
+	        ultimaPosMouse = motionEvent.Position;
+
+	        // Si movés a la derecha → rota antihorario, izquierda → horario
+	        RotateY(deltaX * velocidadManual * -1f);
+	    }
+	}
+
+
+
 
 	private void AjustarAlInicio()
 	{
@@ -151,4 +190,13 @@ public partial class CamaraController : Node3D
 			enModoOrbita = true;
 		}));
 	}
+
+	public void ResetearCamaraAutomaticamente(Node3D jugadorActual)
+	{
+	    controlJugador = false;
+	    enModoOrbita = false;
+
+	    EnfocarNodo(jugadorActual, 1.0f, 1.0f); // vuelve a la lógica automática
+	}
+
 }

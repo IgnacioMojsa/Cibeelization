@@ -699,7 +699,7 @@ public partial class PlayerManager : Node3D
 
 		if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador))
 		{
-			GameManager.Instance.CamaraActual.EnfocarNodo(visualJugador, 2, 1);
+			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
 		}
 		
 		LimpiarAbejasEliminadas();
