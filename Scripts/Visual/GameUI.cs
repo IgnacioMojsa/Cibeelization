@@ -555,4 +555,18 @@ public partial class GameUI : Control
 		AudioManager.Instance.PlaySound(UiSound1);
 		UICreditos.Visible = false;
 	}
+
+	private void MostrarTutorial()
+	{
+		PanelContainer UITutorial = GetNode<PanelContainer>("Tutorial");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UITutorial.Visible = true;
+	}
+
+	private void OcultarTutorial()
+	{
+		PanelContainer UITutorial = GetNode<PanelContainer>("Tutorial");
+		AudioManager.Instance.PlaySound(UiSound1);
+		UITutorial.Visible = false;
+	}
 };

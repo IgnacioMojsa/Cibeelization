@@ -561,6 +561,7 @@ text = "Volver
 "
 
 [node name="Tutorial" type="PanelContainer" parent="." unique_id=1395941169]
+visible = false
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
