@@ -40,6 +40,9 @@ Click izquierdo y arrastre para mover la dirección de la cámara.
 - Estéticas:
     - Desafío
     - Azar
+ 
+#### UML
+<img width="1262" height="712" alt="Image" src="https://github.com/user-attachments/assets/6ddfbdcc-9d42-4b72-a5e8-3cf7db0313f9" />
 
 ## Patrones de diseño [^1]
 
