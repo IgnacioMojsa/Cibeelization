@@ -196,32 +196,32 @@ public partial class PlayerManager : Node3D
 
 	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino)
 	{
-	    Vector3 origen = jugadorVisual.GlobalPosition;
-	    Vector3 destino = celdaDestino.Tile.GlobalPosition;
+		Vector3 origen = jugadorVisual.GlobalPosition;
+		Vector3 destino = celdaDestino.Tile.GlobalPosition;
 
-	    Vector3 dir = (destino - origen).Normalized();
-	    dir.Y = 0; // solo plano XZ
+		Vector3 dir = (destino - origen).Normalized();
+		dir.Y = 0; // solo plano XZ
 
-	    // Ángulo en radianes
-	    float anguloMouse = Mathf.Atan2(dir.X, dir.Z);
+		// Ángulo en radianes
+		float anguloMouse = Mathf.Atan2(dir.X, dir.Z);
 
-	    // Convertir a grados
-	    float grados = Mathf.RadToDeg(anguloMouse);
+		// Convertir a grados
+		float grados = Mathf.RadToDeg(anguloMouse);
 
-	    // Normalizar entre 0–360
-	    if (grados < 0) grados += 360f;
+		// Normalizar entre 0–360
+		if (grados < 0) grados += 360f;
 
-	    // Dividir en 6 sectores de 60°
-	    int sector = (int)System.Math.Round(grados / 60.0);
+		// Dividir en 6 sectores de 60°
+		int sector = (int)System.Math.Round(grados / 60.0);
 
-	    // Calcular ángulo fijo en grados
-	    float anguloFinal = (sector * 60.0f) + 180f; // Ajuste de 180° para que mire hacia el destino
+		// Calcular ángulo fijo en grados
+		float anguloFinal = (sector * 60.0f) + 180f; // Ajuste de 180° para que mire hacia el destino
 
-	    // Pasar a radianes
-	    float anguloFinalRad = Mathf.DegToRad(anguloFinal);
+		// Pasar a radianes
+		float anguloFinalRad = Mathf.DegToRad(anguloFinal);
 
-	    // Aplicar rotación en Y
-	    jugadorVisual.Rotation = new Vector3(0, anguloFinalRad, 0);
+		// Aplicar rotación en Y
+		jugadorVisual.Rotation = new Vector3(0, anguloFinalRad, 0);
 	}
 
 

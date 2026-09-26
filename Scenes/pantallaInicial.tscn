@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="6_e1fak"]
+[ext_resource type="Texture2D" uid="uid://corx426tq0bdl" path="res://Assets/PNGS/mouses.png" id="7_3b2ad"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
@@ -17,6 +18,18 @@ border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_8of7i"]
 resource_name = "Size"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awl3a"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.47843137, 0.47843137, 0.47843137, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="GameUI" type="Control" unique_id=128062121]
 layout_mode = 3
@@ -547,6 +560,68 @@ action_mode = 0
 text = "Volver
 "
 
+[node name="Tutorial" type="PanelContainer" parent="." unique_id=1395941169]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_awl3a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial" unique_id=151754619]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Tutorial/VBoxContainer" unique_id=719654130]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 50
+text = "Cómo jugar Cibeelization"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Tutorial/VBoxContainer" unique_id=593674571]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "En Cibeelization, cada jugador es una Abeja Reina que debe luchar contra otras en la partida
+para conquistar la mayor parte de la colmena. La última que quede en pie será la ganadora.
+
+Utiliza el click derecho del mouse para interactuar con el entorno y los botones.
+Puedes rotar la cámara manteniendo presionado el click izquierdo y arrastrando en la dirección que quieras.
+
+
+
+
+
+Para comenzar, tira los dados: cuando te muevas a una celda, podrás elegir si atacar o invocar un súbdito,
+siempre que tengas movimientos disponibles.
+
+Tu turno se acabará cuando ataques, invoques, o cuando agotes todos tus movimientos."
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Tutorial/VBoxContainer" unique_id=5650467]
+layout_mode = 2
+theme_override_constants/margin_top = 15
+
+[node name="Volver" type="PanelContainer" parent="Tutorial/VBoxContainer/MarginContainer2" unique_id=848193364]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VolverButton2" type="Button" parent="Tutorial/VBoxContainer/MarginContainer2/Volver" unique_id=308543915]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Volver
+"
+
+[node name="Mouses" type="Sprite2D" parent="Tutorial/VBoxContainer" unique_id=1344070435]
+position = Vector2(590.0748, 327.00003)
+scale = Vector2(0.6591759, 0.65917593)
+texture = ExtResource("7_3b2ad")
+
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
@@ -555,8 +630,10 @@ text = "Volver
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
+[connection signal="pressed" from="HBoxContainer/Tutorial/TutorialButton" to="." method="MostrarTutorial"]
 [connection signal="pressed" from="HBoxContainer/Settings/SettingsButton" to="." method="Ajustes"]
 [connection signal="pressed" from="HBoxContainer/Credits/CreditsButton" to="." method="Creditos"]
 [connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
 [connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]
+[connection signal="pressed" from="Tutorial/VBoxContainer/MarginContainer2/Volver/VolverButton2" to="." method="OcultarTutorial"]
