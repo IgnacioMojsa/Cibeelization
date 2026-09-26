@@ -10,6 +10,7 @@
 
 ## Pila tecnológica
 - Motor: Godot 4.7.2 (C# support)
+- Declaración sobre el uso de IA Generativa: Gemini AI de Google.
 
 #### Instrucciones de juego
 - Elige la cantidad de jugadores y el tamaño del tablero (opcional).
@@ -39,8 +40,6 @@ Click izquierdo y arrastre para mover la dirección de la cámara.
 - Estéticas:
     - Desafío
     - Azar
-
-
 
 ## Patrones de diseño [^1]
 
