@@ -178,4 +178,27 @@ Se implementó un Audio Manager global que permite manejar AudioStreamPlayer y M
 - Celdas de invocación de color rojo: Cuando un jugador decide invocar un súbdito, se pintan de rojo las celdas donde puede realizar la acción.
 - Celdas donde un jugador invocó un súbdito se pintan del mismo color que su outline: esto es para diferenciar las abejas súbditas de cada jugador.
 
+## Reporte de testings
+Realizamos tests sobre nuestras clases TurnManager y GameManager.
+
+#### TurnManagerTests
+
+Nuestro TurnManager nos permite gestionar el flujo secuencial estricto de los turnos de cada jugador y qué acciones puede realizar durante el mismo. Antes de empezar con los tests, armamos un escenario de partida de 3 jugadores, donde el jugador 3 está fuera de turno.
+
+Con el test case AsignarJugadorCorrectoEnElPrimerTurno() utilizamos esa partida para ejecutar el método EstablecerPrimerTurno().
+El test valida que el índice del primer turno sea 0 (int), que el índice actual de la lista de jugadores sea 0, que el estado EsSuTurno del jugador actual pase a ser true, y que el estado EstadoTurno sea EsperandoDado.
+
+Con el test case de OmitirJugadorFueraDeJuegoAlCambiarDeTurno(), validamos que el paso del turno del jugador 2 sea hacia el jugador 1, ya que el jugador 3 está fuera de juego. 
+
+Estas pruebas unitarias realizadas con GDUnit4 y C# nos permitieron confirmar la correcta gestión y asignación de los jugadores en juego y fuera de juego. También nos permitió verificar el correcto funcionamiento de nuestra máquina de estados EstadoTurno de nuestra clase AbejaReina. Y finalmente, nos permitió probar el comportamiento cíclico de nuestra lista de turnos para evitar los errores de índices inexistentes.
+
+#### GameManagerTests
+
+Nuestro GameManager es una instancia global y singleton que controla el estado del juego, administra la partida a gran escala: los turnos, los movimientos y el fin del juego. Para testear la clase, armamos dos simulaciones de partida diferentes para dos tests diferentes.
+
+En el test case ConsumirMovimientosEnUnTurnoYPasarAlSiguienteJugador() simulamos una partida de 2 jugadores, al jugador actual se le establecen 3 movimientos restantes y luego realiza 3 movimientos con el método ConsumirMovimiento(). Este test nos permite validar que agotó los 3 movimientos y que el turno dejó de ser suyo, para pasar a ser del siguiente jugador.
+
+El test case QuedaUnJugadorEnPieYSeCumpleLaCondicionDeVictoria() simula una partida con 4 jugadores donde 3 quedan fuera de juego. Luego validamos que la condición de victoria se cumpla (1 solo jugador en pie), finalmente establecemos al jugador ganador con el método EstablecerJugadorGanador() y validamos que sea el jugador ganador tenga la misma ID que el último jugador en pie.
+
+Estos dos tests nos permitieron verificar el correcto funcionamiento de los movimientos disponibles, y que no permita movimientos infinitos. También nos permite verificar que todo funciona correctamente para finalizar el ciclo de juego estableciendo a un ganador. También, hicimos uso del método ResetearEstadoPartida() en el BeforeTests y en el AfterTest para limpiar los datos de la partida y crear dos simulaciones diferentes.
 
