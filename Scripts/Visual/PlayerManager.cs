@@ -385,11 +385,13 @@ public partial class PlayerManager : Node3D
 
 	public void EsconderOutlineDeJugadores()
 	{
+		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
+		
 		foreach (var visual in VisualesJugadores)
 		{
 			if (visual != VisualJugadorActual)
 			{
-				EstablecerNextPass(visual, null);
+				EstablecerNextPass(visual, outlineBase);
 			}
 		}
 	}
@@ -578,6 +580,8 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void OcultarAbejasObjetivo(){
+		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
+
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
 		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
@@ -595,7 +599,7 @@ public partial class PlayerManager : Node3D
 		{
 			if(abejaVisual != null)
 			{
-				EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], null);
+				EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], outlineBase);
 			} 
 		}
 	}

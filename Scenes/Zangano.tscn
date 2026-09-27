@@ -1,36 +1,45 @@
 [gd_scene format=3 uid="uid://bq5drh2secx73"]
 
 [ext_resource type="PackedScene" uid="uid://cenyuxfu2de1u" path="res://Assets/Zangano.glb" id="1_snhb3"]
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_mmv4g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snhb3"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhter"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vr2s"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmv4g"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.9764706, 0.7137255, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_alycm"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwoye"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.98039216, 0.38039216, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sw2o2"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(0.80784315, 0.24705882, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iu2jm"]
+next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
 

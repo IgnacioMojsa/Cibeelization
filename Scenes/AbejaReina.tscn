@@ -2,150 +2,52 @@
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/AbejaReina.glb" id="1_3g5vb"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avlpo"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
-next_pass = SubResource("StandardMaterial3D_avlpo")
 shading_mode = 0
 albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
 proximity_fade_distance = 0.01
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clgnp"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvxwy"]
-next_pass = SubResource("StandardMaterial3D_clgnp")
 shading_mode = 0
 albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqnfv"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i22ah"]
-next_pass = SubResource("StandardMaterial3D_iqnfv")
 shading_mode = 0
 albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdyce"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir8l8"]
-next_pass = SubResource("StandardMaterial3D_bdyce")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md330"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g5vb"]
-next_pass = SubResource("StandardMaterial3D_md330")
 shading_mode = 0
 albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvrqx"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m5opc"]
-next_pass = SubResource("StandardMaterial3D_vvrqx")
 shading_mode = 0
 albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyg5u"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-grow = true
-grow_amount = 0.05
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1y4r8"]
-next_pass = SubResource("StandardMaterial3D_oyg5u")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
-stencil_mode = 1
 stencil_flags = 2
 stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
 stencil_outline_thickness = 0.05

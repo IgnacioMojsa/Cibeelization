@@ -420,7 +420,11 @@ public partial class GameUI : Control
 				playerManager.MostrarJugadoresObjetivo();
 				playerManager.MostrarAbejasObjetivo();
 				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
-				playerManager.PintarCeldaDeAbejaBuffeada();
+
+				if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado)
+				{
+					playerManager.PintarCeldaDeAbejaBuffeada();
+				}
 			}
 		}
 		else if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
