@@ -22,6 +22,7 @@ public partial class PlayerManager : Node3D
 	public Vector3 PosicionEnMundo3D;
 	public Celda CeldaCliqueada;
 	public Celda CeldaOrigen;
+	private Tween TweenBuffArcoiris;
 	
 
 	public override async void _Ready()
@@ -224,9 +225,6 @@ public partial class PlayerManager : Node3D
 		jugadorVisual.Rotation = new Vector3(0, anguloFinalRad, 0);
 	}
 
-
-
-
 	private void EstablecerCeldaParaJugadorEnTurno()
 	{
 		if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual))
@@ -247,6 +245,10 @@ public partial class PlayerManager : Node3D
 
 	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
 	{
+		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+			DespintarCeldaDeAbejaBuffeada();
+		}
+
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;
 		targetPos.Y = jugador.GlobalPosition.Y; 
 
@@ -700,9 +702,77 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+	public void PintarCeldaDeAbejaBuffeada()
+	{
+    	var celdaAPintar = GameManager.Instance.jugadorEnTurno.UbicacionActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+
+    	if (celdaAPintar is MeshInstance3D meshInstance)
+    	{
+    	    if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
+    	    {
+    	        TweenBuffArcoiris.Kill();
+    	    }
+
+    	    StandardMaterial3D material = meshInstance.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
+    	    if (material == null)
+    	    {
+    	        material = new StandardMaterial3D();
+    	    }
+    	    else
+    	    {
+    	        material = (StandardMaterial3D)material.Duplicate();
+    	    }
+
+    	    meshInstance.SetSurfaceOverrideMaterial(0, material);
+
+    	    TweenBuffArcoiris = CreateTween().SetLoops();
+    	    TweenBuffArcoiris.TweenMethod(Callable.From<float>((hue) => 
+    	    {
+    	        material.AlbedoColor = Color.FromHsv(hue, 1.0f, 1.0f);
+    	    }), 0.0f, 1.0f, 2.0f);
+    	}
+	}
+
+	public void DespintarCeldaDeAbejaBuffeada()
+	{
+
+    	if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
+    	{
+    	    TweenBuffArcoiris.Kill();
+    	}
+
+    	var celda = GameManager.Instance.jugadorEnTurno.UbicacionActual;
+
+    	if (celda.Tile == null) return;
+
+    	var nodoHexagon = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+
+    	if (nodoHexagon is MeshInstance3D meshInstance)
+    	{
+    	    StandardMaterial3D materialDeMesh = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
+	
+    	    StandardMaterial3D nuevoMaterial;
+    	    if (materialDeMesh != null)
+    	    {
+    	        nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
+    	    }
+    	    else
+    	    {
+    	        nuevoMaterial = new StandardMaterial3D();
+    	    }
+
+    	    nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
+    	    meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
+    	}
+}
+
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
 	{
 		if (jugadorNuevo == null) return;
+
+		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+			DespintarCeldaDeAbejaBuffeada();
+		}
 
 		Node3D visualJugador = VisualesJugadores[jugadorNuevo.Id - 1]; 
 

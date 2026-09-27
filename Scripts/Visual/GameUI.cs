@@ -420,6 +420,7 @@ public partial class GameUI : Control
 				playerManager.MostrarJugadoresObjetivo();
 				playerManager.MostrarAbejasObjetivo();
 				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
+				playerManager.PintarCeldaDeAbejaBuffeada();
 			}
 		}
 		else if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
@@ -428,6 +429,7 @@ public partial class GameUI : Control
 
 			playerManager.EsconderOutlineDeJugadores();
 			playerManager.OcultarAbejasObjetivo();
+			playerManager.DespintarCeldaDeAbejaBuffeada();
 		}
 		
 		AudioManager.Instance.PlaySound(UiSound1);
