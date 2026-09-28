@@ -46,8 +46,10 @@ camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
 tropasManager = NodePath("../TroopsManager")
 
-[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133]
+[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager")]
 script = ExtResource("2_qqnew")
+tableroActual = NodePath("../Tablero")
+playerManager = NodePath("../PlayerManager")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
@@ -154,11 +156,27 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 34
 text = "???"
 
+[node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
+layout_mode = 0
+offset_left = 92.0
+offset_top = -592.0
+offset_right = 211.0
+offset_bottom = -533.0
+scale = Vector2(1.0799975, 1)
+
+[node name="CurarButton" type="Button" parent="HUD/Curar" unique_id=1304026619]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 19
+disabled = true
+text = "Sacrificar
+Subdito"
+
 [node name="Subdito" type="PanelContainer" parent="HUD" unique_id=885164177]
 layout_mode = 0
-offset_left = 20.0
+offset_left = -44.0
 offset_top = -592.0
-offset_right = 139.0
+offset_right = 75.0
 offset_bottom = -533.0
 scale = Vector2(1.0799975, 1)
 
@@ -171,9 +189,9 @@ subdito"
 
 [node name="Atacar" type="PanelContainer" parent="HUD" unique_id=120025344]
 layout_mode = 0
-offset_left = -108.0
+offset_left = -172.0
 offset_top = -592.0
-offset_right = 11.0
+offset_right = -53.0
 offset_bottom = -533.0
 
 [node name="AtacarButton" type="Button" parent="HUD/Atacar" unique_id=968980427]
@@ -647,6 +665,7 @@ action_mode = 0
 text = "Aceptar"
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
+[connection signal="pressed" from="HUD/Curar/CurarButton" to="HUD" method="OnCurarPressed"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]

@@ -194,6 +194,14 @@ public partial class GameManager
 		}
 	}
 
+	public void ConsumirAbsorcion(Abeja unaAbeja)
+	{
+		jugadorEnTurno.Curar();
+		
+		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
+		unaAbeja.MatarAbeja();
+	}
+
 	public void ResetearEstadoPartida()
 	{
 		//GD.Print("Reseteando la partida");

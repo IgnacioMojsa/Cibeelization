@@ -1,3 +1,5 @@
+using System;
+
 public partial class Abeja{
 	public int HP { get; private set; } = 15;
 	public string RecursoDeTransformacion { get ; private set; } 
@@ -11,6 +13,11 @@ public partial class Abeja{
 
 	public void RestarVida(int cantidad){
 		HP -= cantidad;
+	}
+
+	public void Curar()
+	{
+		HP = Math.Min(15, HP + 5);
 	}
 
 	public void MatarAbeja(){

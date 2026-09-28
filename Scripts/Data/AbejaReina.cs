@@ -7,6 +7,7 @@ public partial class AbejaReina : Abeja
 	public bool AtaquePotenciado {get; set;} = false;
 
 	public bool AtacoRecien {get; set;} = false;
+	public bool ModoAbsorcion {get; set;} = false;
 	public bool ModoAtaque {get; set;} = false;
 	public bool ModoInvocacion {get; set;} = false;
 	public bool InvocoRecien {get; set;} = false;
@@ -43,5 +44,4 @@ public partial class AbejaReina : Abeja
 	    InvocoRecien = false;
 	    Estado = EstadoTurno.EsperandoDado;
 	}
-
 }

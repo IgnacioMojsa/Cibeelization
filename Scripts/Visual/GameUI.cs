@@ -11,6 +11,7 @@ public partial class GameUI : Control
 	private AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
+	private Button botonCurar;
 	private Button botonPausa;
 
 	private PanelContainer containerPausa;
@@ -88,6 +89,7 @@ public partial class GameUI : Control
 		feedback = GetNode<Label>("Feedback");
 		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+		botonCurar = GetNode<Button>("Curar/CurarButton");
 		botonPausa = GetNode<Button>("Pausa/PausaButton");
 		containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
@@ -99,6 +101,7 @@ public partial class GameUI : Control
 
 		//Suscripciones de godot
 		botonAtacar.Pressed += OnAtacarPressed;
+		botonCurar.Pressed += OnCurarPressed;
 		botonPausa.Pressed += PausarPartida;
 		botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
 		botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
@@ -174,6 +177,7 @@ public partial class GameUI : Control
 
 		//GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
+		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
 	}
 
 	private void ActualizarUI()
@@ -182,6 +186,7 @@ public partial class GameUI : Control
 		MostrarHPDeJugaores();
 		DeshabilitarDado();
 		AlternarEstadoDeAtaque();
+		AlternarEstadoDeAbsorcion();
 	}
 	
 	private void Jugar(){
@@ -407,6 +412,23 @@ public partial class GameUI : Control
 		resultadoDados.Text = resultado.ToString();
 	}
 
+	private void OnCurarPressed()
+	{
+		if(playerManager == null)
+		return;
+
+		if(!GameManager.Instance.jugadorEnTurno.ModoAbsorcion)
+		{		
+			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = true;
+			tropasManager.MostrarAbejasAAbsorber();
+		}
+		else
+		{
+			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = false;
+			tropasManager.OcultarAbejasAAbsorber();
+		}
+	}
+
 	private void OnAtacarPressed()
 	{
 		if(playerManager == null)
@@ -453,6 +475,14 @@ public partial class GameUI : Control
 		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
 
 		botonAtacar.Disabled = !puedeAtacar;
+	}
+
+	private void AlternarEstadoDeAbsorcion(){
+		if (playerManager == null) return;
+		
+		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
+
+		botonCurar.Disabled = !puedeAbsorber;
 	}
 
 	public void MostrarResultadoDado(){
@@ -515,12 +545,14 @@ public partial class GameUI : Control
 		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 			AlternarEstadoDeAtaque();
+			AlternarEstadoDeAbsorcion();
 			playerManager.MostrarCeldasDisponiblesParaInvocar();
 		}
 		else if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion)
 		{
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = false;
 			AlternarEstadoDeAtaque();
+			AlternarEstadoDeAbsorcion();
 			playerManager.OcultarCeldasDisponiblesParaInvocar();
 		}
 

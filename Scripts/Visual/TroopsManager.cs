@@ -1,11 +1,15 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class TroopsManager : Node3D
 {
-    private readonly List<PackedScene> Assets = new();
+    [Export] private Tablero tableroActual;
+	[Export] private PlayerManager playerManager;
+	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Abeja, Node3D> VisualAbejas = new();
 	public Dictionary<AbejaReina, Node3D> AlmacenJugadores = new();
+	public List<Abeja> PosiblesSacrificios = new();
     public override void _Ready()
 	{
 	    AlmacenJugadores.Clear();
@@ -105,5 +109,55 @@ public partial class TroopsManager : Node3D
 		nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
+	}
+
+	public void AbsorberSubdito(Celda unaCelda)
+	{
+		var abejaSacrificio = GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Find(a => a.CeldaActual == unaCelda);
+
+		GameManager.Instance.ConsumirAbsorcion(abejaSacrificio);
+
+		PosiblesSacrificios.Remove(abejaSacrificio);
+
+		VisualAbejas[abejaSacrificio].QueueFree();
+	}
+
+	public void MostrarAbejasAAbsorber()
+	{
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+		
+		var reinaActual = GameManager.Instance.jugadorEnTurno;
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.UbicacionActual);
+
+		PosiblesSacrificios = reinaActual.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Contains(a.CeldaActual)).ToList();
+
+		foreach (var abeja in PosiblesSacrificios)
+		{
+			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialAtaque);
+
+			GD.Print(abeja + " disponible para absorber");
+		} 
+	}
+
+	public void OcultarAbejasAAbsorber()
+	{
+		var materialOriginal = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
+
+		foreach (var abeja in PosiblesSacrificios)
+		{
+			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
+		} 
+	}
+
+	public bool PuedeAbsorberSubdito()
+	{
+		if (tableroActual == null) return false;
+		
+		var reinaActual = GameManager.Instance.jugadorEnTurno;
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.UbicacionActual);
+
+		if (celdasAdyacentes == null || celdasAdyacentes.Any(c => c == null)) return false;
+
+		return celdasAdyacentes.Any(c => reinaActual.ColmenaDeReina.AbejasDeColmena.Any(abeja => abeja.CeldaActual == c)) && reinaActual.HP < 15;
 	}
 }

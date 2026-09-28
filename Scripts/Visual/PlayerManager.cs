@@ -319,7 +319,7 @@ public partial class PlayerManager : Node3D
 		return meshes;
 	}
 
-	private void EstablecerNextPass(Node3D visual, Material materialOutline)
+	public void EstablecerNextPass(Node3D visual, Material materialOutline)
 	{
 		var meshes = ObtenerTodosLosMeshes(visual);
 
