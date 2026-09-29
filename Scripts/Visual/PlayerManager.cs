@@ -708,66 +708,66 @@ public partial class PlayerManager : Node3D
 
 	public void PintarCeldaDeAbejaBuffeada()
 	{
-    	var celdaAPintar = GameManager.Instance.jugadorEnTurno.UbicacionActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+		var celdaAPintar = GameManager.Instance.jugadorEnTurno.UbicacionActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
-    	if (celdaAPintar is MeshInstance3D meshInstance)
-    	{
-    	    if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-    	    {
-    	        TweenBuffArcoiris.Kill();
-    	    }
+		if (celdaAPintar is MeshInstance3D meshInstance)
+		{
+			if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
+			{
+				TweenBuffArcoiris.Kill();
+			}
 
-    	    StandardMaterial3D material = meshInstance.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
-    	    if (material == null)
-    	    {
-    	        material = new StandardMaterial3D();
-    	    }
-    	    else
-    	    {
-    	        material = (StandardMaterial3D)material.Duplicate();
-    	    }
+			StandardMaterial3D material = meshInstance.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
+			if (material == null)
+			{
+				material = new StandardMaterial3D();
+			}
+			else
+			{
+				material = (StandardMaterial3D)material.Duplicate();
+			}
 
-    	    meshInstance.SetSurfaceOverrideMaterial(0, material);
+			meshInstance.SetSurfaceOverrideMaterial(0, material);
 
-    	    TweenBuffArcoiris = CreateTween().SetLoops();
-    	    TweenBuffArcoiris.TweenMethod(Callable.From<float>((hue) => 
-    	    {
-    	        material.AlbedoColor = Color.FromHsv(hue, 1.0f, 1.0f);
-    	    }), 0.0f, 1.0f, 2.0f);
-    	}
+			TweenBuffArcoiris = CreateTween().SetLoops();
+			TweenBuffArcoiris.TweenMethod(Callable.From<float>((hue) => 
+			{
+				material.AlbedoColor = Color.FromHsv(hue, 1.0f, 1.0f);
+			}), 0.0f, 1.0f, 2.0f);
+		}
 	}
 
 	public void DespintarCeldaDeAbejaBuffeada()
 	{
 
-    	if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-    	{
-    	    TweenBuffArcoiris.Kill();
-    	}
+		if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
+		{
+			TweenBuffArcoiris.Kill();
+		}
 
-    	var celda = GameManager.Instance.jugadorEnTurno.UbicacionActual;
+		var celda = GameManager.Instance.jugadorEnTurno.UbicacionActual;
 
-    	if (celda.Tile == null) return;
+		if (celda.Tile == null) return;
 
-    	var nodoHexagon = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+		var nodoHexagon = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
-    	if (nodoHexagon is MeshInstance3D meshInstance)
-    	{
-    	    StandardMaterial3D materialDeMesh = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
+		if (nodoHexagon is MeshInstance3D meshInstance)
+		{
+			StandardMaterial3D materialDeMesh = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
 	
-    	    StandardMaterial3D nuevoMaterial;
-    	    if (materialDeMesh != null)
-    	    {
-    	        nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-    	    }
-    	    else
-    	    {
-    	        nuevoMaterial = new StandardMaterial3D();
-    	    }
+			StandardMaterial3D nuevoMaterial;
+			if (materialDeMesh != null)
+			{
+				nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
+			}
+			else
+			{
+				nuevoMaterial = new StandardMaterial3D();
+			}
 
-    	    nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
-    	    meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
-    	}
+			nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
+			meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
+		}
 }
 
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
