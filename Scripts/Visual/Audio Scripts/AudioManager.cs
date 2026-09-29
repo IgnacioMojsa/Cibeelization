@@ -1,8 +1,5 @@
 using Godot;
-using System;
 
-//Estos son los métodos de reproducción de audio
-//Singleton
 public partial class AudioManager : Node
 {
 	public static AudioManager Instance { get; private set; }

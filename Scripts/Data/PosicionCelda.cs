@@ -1,5 +1,3 @@
-using Godot;
-
 public abstract class PosicionCelda
 {
 	public int Id { get; protected set; }

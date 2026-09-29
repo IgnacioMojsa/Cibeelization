@@ -1,7 +1,5 @@
 using Godot;
 
-//Acá está la configuracion del audio para la interfaz
-
 [GlobalClass]
 public partial class AudioSetting : Resource
 {
