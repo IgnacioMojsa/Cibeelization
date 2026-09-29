@@ -1,7 +1,4 @@
 using Godot;
-using System;
-
-//Acá se crean las propiedades visibles dentro del editor de godot
 
 [GlobalClass]
 public partial class GameAudio : Resource

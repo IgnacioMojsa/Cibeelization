@@ -147,7 +147,7 @@ public partial class TroopsManager : Node3D
 		{
 			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
 
-			GD.Print(VisualAbejas[abeja]);
+			//GD.Print(VisualAbejas[abeja]);
 		} 
 	}
 
