@@ -35,6 +35,7 @@ public class TurnManager
 		jugadorEnTurno.AtacoRecien = false;
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.ModoInvocacion = false;
+		jugadorEnTurno.ModoAbsorcion = false;
 		jugadorEnTurno.InvocoRecien = false; 
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 

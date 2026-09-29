@@ -197,6 +197,8 @@ public partial class GameManager
 		
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
 		unaAbeja.MatarAbeja();
+
+		TurnManager.TerminarTurno();
 	}
 
 	public void ResetearEstadoPartida()

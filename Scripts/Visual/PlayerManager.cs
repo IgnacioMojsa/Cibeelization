@@ -67,6 +67,10 @@ public partial class PlayerManager : Node3D
 		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoInvocacion){
 			Atacar();
 		}
+
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAbsorcion && (!GameManager.Instance.jugadorEnTurno.ModoInvocacion || !GameManager.Instance.jugadorEnTurno.ModoAtaque)){
+			tropasManager.AbsorberSubdito(CeldaCliqueada);
+		}
 	}
 
 	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas, List<Node3D> visualesJugadores)

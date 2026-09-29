@@ -115,11 +115,12 @@ public partial class TroopsManager : Node3D
 	{
 		var abejaSacrificio = GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Find(a => a.CeldaActual == unaCelda);
 
+		DespintarCeldaDeAbeja(unaCelda, abejaSacrificio);
 		GameManager.Instance.ConsumirAbsorcion(abejaSacrificio);
-
 		PosiblesSacrificios.Remove(abejaSacrificio);
-
 		VisualAbejas[abejaSacrificio].QueueFree();
+
+		GD.Print("El jugador " + GameManager.Instance.jugadorEnTurno.Id + " tiene " + GameManager.Instance.jugadorEnTurno.HP + " puntos de vida");
 	}
 
 	public void MostrarAbejasAAbsorber()
