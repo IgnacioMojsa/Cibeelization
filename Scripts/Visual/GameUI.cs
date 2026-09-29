@@ -420,11 +420,16 @@ public partial class GameUI : Control
 		if(!GameManager.Instance.jugadorEnTurno.ModoAbsorcion)
 		{		
 			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = true;
-			tropasManager.MostrarAbejasAAbsorber();
+
+			if(tropasManager.PuedeAbsorberSubdito())
+			{
+				tropasManager.MostrarAbejasAAbsorber();
+			}
 		}
-		else
+		else if(GameManager.Instance.jugadorEnTurno.ModoAbsorcion)
 		{
 			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = false;
+
 			tropasManager.OcultarAbejasAAbsorber();
 		}
 	}

@@ -135,7 +135,7 @@ public partial class TroopsManager : Node3D
 		{
 			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialAtaque);
 
-			GD.Print(abeja + " disponible para absorber");
+			//GD.Print(VisualAbejas[abeja]);
 		} 
 	}
 
@@ -146,6 +146,8 @@ public partial class TroopsManager : Node3D
 		foreach (var abeja in PosiblesSacrificios)
 		{
 			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
+
+			GD.Print(VisualAbejas[abeja]);
 		} 
 	}
 

@@ -38,9 +38,7 @@ public partial class GameManager
 		//SetTiles(sizeTablero);
 	}
 
-
 	public event Action OnEstadoAccionesCambiado;
-	
 	
 	public void NotificarCambioDeEstado()
 	{
