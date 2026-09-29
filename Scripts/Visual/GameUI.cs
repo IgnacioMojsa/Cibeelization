@@ -27,18 +27,17 @@ public partial class GameUI : Control {
 	private Button botonReiniciarPartidaVictoria;
 	
 	public override void _Ready(){
+
+		ProcessMode = ProcessModeEnum.Always;
 		
 		if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
-
 			var root = GetTree().CurrentScene; 
-
 			GameManager.Instance.TableroActual = root.GetNodeOrNull<Tablero>("Tablero");
 				if (GameManager.Instance.TableroActual == null)
 					GD.PrintErr("No se encontró Tablero en la escena");
 
 			GameManager.Instance.CamaraActual = root.GetNode<CamaraController>("Camara");
 			playerManager = root.GetNode<PlayerManager>("PlayerManager");
-
 			//Tablero válido:
 			GameManager.Instance.SetTiles(GameManager.Instance.sizeTablero);
 			
@@ -47,63 +46,45 @@ public partial class GameUI : Control {
 			MostrarDataDeJugadores();
 			ActualizarUI();
 			ActualizarInstrucciones("Tirá el dado para comenzar.");
-			}
-		else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn")
-			{
+			}else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
 				MostrarPantallaDeVictoria();
 			}
-	}		
-
-	public override void _ExitTree(){
-		if (GameManager.Instance != null){
-			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
-
-			if (GameManager.Instance.TurnManager != null){
-				var turnManager = GameManager.Instance.TurnManager;
-				EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
-				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
-				turnManager.OnTurnoCambiado -= ActualizarUI;
-			}
-		}
 	}
-
+	
 	private void OnCambioDeTurno(object _) => ActualizarUI();
-
+	
 	public void InicializarGameUI(){
-		botonPausa = GetNode<Button>("Pausa/PausaButton");
-		containerPausa = GetNode<PanelContainer>("Pausa");
-		uiPausa = GetNode<HBoxContainer>("MenuPausa");
-		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
-		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
-		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
-		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
-		botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+	botonPausa = GetNode<Button>("Pausa/PausaButton");
+	containerPausa = GetNode<PanelContainer>("Pausa");
+	uiPausa = GetNode<HBoxContainer>("MenuPausa");
+	confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+	confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 
-		botonPausa = GetNode<Button>("Pausa/PausaButton");
-		containerPausa = GetNode<PanelContainer>("Pausa");
-		uiPausa = GetNode<HBoxContainer>("MenuPausa");
-		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
-		feedback = GetNode<Label>("Feedback");
-		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
-		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
-		botonCurar = GetNode<Button>("Curar/CurarButton");
+	resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+	feedback = GetNode<Label>("Feedback");
+	botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
+	botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+	botonCurar = GetNode<Button>("Curar/CurarButton");
 
-		//Suscripciones de godot
-		botonAtacar.Pressed += OnAtacarPressed;
-		botonCurar.Pressed += OnCurarPressed;
-		botonPausa.Pressed += PausarPartida;
-		botonContinuar.Pressed += PausarPartida; // Reanuda al presionar Continuar
-		botonMenuPrincipal.Pressed += MostrarConfirmacionSalir;
-		botonReiniciarPartida.Pressed += MostrarConfirmacionReiniciar;
+	//Pausa
+	botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
+	botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+	botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+	botonContinuar.Pressed += PausarPartida;
+	botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
+	botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
 
-		// Botones del cuadro de confirmación para regresar al menu principal
-		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalir;
+	//Controles del juego
+	botonAtacar.Pressed += OnAtacarPressed;
+	botonCurar.Pressed += OnCurarPressed;
+	botonPausa.Pressed += PausarPartida;
 
-		// Botones del cuadro de confirmación para reiniciar la partida
-		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
-		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionReiniciar;
-	}
+	//Confirmaciones
+	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalir, uiPausa);
+	GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
+	GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciar, uiPausa);
+}
 
 	private void SuscribirAEventos(){
 		// Primero limpiar suscripciones viejas
@@ -118,7 +99,7 @@ public partial class GameUI : Control {
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
 	}
-
+	
 	private void ActualizarUI(){
 		MostrarJugadorEnTurno();
 		MostrarHPDeJugaores();
@@ -314,22 +295,6 @@ public partial class GameUI : Control {
 		}
 	}
 
-	private void MostrarConfirmacionReiniciar(){
-		uiPausa.Visible = false;
-		confirmacionReiniciar.Visible = true;
-	}
-
-	private void OcultarConfirmacionReiniciar(){
-		confirmacionReiniciar.Visible = false;
-		uiPausa.Visible = true;
-	}
-
-	private void MostrarConfirmacionSalir(){
-		uiPausa.Visible = false;
-		confirmacionSalir.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
 	private void OcultarConfirmacionSalir(){
 		confirmacionSalir.Visible = false;
 		uiPausa.Visible = true;
@@ -397,45 +362,39 @@ public partial class GameUI : Control {
 		confirmacionReiniciarVictoria = GetNode<PanelContainer>("ConfirmacionReiniciarVictoria");
 		confirmacionSalirVictoria = GetNode<PanelContainer>("ConfirmacionSalirVictoria");
 
-		botonSalirVictoria.Pressed += MostrarConfirmacionSalirVictoria;
-		botonReiniciarPartidaVictoria.Pressed += MostrarConfirmacionReiniciarVictoria;
+		botonSalirVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionSalirVictoria);
+		botonReiniciarPartidaVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionReiniciarVictoria);
 
 		// Botones del cuadro de confirmación para regresar al menu principal
 		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionSalirVictoria;
+		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalirVictoria, MenuVictoria);
 
 		// Botones del cuadro de confirmación para reiniciar la partida
 		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
-		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += OcultarConfirmacionReiniciarVictoria;
-	}
-
-	private void MostrarConfirmacionSalirVictoria(){
-		MenuVictoria.Visible = false;
-		confirmacionSalirVictoria.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	private void OcultarConfirmacionSalirVictoria(){
-		confirmacionSalirVictoria.Visible = false;
-		MenuVictoria.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	private void MostrarConfirmacionReiniciarVictoria(){
-		MenuVictoria.Visible = false;
-		confirmacionReiniciarVictoria.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	private void OcultarConfirmacionReiniciarVictoria(){
-		confirmacionReiniciarVictoria.Visible = false;
-		MenuVictoria.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
+		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciarVictoria, MenuVictoria);
 	}
 
 	public void MostrarMensajeVictoria(){
 		var mensajeVictoria = GetNode<Label>("Titulo");
-		
 		mensajeVictoria.Text = "EL  JUGADOR   " + GameManager.Instance.JugadorGanador.Id + "   ES  EL  GANADOR";
+	}
+
+	public void CambiarMenu(Control menuAOcultar, Control menuAMostrar){
+		menuAOcultar.Visible = false;
+		menuAMostrar.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	public override void _ExitTree(){
+		if (GameManager.Instance != null){
+			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+
+			if (GameManager.Instance.TurnManager != null){
+				var turnManager = GameManager.Instance.TurnManager;
+				EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
+				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
+				turnManager.OnTurnoCambiado -= ActualizarUI;
+			}
+		}
 	}
 };

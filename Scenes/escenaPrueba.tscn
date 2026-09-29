@@ -94,6 +94,7 @@ transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.842468, -2.026
 visible = false
 
 [node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager")]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
