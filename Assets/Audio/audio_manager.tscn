@@ -11,6 +11,7 @@ GameAudio = ExtResource("2_81o5i")
 [node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=293319229]
 process_mode = 3
 stream = ExtResource("2_l7d0f")
+volume_db = -20.0
 autoplay = true
 bus = &"Music"
 
