@@ -1,7 +1,6 @@
 public abstract class PosicionCelda
 {
 	public int Id { get; protected set; }
-
 	public int Q { get; protected set; }
 	public int R { get; protected set; }
 

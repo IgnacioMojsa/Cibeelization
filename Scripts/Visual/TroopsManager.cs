@@ -6,6 +6,7 @@ public partial class TroopsManager : Node3D
 {
     [Export] private Tablero tableroActual;
 	[Export] private PlayerManager playerManager;
+	[Export] public CeldasManager celdasManager;
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Abeja, Node3D> VisualAbejas = new();
 	public Dictionary<AbejaReina, Node3D> AlmacenJugadores = new();
@@ -56,7 +57,7 @@ public partial class TroopsManager : Node3D
 		AlmacenJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);
 	    EstablecerPosicionDeAbeja(InstanciaNueva, celdaCliqueada.Tile.GlobalPosition);
 
-		PintarCeldaDeAbeja(celdaCliqueada, abejaNueva);
+		celdasManager.PintarCeldaDeAbeja(celdaCliqueada, abejaNueva);
 
 	    GD.Print("Abeja instanciada en " + celdaCliqueada);
 	}
@@ -77,45 +78,11 @@ public partial class TroopsManager : Node3D
 		}
 	}
 
-	public void PintarCeldaDeAbeja(Celda unaCelda, Abeja unaAbeja)
-	{
-		var jugadorActual = unaAbeja.ColmenaHogar.ReinaDeColmena;
-		int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorActual);
-		
-		var colorJ1 = Color.Color8(106, 38, 143, 255);
-		var colorJ2 = Color.Color8(76, 29, 174, 255);
-		var colorJ3 = Color.Color8(179, 54, 113, 255);
-		var colorJ4 = Color.Color8(130, 96, 229, 255); 
-
-		List<Color> coloresDeJugadores = new List<Color>{colorJ1, colorJ2, colorJ3, colorJ4};
-		var hexagono = unaCelda.Tile.GetNode<Node3D>("hexagon_tile");
-		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
-
-		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = coloresDeJugadores[indiceJugador];
-
-		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
-	}
-
-	public void DespintarCeldaDeAbeja(Celda unaCelda, Abeja unaAbeja)
-	{
-		var jugadorActual = unaAbeja.ColmenaHogar.ReinaDeColmena;
-		int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorActual);
-
-		var hexagono = unaCelda.Tile.GetNode<Node3D>("hexagon_tile");
-		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
-
-		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
-
-		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
-	}
-
 	public void AbsorberSubdito(Celda unaCelda)
 	{
 		var abejaSacrificio = GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Find(a => a.CeldaActual == unaCelda);
 
-		DespintarCeldaDeAbeja(unaCelda, abejaSacrificio);
+		celdasManager.DespintarCeldaDeAbeja(unaCelda);
 		GameManager.Instance.ConsumirAbsorcion(abejaSacrificio);
 		PosiblesSacrificios.Remove(abejaSacrificio);
 		VisualAbejas[abejaSacrificio].QueueFree();

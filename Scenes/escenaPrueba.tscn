@@ -10,6 +10,8 @@
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="5_cvlkt"]
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
+[ext_resource type="Texture2D" uid="uid://ct82j6o3ymogj" path="res://Recurso.svg" id="11_g66tl"]
+[ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://JugadorEnTurno.svg" id="12_gsowx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -53,10 +55,11 @@ tablero = NodePath("../Tablero")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
 
-[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager")]
+[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager", "celdasManager")]
 script = ExtResource("2_qqnew")
 tableroActual = NodePath("../Tablero")
 playerManager = NodePath("../PlayerManager")
+celdasManager = NodePath("../CeldasManager")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
@@ -672,6 +675,49 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Aceptar"
+
+[node name="DiseñoTerminado" type="Control" parent="HUD" unique_id=851638192]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Recursos1" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=156705770]
+layout_mode = 0
+offset_left = 124.00006
+offset_top = -624.0
+offset_right = 522.00006
+offset_bottom = -449.0
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(0, 88.35)
+texture = ExtResource("11_g66tl")
+
+[node name="Recursos2" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=1018539452]
+layout_mode = 0
+offset_left = -343.0
+offset_top = -624.0
+offset_right = 55.0
+offset_bottom = -449.0
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(0, 88.35)
+texture = ExtResource("11_g66tl")
+flip_h = true
+
+[node name="JugadorEnTurno" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=155409841]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -195.50002
+offset_top = -614.0
+offset_right = 195.49998
+offset_bottom = -354.0
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(200.5, -1)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("12_gsowx")
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]

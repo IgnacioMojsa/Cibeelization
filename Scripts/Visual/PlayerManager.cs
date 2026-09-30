@@ -12,8 +12,7 @@ public partial class PlayerManager : Node3D
 	public readonly List<Node3D> VisualesJugadores = new();
 	public readonly List<Node3D> OutlinesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
-	private readonly Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
-	private List<Celda> CeldasDisponibles = new();
+	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 	private List<Abeja> AbejasObjetivo = new();
 
 	private MovimientoManager movimientoManager;
@@ -421,7 +420,7 @@ public partial class PlayerManager : Node3D
 		
 		if (tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(tropasManager.VisualAbejas[abejaObjetivo]))
 		{
-			tropasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual, abejaObjetivo);
+			celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
 		}
 
@@ -517,14 +516,6 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public void GuardarOutlines(){
-		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
-		{
-			var contornoJugador = VisualesJugadores[j].GetNode<Node3D>("Outline");
-			OutlinesJugadores.Add(contornoJugador);
-		}
-	}
-
 	public void EstablecerSpawnsEnCeldas()
 	{
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
@@ -562,7 +553,7 @@ public partial class PlayerManager : Node3D
 		
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
-		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		celdasManager.CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
 
 		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
 		{
@@ -587,7 +578,7 @@ public partial class PlayerManager : Node3D
 
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
-		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+		celdasManager.CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
 
 		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
 		{
@@ -612,7 +603,7 @@ public partial class PlayerManager : Node3D
 		
 		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
 		{
-			if (CeldasDisponibles.Contains(abejaActual.CeldaActual) 
+			if (celdasManager.CeldasDisponibles.Contains(abejaActual.CeldaActual) 
 			&& movimientoManager.CeldasSonAdyacentes(jugadorActual.UbicacionActual, abejaActual.CeldaActual) 
 			&& !abejaActual.FueraDeJuego
 			&& !jugadorActual.ColmenaDeReina.AbejasDeColmena.Contains(abejaActual))
