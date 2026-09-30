@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://djv6bcnwwovcg"]
 
+[ext_resource type="Script" uid="uid://5vsbaonlm86g" path="res://Scripts/Visual/CeldasManager.cs" id="1_ap8h6"]
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
@@ -40,11 +41,17 @@ border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 
 [node name="Escena" type="Node3D" unique_id=104624866]
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager")]
+[node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
+script = ExtResource("1_ap8h6")
+playerManager = NodePath("../PlayerManager")
+tablero = NodePath("../Tablero")
+
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
 tropasManager = NodePath("../TroopsManager")
+celdasManager = NodePath("../CeldasManager")
 
 [node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager")]
 script = ExtResource("2_qqnew")
@@ -93,7 +100,7 @@ data = {
 transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.842468, -2.0266418, 13.976545)
 visible = false
 
-[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager")]
+[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager", "celdasManager")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 7
@@ -111,6 +118,7 @@ size_flags_vertical = 8
 script = ExtResource("4_2lok1")
 playerManager = NodePath("../PlayerManager")
 tropasManager = NodePath("../TroopsManager")
+celdasManager = NodePath("../CeldasManager")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=987035873]
 layout_mode = 1

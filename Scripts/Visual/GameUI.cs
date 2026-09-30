@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public partial class GameUI : Control {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
+	[Export] public CeldasManager celdasManager; 
 	[Export] private Label feedback;
 	private Button botonPausa;
 	private PanelContainer containerPausa;
@@ -177,7 +178,7 @@ public partial class GameUI : Control {
 				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
 
 				if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
-					playerManager.PintarCeldaDeAbejaBuffeada();
+					playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
 				}
 			}
 		}else if(GameManager.Instance.jugadorEnTurno.ModoAtaque){
@@ -185,7 +186,7 @@ public partial class GameUI : Control {
 
 			playerManager.EsconderOutlineDeJugadores();
 			playerManager.OcultarAbejasObjetivo();
-			playerManager.DespintarCeldaDeAbejaBuffeada();
+			playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
@@ -269,12 +270,12 @@ public partial class GameUI : Control {
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
-			playerManager.MostrarCeldasDisponiblesParaInvocar();
+			celdasManager.MostrarCeldasDisponiblesParaInvocar();
 		}else if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = false;
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
-			playerManager.OcultarCeldasDisponiblesParaInvocar();
+			celdasManager.OcultarCeldasDisponiblesParaInvocar();
 		}
 
 		AudioManager.Instance.PlaySound(UiSound1);

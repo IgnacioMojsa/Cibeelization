@@ -5,8 +5,9 @@ using System.Linq;
 public partial class PlayerManager : Node3D
 {
 	[Export] private Camera3D camera;
-	[Export] private Tablero tablero; 
+	[Export] public Tablero tablero; 
 	[Export] public TroopsManager tropasManager; 
+	[Export] public CeldasManager celdasManager; 
 
 	public readonly List<Node3D> VisualesJugadores = new();
 	public readonly List<Node3D> OutlinesJugadores = new();
@@ -24,7 +25,6 @@ public partial class PlayerManager : Node3D
 	public Celda CeldaOrigen;
 	private Tween TweenBuffArcoiris;
 	
-
 	public override async void _Ready()
 	{
 		movimientoManager = new MovimientoManager(tablero);
@@ -240,7 +240,7 @@ public partial class PlayerManager : Node3D
 		if (CeldaCliqueada == CeldaOrigen) return;
 	}
 
-	private bool JugadorEnTurnoAdyacenteAOtro(Node3D otroJugador){
+	public bool JugadorEnTurnoAdyacenteAOtro(Node3D otroJugador){
 		List<Celda> VecinosAdyacentes = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
 		Celda CeldaOtroJugador = CeldaActualPorJugador[otroJugador];
 		return VecinosAdyacentes.Contains(CeldaOtroJugador);
@@ -249,7 +249,7 @@ public partial class PlayerManager : Node3D
 	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
 	{
 		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
-			DespintarCeldaDeAbejaBuffeada();
+			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;
@@ -634,64 +634,6 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public void MostrarCeldasDisponiblesParaInvocar(){
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-
-		CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-		
-		foreach (var jugador in VisualesJugadores)
-		{
-			if(JugadorEnTurnoAdyacenteAOtro(jugador)){
-				var celdaOcupada = CeldaActualPorJugador[jugador];
-
-				CeldasDisponibles = CeldasDisponibles.Where(c => c != celdaOcupada).ToList();
-
-				GD.Print("Hay otro jugador cerca");
-			}
-		}
-
-		foreach (var reina in GameManager.Instance.JugadoresEnPartida)
-		{
-			for (int e = 0; e < CeldasDisponibles.Count; e++)
-			{
-				var abejasEnCeldas = reina.ColmenaDeReina.AbejasDeColmena.Where(a => a.CeldaActual == CeldasDisponibles[e] && !a.FueraDeJuego).ToList();
-
-				foreach (var abeja in abejasEnCeldas)
-				{
-					var celdaOcupada = CeldasDisponibles.Find(c => c == abeja.CeldaActual);
-
-					CeldasDisponibles.Remove(celdaOcupada);
-				}
-			}
-		}
-
-		foreach (var celda in CeldasDisponibles)
-		{
-			PintarCelda(celda, Color.FromHtml("#d72f00"));
-
-			GD.Print(celda.Tile.GetNode<Node3D>("Outline").Visible + " de ID" + celda.Id);
-		}
-	}
-
-	// ESTO LO VOY A MOVER A UN CELDAS MANAGER (ESTA ACA DE MANERA PROVISORIA) //
-	public void PintarCelda(Celda unaCelda, Color unColor)
-	{
-		var hexagono = unaCelda.Tile.GetNode<Node3D>("hexagon_tile");
-		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
-
-		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = unColor;
-
-		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
-	}
-
-	public void OcultarCeldasDisponiblesParaInvocar(){
-		foreach (var celda in CeldasDisponibles)
-		{
-			PintarCelda(celda, Color.Color8(201, 113, 0, 255));
-		}
-	}
-
 	public void InvocarAbejaNueva(){
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
@@ -710,8 +652,8 @@ public partial class PlayerManager : Node3D
 		if(CeldaCliqueada == null)
 		return;
 
-		if(CeldasDisponibles.Contains(CeldaCliqueada)){
-			OcultarCeldasDisponiblesParaInvocar();	
+		if(celdasManager.CeldasDisponibles.Contains(CeldaCliqueada)){
+			celdasManager.OcultarCeldasDisponiblesParaInvocar();	
 			OcultarAbejasObjetivo();
 			tropasManager.InstanciarAbeja(CeldaCliqueada);
 			var bee1 = AudioManager.Instance.GameAudio.Sound5;
@@ -723,79 +665,12 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public void PintarCeldaDeAbejaBuffeada()
-	{
-		var celdaAPintar = GameManager.Instance.jugadorEnTurno.UbicacionActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
-
-		if (celdaAPintar is MeshInstance3D meshInstance)
-		{
-			if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-			{
-				TweenBuffArcoiris.Kill();
-			}
-
-			StandardMaterial3D material = meshInstance.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
-			if (material == null)
-			{
-				material = new StandardMaterial3D();
-			}
-			else
-			{
-				material = (StandardMaterial3D)material.Duplicate();
-			}
-
-			meshInstance.SetSurfaceOverrideMaterial(0, material);
-
-			TweenBuffArcoiris = CreateTween().SetLoops();
-			TweenBuffArcoiris.TweenMethod(Callable.From<float>((hue) => 
-			{
-				material.AlbedoColor = Color.FromHsv(hue, 1.0f, 1.0f);
-			}), 0.0f, 1.0f, 2.0f);
-		}
-	}
-
-	public void DespintarCeldaDeAbejaBuffeada()
-	{
-
-		if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-		{
-			TweenBuffArcoiris.Kill();
-		}
-
-		var celda = GameManager.Instance.jugadorEnTurno.UbicacionActual;
-
-		if (celda.Tile == null) return;
-
-		var nodoHexagon = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
-
-		if (nodoHexagon is MeshInstance3D meshInstance)
-		{
-			StandardMaterial3D materialDeMesh = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
-	
-			StandardMaterial3D nuevoMaterial;
-			if (materialDeMesh != null)
-			{
-				nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-			}
-			else
-			{
-				nuevoMaterial = new StandardMaterial3D();
-			}
-
-			if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado)
-			{
-				nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
-				meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
-			}
-		}
-	}
-
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
 	{
 		if (jugadorNuevo == null) return;
 
 		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
-			DespintarCeldaDeAbejaBuffeada();
+			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
 		Node3D visualJugador = VisualesJugadores[jugadorNuevo.Id - 1]; 
