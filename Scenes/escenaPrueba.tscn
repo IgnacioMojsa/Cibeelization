@@ -565,7 +565,7 @@ offset_bottom = -74.0
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
-text = "Texto texto texto texto"
+text = "Tirá el dado para comenzar."
 horizontal_alignment = 1
 
 [node name="Ajustes" type="PanelContainer" parent="HUD" unique_id=109946770]

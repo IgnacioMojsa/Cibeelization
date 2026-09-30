@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JuegoAbeja.Scripts.Data;
+using System.Threading.Tasks;
 
 public partial class GameManager 
 {
@@ -102,7 +103,7 @@ public partial class GameManager
 		return numeroAleatorio;
 	}
 
-	public void ConsumirMovimiento()
+	public async Task ConsumirMovimiento()
 	{
 		if (jugadorEnTurno == null) return;
 
@@ -112,6 +113,7 @@ public partial class GameManager
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
+			await Task.Delay(1000);
 			TurnManager.TerminarTurno();
 		}
 	}
@@ -123,12 +125,13 @@ public partial class GameManager
 			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
-	public void ConsumirAtaque()
+	public async Task ConsumirAtaque()
 	{
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
+		await Task.Delay(1500);
 		TurnManager.TerminarTurno();
 	}
 
@@ -138,12 +141,12 @@ public partial class GameManager
 		//GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
 	}
 
-	public void GenerarAbejaNueva(Abeja unaAbeja){
+	public async Task GenerarAbejaNueva(Abeja unaAbeja){
 		var abejaNueva = unaAbeja;
 
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(abejaNueva);
 		jugadorEnTurno.InvocoRecien = true;
-		
+		await Task.Delay(1500);
 		TurnManager.TerminarTurno();
 	}
 
@@ -191,13 +194,13 @@ public partial class GameManager
 		}
 	}
 
-	public void ConsumirAbsorcion(Abeja unaAbeja)
+	public async Task ConsumirAbsorcion(Abeja unaAbeja)
 	{
 		jugadorEnTurno.Curar();
 		
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
 		unaAbeja.MatarAbeja();
-
+		await Task.Delay(1500);
 		TurnManager.TerminarTurno();
 	}
 

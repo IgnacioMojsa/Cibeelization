@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public partial class GameUI : Control {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
-	[Export] public Label feedback;
+	[Export] private Label feedback;
 	private Button botonPausa;
 	private PanelContainer containerPausa;
 	private HBoxContainer uiPausa;
@@ -20,8 +20,8 @@ public partial class GameUI : Control {
 	private Button botonMenuPrincipal;
 	private PanelContainer confirmacionSalir;
 	private PanelContainer confirmacionReiniciar;
-	public PanelContainer confirmacionSalirVictoria;
-	public PanelContainer confirmacionReiniciarVictoria;
+	private PanelContainer confirmacionSalirVictoria;
+	private PanelContainer confirmacionReiniciarVictoria;
 	private HBoxContainer MenuVictoria;
 	private Button botonSalirVictoria;
 	private Button botonReiniciarPartidaVictoria;
@@ -45,7 +45,6 @@ public partial class GameUI : Control {
 			SuscribirAEventos();
 			MostrarDataDeJugadores();
 			ActualizarUI();
-			ActualizarInstrucciones("Tirá el dado para comenzar.");
 			}else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
 				MostrarPantallaDeVictoria();
 			}
