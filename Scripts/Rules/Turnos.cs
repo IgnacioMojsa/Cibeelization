@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class TurnManager
 {
@@ -26,7 +27,7 @@ public class TurnManager
 		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
 	}
 
-	public void TerminarTurno(){
+	public async Task TerminarTurno(){
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.EsSuTurno = false;
@@ -40,7 +41,7 @@ public class TurnManager
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 
 		//GD.Print("Terminó su turno");
-
+		await Task.Delay(1000);
 		CambiarTurnoASiguienteJugador();
 	}
 

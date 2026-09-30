@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JuegoAbeja.Scripts.Data;
-using System.Threading.Tasks;
 
 public partial class GameManager 
 {
@@ -103,7 +102,7 @@ public partial class GameManager
 		return numeroAleatorio;
 	}
 
-	public async Task ConsumirMovimiento()
+	public void ConsumirMovimiento()
 	{
 		if (jugadorEnTurno == null) return;
 
@@ -113,8 +112,7 @@ public partial class GameManager
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
-			await Task.Delay(1000);
-			TurnManager.TerminarTurno();
+            _ = TurnManager.TerminarTurno();
 		}
 	}
 
@@ -125,14 +123,13 @@ public partial class GameManager
 			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
-	public async Task ConsumirAtaque()
+	public void ConsumirAtaque()
 	{
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
-		await Task.Delay(1500);
-		TurnManager.TerminarTurno();
+		_ = TurnManager.TerminarTurno();
 	}
 
 	public void EliminarJugador(int Id)
@@ -141,13 +138,12 @@ public partial class GameManager
 		//GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
 	}
 
-	public async Task GenerarAbejaNueva(Abeja unaAbeja){
+	public void GenerarAbejaNueva(Abeja unaAbeja){
 		var abejaNueva = unaAbeja;
 
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(abejaNueva);
 		jugadorEnTurno.InvocoRecien = true;
-		await Task.Delay(1500);
-		TurnManager.TerminarTurno();
+		_ = TurnManager.TerminarTurno();
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)
@@ -194,14 +190,13 @@ public partial class GameManager
 		}
 	}
 
-	public async Task ConsumirAbsorcion(Abeja unaAbeja)
+	public void ConsumirAbsorcion(Abeja unaAbeja)
 	{
 		jugadorEnTurno.Curar();
 		
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
 		unaAbeja.MatarAbeja();
-		await Task.Delay(1500);
-		TurnManager.TerminarTurno();
+		_ = TurnManager.TerminarTurno();
 	}
 
 	public void ResetearEstadoPartida()
