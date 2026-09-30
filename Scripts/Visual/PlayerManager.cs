@@ -186,7 +186,6 @@ public partial class PlayerManager : Node3D
 
 		if(PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
-			OcultarCeldasDisponiblesParaInvocar();
 			OcultarAbejasObjetivo();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 
@@ -668,14 +667,28 @@ public partial class PlayerManager : Node3D
 
 		foreach (var celda in CeldasDisponibles)
 		{
-			celda.Tile.GetNode<Node3D>("Outline").Visible = true;
+			PintarCelda(celda, Color.FromHtml("#d72f00"));
+
+			GD.Print(celda.Tile.GetNode<Node3D>("Outline").Visible + " de ID" + celda.Id);
 		}
+	}
+
+	// ESTO LO VOY A MOVER A UN CELDAS MANAGER (ESTA ACA DE MANERA PROVISORIA) //
+	public void PintarCelda(Celda unaCelda, Color unColor)
+	{
+		var hexagono = unaCelda.Tile.GetNode<Node3D>("hexagon_tile");
+		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
+
+		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
+		nuevoMaterial.AlbedoColor = unColor;
+
+		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
 	}
 
 	public void OcultarCeldasDisponiblesParaInvocar(){
 		foreach (var celda in CeldasDisponibles)
 		{
-			celda.Tile.GetNode<Node3D>("Outline").Visible = false;
+			PintarCelda(celda, Color.Color8(201, 113, 0, 255));
 		}
 	}
 
@@ -769,10 +782,13 @@ public partial class PlayerManager : Node3D
 				nuevoMaterial = new StandardMaterial3D();
 			}
 
-			nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
-			meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
+			if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado)
+			{
+				nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
+				meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
+			}
 		}
-}
+	}
 
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
 	{
