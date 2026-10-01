@@ -173,6 +173,7 @@ theme_override_font_sizes/font_size = 34
 text = "???"
 
 [node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
+visible = false
 layout_mode = 0
 offset_left = 24.0
 offset_top = -592.0
@@ -189,6 +190,7 @@ text = "Sacrificar
 Subdito"
 
 [node name="Subdito" type="PanelContainer" parent="HUD" unique_id=885164177]
+visible = false
 layout_mode = 0
 offset_left = -112.0
 offset_top = -592.0
@@ -745,8 +747,9 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = ExtResource("12_gsowx")
 
-[node name="MenuRadial" parent="HUD" unique_id=1055766075 instance=ExtResource("13_gsowx")]
+[node name="MenuRadial" parent="HUD" unique_id=1055766075 node_paths=PackedStringArray("hud") instance=ExtResource("13_gsowx")]
 layout_mode = 1
+hud = NodePath("..")
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]

@@ -3,10 +3,11 @@ using System;
 
 public partial class MenuRadial : Control
 {
+    [Export] private GameUI hud; 
     private Control ContenedorDeBotones;
     public bool Activo = false;
     public Vector2 PosicionCentral;
-    public float Radio = 150f;
+    public float Radio = 110f;
     public float VelocidadAnimacion = 0.25f;
 
     public override void _Ready()
@@ -27,6 +28,11 @@ public partial class MenuRadial : Control
                 boton.Pressed += () => SeleccionarOpcion(boton.Name);
             }
         }
+    }
+
+    public void EstablecerHUD(GameUI gameUI)
+    {
+        hud = gameUI;
     }
 
     public void DesplegarEnPosicion(Vector2 posicionGlobal)
@@ -121,11 +127,23 @@ public partial class MenuRadial : Control
             case "ControlarButton":
                 break;
             case "CurarButton":
+                hud.OnCurarPressed();
                 break;
             case "InvocarButton":
+                hud.InvocarSubdito();
                 break;
         }
         
         OcultarMenu();
     }
+
+    public void ActualizarEstadoBoton(bool condicion, string unBoton)
+    {
+        if (ContenedorDeBotones.HasNode(unBoton))
+        {
+            var boton = ContenedorDeBotones.GetNode<Button>(unBoton);
+            boton.Disabled = !condicion;
+        }
+    }
 }
+

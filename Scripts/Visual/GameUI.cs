@@ -16,7 +16,7 @@ public partial class GameUI : Control {
 	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
-	private Button botonCurar;
+	//private Button botonCurar;
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 	private Button botonContinuar;
@@ -67,7 +67,7 @@ public partial class GameUI : Control {
 		feedback = GetNode<Label>("Feedback");
 		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
-		botonCurar = GetNode<Button>("Curar/CurarButton");
+		//botonCurar = GetNode<Button>("Curar/CurarButton");
 		botonColmena = GetNode<Button>("Colmena/ColmenaButton");
 
 		//Pausa
@@ -80,7 +80,7 @@ public partial class GameUI : Control {
 
 		//Controles del juego
 		botonAtacar.Pressed += OnAtacarPressed;
-		botonCurar.Pressed += OnCurarPressed;
+		//botonCurar.Pressed += OnCurarPressed;
 		botonColmena.Pressed += OnBotonColmenaPressed;
 		botonPausa.Pressed += PausarPartida;
 
@@ -155,14 +155,18 @@ public partial class GameUI : Control {
     	{
     	    instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
     	    AddChild(instanciaMenuRadial);
+			instanciaMenuRadial.EstablecerHUD(this);
     	}
 		
 		Vector2 centroPantalla = GetViewportRect().Size / 2;
 
 		instanciaMenuRadial.DesplegarEnPosicion(centroPantalla);	
+
+		AlternarEstadoDeInvocacion();
+		AlternarEstadoDeAbsorcion();
 	}
 
-	private void OnCurarPressed(){
+	public void OnCurarPressed(){
 		if(playerManager == null) return;
 
 		if(!GameManager.Instance.jugadorEnTurno.ModoAbsorcion){		
@@ -225,12 +229,25 @@ public partial class GameUI : Control {
 		botonAtacar.Disabled = !puedeAtacar;
 	}
 
+	private void AlternarEstadoDeInvocacion()
+	{
+		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
+		
+		if (instanciaMenuRadial != null)
+        {
+            instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
+        }
+	}
+
 	private void AlternarEstadoDeAbsorcion(){
 		if (playerManager == null) return;
 		
 		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
 
-		botonCurar.Disabled = !puedeAbsorber;
+		if (instanciaMenuRadial != null)
+        {
+            instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
+        }
 	}
 
 	public void MostrarResultadoDado(){
@@ -283,7 +300,7 @@ public partial class GameUI : Control {
 		}
 	}
 
-	private void InvocarSubdito(){
+	public void InvocarSubdito(){
 		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 			AlternarEstadoDeAtaque();

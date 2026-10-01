@@ -19,7 +19,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ControlarButton" type="Button" parent="ContenedorBotones" unique_id=2023640203]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 0
 offset_right = 82.0
 offset_bottom = 54.0
@@ -29,20 +29,20 @@ text = "Controlar
 Abeja"
 
 [node name="CurarButton" type="Button" parent="ContenedorBotones" unique_id=1303995750]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 74.0
+offset_bottom = 50.0
 scale = Vector2(1e-05, 1e-05)
 theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Sacrificar
 Abeja"
 
 [node name="InvocarButton" type="Button" parent="ContenedorBotones" unique_id=1785503417]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 60.0
+offset_bottom = 50.0
 scale = Vector2(1e-05, 1e-05)
 theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Invocar
