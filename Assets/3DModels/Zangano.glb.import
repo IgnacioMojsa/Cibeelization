@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://buppbncamca7f"
-path="res://.godot/imported/AbejaReina4.glb-7bd190607a5a70cd4a4e2ca4707e5aca.scn"
+uid="uid://cenyuxfu2de1u"
+path="res://.godot/imported/Zangano.glb-4231312a7086ed9f4b39cde2e90eaa73.scn"
 
 [deps]
 
-source_file="res://Assets/AbejaReina4.glb"
-dest_files=["res://.godot/imported/AbejaReina4.glb-7bd190607a5a70cd4a4e2ca4707e5aca.scn"]
+source_file="res://Assets/3DModels/Zangano.glb"
+dest_files=["res://.godot/imported/Zangano.glb-4231312a7086ed9f4b39cde2e90eaa73.scn"]
 
 [params]
 

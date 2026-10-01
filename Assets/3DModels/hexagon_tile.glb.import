@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bk8nalj4a55yl"
-path="res://.godot/imported/FondoCibeelization.glb-0968c23d9192ed2d99122c547868673a.scn"
+uid="uid://h0o4ur0ghpm3"
+path="res://.godot/imported/hexagon_tile.glb-9ffac7513da30695fdfee615343312d4.scn"
 
 [deps]
 
-source_file="res://Assets/FondoCibeelization.glb"
-dest_files=["res://.godot/imported/FondoCibeelization.glb-0968c23d9192ed2d99122c547868673a.scn"]
+source_file="res://Assets/3DModels/hexagon_tile.glb"
+dest_files=["res://.godot/imported/hexagon_tile.glb-9ffac7513da30695fdfee615343312d4.scn"]
 
 [params]
 

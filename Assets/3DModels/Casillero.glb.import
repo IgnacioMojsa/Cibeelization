@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://h0o4ur0ghpm3"
-path="res://.godot/imported/hexagon_tile.glb-e12186678deae4b7f14f688fbf47bb46.scn"
+uid="uid://dox8nom4xtm8c"
+path="res://.godot/imported/Casillero.glb-5c48fdf71a020a4434160821628670d4.scn"
 
 [deps]
 
-source_file="res://Assets/hexagon_tile.glb"
-dest_files=["res://.godot/imported/hexagon_tile.glb-e12186678deae4b7f14f688fbf47bb46.scn"]
+source_file="res://Assets/3DModels/Casillero.glb"
+dest_files=["res://.godot/imported/Casillero.glb-5c48fdf71a020a4434160821628670d4.scn"]
 
 [params]
 

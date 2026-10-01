@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dox8nom4xtm8c"
-path="res://.godot/imported/Casillero.glb-7bf1073e7ed69360ef837de0cdf55a75.scn"
+uid="uid://bk8nalj4a55yl"
+path="res://.godot/imported/FondoCibeelization.glb-73e2c0000383cc60850ae070a0c80fac.scn"
 
 [deps]
 
-source_file="res://Assets/Casillero.glb"
-dest_files=["res://.godot/imported/Casillero.glb-7bf1073e7ed69360ef837de0cdf55a75.scn"]
+source_file="res://Assets/3DModels/FondoCibeelization.glb"
+dest_files=["res://.godot/imported/FondoCibeelization.glb-73e2c0000383cc60850ae070a0c80fac.scn"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bq5drh2secx73"]
 
-[ext_resource type="PackedScene" uid="uid://cenyuxfu2de1u" path="res://Assets/Zangano.glb" id="1_snhb3"]
+[ext_resource type="PackedScene" uid="uid://cenyuxfu2de1u" path="res://Assets/3DModels/Zangano.glb" id="1_snhb3"]
 [ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_mmv4g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snhb3"]

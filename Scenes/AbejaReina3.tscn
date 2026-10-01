@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4fkyv6s5yq7s"]
 
-[ext_resource type="PackedScene" uid="uid://460at6v2vcoe" path="res://Assets/AbejaReina3.glb" id="1_dlw1h"]
+[ext_resource type="PackedScene" uid="uid://460at6v2vcoe" path="res://Assets/3DModels/AbejaReina3.glb" id="1_dlw1h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dlw1h"]
 shading_mode = 0

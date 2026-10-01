@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c01fhiijvlqft"]
 
-[ext_resource type="PackedScene" uid="uid://bk8nalj4a55yl" path="res://Assets/FondoCibeelization.glb" id="1_r0mwa"]
+[ext_resource type="PackedScene" uid="uid://bk8nalj4a55yl" path="res://Assets/3DModels/FondoCibeelization.glb" id="1_r0mwa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gsowx"]
 shading_mode = 0

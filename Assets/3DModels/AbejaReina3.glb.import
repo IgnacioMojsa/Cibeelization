@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dhxsyv712fnga"
-path="res://.godot/imported/AbejaReina.glb-6b49c718c6c4cd715aa4212f7229382d.scn"
+uid="uid://460at6v2vcoe"
+path="res://.godot/imported/AbejaReina3.glb-69bb42d754701f771ed627ca3783d74c.scn"
 
 [deps]
 
-source_file="res://Assets/AbejaReina.glb"
-dest_files=["res://.godot/imported/AbejaReina.glb-6b49c718c6c4cd715aa4212f7229382d.scn"]
+source_file="res://Assets/3DModels/AbejaReina3.glb"
+dest_files=["res://.godot/imported/AbejaReina3.glb-69bb42d754701f771ed627ca3783d74c.scn"]
 
 [params]
 

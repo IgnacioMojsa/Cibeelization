@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UIPantallaDeInicio.cs" id="1_3b2ad"]
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
-[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="3_cluwn"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="6_e1fak"]
 [ext_resource type="Texture2D" uid="uid://corx426tq0bdl" path="res://Assets/PNGS/mouses.png" id="7_3b2ad"]

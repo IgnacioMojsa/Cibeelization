@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://y6w6vdnh10lp"]
 
-[ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/hexagon_tile.glb" id="2_3p6xg"]
+[ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/3DModels/hexagon_tile.glb" id="2_3p6xg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sii6b"]
 albedo_color = Color(0.7882353, 0.44313726, 0, 1)

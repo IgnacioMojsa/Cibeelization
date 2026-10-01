@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct82j6o3ymogj"
-path="res://.godot/imported/Recurso.svg-37f753838e917c9dba7bbd41e5852dc6.ctex"
+uid="uid://bpjrf4ly4gv8k"
+path="res://.godot/imported/JugadorEnTurno.svg-6c1025bd39a0bea1b8850603a0ba57a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Recurso.svg"
-dest_files=["res://.godot/imported/Recurso.svg-37f753838e917c9dba7bbd41e5852dc6.ctex"]
+source_file="res://Assets/UI/JugadorEnTurno.svg"
+dest_files=["res://.godot/imported/JugadorEnTurno.svg-6c1025bd39a0bea1b8850603a0ba57a9.ctex"]
 
 [params]
 
