@@ -288,8 +288,19 @@ public partial class PlayerManager : Node3D
 		return;
 
 		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+		
+		Node nodoCollider = result["collider"].As<GodotObject>() as Node;
+		Abeja abejaCliqueada = ObtenerAbejaDesdeCollider(nodoCollider);
 
+		if(abejaCliqueada != null){
+			CeldaCliqueada = abejaCliqueada.CeldaActual;
+			RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
+			if (AbejasObjetivo.Contains(abejaCliqueada)){
+				AtacarAbejaEspecifica(abejaCliqueada);
+			}
+		}
+
+		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
 		if (CeldaCliqueada == null)
 		return;
 
@@ -304,6 +315,36 @@ public partial class PlayerManager : Node3D
 			AtacarAbeja();
 		}
 		
+	}
+
+	private Abeja ObtenerAbejaDesdeCollider(Node collider)
+	{
+		if(collider == null || tropasManager == null || tropasManager.VisualAbejas == null)
+		return null;
+
+		Node actual = collider;
+
+		while(actual != null && actual != GetTree().Root){
+			if(actual is Node3D node3d){
+				var par = tropasManager.VisualAbejas.FirstOrDefault(kvp => kvp.Value == node3d);
+				if(par.Key != null){
+					return par.Key;
+				}
+			}
+			actual = actual.GetParent();
+		}
+		return null;
+	}
+
+	private void AtacarAbejaEspecifica(Abeja abejaObjetivo)
+	{
+		ataqueManager.DaniarAbeja(abejaObjetivo);
+		if(tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
+			celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
+			visual.QueueFree();
+		}
+		LimpiarAbejasEliminadas();
+		GameManager.Instance.ConsumirAtaque();
 	}
 
 	private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
