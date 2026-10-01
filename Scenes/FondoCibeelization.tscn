@@ -1,53 +1,154 @@
 [gd_scene format=3 uid="uid://c01fhiijvlqft"]
 
 [ext_resource type="PackedScene" uid="uid://bk8nalj4a55yl" path="res://Assets/3DModels/FondoCibeelization.glb" id="1_r0mwa"]
+[ext_resource type="Script" uid="uid://bbphlmu15m2jp" path="res://Scripts/Visual/EntornoManager.cs" id="2_2jwc3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gsowx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1y4r8"]
 shading_mode = 0
-albedo_color = Color(0.6525235, 0.42186123, 0.7928982, 1)
+albedo_color = Color(0.47064015, 0.3256, 0.74, 1)
+
+[sub_resource type="Gradient" id="Gradient_2jwc3"]
+colors = PackedColorArray(0.48105007, 0.39099187, 0.67293775, 1, 0.89665335, 0.7098, 0.91, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i45av"]
+gradient = SubResource("Gradient_2jwc3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_im4w1"]
+diffuse_mode = 3
+albedo_color = Color(0.91766715, 0.82024693, 0.92032963, 1)
+albedo_texture = SubResource("GradientTexture1D_i45av")
 
 [sub_resource type="Gradient" id="Gradient_r0mwa"]
-colors = PackedColorArray(0.67139965, 0.4648047, 0.79683125, 1, 1, 0.71000004, 0.9855001, 1)
+offsets = PackedFloat32Array(0, 0.51492536, 1)
+colors = PackedColorArray(0.4664141, 0.35064125, 0.66465837, 1, 0.8720168, 0.8659951, 0.6706547, 1, 0.41719148, 0.38925654, 0.6119613, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_msutb"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sdonn"]
 gradient = SubResource("Gradient_r0mwa")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hetl4"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i45av"]
 shading_mode = 0
-albedo_color = Color(0.8022823, 0.5442672, 0.70500135, 1)
-albedo_texture = SubResource("GradientTexture1D_msutb")
+albedo_color = Color(0.41199613, 0.3195437, 0.68741864, 1)
+albedo_texture = SubResource("GradientTexture1D_sdonn")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0mwa"]
+shading_mode = 0
+albedo_color = Color(0.84849, 0.6825141, 0.80855185, 1)
+
+[sub_resource type="Gradient" id="Gradient_v8mak"]
+offsets = PackedFloat32Array(0, 0.5074627, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.6484447, 0.36060026, 0.44498423, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u1pjx"]
+gradient = SubResource("Gradient_v8mak")
+width = 745
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ghyt"]
+shading_mode = 0
+albedo_color = Color(0.87338674, 0.8464, 0.92, 1)
+albedo_texture = SubResource("GradientTexture1D_u1pjx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21eqq"]
+shading_mode = 0
+diffuse_mode = 3
+albedo_color = Color(0.876378, 0.7334938, 0.8829094, 1)
+albedo_texture = SubResource("GradientTexture1D_i45av")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2btdp"]
+shading_mode = 0
+diffuse_mode = 3
+albedo_color = Color(0.876378, 0.7334938, 0.8829094, 1)
+albedo_texture = SubResource("GradientTexture1D_i45av")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5f82l"]
+shading_mode = 0
+albedo_color = Color(0.87338674, 0.8464, 0.92, 1)
+albedo_texture = SubResource("GradientTexture1D_u1pjx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hb7is"]
+shading_mode = 0
+albedo_color = Color(0.84849, 0.6825141, 0.80855185, 1)
+
+[sub_resource type="Gradient" id="Gradient_2nnyu"]
+offsets = PackedFloat32Array(0, 0.5970149)
+colors = PackedColorArray(0.5689727, 0.56897277, 0.5689727, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wdk6f"]
+gradient = SubResource("Gradient_2nnyu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e5bfo"]
+shading_mode = 0
+albedo_color = Color(0.84849, 0.6825141, 0.80855185, 1)
+albedo_texture = SubResource("GradientTexture1D_wdk6f")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3amyq"]
+shading_mode = 0
+albedo_color = Color(0.87338674, 0.8464, 0.92, 1)
+albedo_texture = SubResource("GradientTexture1D_u1pjx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sdonn"]
+shading_mode = 0
+albedo_color = Color(0.84849, 0.6825141, 0.80855185, 1)
+albedo_texture = SubResource("GradientTexture1D_wdk6f")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krsp4"]
+shading_mode = 0
+albedo_color = Color(0.87338674, 0.8464, 0.92, 1)
+albedo_texture = SubResource("GradientTexture1D_u1pjx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ol85b"]
+shading_mode = 0
+albedo_color = Color(0.84849, 0.6825141, 0.80855185, 1)
+albedo_texture = SubResource("GradientTexture1D_wdk6f")
 
 [node name="FondoCibeelization" unique_id=1028333430 instance=ExtResource("1_r0mwa")]
+script = ExtResource("2_2jwc3")
 
-[node name="Plano" parent="." index="0" unique_id=291022046]
-transform = Transform3D(-106.801, 0, 0, 0, -106.801, 0, 0, 0, -106.801, -230.6206, -14.890869, 39.10019)
-surface_material_override/0 = SubResource("StandardMaterial3D_gsowx")
+[node name="Superficie" parent="." index="0" unique_id=2110371320]
+surface_material_override/0 = SubResource("StandardMaterial3D_1y4r8")
 
-[node name="Trayectoria_NURBS_001" parent="." index="1" unique_id=1275448561]
-transform = Transform3D(-17.085344, 0, -10.585513, 0, 20.098806, 0, 10.585513, 0, -17.085344, 195.1291, 8.609848, -248.87788)
+[node name="Flor5" parent="." index="1" unique_id=1339734799]
+transform = Transform3D(-18.441792, 0, -7.991406, 0, 20.098806, 0, 7.991406, 0, -18.441792, 172.60349, 8.609848, -52.273415)
+surface_material_override/0 = SubResource("StandardMaterial3D_im4w1")
+surface_material_override/1 = SubResource("StandardMaterial3D_i45av")
+surface_material_override/2 = SubResource("StandardMaterial3D_r0mwa")
+surface_material_override/3 = SubResource("StandardMaterial3D_1ghyt")
 
-[node name="Trayectoria_NURBS" parent="." index="2" unique_id=214441995]
-transform = Transform3D(0, 21.726044, 20.252785, -29.70179, -1.2071602e-06, 1.2949731e-06, 1.7703646e-06, -20.252787, 21.726044, -186.02283, 57.17138, -252.89719)
+[node name="Flor4" parent="." index="2" unique_id=1519765993]
+transform = Transform3D(0, 21.726046, 20.252787, -29.70179, -1.8107403e-06, 1.9424597e-06, 2.655547e-06, -20.252787, 21.726044, -180.2807, 57.17138, 3.5883026)
+surface_material_override/0 = SubResource("StandardMaterial3D_im4w1")
+surface_material_override/1 = SubResource("StandardMaterial3D_i45av")
 
-[node name="Plano_003" parent="." index="3" unique_id=846789148]
-transform = Transform3D(14.382137, -7.377611, 7.886637, 4.5615754, 16.055218, 6.700447, -9.788782, -3.3577957, 14.709826, -212.23671, -3.7727394, 146.14835)
-surface_material_override/0 = SubResource("StandardMaterial3D_hetl4")
+[node name="Flor2" parent="." index="3" unique_id=1867571617]
+transform = Transform3D(-5.3304954, 7.8836155, -15.261339, 4.561575, 16.05522, 6.7004476, 16.560556, -1.8848118, -6.7579284, -135.32681, 13.392757, -217.56418)
+surface_material_override/0 = SubResource("StandardMaterial3D_21eqq")
 
-[node name="Plano_001" parent="." index="4" unique_id=1527123514]
-transform = Transform3D(6.897862, 1.0580404, -0.721139, -0.7390699, 6.516569, 2.491604, 1.045594, -2.3737867, 6.518579, -162.96028, 12.202332, 145.08786)
-surface_material_override/0 = SubResource("StandardMaterial3D_hetl4")
+[node name="Flor1" parent="." index="4" unique_id=914350440]
+transform = Transform3D(-3.5309012, 1.8115895, -5.7854033, -0.73907, 6.51657, 2.491604, 6.0171843, 1.8634536, -3.0888553, -154.81686, 8.34613, -166.94653)
+surface_material_override/0 = SubResource("StandardMaterial3D_2btdp")
 
-[node name="Trayectoria_NURBS_002" parent="." index="5" unique_id=791712353]
-transform = Transform3D(8.004958e-06, 42.221874, -14.879319, -44.766964, 7.7715795e-06, -2.0314749e-06, 6.670798e-07, 14.879319, 42.221874, -186.02283, 84.30246, -240.51291)
+[node name="Flor3" parent="." index="5" unique_id=2119201336]
+transform = Transform3D(1.3341596e-05, 42.221874, -14.879318, -44.766964, 1.3026539e-05, -3.1760728e-06, 1.3341596e-06, 14.879318, 42.221874, -180.2807, 84.30246, 15.972572)
+surface_material_override/0 = SubResource("StandardMaterial3D_im4w1")
+surface_material_override/1 = SubResource("StandardMaterial3D_i45av")
 
-[node name="Trayectoria_NURBS_003" parent="." index="6" unique_id=1116766123]
-transform = Transform3D(-11.105372, 0, 15.751445, 0, 19.272707, 0, -15.751445, 0, -11.105372, 21.205078, 8.609848, 249.52298)
+[node name="Flor9" parent="." index="6" unique_id=2068561872]
+transform = Transform3D(-11.1053705, 0, 15.751444, 0, 19.272707, 0, -15.751444, 0, -11.1053705, -57.393814, 8.609848, 205.87494)
+surface_material_override/0 = SubResource("StandardMaterial3D_im4w1")
+surface_material_override/1 = SubResource("StandardMaterial3D_i45av")
+surface_material_override/2 = SubResource("StandardMaterial3D_5f82l")
+surface_material_override/3 = SubResource("StandardMaterial3D_hb7is")
 
-[node name="Plano_004" parent="." index="7" unique_id=33855545]
-transform = Transform3D(1.6080472, -0.4039046, 2.086875, 0.060454667, 2.6244042, 0.46135736, -2.1247432, -0.23101167, 1.5925152, 262.28354, 10.514853, 257.77618)
+[node name="Flor7" parent="." index="7" unique_id=1748720386]
+transform = Transform3D(1.4936917, -0.45741713, 2.1595502, -0.061755333, 2.5978048, 0.5929584, -2.206598, -0.3823389, 1.4452491, 157.16843, 12.111876, 195.49281)
+surface_material_override/0 = SubResource("StandardMaterial3D_e5bfo")
+surface_material_override/1 = SubResource("StandardMaterial3D_3amyq")
 
-[node name="Plano_002" parent="." index="8" unique_id=1545996049]
-transform = Transform3D(1.5180194, -0.10776567, 0.71833384, -0.007689763, 1.6617533, 0.265549, -0.72633195, -0.24282092, 1.498492, 184.76857, 5.872986, 253.19708)
+[node name="Flor8" parent="." index="8" unique_id=1094159460]
+transform = Transform3D(1.4685513, -0.360519, 0.73850113, 0.2801662, 1.6413133, 0.2441247, -0.7725703, -0.09008892, 1.4923196, 87.12007, 7.7590704, 195.49281)
+surface_material_override/0 = SubResource("StandardMaterial3D_sdonn")
+surface_material_override/1 = SubResource("StandardMaterial3D_krsp4")
 
-[node name="Plano_005" parent="." index="9" unique_id=1006547026]
-transform = Transform3D(1.209957, 0.034700166, -0.014531679, -0.034655947, 1.210039, 0.003874613, 0.01463674, -0.003456721, 1.2104479, 264.98175, 3.6274204, 193.34964)
+[node name="Flor6" parent="." index="9" unique_id=1967111152]
+transform = Transform3D(1.2093498, 0.016894905, 0.050985273, -0.02036457, 1.2075276, 0.08290246, -0.049701333, -0.08367852, 1.2066227, 156.47342, 8.108904, 131.5965)
+surface_material_override/0 = SubResource("StandardMaterial3D_ol85b")
+surface_material_override/1 = SubResource("StandardMaterial3D_krsp4")
