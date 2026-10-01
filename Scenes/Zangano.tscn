@@ -43,10 +43,14 @@ next_pass = ExtResource("2_mmv4g")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mmv4g"]
+radius = 1.8857422
+height = 4.6805267
+
 [node name="Zangano" unique_id=800501426 instance=ExtResource("1_snhb3")]
 transform = Transform3D(-0.59, 0, 5.1579438e-08, 0, 0.59, 0, -5.1579438e-08, 0, -0.59, 0, 0.09356356, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1895809551) index="0" unique_id=856397711]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1771413386) index="0" unique_id=804254488]
 bones/0/position = Vector3(1.0587912e-22, -0.1774747, 6.0746985e-09)
 bones/1/scale = Vector3(1, 0.93725795, 1)
 bones/4/rotation = Quaternion(-0.6769439, -0.0028965825, 0.69865996, 0.23154455)
@@ -82,22 +86,28 @@ bones/37/rotation = Quaternion(0.0008410742, 1.4096031e-09, 0.24095738, 0.970535
 bones/38/rotation = Quaternion(0.03998831, 0.0106776925, -0.2666736, 0.9628978)
 bones/39/rotation = Quaternion(-0.0013437876, 0.0005291604, 0.4299624, 0.9028457)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1109028836]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1327647288]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_snhb3")
 surface_material_override/1 = SubResource("StandardMaterial3D_qhter")
 surface_material_override/2 = SubResource("StandardMaterial3D_5vr2s")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1628565557]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=631569656]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_mmv4g")
 surface_material_override/1 = SubResource("StandardMaterial3D_alycm")
 surface_material_override/2 = SubResource("StandardMaterial3D_dwoye")
 surface_material_override/3 = SubResource("StandardMaterial3D_sw2o2")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=405837180]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1996562513]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_iu2jm")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1673991270]
+[node name="AnimationPlayer" parent="." index="1" unique_id=2076078064]
 autoplay = &"Idle"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=271993378]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=364062059]
+transform = Transform3D(1, 0, -2.3590019e-12, 0, 1, 0, 2.3590019e-12, 0, 1, 0.034994755, 3.1427016, -0.11017825)
+shape = SubResource("CapsuleShape3D_mmv4g")
