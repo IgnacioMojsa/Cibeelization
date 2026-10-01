@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
 [ext_resource type="Texture2D" uid="uid://ct82j6o3ymogj" path="res://Recurso.svg" id="11_g66tl"]
 [ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://JugadorEnTurno.svg" id="12_gsowx"]
+[ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -22,7 +23,9 @@ ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 sky_material = SubResource("ProceduralSkyMaterial_21dei")
 
 [sub_resource type="Environment" id="Environment_6nc1v"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0.1584819, 0.052934557, 0.27029577, 1)
+background_energy_multiplier = 1.49
 sky = SubResource("Sky_gojdn")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvlkt"]
@@ -100,8 +103,7 @@ data = {
 }
 
 [node name="FondoCibeelization" parent="." unique_id=1028333430 instance=ExtResource("6_3642x")]
-transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.842468, -2.0266418, 13.976545)
-visible = false
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
 
 [node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager", "celdasManager")]
 process_mode = 3
@@ -122,6 +124,7 @@ script = ExtResource("4_2lok1")
 playerManager = NodePath("../PlayerManager")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
+menuRadialPrefab = ExtResource("13_gsowx")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=987035873]
 layout_mode = 1
@@ -170,9 +173,9 @@ text = "???"
 
 [node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
 layout_mode = 0
-offset_left = 92.0
+offset_left = 24.0
 offset_top = -592.0
-offset_right = 211.0
+offset_right = 143.0
 offset_bottom = -533.0
 scale = Vector2(1.0799975, 1)
 
@@ -186,9 +189,9 @@ Subdito"
 
 [node name="Subdito" type="PanelContainer" parent="HUD" unique_id=885164177]
 layout_mode = 0
-offset_left = -44.0
+offset_left = -112.0
 offset_top = -592.0
-offset_right = 75.0
+offset_right = 7.0
 offset_bottom = -533.0
 scale = Vector2(1.0799975, 1)
 
@@ -201,16 +204,38 @@ subdito"
 
 [node name="Atacar" type="PanelContainer" parent="HUD" unique_id=120025344]
 layout_mode = 0
-offset_left = -172.0
-offset_top = -592.0
-offset_right = -53.0
-offset_bottom = -533.0
+offset_left = -220.0
+offset_top = -48.0
+offset_right = -101.0
+offset_bottom = 11.0
 
 [node name="AtacarButton" type="Button" parent="HUD/Atacar" unique_id=968980427]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 40
 text = "Atacar"
+
+[node name="Colmena" type="PanelContainer" parent="HUD" unique_id=1212104814]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 124.0
+offset_top = -68.0
+offset_right = 268.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColmenaButton" type="Button" parent="HUD/Colmena" unique_id=329072945]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 40
+text = "Colmena"
 
 [node name="Pausa" type="PanelContainer" parent="HUD" unique_id=830340097]
 layout_mode = 0
@@ -718,6 +743,9 @@ pivot_offset = Vector2(200.5, -1)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = ExtResource("12_gsowx")
+
+[node name="MenuRadial" parent="HUD" unique_id=1055766075 instance=ExtResource("13_gsowx")]
+layout_mode = 1
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]

@@ -4,10 +4,10 @@ public partial class CamaraController : Node3D
 {
 	[Export] private Camera3D camera3D;
 	[Export] private float paddingFactor = 1.25f; // Margen de seguridad alrededor del tablero
-	[Export] private float anguloInclinacionDeg = -70.0f; // Grados de inclinación de la cámara
+	[Export] private float anguloInclinacionDeg = -85.0f; // Grados de inclinación de la cámara
 
-	[Export] private float alturaZoomTurno = 11.0f;  
-	[Export] private float offsetZTurno = 6.0f;     
+	[Export] private float alturaZoomTurno = 12.5f;  
+	[Export] private float offsetZTurno = 4.5f;     
 	[Export] private float duracionAnimacion = 0.8f;
 	[Export] private float velocidadRotacion = 0.07f;
 

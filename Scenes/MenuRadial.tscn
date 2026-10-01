@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bfr7m4fc3bev5"]
+
+[ext_resource type="Script" uid="uid://croqb2b1bnegk" path="res://Scripts/Visual/MenuRadial.cs" id="1_g5qvg"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://BLKCHCRY.TTF" id="2_p45bt"]
+
+[node name="MenuRadial" type="Control" unique_id=1055766075]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g5qvg")
+
+[node name="ContenedorBotones" type="Control" parent="." unique_id=1222717018]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ControlarButton" type="Button" parent="ContenedorBotones" unique_id=2023640203]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 82.0
+offset_bottom = 54.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Controlar 
+Abeja"
+
+[node name="CurarButton" type="Button" parent="ContenedorBotones" unique_id=1303995750]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Sacrificar
+Abeja"
+
+[node name="InvocarButton" type="Button" parent="ContenedorBotones" unique_id=1785503417]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Invocar
+Abeja"

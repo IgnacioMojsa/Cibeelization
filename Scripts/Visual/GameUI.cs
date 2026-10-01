@@ -6,7 +6,10 @@ public partial class GameUI : Control {
 	[Export] private TroopsManager tropasManager;
 	[Export] public CeldasManager celdasManager; 
 	[Export] private Label feedback;
+	[Export] private PackedScene menuRadialPrefab;
+	private MenuRadial instanciaMenuRadial;
 	private Button botonPausa;
+	private Button botonColmena;
 	private PanelContainer containerPausa;
 	private HBoxContainer uiPausa;
 	private Label resultadoDados;
@@ -54,37 +57,39 @@ public partial class GameUI : Control {
 	private void OnCambioDeTurno(object _) => ActualizarUI();
 	
 	public void InicializarGameUI(){
-	botonPausa = GetNode<Button>("Pausa/PausaButton");
-	containerPausa = GetNode<PanelContainer>("Pausa");
-	uiPausa = GetNode<HBoxContainer>("MenuPausa");
-	confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
-	confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
+		botonPausa = GetNode<Button>("Pausa/PausaButton");
+		containerPausa = GetNode<PanelContainer>("Pausa");
+		uiPausa = GetNode<HBoxContainer>("MenuPausa");
+		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 
-	resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
-	feedback = GetNode<Label>("Feedback");
-	botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
-	botonAtacar = GetNode<Button>("Atacar/AtacarButton");
-	botonCurar = GetNode<Button>("Curar/CurarButton");
+		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+		feedback = GetNode<Label>("Feedback");
+		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
+		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+		botonCurar = GetNode<Button>("Curar/CurarButton");
+		botonColmena = GetNode<Button>("Colmena/ColmenaButton");
 
-	//Pausa
-	botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
-	botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
-	botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
-	botonContinuar.Pressed += PausarPartida;
-	botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
-	botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
+		//Pausa
+		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
+		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+		botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+		botonContinuar.Pressed += PausarPartida;
+		botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
+		botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
 
-	//Controles del juego
-	botonAtacar.Pressed += OnAtacarPressed;
-	botonCurar.Pressed += OnCurarPressed;
-	botonPausa.Pressed += PausarPartida;
+		//Controles del juego
+		botonAtacar.Pressed += OnAtacarPressed;
+		botonCurar.Pressed += OnCurarPressed;
+		botonColmena.Pressed += OnBotonColmenaPressed;
+		botonPausa.Pressed += PausarPartida;
 
-	//Confirmaciones
-	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-	GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalir, uiPausa);
-	GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
-	GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciar, uiPausa);
-}
+		//Confirmaciones
+		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalir, uiPausa);
+		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
+		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciar, uiPausa);
+	}
 
 	private void SuscribirAEventos(){
 		// Primero limpiar suscripciones viejas
@@ -142,6 +147,19 @@ public partial class GameUI : Control {
 	private void OnTirarDadoPressed(){	
 		int resultado = GameManager.Instance.TirarDado();
 		resultadoDados.Text = resultado.ToString();
+	}
+
+	private void OnBotonColmenaPressed()
+	{
+		if (instanciaMenuRadial == null)
+    	{
+    	    instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
+    	    AddChild(instanciaMenuRadial);
+    	}
+		
+		Vector2 centroPantalla = GetViewportRect().Size / 2;
+
+		instanciaMenuRadial.DesplegarEnPosicion(centroPantalla);	
 	}
 
 	private void OnCurarPressed(){

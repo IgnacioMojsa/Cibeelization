@@ -2,10 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://bk8nalj4a55yl" path="res://Assets/FondoCibeelization.glb" id="1_r0mwa"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gsowx"]
+shading_mode = 0
+albedo_color = Color(0.6525235, 0.42186123, 0.7928982, 1)
+
+[sub_resource type="Gradient" id="Gradient_r0mwa"]
+colors = PackedColorArray(0.67139965, 0.4648047, 0.79683125, 1, 1, 0.71000004, 0.9855001, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_msutb"]
+gradient = SubResource("Gradient_r0mwa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hetl4"]
+shading_mode = 0
+albedo_color = Color(0.8022823, 0.5442672, 0.70500135, 1)
+albedo_texture = SubResource("GradientTexture1D_msutb")
+
 [node name="FondoCibeelization" unique_id=1028333430 instance=ExtResource("1_r0mwa")]
 
 [node name="Plano" parent="." index="0" unique_id=291022046]
-transform = Transform3D(-106.801, 0, 0, 0, -106.801, 0, 0, 0, -106.801, 0, 0, 0)
+transform = Transform3D(-106.801, 0, 0, 0, -106.801, 0, 0, 0, -106.801, -230.6206, -14.890869, 39.10019)
+surface_material_override/0 = SubResource("StandardMaterial3D_gsowx")
 
 [node name="Trayectoria_NURBS_001" parent="." index="1" unique_id=1275448561]
 transform = Transform3D(-17.085344, 0, -10.585513, 0, 20.098806, 0, 10.585513, 0, -17.085344, 195.1291, 8.609848, -248.87788)
@@ -14,10 +30,12 @@ transform = Transform3D(-17.085344, 0, -10.585513, 0, 20.098806, 0, 10.585513, 0
 transform = Transform3D(0, 21.726044, 20.252785, -29.70179, -1.2071602e-06, 1.2949731e-06, 1.7703646e-06, -20.252787, 21.726044, -186.02283, 57.17138, -252.89719)
 
 [node name="Plano_003" parent="." index="3" unique_id=846789148]
-transform = Transform3D(14.382137, -7.377611, 7.886637, 4.5615754, 16.055218, 6.700447, -9.788782, -3.3577957, 14.709826, -212.23671, 7.4402275, 146.14835)
+transform = Transform3D(14.382137, -7.377611, 7.886637, 4.5615754, 16.055218, 6.700447, -9.788782, -3.3577957, 14.709826, -212.23671, -3.7727394, 146.14835)
+surface_material_override/0 = SubResource("StandardMaterial3D_hetl4")
 
 [node name="Plano_001" parent="." index="4" unique_id=1527123514]
 transform = Transform3D(6.897862, 1.0580404, -0.721139, -0.7390699, 6.516569, 2.491604, 1.045594, -2.3737867, 6.518579, -162.96028, 12.202332, 145.08786)
+surface_material_override/0 = SubResource("StandardMaterial3D_hetl4")
 
 [node name="Trayectoria_NURBS_002" parent="." index="5" unique_id=791712353]
 transform = Transform3D(8.004958e-06, 42.221874, -14.879319, -44.766964, 7.7715795e-06, -2.0314749e-06, 6.670798e-07, 14.879319, 42.221874, -186.02283, 84.30246, -240.51291)
