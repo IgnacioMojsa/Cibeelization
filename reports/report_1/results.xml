@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites id="2026-10-01" name="report_1" tests="4" failures="2" skipped="0" flaky="0" time="0.000">
-	<testsuite id="0" name="GameManagerTests" package="Scripts/Tests" timestamp="2026-10-01T05:28:50" hostname="localhost" tests="2" failures="1" errors="0" skipped="0" flaky="0" time="0.333">
-		<testcase name="ConsumirMovimientosEnUnTurnoYPasarAlSiguienteJugador" classname="GameManagerTests" time="0.200">
-			<failure message="FAILED: res://Scripts/Tests/GameManagerTests.cs:34" type="FAILURE">
-<![CDATA[
-Expecting be NOT equal:
-    <AbejaReina> (objId: 64329655) but is <AbejaReina> (objId: 64329655)
-]]>
-			</failure>
+<testsuites id="2026-10-01" name="report_1" tests="4" failures="0" skipped="0" flaky="0" time="0.000">
+	<testsuite id="0" name="TurnManagerTests" package="Scripts/Tests" timestamp="2026-10-01T05:55:05" hostname="localhost" tests="2" failures="0" errors="0" skipped="0" flaky="0" time="2.186">
+		<testcase name="AsignarJugadorCorrectoEnElPrimerTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.108">
 		</testcase>
-		<testcase name="QuedaUnJugadorEnPieYSeCumpleLaCondicionDeVictoria" classname="GameManagerTests" time="0.017">
+		<testcase name="OmitirJugadorFueraDeJuegoAlCambiarDeTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="2.007">
 		</testcase>
 	</testsuite>
-	<testsuite id="1" name="TurnManagerTests" package="Scripts/Tests" timestamp="2026-10-01T05:28:50" hostname="localhost" tests="2" failures="1" errors="0" skipped="0" flaky="0" time="0.037">
-		<testcase name="AsignarJugadorCorrectoEnElPrimerTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.022">
+	<testsuite id="1" name="GameManagerTests" package="Scripts/Tests" timestamp="2026-10-01T05:55:08" hostname="localhost" tests="2" failures="0" errors="0" skipped="0" flaky="0" time="1.021">
+		<testcase name="ConsumirMovimientosEnUnTurnoYPasarAlSiguienteJugador" classname="GameManagerTests" time="1.012">
 		</testcase>
-		<testcase name="OmitirJugadorFueraDeJuegoAlCambiarDeTurno" classname="JuegoAbeja.Tests.TurnManagerTests" time="0.009">
-			<failure message="FAILED: res://Scripts/Tests/TurnManagerTests.cs:56" type="FAILURE">
-<![CDATA[
-Expecting be equal:
-    '1' but is '0'
-]]>
-			</failure>
+		<testcase name="QuedaUnJugadorEnPieYSeCumpleLaCondicionDeVictoria" classname="GameManagerTests" time="0.006">
 		</testcase>
 	</testsuite>
 </testsuites>

@@ -2,6 +2,7 @@ using Godot;
 using GdUnit4;
 using System.Collections.Generic;
 using static GdUnit4.Assertions;
+using System.Threading.Tasks;
 
 /*NOTA MUY IMPORTANTE para hacer tests
 
@@ -47,16 +48,16 @@ public class TurnManagerTests
 
 	[TestCase]
 	//En el setup, el jugador 3 (indice=2) está fuera de juego, por lo que una ves termine el turno del jugador 1 y el 2, regresará al 1.
-	public void OmitirJugadorFueraDeJuegoAlCambiarDeTurno()
+	public async Task OmitirJugadorFueraDeJuegoAlCambiarDeTurno()
 	{
 		var turnManager = new TurnManager(jugadores);
 		turnManager.EstablecerPrimerTurno();
-		turnManager.TerminarTurno();
+		await turnManager.TerminarTurno();
 
 		AssertThat(turnManager.indiceTurno).IsEqual(1);
 		AssertThat(turnManager.jugadorEnTurno.Id).IsEqual(2);
 	
-		turnManager.TerminarTurno(); 
+		await turnManager.TerminarTurno(); 
 
 		AssertThat(turnManager.indiceTurno).IsEqual(0);
 		AssertThat(turnManager.jugadorEnTurno.Id).IsEqual(1);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JuegoAbeja.Scripts.Data;
+using System.Threading.Tasks;
 
 public partial class GameManager 
 {
@@ -102,7 +103,7 @@ public partial class GameManager
 		return numeroAleatorio;
 	}
 
-	public void ConsumirMovimiento()
+	public async Task ConsumirMovimiento()
 	{
 		if (jugadorEnTurno == null) return;
 
@@ -112,7 +113,7 @@ public partial class GameManager
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
-            _ = TurnManager.TerminarTurno();
+            await TurnManager.TerminarTurno();
 		}
 	}
 
