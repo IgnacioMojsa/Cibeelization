@@ -8,6 +8,7 @@ public partial class PlayerManager : Node3D
 	[Export] public Tablero tablero; 
 	[Export] public TroopsManager tropasManager; 
 	[Export] public CeldasManager celdasManager; 
+	[Export] public AnimationManager animationManager;
 
 	public readonly List<Node3D> VisualesJugadores = new();
 	public readonly List<Node3D> OutlinesJugadores = new();
@@ -487,6 +488,7 @@ public partial class PlayerManager : Node3D
 				GD.Print("¡Ataque exitoso al jugador " + reinaObjetivo.Id + "!");
 	
 				EfectuarAtaque(visualRival, reinaObjetivo.Id - 1);
+				animationManager.CambiarAnimacionDeJugador(reinaObjetivo, "RecibirDanio");
 
 				OcultarAbejasObjetivo();
 				GameManager.Instance.ConsumirAtaque();
@@ -555,6 +557,8 @@ public partial class PlayerManager : Node3D
 			AddChild(InstanciaNueva);
 			VisualesJugadores.Add(InstanciaNueva);
 		}
+
+		animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
 	}
 
 	public void EstablecerSpawnsEnCeldas()
@@ -711,7 +715,8 @@ public partial class PlayerManager : Node3D
 		{
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
 		}
-		
+
+		animationManager.ReestablecerVelocidadAnimacion();
 		LimpiarAbejasEliminadas();
 	}
 

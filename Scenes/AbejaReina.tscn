@@ -1,56 +1,37 @@
 [gd_scene format=3 uid="uid://be5yc5wwbd0uv"]
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/3DModels/AbejaReina.glb" id="1_3g5vb"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m128"]
-shading_mode = 0
-albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
-proximity_fade_distance = 0.01
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_m5opc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvxwy"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
+albedo_color = Color(1, 0.5686275, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i22ah"]
 shading_mode = 0
-albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
+albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir8l8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avlpo"]
 shading_mode = 0
-albedo_color = Color(1, 0.5686275, 0, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
+albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3g5vb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clgnp"]
+shading_mode = 0
+albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqnfv"]
 shading_mode = 0
 albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m5opc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdyce"]
 shading_mode = 0
 albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1y4r8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md330"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
-stencil_flags = 2
-stencil_color = Color(0.3254902, 0.12941177, 0.2509804, 1)
-stencil_outline_thickness = 0.05
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3g5vb"]
 radius = 0.97314453
@@ -59,54 +40,53 @@ height = 6.4457397
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1485224808) index="0" unique_id=1417315613]
+[node name="Skeleton3D" parent="Esqueleto_001" parent_id_path=PackedInt32Array(65879535) index="0" unique_id=1636249196]
 bones/0/rotation = Quaternion(0.9942587, 1.27558355e-08, 1.18524866e-07, 0.10700372)
-bones/1/rotation = Quaternion(0.07742586, 1.7704717e-14, 1.845976e-08, 0.9969982)
-bones/2/rotation = Quaternion(0.022922367, -1.42007056e-14, 5.4651186e-09, 0.9997373)
-bones/3/rotation = Quaternion(0.24136645, 4.0875e-15, 5.7546238e-08, 0.97043407)
-bones/4/rotation = Quaternion(0.06463767, 0.08944565, 0.5943245, 0.79661775)
-bones/5/rotation = Quaternion(0.14314014, 0.084876, -0.19299975, 0.966984)
-bones/6/rotation = Quaternion(-0.017642718, -0.0011887159, -0.49272075, 0.8700079)
-bones/7/rotation = Quaternion(0.14230971, 0.0085769165, 0.13880578, 0.98000383)
-bones/8/rotation = Quaternion(0.064637825, -0.089445844, -0.5943246, 0.7966177)
-bones/9/rotation = Quaternion(0.14314017, -0.084875986, 0.19299978, 0.966984)
-bones/10/rotation = Quaternion(-0.01764274, 0.0011887187, 0.49272066, 0.87000793)
-bones/11/rotation = Quaternion(0.14230973, -0.00857692, -0.13880579, 0.98000383)
-bones/13/rotation = Quaternion(-0.16886261, 0.013533964, -0.2912518, 0.94152784)
-bones/14/rotation = Quaternion(0.120008335, -0.029056177, -0.47809708, 0.8695844)
-bones/15/rotation = Quaternion(0.011689648, 0.002708861, 0.017964108, 0.99976665)
-bones/16/rotation = Quaternion(0.06431393, 0.0018635421, 0.02576484, 0.99759537)
-bones/17/rotation = Quaternion(0.0060644685, -0.00606493, -0.6518714, 0.75828105)
-bones/18/rotation = Quaternion(-0.16886263, -0.013533994, 0.29125184, 0.94152784)
-bones/19/rotation = Quaternion(0.12000832, 0.029056182, 0.47809708, 0.8695844)
-bones/20/rotation = Quaternion(0.0116896555, -0.0027088646, -0.017964095, 0.99976665)
-bones/21/rotation = Quaternion(0.06431395, -0.0018635362, -0.025764836, 0.99759537)
-bones/22/rotation = Quaternion(-0.015972216, 1.1919408e-07, -1.9040378e-09, 0.99987245)
-bones/23/rotation = Quaternion(0.05338996, 1.5099031e-14, 1.2729158e-08, 0.9985738)
-bones/31/rotation = Quaternion(0.6054195, -0.08929908, 0.70144546, -0.36533162)
-bones/35/rotation = Quaternion(-0.07303615, 0.18091634, 0.37767428, 0.90515035)
-bones/36/rotation = Quaternion(-0.17097801, 0.15627985, 0.32385558, 0.91731167)
-bones/41/rotation = Quaternion(-0.073036134, -0.18091635, -0.37767434, 0.9051504)
-bones/42/rotation = Quaternion(-0.17097805, -0.1562799, -0.32385573, 0.9173116)
+bones/1/rotation = Quaternion(0.10659666, 2.4899843e-14, 2.541462e-08, 0.99430233)
+bones/2/rotation = Quaternion(0.026689513, -6.9442586e-15, 6.3632792e-09, 0.99964386)
+bones/4/rotation = Quaternion(0.13069646, 0.11525437, 0.42768127, 0.8869744)
+bones/5/rotation = Quaternion(-0.017642755, -0.0011887262, -0.49272066, 0.87000793)
+bones/6/rotation = Quaternion(0.14230971, 0.0085769165, 0.13880576, 0.98000383)
+bones/7/rotation = Quaternion(0.13069654, -0.11525458, -0.4276812, 0.8869744)
+bones/8/rotation = Quaternion(-0.017642723, 0.0011887082, 0.49272075, 0.8700079)
+bones/9/rotation = Quaternion(0.14230973, -0.008576937, -0.13880582, 0.9800037)
+bones/10/rotation = Quaternion(-0.13292438, -0.09233778, 0.39401057, 0.90474343)
+bones/11/rotation = Quaternion(0.120008305, -0.029056214, -0.47809708, 0.8695843)
+bones/12/rotation = Quaternion(0.011689664, 0.0027088574, 0.017964054, 0.9997667)
+bones/13/rotation = Quaternion(0.06431395, 0.0018635376, 0.025764849, 0.99759537)
+bones/14/rotation = Quaternion(-0.1329243, 0.092337586, -0.39401063, 0.9047434)
+bones/15/rotation = Quaternion(0.12000833, 0.029056218, 0.4780971, 0.8695844)
+bones/16/rotation = Quaternion(0.0116896415, -0.0027088516, -0.017964095, 0.99976665)
+bones/17/rotation = Quaternion(0.06431395, -0.0018635348, -0.02576484, 0.99759537)
+bones/18/rotation = Quaternion(-0.015972216, 1.1919408e-07, -1.9040378e-09, 0.99987245)
+bones/19/rotation = Quaternion(0.05338996, 1.5099031e-14, 1.2729158e-08, 0.9985738)
+bones/20/rotation = Quaternion(-0.19185573, -1.7401543e-14, -4.5741974e-08, 0.98142314)
+bones/21/rotation = Quaternion(0.27396855, -1.1464818e-07, 3.26596e-08, 0.96173865)
+bones/27/rotation = Quaternion(0.6054195, -0.08929908, 0.70144546, -0.36533162)
+bones/30/rotation = Quaternion(0.0015570931, 0.029504461, 0.84406894, 0.5354201)
+bones/31/rotation = Quaternion(-0.07303615, 0.18091634, 0.37767428, 0.90515035)
+bones/32/rotation = Quaternion(-0.17097801, 0.15627985, 0.32385558, 0.91731167)
+bones/36/rotation = Quaternion(0.0015572766, -0.029504586, -0.84406894, 0.5354201)
+bones/37/rotation = Quaternion(-0.073036134, -0.18091635, -0.37767434, 0.9051504)
+bones/38/rotation = Quaternion(-0.17097805, -0.1562799, -0.32385573, 0.9173116)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=194455311]
-lod_bias = 0.1
-surface_material_override/0 = SubResource("StandardMaterial3D_8m128")
-surface_material_override/1 = SubResource("StandardMaterial3D_mvxwy")
-surface_material_override/2 = SubResource("StandardMaterial3D_i22ah")
+[node name="Cube_006" parent="Esqueleto_001/Skeleton3D" index="0" unique_id=766449179]
+surface_material_override/0 = SubResource("StandardMaterial3D_mvxwy")
+surface_material_override/1 = SubResource("StandardMaterial3D_i22ah")
+surface_material_override/2 = SubResource("StandardMaterial3D_avlpo")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1756190040]
-lod_bias = 0.1
-surface_material_override/0 = SubResource("StandardMaterial3D_ir8l8")
-surface_material_override/1 = SubResource("StandardMaterial3D_3g5vb")
-surface_material_override/2 = SubResource("StandardMaterial3D_m5opc")
+[node name="Cube_007" parent="Esqueleto_001/Skeleton3D" index="1" unique_id=1279720977]
+surface_material_override/0 = SubResource("StandardMaterial3D_clgnp")
+surface_material_override/1 = SubResource("StandardMaterial3D_iqnfv")
+surface_material_override/2 = SubResource("StandardMaterial3D_bdyce")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1079067927]
-lod_bias = 0.1
-surface_material_override/0 = SubResource("StandardMaterial3D_1y4r8")
+[node name="Plano_003" parent="Esqueleto_001/Skeleton3D" index="2" unique_id=450318437]
+surface_material_override/0 = SubResource("StandardMaterial3D_md330")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=273426240]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1405675075]
 autoplay = &"Idle"
+next/RecibirDanio = &"Idle"
+blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1021967813]
 
