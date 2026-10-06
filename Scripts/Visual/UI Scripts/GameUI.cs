@@ -230,14 +230,14 @@ public partial class GameUI : Control {
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null) return;
 		
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
 
 		botonAtacar.Disabled = !puedeAtacar;
 	}
 
 	private void AlternarEstadoDeInvocacion()
 	{
-		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
+		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
 		
 		if (instanciaMenuRadial != null)
         {
@@ -248,7 +248,7 @@ public partial class GameUI : Control {
 	private void AlternarEstadoDeAbsorcion(){
 		if (playerManager == null) return;
 		
-		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
+		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
 
 		if (instanciaMenuRadial != null)
         {
