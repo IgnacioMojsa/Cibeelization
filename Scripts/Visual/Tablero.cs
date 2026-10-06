@@ -134,12 +134,12 @@ public partial class Tablero : Node3D
 				int q = widthRow;
 				int r = heightRow - (widthRow - (widthRow & 1)) / 2;
 
-                var celda = new Celda(Celdas.Count, q, r)
-                {
-                    Tile = tileNode
-                };
+				var celda = new Celda(Celdas.Count, q, r)
+				{
+					Tile = tileNode
+				};
 
-                Celdas.Add(celda);
+				Celdas.Add(celda);
 				_celdasPorPosicion[(q, r)] = celda;
 			}
 		}
