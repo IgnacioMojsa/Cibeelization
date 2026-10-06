@@ -9,12 +9,12 @@ public partial class PlayerManager : Node3D
 	[Export] public TroopsManager tropasManager; 
 	[Export] public CeldasManager celdasManager; 
 	[Export] public AnimationManager animationManager;
+	[Export] public VFXManager vfxManager;
 
 	public readonly List<Node3D> VisualesJugadores = new();
-	public readonly List<Node3D> OutlinesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
-	private List<Abeja> AbejasObjetivo = new();
+	public List<Abeja> AbejasObjetivo = new();
 
 	private MovimientoManager movimientoManager;
 	private AtaqueManager ataqueManager;
@@ -185,7 +185,7 @@ public partial class PlayerManager : Node3D
 
 		if(PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores))
 		{
-			OcultarAbejasObjetivo();
+			vfxManager.OcultarAbejasObjetivo();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 
 		}
@@ -316,7 +316,7 @@ public partial class PlayerManager : Node3D
 			AtacarAbeja();
 		}
 		
-		OcultarAbejasObjetivo();
+		vfxManager.OcultarAbejasObjetivo();
 	}
 
 	private Abeja ObtenerAbejaDesdeCollider(Node collider)
@@ -347,98 +347,6 @@ public partial class PlayerManager : Node3D
 		}
 		LimpiarAbejasEliminadas();
 		GameManager.Instance.ConsumirAtaque();
-	}
-
-	private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
-		var meshes = new List<MeshInstance3D>();
-
-		if (visual == null) return meshes;
-
-		foreach (var node in visual.FindChildren("*", "MeshInstance3D"))
-		{
-			if (node is MeshInstance3D mesh)
-			{
-				meshes.Add(mesh);
-			}
-		}
-		return meshes;
-	}
-
-	public void EstablecerNextPass(Node3D visual, Material materialOutline)
-	{
-		var meshes = ObtenerTodosLosMeshes(visual);
-
-		foreach (var mesh in meshes)
-		{
-			if (mesh.Mesh == null) continue;
-
-			int cantidadSuperficies = mesh.Mesh.GetSurfaceCount();
-
-			for (int i = 0; i < cantidadSuperficies; i++)
-			{
-				var materialBase = mesh.GetActiveMaterial(i);
-				
-				if (materialBase == null) continue;
-
-				if (!materialBase.IsLocalToScene())
-				{
-					materialBase = (Material)materialBase.Duplicate();
-					mesh.SetSurfaceOverrideMaterial(i, materialBase);
-				}
-
-				if (materialOutline != null && materialBase == materialOutline)
-				{
-					GD.PrintErr($"[PlayerManager] Conflicto de material en {mesh.Name} (Superficie {i}): El material base y el outline son la misma instancia.");
-					continue;
-				}
-
-				materialBase.NextPass = materialOutline;
-			}
-		}
-	}
-
-	public void MostrarJugadoresObjetivo(){
-		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
-		var jugadoresObjetivo = VisualesJugadores.Where(j => JugadorEnTurnoAdyacenteAOtro(j)).ToList();
-
-		foreach (var jugador in jugadoresObjetivo)
-		{
-			if (jugador != VisualJugadorActual)
-			{
-				EstablecerNextPass(jugador, materialAtaque);
-			}
-		}
-	}
-
-	public void OutlineJugadorEnTurno(Node3D visualActual){
-		var IndiceDeJugadorEnTurno = GameManager.Instance.jugadorEnTurno.Id - 1;
-		
-		var materialTurnoJ1 = GD.Load<StandardMaterial3D>("res://outlineJugador1.tres");
-		var materialTurnoJ2 = GD.Load<StandardMaterial3D>("res://outlineJugador2.tres");
-		var materialTurnoJ3 = GD.Load<StandardMaterial3D>("res://outlineJugador3.tres");
-		var materialTurnoJ4 = GD.Load<StandardMaterial3D>("res://outlineJugador4.tres");
-
-		List<StandardMaterial3D> OutlinesJugadores = new List<StandardMaterial3D>{ materialTurnoJ1, materialTurnoJ2, materialTurnoJ3, materialTurnoJ4 };
-
-		EsconderOutlineDeJugadores();
-
-		if (visualActual != null)
-		{
-			EstablecerNextPass(visualActual, OutlinesJugadores[IndiceDeJugadorEnTurno]);
-		}
-	}
-
-	public void EsconderOutlineDeJugadores()
-	{
-		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
-		
-		foreach (var visual in VisualesJugadores)
-		{
-			if (visual != VisualJugadorActual)
-			{
-				EstablecerNextPass(visual, outlineBase);
-			}
-		}
 	}
 
 	public bool OtroJugadorCerca()
@@ -592,34 +500,6 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public void MostrarAbejasObjetivo(){
-		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
-
-		ActualizarAbejasObjetivo();
-
-		foreach (var abejaVisual in AbejasObjetivo)
-		{
-			if(tropasManager.VisualAbejas[abejaVisual] != null)
-			{
-				EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], materialAtaque);
-			} 
-		}
-	}
-
-	public void OcultarAbejasObjetivo(){
-		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
-
-		foreach (var abejaVisual in AbejasObjetivo)
-		{
-			if(abejaVisual != null)
-			{
-				EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], outlineBase);
-			} 
-		}
-
-		AbejasObjetivo.Clear();
-	}
-
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
 		var jugadorActual = GameManager.Instance.jugadorEnTurno;
 		
@@ -635,7 +515,7 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	private void ActualizarAbejasObjetivo()
+	public void ActualizarAbejasObjetivo()
 	{
     	AbejasObjetivo.Clear();
     	VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
@@ -680,7 +560,7 @@ public partial class PlayerManager : Node3D
 
 		if(celdasManager.CeldasDisponibles.Contains(CeldaCliqueada)){
 			celdasManager.OcultarCeldasDisponiblesParaInvocar();	
-			OcultarAbejasObjetivo();
+			vfxManager.OcultarAbejasObjetivo();
 			tropasManager.InstanciarAbeja(CeldaCliqueada);
 			var bee1 = AudioManager.Instance.GameAudio.Sound5;
 			AudioManager.Instance.PlaySound(bee1);

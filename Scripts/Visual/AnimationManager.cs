@@ -14,11 +14,6 @@ public partial class AnimationManager : Node3D
 
             AnimacionesJugadores.Add(GameManager.Instance.JugadoresEnPartida[j], animacionJugador);
         }
-
-        foreach (var animacion in AnimacionesJugadores)
-        {
-            GD.Print(animacion);
-        }
     }
 
     public void CambiarAnimacionDeJugador(AbejaReina unJugador, string animacionNueva)

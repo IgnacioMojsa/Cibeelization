@@ -194,8 +194,8 @@ public partial class GameUI : Control {
 		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque){
 			if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
 				GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-				playerManager.MostrarJugadoresObjetivo();
-				playerManager.MostrarAbejasObjetivo();
+				playerManager.vfxManager.MostrarJugadoresObjetivo();
+				playerManager.vfxManager.MostrarAbejasObjetivo();
 
 				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
 
@@ -206,15 +206,10 @@ public partial class GameUI : Control {
 		}else if(GameManager.Instance.jugadorEnTurno.ModoAtaque){
 			GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
 
-			playerManager.EsconderOutlineDeJugadores();
-			playerManager.OcultarAbejasObjetivo();
+			playerManager.vfxManager.EsconderOutlineDeJugadores();
+			playerManager.vfxManager.OcultarAbejasObjetivo();
 			playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
-
-		GD.Print("Accion = " + GameManager.Instance.jugadorEnTurno.Estado);
-		GD.Print("Tiro los dados = " + GameManager.Instance.jugadorEnTurno.TiroLosDados);
-		GD.Print("Consumio accion = " + GameManager.Instance.jugadorEnTurno.AccionConsumida);
-		GD.Print("Modo de Ataque = " + GameManager.Instance.jugadorEnTurno.ModoAtaque);
 
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
@@ -302,7 +297,7 @@ public partial class GameUI : Control {
 
 		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id){
 			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
-			playerManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
+			playerManager.vfxManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
 		}
 	}
 

@@ -101,7 +101,7 @@ public partial class TroopsManager : Node3D
 
 		foreach (var abeja in PosiblesSacrificios)
 		{
-			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialAtaque);
+			playerManager.vfxManager.EstablecerNextPass(VisualAbejas[abeja], materialAtaque);
 
 			//GD.Print(VisualAbejas[abeja]);
 		} 
@@ -113,7 +113,7 @@ public partial class TroopsManager : Node3D
 
 		foreach (var abeja in PosiblesSacrificios)
 		{
-			playerManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
+			playerManager.vfxManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
 
 			//GD.Print(VisualAbejas[abeja]);
 		} 

@@ -5,9 +5,10 @@
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
 [ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 [ext_resource type="Script" uid="uid://6cd1daexkf3j" path="res://Scripts/Visual/TroopsManager.cs" id="2_qqnew"]
+[ext_resource type="Script" uid="uid://df77aeggy475y" path="res://Scripts/Visual/VFXManager.cs" id="3_auhuj"]
 [ext_resource type="Script" uid="uid://c7ncbwx7eb0qd" path="res://Scripts/Visual/CamaraController.cs" id="3_cvlkt"]
 [ext_resource type="Script" uid="uid://d2vt13cmx2gfi" path="res://Scripts/Visual/AnimationManager.cs" id="3_xolvn"]
-[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="4_2lok1"]
+[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/UI Scripts/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="5_cvlkt"]
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
@@ -53,13 +54,18 @@ script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
 tablero = NodePath("../Tablero")
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager")]
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
 animationManager = NodePath("../AnimationManager")
+vfxManager = NodePath("../VFXManager")
+
+[node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager")]
+script = ExtResource("3_auhuj")
+playerManager = NodePath("../PlayerManager")
 
 [node name="AnimationManager" type="Node3D" parent="." unique_id=2110061658]
 script = ExtResource("3_xolvn")
@@ -717,6 +723,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Recursos1" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=156705770]
+visible = false
 layout_mode = 0
 offset_left = 124.00006
 offset_top = -624.0
@@ -727,6 +734,7 @@ pivot_offset = Vector2(0, 88.35)
 texture = ExtResource("11_g66tl")
 
 [node name="Recursos2" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=1018539452]
+visible = false
 layout_mode = 0
 offset_left = -343.0
 offset_top = -624.0
@@ -742,10 +750,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -195.50002
-offset_top = -614.0
-offset_right = 195.49998
-offset_bottom = -354.0
+offset_left = -195.5
+offset_top = -620.00006
+offset_right = 195.5
+offset_bottom = -360.00006
 grow_horizontal = 2
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(200.5, -1)
@@ -759,9 +767,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -195.5
-offset_top = -123.0
+offset_top = -121.0
 offset_right = 195.5
-offset_bottom = 153.0
+offset_bottom = 155.0
 grow_horizontal = 2
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(200.5, -1)

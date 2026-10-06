@@ -120,8 +120,6 @@ public partial class CeldasManager : Node3D
 		foreach (var celda in CeldasDisponibles)
 		{
 			PintarCelda(celda, Color.FromHtml("#d72f00"));
-
-			GD.Print(celda.Tile.GetNode<Node3D>("Outline").Visible + " de ID" + celda.Id);
 		}
 	}
 
