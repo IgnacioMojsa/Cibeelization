@@ -44,10 +44,9 @@ public partial class PlayerManager : Node3D
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (!movimientoManager.PuedeMover(GameManager.Instance.jugadorEnTurno))
-			return;
-
+	{	
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		
 		if (!@event.IsActionPressed("move"))
 			return; 
 
@@ -56,20 +55,20 @@ public partial class PlayerManager : Node3D
 
 		camera ??= GetViewport().GetCamera3D();
 		
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			IntentarMoverJugador();
-		}
-		
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){
+		if(jugador.ModoInvocacion && !jugador.AccionConsumida){
 			InvocarAbejaNueva();
 		}
-
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoInvocacion){
+		
+		else if(jugador.ModoAtaque && !jugador.AccionConsumida){
 			Atacar();
 		}
 
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoAbsorcion && (!GameManager.Instance.jugadorEnTurno.ModoInvocacion || !GameManager.Instance.jugadorEnTurno.ModoAtaque)){
+		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){
 			tropasManager.AbsorberSubdito(CeldaCliqueada);
+		}
+
+		else{
+			IntentarMoverJugador();
 		}
 	}
 
@@ -298,6 +297,7 @@ public partial class PlayerManager : Node3D
 			RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
 			if (AbejasObjetivo.Contains(abejaCliqueada)){
 				AtacarAbejaEspecifica(abejaCliqueada);
+				return;
 			}
 		}
 
@@ -316,6 +316,7 @@ public partial class PlayerManager : Node3D
 			AtacarAbeja();
 		}
 		
+		OcultarAbejasObjetivo();
 	}
 
 	private Abeja ObtenerAbejaDesdeCollider(Node collider)
@@ -446,7 +447,8 @@ public partial class PlayerManager : Node3D
 	}
 
 	public bool TieneObjetivosCerca(){	
-		return (AbejasObjetivo.Count > 0) || OtroJugadorCerca();
+		ActualizarAbejasObjetivo();
+    	return AbejasObjetivo.Count > 0 || OtroJugadorCerca();
 	}
 
 	private void AtacarAbeja(){
@@ -490,7 +492,6 @@ public partial class PlayerManager : Node3D
 				EfectuarAtaque(visualRival, reinaObjetivo.Id - 1);
 				animationManager.CambiarAnimacionDeJugador(reinaObjetivo, "RecibirDanio");
 
-				OcultarAbejasObjetivo();
 				GameManager.Instance.ConsumirAtaque();
 			}
 			else
@@ -594,20 +595,7 @@ public partial class PlayerManager : Node3D
 	public void MostrarAbejasObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 
-		AbejasObjetivo.Clear();
-		
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-
-		celdasManager.CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-
-		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
-		{
-			if(jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego){
-				continue;
-			}
-
-			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
-		}
+		ActualizarAbejasObjetivo();
 
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
@@ -621,19 +609,6 @@ public partial class PlayerManager : Node3D
 	public void OcultarAbejasObjetivo(){
 		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
 
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
-
-		celdasManager.CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
-
-		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
-		{
-			if(jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego){
-				continue;
-			}
-
-			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
-		}
-
 		foreach (var abejaVisual in AbejasObjetivo)
 		{
 			if(abejaVisual != null)
@@ -641,6 +616,8 @@ public partial class PlayerManager : Node3D
 				EstablecerNextPass(tropasManager.VisualAbejas[abejaVisual], outlineBase);
 			} 
 		}
+
+		AbejasObjetivo.Clear();
 	}
 
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
@@ -656,6 +633,19 @@ public partial class PlayerManager : Node3D
 				listaDeAbejas.Add(abejaActual);
 			}
 		}
+	}
+
+	private void ActualizarAbejasObjetivo()
+	{
+    	AbejasObjetivo.Clear();
+    	VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+    	celdasManager.CeldasDisponibles = tablero.ObtenerVecinos(CeldaActualPorJugador[VisualJugadorActual]);
+
+    	foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
+    	{
+    	    if (jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego) continue;
+    	    BuscarAbejasObjetivo(jugador, AbejasObjetivo);
+    	}
 	}
 
 	public void LimpiarAbejasEliminadas(){

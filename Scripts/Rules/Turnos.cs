@@ -32,6 +32,7 @@ public class TurnManager
 
 		jugadorEnTurno.EsSuTurno = false;
 		jugadorEnTurno.TiroLosDados = false;
+		jugadorEnTurno.AccionConsumida = false;
 		jugadorEnTurno.SeMovio = false;
 		jugadorEnTurno.AtacoRecien = false;
 		jugadorEnTurno.ModoAtaque = false;

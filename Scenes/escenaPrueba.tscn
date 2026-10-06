@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://ct82j6o3ymogj" path="res://Assets/UI/Recurso.svg" id="11_g66tl"]
 [ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
+[ext_resource type="Texture2D" uid="uid://cj0jh65b62hxa" path="res://Assets/UI/Dado.svg" id="15_icj48"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -751,6 +752,22 @@ pivot_offset = Vector2(200.5, -1)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = ExtResource("12_gsowx")
+
+[node name="Dado" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=754489819]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -195.5
+offset_top = -123.0
+offset_right = 195.5
+offset_bottom = 153.0
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(200.5, -1)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("15_icj48")
 
 [node name="MenuRadial" parent="HUD" unique_id=1055766075 node_paths=PackedStringArray("hud") instance=ExtResource("13_gsowx")]
 layout_mode = 1

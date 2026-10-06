@@ -192,11 +192,11 @@ public partial class GameUI : Control {
 		if(playerManager == null) return;
 
 		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-		
 			if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
+				GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 				playerManager.MostrarJugadoresObjetivo();
 				playerManager.MostrarAbejasObjetivo();
+
 				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
 
 				if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
@@ -210,6 +210,12 @@ public partial class GameUI : Control {
 			playerManager.OcultarAbejasObjetivo();
 			playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
+
+		GD.Print("Accion = " + GameManager.Instance.jugadorEnTurno.Estado);
+		GD.Print("Tiro los dados = " + GameManager.Instance.jugadorEnTurno.TiroLosDados);
+		GD.Print("Consumio accion = " + GameManager.Instance.jugadorEnTurno.AccionConsumida);
+		GD.Print("Modo de Ataque = " + GameManager.Instance.jugadorEnTurno.ModoAtaque);
+
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
@@ -301,13 +307,15 @@ public partial class GameUI : Control {
 	}
 
 	public void InvocarSubdito(){
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
+
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
 			celdasManager.MostrarCeldasDisponiblesParaInvocar();
 		}else if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = false;
+
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
 			celdasManager.OcultarCeldasDisponiblesParaInvocar();

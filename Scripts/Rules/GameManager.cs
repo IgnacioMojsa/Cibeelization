@@ -121,16 +121,18 @@ public partial class GameManager
 	{
 		return jugadorEnTurno != null &&
 			   jugadorEnTurno.EsSuTurno &&
+			   jugadorEnTurno.TiroLosDados &&
+			   !jugadorEnTurno.AccionConsumida &&
 			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
 	public void ConsumirAtaque()
 	{
-		if (jugadorEnTurno == null) return;
-
+		if (jugadorEnTurno == null || jugadorEnTurno.AccionConsumida) return;
+			
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
-		_ = TurnManager.TerminarTurno();
+		jugadorEnTurno.AccionConsumida = true;
 	}
 
 	public void EliminarJugador(int Id)
@@ -140,11 +142,12 @@ public partial class GameManager
 	}
 
 	public void GenerarAbejaNueva(Abeja unaAbeja){
-		var abejaNueva = unaAbeja;
+		if (jugadorEnTurno.AccionConsumida) return;
 
-		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(abejaNueva);
+		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(unaAbeja);
+		jugadorEnTurno.ModoInvocacion = false;
 		jugadorEnTurno.InvocoRecien = true;
-		_ = TurnManager.TerminarTurno();
+		jugadorEnTurno.AccionConsumida = true;
 	}
 
 	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)
@@ -193,11 +196,15 @@ public partial class GameManager
 
 	public void ConsumirAbsorcion(Abeja unaAbeja)
 	{
+		if (jugadorEnTurno.AccionConsumida) return;
+
 		jugadorEnTurno.Curar();
 		
 		jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
 		unaAbeja.MatarAbeja();
-		_ = TurnManager.TerminarTurno();
+			
+		jugadorEnTurno.ModoAbsorcion = false;
+		jugadorEnTurno.AccionConsumida = true;
 	}
 
 	public void ResetearEstadoPartida()

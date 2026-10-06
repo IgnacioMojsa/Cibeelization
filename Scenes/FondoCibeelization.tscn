@@ -17,6 +17,7 @@ gradient = SubResource("Gradient_2jwc3")
 diffuse_mode = 3
 albedo_color = Color(0.91766715, 0.82024693, 0.92032963, 1)
 albedo_texture = SubResource("GradientTexture1D_i45av")
+stencil_flags = 2
 
 [sub_resource type="Gradient" id="Gradient_r0mwa"]
 offsets = PackedFloat32Array(0, 0.51492536, 1)
