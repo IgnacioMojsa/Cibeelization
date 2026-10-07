@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
 [ext_resource type="Texture2D" uid="uid://cj0jh65b62hxa" path="res://Assets/UI/Dado.svg" id="15_icj48"]
+[ext_resource type="Texture2D" uid="uid://ewlnk7vyjprx" path="res://Assets/UI/AbejarReina1.svg" id="16_2gfcn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -716,13 +717,12 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Aceptar"
 
-[node name="DiseñoTerminado" type="Control" parent="HUD" unique_id=851638192]
-visible = false
+[node name="Elementos" type="Control" parent="HUD" unique_id=851638192]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Recursos1" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=156705770]
+[node name="Recursos1" type="TextureRect" parent="HUD/Elementos" unique_id=156705770]
 visible = false
 layout_mode = 0
 offset_left = 124.00006
@@ -733,7 +733,7 @@ scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(0, 88.35)
 texture = ExtResource("11_g66tl")
 
-[node name="Recursos2" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=1018539452]
+[node name="Recursos2" type="TextureRect" parent="HUD/Elementos" unique_id=1018539452]
 visible = false
 layout_mode = 0
 offset_left = -343.0
@@ -745,7 +745,7 @@ pivot_offset = Vector2(0, 88.35)
 texture = ExtResource("11_g66tl")
 flip_h = true
 
-[node name="JugadorEnTurno" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=155409841]
+[node name="JugadorEnTurno" type="TextureRect" parent="HUD/Elementos" unique_id=155409841]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -761,7 +761,19 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = ExtResource("12_gsowx")
 
-[node name="Dado" type="TextureRect" parent="HUD/DiseñoTerminado" unique_id=754489819]
+[node name="IconoJugador" type="TextureRect" parent="HUD/Elementos" unique_id=1352185011]
+layout_mode = 0
+offset_left = -102.99988
+offset_top = -762.0001
+offset_right = 175.84143
+offset_bottom = -312.79382
+scale = Vector2(0.365, 0.365)
+pivot_offset = Vector2(117.64697, 188.23528)
+texture = ExtResource("16_2gfcn")
+stretch_mode = 3
+
+[node name="Dado" type="TextureRect" parent="HUD/Elementos" unique_id=754489819]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

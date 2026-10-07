@@ -271,6 +271,7 @@ public partial class GameUI : Control {
 //hay q parametrizar esto
 	private void MostrarJugadorEnTurno(){ 
 		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		TextureRect iconoJugadorEnTurno = GetNode<TextureRect>("Elementos/IconoJugador");
 
 		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
 		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
@@ -282,12 +283,19 @@ public partial class GameUI : Control {
 		var colorJ3 = Color.FromHtml("#b33671");
 		var colorJ4 = Color.FromHtml("#8260e5");
 
+		var iconoJ1 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina1.svg");
+		var iconoJ2 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina2.svg");
+		var iconoJ3 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina3.svg");
+		var iconoJ4 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina4.svg");
+
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
 		List<Color> ColorJugadores = new List<Color>{ colorJ1, colorJ2, colorJ3, colorJ4};
+		List<CompressedTexture2D> IconosJugadores = new List<CompressedTexture2D>{iconoJ1, iconoJ2, iconoJ3, iconoJ4};
 
 		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++){
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
 				UIJugadores[j].Modulate = ColorJugadores[j];
+				iconoJugadorEnTurno.Texture = IconosJugadores[j];
 			}else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
 				UIJugadores[j].Visible = false;
 			}else{

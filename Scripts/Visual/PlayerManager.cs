@@ -23,7 +23,6 @@ public partial class PlayerManager : Node3D
 	public Vector3 PosicionEnMundo3D;
 	public Celda CeldaCliqueada;
 	public Celda CeldaOrigen;
-	private Tween TweenBuffArcoiris;
 	
 	public override async void _Ready()
 	{
