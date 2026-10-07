@@ -164,6 +164,27 @@ public partial class GameUI : Control {
 
 		AlternarEstadoDeInvocacion();
 		AlternarEstadoDeAbsorcion();
+		AlternarEstadoDeControl();
+	}
+
+	public void OnControlarPressed()
+	{
+		if(playerManager == null) return;
+
+		if(!GameManager.Instance.jugadorEnTurno.MenteColmena){		
+			GameManager.Instance.jugadorEnTurno.MenteColmena = true;
+
+			tropasManager.MostrarAbejasCercanas();
+		}
+		else if(GameManager.Instance.jugadorEnTurno.MenteColmena)
+		{
+			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
+			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
+
+			tropasManager.OcultarAbejasCercanas();
+
+			GameManager.Instance.CamaraActual.EnfocarNodo(playerManager.VisualJugadorActual, 2, 1);
+		}
 	}
 
 	public void OnCurarPressed(){
@@ -174,7 +195,7 @@ public partial class GameUI : Control {
 
 			if(tropasManager.PuedeAbsorberSubdito())
 			{
-				tropasManager.MostrarAbejasAAbsorber();
+				tropasManager.MostrarAbejasCercanas();
 				GD.Print("Modo de absorcion = " + GameManager.Instance.jugadorEnTurno.ModoAbsorcion);
 			}
 		}
@@ -182,7 +203,7 @@ public partial class GameUI : Control {
 		{
 			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = false;
 
-			tropasManager.OcultarAbejasAAbsorber();
+			tropasManager.OcultarAbejasCercanas();
 
 			GD.Print("Modo de absorcion = " + GameManager.Instance.jugadorEnTurno.ModoAbsorcion);
 		}
@@ -237,6 +258,16 @@ public partial class GameUI : Control {
 		if (instanciaMenuRadial != null)
         {
             instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
+        }
+	}
+
+	private void AlternarEstadoDeControl()
+	{
+		bool puedeControlar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
+		
+		if (instanciaMenuRadial != null)
+        {
+            instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
         }
 	}
 

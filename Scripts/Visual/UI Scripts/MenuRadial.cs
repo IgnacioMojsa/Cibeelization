@@ -125,6 +125,7 @@ public partial class MenuRadial : Control
 		switch(nombreBoton)
 		{
 			case "ControlarButton":
+				hud.OnControlarPressed();
 				break;
 			case "CurarButton":
 				hud.OnCurarPressed();

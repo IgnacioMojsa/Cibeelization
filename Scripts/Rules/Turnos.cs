@@ -39,6 +39,8 @@ public class TurnManager
 		jugadorEnTurno.ModoInvocacion = false;
 		jugadorEnTurno.ModoAbsorcion = false;
 		jugadorEnTurno.InvocoRecien = false; 
+		jugadorEnTurno.MenteColmena = false;
+		jugadorEnTurno.MoviendoSubdito = false;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
 
 		//GD.Print("Terminó su turno");

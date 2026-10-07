@@ -16,7 +16,7 @@ public partial class PlayerManager : Node3D
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 	public List<Abeja> AbejasObjetivo = new();
 
-	private MovimientoManager movimientoManager;
+	public MovimientoManager movimientoManager;
 	private AtaqueManager ataqueManager;
 
 	public Node3D VisualJugadorActual;
@@ -64,6 +64,17 @@ public partial class PlayerManager : Node3D
 
 		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){
 			tropasManager.AbsorberSubdito(CeldaCliqueada);
+		}
+
+		else if(jugador.MenteColmena && !jugador.AccionConsumida && !jugador.MoviendoSubdito){
+			CeldaCliqueada = ObtenerCeldaAlClickear();
+			tropasManager.ControlarAbeja(CeldaCliqueada);
+		}
+
+		else if(jugador.MenteColmena && jugador.MoviendoSubdito)
+		{
+			CeldaCliqueada = ObtenerCeldaAlClickear();
+			tropasManager.IntentarMoverSubdito(CeldaCliqueada);
 		}
 
 		else{
@@ -123,6 +134,25 @@ public partial class PlayerManager : Node3D
 		return true;
 	}
 
+	private Celda ObtenerCeldaAlClickear()
+	{
+		Vector2 mousePosition = GetViewport().GetMousePosition();
+		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
+		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
+	
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
+		var result = spaceState.IntersectRay(query);
+
+		if(result.Count == 0) return null;
+
+		PosicionEnMundo3D = result["position"].AsVector3();
+		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
+	
+		return CeldaCliqueada;
+		
+	}
+
 	public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion) 
 	{
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
@@ -147,7 +177,7 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void IntentarMoverJugador()
-	{       
+	{      
 		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0)
 			return;
 
@@ -160,23 +190,7 @@ public partial class PlayerManager : Node3D
 
 		VisualJugadorActual = VisualesJugadores[indexJugador];
 
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
-
-	
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-		var result = spaceState.IntersectRay(query);
-
-		if(result.Count == 0)
-			return;
-
-		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
-	
-		if(CeldaCliqueada == null)
-			return;
+		CeldaCliqueada = ObtenerCeldaAlClickear();
 		
 		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
 
@@ -186,7 +200,6 @@ public partial class PlayerManager : Node3D
 		{
 			vfxManager.OcultarAbejasObjetivo();
 			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
-
 		}
 		else
 		{
@@ -540,22 +553,7 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void InvocarAbejaNueva(){
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
-	
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-		var result = spaceState.IntersectRay(query);
-
-		if(result.Count == 0)
-		return;
-
-		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
-	
-		if(CeldaCliqueada == null)
-		return;
+		CeldaCliqueada = ObtenerCeldaAlClickear();
 
 		if(celdasManager.CeldasDisponibles.Contains(CeldaCliqueada)){
 			celdasManager.OcultarCeldasDisponiblesParaInvocar();	
