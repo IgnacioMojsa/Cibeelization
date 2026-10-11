@@ -22,7 +22,7 @@ public partial class CeldasManager : Node3D
 
     public void PintarCeldaDeAbejaBuffeada()
 	{
-		var celdaAPintar = GameManager.Instance.jugadorEnTurno.UbicacionActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+		var celdaAPintar = GameManager.Instance.jugadorEnTurno.CeldaActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
 		if (celdaAPintar is MeshInstance3D meshInstance)
 		{
@@ -59,7 +59,7 @@ public partial class CeldasManager : Node3D
 			TweenBuffArcoiris.Kill();
 		}
 
-		var celda = GameManager.Instance.jugadorEnTurno.UbicacionActual;
+		var celda = GameManager.Instance.jugadorEnTurno.CeldaActual;
 
 		if (celda.Tile == null) return;
 
@@ -90,7 +90,7 @@ public partial class CeldasManager : Node3D
     public void MostrarCeldasDisponiblesParaInvocar(){
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
-		CeldasDisponibles = tablero.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.UbicacionActual);
+		CeldasDisponibles = tablero.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
 		
 		foreach (var jugador in playerManager.VisualesJugadores)
 		{

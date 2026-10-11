@@ -19,8 +19,6 @@ public partial class AbejaReina : Abeja
 
 	public Colmena ColmenaDeReina;
 
-	public Celda UbicacionActual {get; set;}
-
 	public EstadoTurno Estado {get; set;} = EstadoTurno.EsperandoDado;
  
 	public enum EstadoTurno 
@@ -42,7 +40,7 @@ public partial class AbejaReina : Abeja
 
 	public void PosicionarEnCelda(Celda celda)
 	{
-	    UbicacionActual = celda;
+	    CeldaActual = celda;
 
 	    // Resetear estados de turno
 	    EsSuTurno = false;

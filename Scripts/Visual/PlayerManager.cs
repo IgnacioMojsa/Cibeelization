@@ -272,7 +272,7 @@ public partial class PlayerManager : Node3D
 		int index = VisualesJugadores.IndexOf(jugador);
 		if (index != -1)
 		{
-			GameManager.Instance.JugadoresEnPartida[index].UbicacionActual = celdaDestino;
+			GameManager.Instance.JugadoresEnPartida[index].CeldaActual = celdaDestino;
 			GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 2, 1);
 		}
 
@@ -319,7 +319,9 @@ public partial class PlayerManager : Node3D
 
 		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
 
-		if(OtroJugadorCerca())
+		var subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
+
+		if(OtroJugadorCerca() || subditoAdyacenteAJugador)
 		{
 			AtacarJugador();
 		}
@@ -395,15 +397,24 @@ public partial class PlayerManager : Node3D
 	private void AtacarJugador(){
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
 
-		Celda celdaAtacante = CeldaActualPorJugador[VisualJugadorActual];
+		Celda celdaAtacante;
+
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			celdaAtacante = tropasManager.SubditoActual.CeldaActual;
+			GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 2, 1);
+		}
+		else
+		{
+			celdaAtacante = CeldaActualPorJugador[VisualJugadorActual];
+		}
 
 		List<Celda> celdasAdyacentes = tablero.ObtenerVecinos(celdaAtacante);
 
-		AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego && j != GameManager.Instance.jugadorEnTurno && j.UbicacionActual == CeldaCliqueada);
-
+		AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(j => !j.FueraDeJuego && j != GameManager.Instance.jugadorEnTurno && j.CeldaActual == CeldaCliqueada);
 
 		if (reinaObjetivo != null){
-			if (celdasAdyacentes.Any(c => c == reinaObjetivo.UbicacionActual))
+			if (celdasAdyacentes.Any(c => c == reinaObjetivo.CeldaActual))
 			{
 				Node3D visualRival = VisualesJugadores[reinaObjetivo.Id - 1];
 
@@ -411,6 +422,7 @@ public partial class PlayerManager : Node3D
 	
 				EfectuarAtaque(visualRival, reinaObjetivo.Id - 1);
 				animationManager.CambiarAnimacionDeJugador(reinaObjetivo, "RecibirDanio");
+				tropasManager.OcultarAbejasCercanas();
 
 				GameManager.Instance.ConsumirAtaque();
 			}
@@ -501,13 +513,13 @@ public partial class PlayerManager : Node3D
 
 			reina.GlobalPosition = targetPos;
 			CeldaActualPorJugador[reina] = celdaInicio;
-			GameManager.Instance.JugadoresEnPartida[i].UbicacionActual = celdaInicio;
+			GameManager.Instance.JugadoresEnPartida[i].CeldaActual = celdaInicio;
 
 			GD.Print(
 				"Jugador " + i + " ubicado en " 
-				+ GameManager.Instance.JugadoresEnPartida[i].UbicacionActual 
-				+ (GameManager.Instance.JugadoresEnPartida[i].UbicacionActual.Q,
-				GameManager.Instance.JugadoresEnPartida[i].UbicacionActual.R)
+				+ GameManager.Instance.JugadoresEnPartida[i].CeldaActual 
+				+ (GameManager.Instance.JugadoresEnPartida[i].CeldaActual.Q,
+				GameManager.Instance.JugadoresEnPartida[i].CeldaActual.R)
 			);
 		}
 	}
@@ -518,7 +530,7 @@ public partial class PlayerManager : Node3D
 		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
 		{
 			if (celdasManager.CeldasDisponibles.Contains(abejaActual.CeldaActual) 
-			&& movimientoManager.CeldasSonAdyacentes(jugadorActual.UbicacionActual, abejaActual.CeldaActual) 
+			&& movimientoManager.CeldasSonAdyacentes(jugadorActual.CeldaActual, abejaActual.CeldaActual) 
 			&& !abejaActual.FueraDeJuego
 			&& !jugadorActual.ColmenaDeReina.AbejasDeColmena.Contains(abejaActual))
 			{
@@ -583,6 +595,7 @@ public partial class PlayerManager : Node3D
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
 		}
 
+		tropasManager.OcultarAbejasCercanas();
 		animationManager.ReestablecerVelocidadAnimacion();
 		LimpiarAbejasEliminadas();
 	}

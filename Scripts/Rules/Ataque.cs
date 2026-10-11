@@ -19,6 +19,10 @@ public class AtaqueManager
 		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
 			jugador.RestarVida(10);
 		}
+		else if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			jugador.RestarVida(2);
+		}
 		else
 		{
 			jugador.RestarVida(5);

@@ -129,6 +129,12 @@ public partial class GameManager
 	public void ConsumirAtaque()
 	{
 		if (jugadorEnTurno == null || jugadorEnTurno.AccionConsumida) return;
+		
+		if (jugadorEnTurno.MoviendoSubdito)
+		{ 
+			jugadorEnTurno.MenteColmena = false;
+			jugadorEnTurno.MoviendoSubdito = false;
+		}
 			
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
@@ -178,7 +184,7 @@ public partial class GameManager
 
 	public List<Abeja> SubditosAdyacentes()
 	{
-		var celdasAdyacentes = TableroActual.ObtenerVecinos(jugadorEnTurno.UbicacionActual);
+		var celdasAdyacentes = TableroActual.ObtenerVecinos(jugadorEnTurno.CeldaActual);
 		
 		return jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Any(c => c == a.CeldaActual)).ToList();
 	}

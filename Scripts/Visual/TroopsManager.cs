@@ -97,7 +97,7 @@ public partial class TroopsManager : Node3D
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 		
 		var reinaActual = GameManager.Instance.jugadorEnTurno;
-		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.UbicacionActual);
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
 
 		AbejasCercanas = reinaActual.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Contains(a.CeldaActual)).ToList();
 
@@ -126,7 +126,7 @@ public partial class TroopsManager : Node3D
 		if (tableroActual == null) return false;
 		
 		var reinaActual = GameManager.Instance.jugadorEnTurno;
-		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.UbicacionActual);
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
 
 		if (celdasAdyacentes == null || celdasAdyacentes.Any(c => c == null)) return false;
 
@@ -141,7 +141,7 @@ public partial class TroopsManager : Node3D
 		
 		if (!playerManager.movimientoManager.CeldasSonAdyacentes(SubditoActual.CeldaActual, unaCelda)) return;
     	if (playerManager.movimientoManager.CeldaTieneOtraAbeja(unaCelda)) return;
-    	if (GameManager.Instance.JugadoresEnPartida.Any(j => !j.FueraDeJuego && j.UbicacionActual == unaCelda)) return;
+    	if (GameManager.Instance.JugadoresEnPartida.Any(j => !j.FueraDeJuego && j.CeldaActual == unaCelda)) return;
 
 		MoverSubdito(unaCelda);
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualSubditoActual, 2, 1);
@@ -180,5 +180,14 @@ public partial class TroopsManager : Node3D
 		GameManager.Instance.jugadorEnTurno.MoviendoSubdito = true;
 		VisualSubditoActual = visual;
 		SubditoActual = subditoAControlar;
+	}
+
+	public bool SubditoTieneAAlguienCerca(Abeja alguien)
+	{
+		if(SubditoActual == null) return false;
+		
+		var celdasVecinasDeSubdito = tableroActual.ObtenerVecinos(SubditoActual.CeldaActual);
+		
+		return celdasVecinasDeSubdito.Contains(alguien.CeldaActual);
 	}
 }

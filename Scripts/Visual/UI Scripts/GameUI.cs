@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameUI : Control {
 	[Export] private PlayerManager playerManager;
@@ -211,9 +212,11 @@ public partial class GameUI : Control {
 
 	private void OnAtacarPressed(){
 		if(playerManager == null) return;
+		
+		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 
 		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			if(GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca()){
+			if(GameManager.Instance.PuedeAtacar() && (playerManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
 				GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 				playerManager.vfxManager.MostrarJugadoresObjetivo();
 				playerManager.vfxManager.MostrarAbejasObjetivo();
@@ -245,8 +248,10 @@ public partial class GameUI : Control {
 
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null) return;
-		
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && playerManager.TieneObjetivosCerca() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+
+		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
+		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && (playerManager.TieneObjetivosCerca() || subditoAdyacenteAJugador) && modoAtaqueDisponible;
 
 		botonAtacar.Disabled = !puedeAtacar;
 	}
