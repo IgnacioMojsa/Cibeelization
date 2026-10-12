@@ -340,7 +340,7 @@ public partial class GameUI : Control {
 		}
 
 		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id){
-			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno.Id - 1];
+			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno];
 			playerManager.vfxManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
 		}
 	}

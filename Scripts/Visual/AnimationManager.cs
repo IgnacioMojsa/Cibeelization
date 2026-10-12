@@ -6,11 +6,11 @@ public partial class AnimationManager : Node3D
 {
     private Dictionary<AbejaReina, AnimationPlayer> AnimacionesJugadores = new Dictionary<AbejaReina, AnimationPlayer>();
 
-    public void GuardarInstanciasDeJugadores(List<Node3D> visualesJugadores)
+    public void GuardarInstanciasDeJugadores(Dictionary<AbejaReina, Node3D> visualesJugadores)
     {
         for (int j = 0; j < visualesJugadores.Count(); j++)
         {
-            var animacionJugador = visualesJugadores[j].GetNode<AnimationPlayer>("AnimationPlayer");
+            var animacionJugador = visualesJugadores[GameManager.Instance.JugadoresEnPartida[j]].GetNode<AnimationPlayer>("AnimationPlayer");
 
             AnimacionesJugadores.Add(GameManager.Instance.JugadoresEnPartida[j], animacionJugador);
         }

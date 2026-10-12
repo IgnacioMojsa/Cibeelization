@@ -88,11 +88,11 @@ public partial class CeldasManager : Node3D
 	}
 
     public void MostrarCeldasDisponiblesParaInvocar(){
-		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno.Id - 1];
+		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
 		CeldasDisponibles = tablero.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
 		
-		foreach (var jugador in playerManager.VisualesJugadores)
+		foreach (var jugador in playerManager.VisualesJugadores.Values)
 		{
 			if(playerManager.JugadorEnTurnoAdyacenteAOtro(jugador)){
 				var celdaOcupada = playerManager.CeldaActualPorJugador[jugador];

@@ -61,11 +61,11 @@ public partial class VFXManager : Node3D
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
 			var reinas = playerManager.tropasManager.AlmacenJugadores.Keys.ToList();
-			jugadoresObjetivo = playerManager.VisualesJugadores.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
 		}
 		else
 		{
-			jugadoresObjetivo = playerManager.VisualesJugadores.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
 		}
 
 		foreach (var jugador in jugadoresObjetivo)
@@ -99,7 +99,7 @@ public partial class VFXManager : Node3D
 	{
 		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
 		
-		foreach (var visual in playerManager.VisualesJugadores)
+		foreach (var visual in playerManager.VisualesJugadores.Values)
 		{
 			if (visual != playerManager.VisualJugadorActual)
 			{
@@ -117,11 +117,11 @@ public partial class VFXManager : Node3D
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
 			var reinas = playerManager.tropasManager.AlmacenJugadores.Keys.ToList();
-			jugadoresObjetivo = playerManager.VisualesJugadores.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
 		}
 		else
 		{
-			jugadoresObjetivo = playerManager.VisualesJugadores.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
 		}
 
 		foreach (var abejaVisual in playerManager.AbejasObjetivo)
