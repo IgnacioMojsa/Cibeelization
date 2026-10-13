@@ -14,7 +14,7 @@ public partial class AttackManager : Node3D
 		attackLogic = new AttackLogic();
 	}
 
-		public void Atacar()
+	public void Atacar()
 	{
 		if (!GameManager.Instance.PuedeAtacar())
 			return;
@@ -103,6 +103,7 @@ public partial class AttackManager : Node3D
 
 	public bool TieneObjetivosCerca(){	
 		ActualizarAbejasObjetivo();
+		
 		return AbejasObjetivo.Count > 0 || OtroJugadorCerca();
 	}
 
@@ -197,16 +198,29 @@ public partial class AttackManager : Node3D
 		};
 	}
 
-
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
-		var jugadorActual = GameManager.Instance.jugadorEnTurno;
+		Abeja jugadorActual;
+
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			jugadorActual = playerManager.tropasManager.SubditoActual;
+		}
+		else
+		{
+			jugadorActual = GameManager.Instance.jugadorEnTurno;
+		}
 		
 		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
 		{
-			if (playerManager.celdasManager.CeldasDisponibles.Contains(abejaActual.CeldaActual) 
-			&& playerManager.movimientoManager.CeldasSonAdyacentes(jugadorActual.CeldaActual, abejaActual.CeldaActual) 
+			var reinaEsDueñaDeUnSubdito = false;
+
+			if(jugadorActual is AbejaReina reinaJugadorActual){
+				reinaEsDueñaDeUnSubdito = reinaJugadorActual.ColmenaDeReina.AbejasDeColmena.Contains(abejaActual);
+			}
+			
+			if (playerManager.movimientoManager.CeldasSonAdyacentes(jugadorActual.CeldaActual, abejaActual.CeldaActual) 
 			&& !abejaActual.FueraDeJuego
-			&& !jugadorActual.ColmenaDeReina.AbejasDeColmena.Contains(abejaActual))
+			&& (!reinaEsDueñaDeUnSubdito))
 			{
 				listaDeAbejas.Add(abejaActual);
 			}
@@ -217,12 +231,16 @@ public partial class AttackManager : Node3D
 	{
 		AbejasObjetivo.Clear();
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
-		playerManager.celdasManager.CeldasDisponibles = playerManager.tablero.ObtenerVecinos(playerManager.CeldaActualPorJugador[playerManager.VisualJugadorActual]);
 
 		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
 		{
 			if (jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego) continue;
 			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
+		}
+
+		foreach (var abeja in AbejasObjetivo)
+		{
+			GD.Print(abeja.GetType() + ", ", abeja.ColmenaHogar.ReinaDeColmena.GetType() + " " + abeja.ColmenaHogar.ReinaDeColmena.Id);
 		}
 	}
 

@@ -111,21 +111,10 @@ public partial class VFXManager : Node3D
 
 	public void MostrarAbejasObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
-		var jugadoresObjetivo = new List<Node3D>();
-		
+
 		attackManager.ActualizarAbejasObjetivo();
 
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
-			var reinas = playerManager.tropasManager.AlmacenJugadores.Keys.ToList();
-			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
-		}
-		else
-		{
-			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
-		}
-
-		foreach (var abejaVisual in playerManager.AbejasObjetivo)
+		foreach (var abejaVisual in attackManager.AbejasObjetivo)
 		{
 			if(playerManager.tropasManager.VisualAbejas[abejaVisual] != null)
 			{

@@ -188,6 +188,6 @@ public partial class TroopsManager : Node3D
 		
 		var celdasVecinasDeSubdito = tableroActual.ObtenerVecinos(SubditoActual.CeldaActual);
 		
-		return celdasVecinasDeSubdito.Contains(alguien.CeldaActual);
+		return celdasVecinasDeSubdito.Contains(alguien.CeldaActual) && alguien != SubditoActual.ColmenaHogar.ReinaDeColmena;
 	}
 }
