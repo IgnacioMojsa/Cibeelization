@@ -6,6 +6,7 @@ public partial class GameUI : Control {
 	[Export] private PlayerManager playerManager;
 	[Export] private TroopsManager tropasManager;
 	[Export] public CeldasManager celdasManager; 
+	[Export] public AttackManager attackManager;
 	[Export] private Label feedback;
 	[Export] private PackedScene menuRadialPrefab;
 	private MenuRadial instanciaMenuRadial;
@@ -153,11 +154,11 @@ public partial class GameUI : Control {
 	private void OnBotonColmenaPressed()
 	{
 		if (instanciaMenuRadial == null)
-    	{
-    	    instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
-    	    AddChild(instanciaMenuRadial);
+		{
+			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
+			AddChild(instanciaMenuRadial);
 			instanciaMenuRadial.EstablecerHUD(this);
-    	}
+		}
 		
 		Vector2 centroPantalla = GetViewportRect().Size / 2;
 
@@ -216,7 +217,7 @@ public partial class GameUI : Control {
 		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 
 		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			if(GameManager.Instance.PuedeAtacar() && (playerManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
+			if(GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
 				GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 				playerManager.vfxManager.MostrarJugadoresObjetivo();
 				playerManager.vfxManager.MostrarAbejasObjetivo();
@@ -251,7 +252,7 @@ public partial class GameUI : Control {
 
 		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && (playerManager.TieneObjetivosCerca() || subditoAdyacenteAJugador) && modoAtaqueDisponible;
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador) && modoAtaqueDisponible;
 
 		botonAtacar.Disabled = !puedeAtacar;
 	}
@@ -261,9 +262,9 @@ public partial class GameUI : Control {
 		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
 		
 		if (instanciaMenuRadial != null)
-        {
-            instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
-        }
+		{
+			instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
+		}
 	}
 
 	private void AlternarEstadoDeControl()
@@ -271,9 +272,9 @@ public partial class GameUI : Control {
 		bool puedeControlar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
 		
 		if (instanciaMenuRadial != null)
-        {
-            instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
-        }
+		{
+			instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
+		}
 	}
 
 	private void AlternarEstadoDeAbsorcion(){
@@ -282,9 +283,9 @@ public partial class GameUI : Control {
 		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
 
 		if (instanciaMenuRadial != null)
-        {
-            instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
-        }
+		{
+			instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
+		}
 	}
 
 	public void MostrarResultadoDado(){

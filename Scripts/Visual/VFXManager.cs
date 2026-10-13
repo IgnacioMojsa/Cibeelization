@@ -4,9 +4,10 @@ using System.Linq;
 
 public partial class VFXManager : Node3D
 {
-    [Export] PlayerManager playerManager;
+	[Export] PlayerManager playerManager;
+	[Export] public AttackManager attackManager;
 
-    private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
+	private List<MeshInstance3D> ObtenerTodosLosMeshes(Node3D visual){
 		var meshes = new List<MeshInstance3D>();
 
 		if (visual == null) return meshes;
@@ -21,7 +22,7 @@ public partial class VFXManager : Node3D
 		return meshes;
 	}
 
-    public void EstablecerNextPass(Node3D visual, Material materialOutline)
+	public void EstablecerNextPass(Node3D visual, Material materialOutline)
 	{
 		var meshes = ObtenerTodosLosMeshes(visual);
 
@@ -54,7 +55,7 @@ public partial class VFXManager : Node3D
 		}
 	}
 
-    public void MostrarJugadoresObjetivo(){
+	public void MostrarJugadoresObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 		var jugadoresObjetivo = new List<Node3D>();
 
@@ -77,7 +78,7 @@ public partial class VFXManager : Node3D
 		}
 	}
 
-    public void OutlineJugadorEnTurno(Node3D visualActual){
+	public void OutlineJugadorEnTurno(Node3D visualActual){
 		var IndiceDeJugadorEnTurno = GameManager.Instance.jugadorEnTurno.Id - 1;
 		
 		var materialTurnoJ1 = GD.Load<StandardMaterial3D>("res://outlineJugador1.tres");
@@ -95,7 +96,7 @@ public partial class VFXManager : Node3D
 		}
 	}
 
-    public void EsconderOutlineDeJugadores()
+	public void EsconderOutlineDeJugadores()
 	{
 		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
 		
@@ -108,11 +109,11 @@ public partial class VFXManager : Node3D
 		}
 	}
 
-    public void MostrarAbejasObjetivo(){
+	public void MostrarAbejasObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 		var jugadoresObjetivo = new List<Node3D>();
 		
-		playerManager.ActualizarAbejasObjetivo();
+		attackManager.ActualizarAbejasObjetivo();
 
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
@@ -133,7 +134,7 @@ public partial class VFXManager : Node3D
 		}
 	}
 
-    public void OcultarAbejasObjetivo(){
+	public void OcultarAbejasObjetivo(){
 		var outlineBase = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
 
 		foreach (var abejaVisual in playerManager.AbejasObjetivo)

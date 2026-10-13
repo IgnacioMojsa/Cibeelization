@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/UI Scripts/GameUI.cs" id="4_2lok1"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="5_cvlkt"]
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
+[ext_resource type="Script" uid="uid://bx17vouq24c6b" path="res://Scripts/Visual/AttackManager.cs" id="6_iks2i"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
 [ext_resource type="Texture2D" uid="uid://ct82j6o3ymogj" path="res://Assets/UI/Recurso.svg" id="11_g66tl"]
 [ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
@@ -55,7 +56,7 @@ script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
 tablero = NodePath("../Tablero")
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager")]
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
@@ -63,10 +64,12 @@ tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
 animationManager = NodePath("../AnimationManager")
 vfxManager = NodePath("../VFXManager")
+attackManager = NodePath("../AttackManager")
 
-[node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager")]
+[node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager", "attackManager")]
 script = ExtResource("3_auhuj")
 playerManager = NodePath("../PlayerManager")
+attackManager = NodePath("../AttackManager")
 
 [node name="AnimationManager" type="Node3D" parent="." unique_id=2110061658]
 script = ExtResource("3_xolvn")
@@ -76,6 +79,11 @@ script = ExtResource("2_qqnew")
 tableroActual = NodePath("../Tablero")
 playerManager = NodePath("../PlayerManager")
 celdasManager = NodePath("../CeldasManager")
+
+[node name="AttackManager" type="Node3D" parent="." unique_id=2099182655 node_paths=PackedStringArray("playerManager", "camera")]
+script = ExtResource("6_iks2i")
+playerManager = NodePath("../PlayerManager")
+camera = NodePath("../Camara/Camera3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
@@ -119,7 +127,7 @@ data = {
 transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
 tablero = NodePath("../Tablero")
 
-[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager", "celdasManager")]
+[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager", "celdasManager", "attackManager")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 7
@@ -138,6 +146,7 @@ script = ExtResource("4_2lok1")
 playerManager = NodePath("../PlayerManager")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
+attackManager = NodePath("../AttackManager")
 menuRadialPrefab = ExtResource("13_gsowx")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=987035873]
