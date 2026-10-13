@@ -1,4 +1,4 @@
-public class AtaqueManager
+public class AttackLogic
 {
 
 	private AudioSetting punchSound => AudioManager.Instance?.GameAudio?.Sound3;

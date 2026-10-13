@@ -17,7 +17,7 @@ public partial class PlayerManager : Node3D
 	public List<Abeja> AbejasObjetivo = new();
 
 	public MovimientoManager movimientoManager;
-	private AtaqueManager ataqueManager;
+	private AttackLogic attackLogic;
 
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
@@ -27,7 +27,7 @@ public partial class PlayerManager : Node3D
 	public override async void _Ready()
 	{
 		movimientoManager = new MovimientoManager(tablero);
-		ataqueManager = new AtaqueManager();
+		attackLogic = new AttackLogic();
 
 		InstanciarJugadores();
 		//GuardarOutlines();
@@ -268,7 +268,7 @@ public partial class PlayerManager : Node3D
 			GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 2, 1);
 		}
 
-		GameManager.Instance.ConsumirMovimiento();
+        _ = GameManager.Instance.ConsumirMovimiento();
 		GameManager.Instance.NotificarCambioDeEstado();
 		
 		var sound = AudioManager.Instance.GameAudio.Sound2;
@@ -346,7 +346,7 @@ public partial class PlayerManager : Node3D
 
 	private void AtacarAbejaEspecifica(Abeja abejaObjetivo)
 	{
-		ataqueManager.DaniarAbeja(abejaObjetivo);
+		attackLogic.DaniarAbeja(abejaObjetivo);
 		if(tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
 			celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			visual.QueueFree();
@@ -374,7 +374,7 @@ public partial class PlayerManager : Node3D
 			return;
 		}
 
-		ataqueManager.DaniarAbeja(abejaObjetivo);
+		attackLogic.DaniarAbeja(abejaObjetivo);
 		
 		if (tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(tropasManager.VisualAbejas[abejaObjetivo]))
 		{
@@ -435,11 +435,11 @@ public partial class PlayerManager : Node3D
 		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
 
 		if(jugador is AbejaReina){
-			ataqueManager.DaniarJugador(jugador);
+			attackLogic.DaniarJugador(jugador);
 			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 		}
 
-		if(ataqueManager.JugadorEstaEliminado(jugador)){
+		if(attackLogic.JugadorEstaEliminado(jugador)){
 			EliminarInstanciaDeJugador(enemigo, Id);
 		}
 	}
