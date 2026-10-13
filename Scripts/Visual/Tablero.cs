@@ -162,6 +162,8 @@ public partial class Tablero : Node3D
 	{
 		List<Celda> vecinos = new List<Celda>();
 
+		if (celdaActual == null) return vecinos; 
+
 		foreach (Vector2I dir in DireccionesHexagonales)
 		{
 			Celda vecino = ObtenerCelda(celdaActual.Q + dir.X, celdaActual.R + dir.Y);
