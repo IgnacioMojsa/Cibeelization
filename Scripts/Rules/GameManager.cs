@@ -203,6 +203,7 @@ public partial class GameManager
 	public void ConsumirAbsorcion(Abeja unaAbeja)
 	{
 		if (jugadorEnTurno.AccionConsumida) return;
+		if (unaAbeja == null) return;
 
 		jugadorEnTurno.Curar();
 		

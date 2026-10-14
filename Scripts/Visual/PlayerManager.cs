@@ -65,6 +65,7 @@ public partial class PlayerManager : Node3D
 		}
 
 		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){
+			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.AbsorberSubdito(CeldaCliqueada);
 		}
 
