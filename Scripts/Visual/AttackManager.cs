@@ -93,6 +93,11 @@ public partial class AttackManager : Node3D
 			visual.QueueFree();
 		}
 		LimpiarAbejasEliminadas();
+		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
+			GD.Print("Camara reestablecida en reina");
+		}
 		GameManager.Instance.ConsumirAtaque();
 	}
 
@@ -124,6 +129,8 @@ public partial class AttackManager : Node3D
 			playerManager.tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
 		}
 
+		playerManager.TerminarControlDeSubdito();
+
 		LimpiarAbejasEliminadas();
 		GameManager.Instance.ConsumirAtaque();
 	}
@@ -136,7 +143,7 @@ public partial class AttackManager : Node3D
 		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
 			celdaAtacante = playerManager.tropasManager.SubditoActual.CeldaActual;
-			GameManager.Instance.CamaraActual.EnfocarNodo(playerManager.VisualJugadorActual, 2, 1);
+			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
 		}
 		else
 		{

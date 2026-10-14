@@ -380,6 +380,15 @@ public partial class PlayerManager : Node3D
 		attackManager.LimpiarAbejasEliminadas();
 	}
 
+	public void TerminarControlDeSubdito()
+	{
+		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			vfxManager.EstablecerUnOutlineAAbeja("res://outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
+			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
+		}
+	}
+
 	public override void _ExitTree()
 	{
 		if (GameManager.Instance.TurnManager != null)

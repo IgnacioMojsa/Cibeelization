@@ -136,4 +136,11 @@ public partial class VFXManager : Node3D
 
 		playerManager.AbejasObjetivo.Clear();
 	}
+
+	public void EstablecerUnOutlineAAbeja(string material, Node3D abeja)
+	{
+		var outline = GD.Load<StandardMaterial3D>(material);
+
+		EstablecerNextPass(abeja, outline);
+	}
 }
