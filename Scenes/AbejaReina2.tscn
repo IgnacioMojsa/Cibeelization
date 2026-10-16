@@ -42,10 +42,12 @@ albedo_color = Color(1, 0.5686275, 0, 1)
 radius = 1.0302734
 height = 6.595459
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmiq5"]
+
 [node name="AbejaReina2" unique_id=2063009922 instance=ExtResource("1_mfljo")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1629162768) index="0" unique_id=273332844]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(931739755) index="0" unique_id=666200632]
 bones/0/position = Vector3(0, 3.1612024, 0.22823513)
 bones/0/rotation = Quaternion(0.07421791, 0, 0, 0.99724203)
 bones/1/rotation = Quaternion(0.041824717, 0, 0, 0.999125)
@@ -152,20 +154,20 @@ bones/45/rotation = Quaternion(0.15452498, 0.018790167, -0.027085602, 0.9874388)
 bones/45/scale = Vector3(0.99999994, 1.0000001, 0.99999994)
 bones/46/rotation = Quaternion(0.034803614, -0.0039370772, -0.0014500351, 0.99938536)
 
-[node name="Cube_002" parent="Esqueleto/Skeleton3D" index="0" unique_id=1736365619]
+[node name="Cube_002" parent="Esqueleto/Skeleton3D" index="0" unique_id=1820271190]
 surface_material_override/0 = SubResource("StandardMaterial3D_tx025")
 surface_material_override/1 = SubResource("StandardMaterial3D_mnfmm")
 surface_material_override/2 = SubResource("StandardMaterial3D_kaq0x")
 
-[node name="Cube_003" parent="Esqueleto/Skeleton3D" index="1" unique_id=447824885]
+[node name="Cube_003" parent="Esqueleto/Skeleton3D" index="1" unique_id=2068988428]
 surface_material_override/0 = SubResource("StandardMaterial3D_qh7y2")
 surface_material_override/1 = SubResource("StandardMaterial3D_edejf")
 surface_material_override/2 = SubResource("StandardMaterial3D_ljsyd")
 
-[node name="Plano_002" parent="Esqueleto/Skeleton3D" index="2" unique_id=1883618022]
+[node name="Plano_002" parent="Esqueleto/Skeleton3D" index="2" unique_id=542684286]
 surface_material_override/0 = SubResource("StandardMaterial3D_f6bg4")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=195605755]
+[node name="AnimationPlayer" parent="." index="1" unique_id=933862793]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 
@@ -174,3 +176,6 @@ next/RecibirDanio = &"Idle"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=792797649]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0349948, 3.848349, 0.47928953)
 shape = SubResource("CapsuleShape3D_20k3m")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=1592698335]
+replication_config = SubResource("SceneReplicationConfig_gmiq5")
