@@ -1,7 +1,8 @@
 using Godot;
 using System.Collections.Generic;
 public partial class UIPantallaDeInicio : GameUI {
-
+	
+	private PanelContainer uiModos;
 	private PanelContainer uiComienzo;
 	private PanelContainer uiCreditos;
 	private PanelContainer uiTutorial;
@@ -9,7 +10,8 @@ public partial class UIPantallaDeInicio : GameUI {
 
 	public override void _Ready(){
 		base._Ready();
-
+		
+		uiModos = GetNode<PanelContainer>("ElegirModo");
 		uiComienzo = GetNode<PanelContainer>("MenuComienzo");
 		uiCreditos = GetNode<PanelContainer>("PantallaCreditos");
 		uiTutorial = GetNode<PanelContainer>("Tutorial");
@@ -22,8 +24,14 @@ public partial class UIPantallaDeInicio : GameUI {
 		panel.Visible = mostrar;
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
+	
+	public void ElegirModo(){
+		MostrarUIPanel(uiModos, true);
+		MostrarUIPanel(uiComienzo, false);
+	}
 
 	private void Jugar(){
+		MostrarUIPanel(uiModos, false);
 		MostrarUIPanel(uiComienzo, true);
 		GD.Print("El botón play ha sido presionado");
 	}

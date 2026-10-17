@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
-[ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UIPantallaDeInicio.cs" id="1_3b2ad"]
+[ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UI Scripts/UIPantallaDeInicio.cs" id="1_3b2ad"]
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
 [ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
@@ -57,6 +57,250 @@ text = "CIBEELIZATION"
 label_settings = ExtResource("1_71g57")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BotonesMenuDeInicio" type="HBoxContainer" parent="." unique_id=1833663844]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -414.5
+offset_top = -78.0
+offset_right = 414.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Play" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1349428790]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayButton" type="Button" parent="BotonesMenuDeInicio/Play" unique_id=1613627018]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Jugar "
+
+[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Play" unique_id=1666260787]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="BotonesMenuDeInicio/Play/MarginContainer" unique_id=737140488]
+layout_mode = 2
+text = "Jugar"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1613145265]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TutorialButton" type="Button" parent="BotonesMenuDeInicio/Tutorial" unique_id=1809885054]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Tutorial "
+
+[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Tutorial" unique_id=1206430386]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="BotonesMenuDeInicio/Tutorial/MarginContainer" unique_id=683723399]
+layout_mode = 2
+text = "Tutorial"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=929770029]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SettingsButton" type="Button" parent="BotonesMenuDeInicio/Settings" unique_id=77355305]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Ajustes "
+
+[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Settings" unique_id=300069358]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="BotonesMenuDeInicio/Settings/MarginContainer" unique_id=1725274790]
+layout_mode = 2
+text = "Ajustes"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1366396267]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CreditsButton" type="Button" parent="BotonesMenuDeInicio/Credits" unique_id=1265861417]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Créditos
+"
+
+[node name="Exit" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=320194545]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ExitButton" type="Button" parent="BotonesMenuDeInicio/Exit" unique_id=1820525158]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = " Salir "
+
+[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Exit" unique_id=1069439262]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="BotonesMenuDeInicio/Exit/MarginContainer" unique_id=1537871213]
+layout_mode = 2
+text = "Salir"
+label_settings = ExtResource("1_uuyxf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ElegirModo" type="PanelContainer" parent="." unique_id=140227141]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = -136.5
+offset_right = 201.0
+offset_bottom = 136.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+
+[node name="MarginContainer" type="MarginContainer" parent="ElegirModo" unique_id=813396153]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ElegirModo/MarginContainer" unique_id=1379100820]
+layout_mode = 2
+alignment = 1
+
+[node name="Titulo" type="PanelContainer" parent="ElegirModo/MarginContainer/VBoxContainer" unique_id=1234616492]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="ElegirModo/MarginContainer/VBoxContainer/Titulo" unique_id=1814823161]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="ElegirModo/MarginContainer/VBoxContainer/Titulo/MarginContainer" unique_id=779668610]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Elige el modo de juego"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ElegirModo/MarginContainer/VBoxContainer" unique_id=1587568628]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StartLocal" type="PanelContainer" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer" unique_id=2091817061]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayButton" type="Button" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal" unique_id=675129464]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Modo Local"
+
+[node name="MarginContainer2" type="MarginContainer" parent="ElegirModo/MarginContainer/VBoxContainer" unique_id=1125695499]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StartOnline" type="PanelContainer" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2" unique_id=181401828]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayButton" type="Button" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2/StartOnline" unique_id=247777471]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Modo Online
+"
 
 [node name="MenuComienzo" type="PanelContainer" parent="." unique_id=627495092]
 visible = false
@@ -242,162 +486,6 @@ theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = " Comenzar "
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1833663844]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -324.5
-offset_top = -78.0
-offset_right = 324.5
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-theme_override_constants/separation = 50
-alignment = 1
-
-[node name="Play" type="PanelContainer" parent="HBoxContainer" unique_id=1349428790]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="PlayButton" type="Button" parent="HBoxContainer/Play" unique_id=1613627018]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Jugar "
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Play" unique_id=1666260787]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="HBoxContainer/Play/MarginContainer" unique_id=737140488]
-layout_mode = 2
-text = "Jugar"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Tutorial" type="PanelContainer" parent="HBoxContainer" unique_id=1613145265]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="TutorialButton" type="Button" parent="HBoxContainer/Tutorial" unique_id=1809885054]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Tutorial "
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Tutorial" unique_id=1206430386]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="HBoxContainer/Tutorial/MarginContainer" unique_id=683723399]
-layout_mode = 2
-text = "Tutorial"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Settings" type="PanelContainer" parent="HBoxContainer" unique_id=929770029]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="SettingsButton" type="Button" parent="HBoxContainer/Settings" unique_id=77355305]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Ajustes "
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Settings" unique_id=300069358]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="HBoxContainer/Settings/MarginContainer" unique_id=1725274790]
-layout_mode = 2
-text = "Ajustes"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Credits" type="PanelContainer" parent="HBoxContainer" unique_id=1366396267]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="CreditsButton" type="Button" parent="HBoxContainer/Credits" unique_id=1265861417]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = "Créditos
-"
-
-[node name="Exit" type="PanelContainer" parent="HBoxContainer" unique_id=320194545]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="ExitButton" type="Button" parent="HBoxContainer/Exit" unique_id=1820525158]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Salir "
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Exit" unique_id=1069439262]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="HBoxContainer/Exit/MarginContainer" unique_id=1537871213]
-layout_mode = 2
-text = "Salir"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Ajustes" type="PanelContainer" parent="." unique_id=519198103]
 visible = false
@@ -623,6 +711,12 @@ position = Vector2(590.0748, 327.00003)
 scale = Vector2(0.6591759, 0.65917593)
 texture = ExtResource("7_3b2ad")
 
+[connection signal="pressed" from="BotonesMenuDeInicio/Play/PlayButton" to="." method="ElegirModo"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Tutorial/TutorialButton" to="." method="MostrarTutorial"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Settings/SettingsButton" to="." method="Ajustes"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Credits/CreditsButton" to="." method="Creditos"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Exit/ExitButton" to="." method="SalirDelJuego"]
+[connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal/PlayButton" to="." method="Jugar"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
@@ -630,11 +724,6 @@ texture = ExtResource("7_3b2ad")
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
-[connection signal="pressed" from="HBoxContainer/Play/PlayButton" to="." method="Jugar"]
-[connection signal="pressed" from="HBoxContainer/Tutorial/TutorialButton" to="." method="MostrarTutorial"]
-[connection signal="pressed" from="HBoxContainer/Settings/SettingsButton" to="." method="Ajustes"]
-[connection signal="pressed" from="HBoxContainer/Credits/CreditsButton" to="." method="Creditos"]
-[connection signal="pressed" from="HBoxContainer/Exit/ExitButton" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
 [connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]
 [connection signal="pressed" from="Tutorial/VBoxContainer/MarginContainer2/Volver/VolverButton2" to="." method="OcultarTutorial"]
