@@ -8,7 +8,9 @@ public class Celda : PosicionCelda
 		int id,
 		int widthRow,
 		int heightRow
-	) : base(id, widthRow, heightRow)
-	{
-	}
+		) : base(id, widthRow, heightRow) {}
+
+	public bool EstaPintada {get; set;} = false;
+	public Abeja Ocupante {get; set;}
+	public Color ColorActual {get; set;} = Color.FromHtml("#c97100");
 }

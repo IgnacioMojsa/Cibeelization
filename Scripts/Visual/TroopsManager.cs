@@ -149,8 +149,6 @@ public partial class TroopsManager : Node3D
 
 	private void MoverSubdito(Celda unaCelda)
 	{
-    	celdasManager.DespintarCeldaDeAbeja(SubditoActual.CeldaActual);
-
     	Vector3 pos = unaCelda.Tile.GlobalPosition;
     	pos.Y = VisualSubditoActual.GlobalPosition.Y;
     	VisualSubditoActual.GlobalPosition = pos;

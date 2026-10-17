@@ -8,6 +8,7 @@ public partial class CeldasManager : Node3D
     [Export] public Tablero tablero; 
     private Tween TweenBuffArcoiris;
     public List<Celda> CeldasDisponibles = new();
+	public List<Color> ColoresDeJugadores = new List<Color>{Color.Color8(106, 38, 143, 255), Color.Color8(76, 29, 174, 255), Color.Color8(179, 54, 113, 255), Color.Color8(130, 96, 229, 255)};
 
     public void PintarCelda(Celda unaCelda, Color unColor)
 	{
@@ -18,6 +19,12 @@ public partial class CeldasManager : Node3D
 		nuevoMaterial.AlbedoColor = unColor;
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
+
+		unaCelda.EstaPintada = true;
+		if(ColoresDeJugadores.Contains(unColor))
+		{
+			unaCelda.ColorActual = unColor;
+		}
 	}
 
     public void PintarCeldaDeAbejaBuffeada()
@@ -126,7 +133,14 @@ public partial class CeldasManager : Node3D
     public void OcultarCeldasDisponiblesParaInvocar(){
 		foreach (var celda in CeldasDisponibles)
 		{
-			PintarCelda(celda, Color.Color8(201, 113, 0, 255));
+			if(!celda.EstaPintada)
+			{
+				PintarCelda(celda, Color.FromHtml("#c97100"));
+			}
+			else
+			{
+				PintarCelda(celda, celda.ColorActual); 
+			}
 		}
 	}
 
@@ -134,20 +148,18 @@ public partial class CeldasManager : Node3D
 	{
 		var jugadorActual = unaAbeja.ColmenaHogar.ReinaDeColmena;
 		int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorActual);
-		
-		var colorJ1 = Color.Color8(106, 38, 143, 255);
-		var colorJ2 = Color.Color8(76, 29, 174, 255);
-		var colorJ3 = Color.Color8(179, 54, 113, 255);
-		var colorJ4 = Color.Color8(130, 96, 229, 255); 
 
-		List<Color> coloresDeJugadores = new List<Color>{colorJ1, colorJ2, colorJ3, colorJ4};
 		var hexagono = unaCelda.Tile.GetNode<Node3D>("hexagon_tile");
 		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
 
 		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = coloresDeJugadores[indiceJugador];
+		nuevoMaterial.AlbedoColor = ColoresDeJugadores[indiceJugador];
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
+
+		unaCelda.EstaPintada = true;
+		unaCelda.ColorActual = ColoresDeJugadores[indiceJugador];
+		unaCelda.Ocupante = unaAbeja;
 	}
 
 	public void DespintarCeldaDeAbeja(Celda unaCelda)
@@ -156,8 +168,12 @@ public partial class CeldasManager : Node3D
 		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
 
 		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
+		nuevoMaterial.AlbedoColor = Color.FromHtml("#c97100");
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
+
+		unaCelda.EstaPintada = false;
+		unaCelda.ColorActual = Color.FromHtml("#c97100");
+		unaCelda.Ocupante = null;
 	}
 }
