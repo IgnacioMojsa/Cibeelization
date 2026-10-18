@@ -10,6 +10,8 @@ public partial class Colmena
 		ReinaDeColmena = reina;
 	}
 
+	public List<Celda> CeldasEnPropiedad = new List<Celda>();
+
 	public Abeja EncontrarAbeja(Abeja unaAbeja){
 		var abejaABuscar = AbejasDeColmena.Find(a => a == unaAbeja);
 		

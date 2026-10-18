@@ -220,4 +220,12 @@ public partial class Tablero : Node3D
 
 		return (Math.Abs(dq) + Math.Abs(dr) + Math.Abs(ds)) / 2;
 	}
+
+	public float PorcentajeDelTableroOcupadoPorUnaReina(AbejaReina unaReina)
+	{
+		var totalCeldas = Celdas.Count;
+		var celdasOcupadasPorReina = unaReina.ColmenaDeReina.CeldasEnPropiedad.Count;
+
+		return celdasOcupadasPorReina * 100 / totalCeldas;
+	}
 }

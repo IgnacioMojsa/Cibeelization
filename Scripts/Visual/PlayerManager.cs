@@ -42,6 +42,8 @@ public partial class PlayerManager : Node3D
 
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 5, 5);
+
+		//GD.Print("El tablero cuenta con " + tablero.Celdas.Count + " celdas");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

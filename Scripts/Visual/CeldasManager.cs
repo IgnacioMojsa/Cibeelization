@@ -8,7 +8,7 @@ public partial class CeldasManager : Node3D
     [Export] public Tablero tablero; 
     private Tween TweenBuffArcoiris;
     public List<Celda> CeldasDisponibles = new();
-	public List<Color> ColoresDeJugadores = new List<Color>{Color.Color8(106, 38, 143, 255), Color.Color8(76, 29, 174, 255), Color.Color8(179, 54, 113, 255), Color.Color8(130, 96, 229, 255)};
+	public List<Color> ColoresDeJugadores = new List<Color>{Color.FromHtml("#6a268f"), Color.FromHtml("#4c1dae"), Color.FromHtml("#b33671"), Color.FromHtml("#8260e5")};
 
     public void PintarCelda(Celda unaCelda, Color unColor)
 	{
@@ -160,6 +160,18 @@ public partial class CeldasManager : Node3D
 		unaCelda.EstaPintada = true;
 		unaCelda.ColorActual = ColoresDeJugadores[indiceJugador];
 		unaCelda.Ocupante = unaAbeja;
+		
+		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
+		{
+			if (jugador.ColmenaDeReina.CeldasEnPropiedad.Contains(unaCelda))
+			{
+				jugador.ColmenaDeReina.CeldasEnPropiedad.Remove(unaCelda);
+			}
+		}
+
+		GameManager.Instance.jugadorEnTurno.ColmenaDeReina.CeldasEnPropiedad.Add(unaCelda);
+		
+		GD.Print(jugadorActual.GetType() + " " + jugadorActual.Id + " tiene un " + tablero.PorcentajeDelTableroOcupadoPorUnaReina(jugadorActual) + "% del tablero pintado");
 	}
 
 	public void DespintarCeldaDeAbeja(Celda unaCelda)
