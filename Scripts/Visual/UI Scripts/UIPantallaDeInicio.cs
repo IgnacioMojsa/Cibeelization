@@ -7,6 +7,7 @@ public partial class UIPantallaDeInicio : GameUI {
 	private PanelContainer uiCreditos;
 	private PanelContainer uiTutorial;
 	private PanelContainer uiAjustes;
+	private List<Button> BotonesDeInicio; 
 
 	public override void _Ready(){
 		base._Ready();
@@ -16,6 +17,14 @@ public partial class UIPantallaDeInicio : GameUI {
 		uiCreditos = GetNode<PanelContainer>("PantallaCreditos");
 		uiTutorial = GetNode<PanelContainer>("Tutorial");
 		uiAjustes = GetNode<PanelContainer>("Ajustes");
+
+		BotonesDeInicio = new List<Button>{
+				GetNode<Button>("BotonesMenuDeInicio/Play/PlayButton"),
+				GetNode<Button>("BotonesMenuDeInicio/Tutorial/TutorialButton"),
+				GetNode<Button>("BotonesMenuDeInicio/Settings/SettingsButton"),
+				GetNode<Button>("BotonesMenuDeInicio/Credits/CreditsButton"),
+				GetNode<Button>("BotonesMenuDeInicio/Exit/ExitButton"),
+			};
 	}
 
 	public void MostrarUIPanel(Control panel, bool mostrar)
@@ -26,13 +35,20 @@ public partial class UIPantallaDeInicio : GameUI {
 	}
 	
 	public void ElegirModo(){
-		MostrarUIPanel(uiModos, true);
+		MostrarUIPanel(uiModos, !uiModos.Visible);
 		MostrarUIPanel(uiComienzo, false);
+
+		foreach (var boton in BotonesDeInicio)
+		{
+			if(boton.Name == "PlayButton") continue;
+			boton.Disabled = !boton.Disabled;
+		}
 	}
 
 	private void Jugar(){
 		MostrarUIPanel(uiModos, false);
 		MostrarUIPanel(uiComienzo, true);
+
 		GD.Print("El botón play ha sido presionado");
 	}
 
@@ -97,11 +113,23 @@ public partial class UIPantallaDeInicio : GameUI {
 	}
 
 	private void Creditos(){
-		MostrarUIPanel(uiCreditos, true);
+		MostrarUIPanel(uiCreditos, !uiCreditos.Visible);
+
+		foreach (var boton in BotonesDeInicio)
+		{
+			if(boton.Name == "CreditsButton") continue;
+			boton.Disabled = !boton.Disabled;
+		}
 	}
 
 	private void CerrarCreditos(){
 		MostrarUIPanel(uiCreditos, false);
+
+		foreach (var boton in BotonesDeInicio)
+		{
+			if(boton.Name == "CreditsButton") continue;
+			boton.Disabled = false;
+		}
 	}
 
 	private void MostrarTutorial(){
@@ -110,5 +138,27 @@ public partial class UIPantallaDeInicio : GameUI {
 
 	private void OcultarTutorial(){
 		MostrarUIPanel(uiTutorial, false);
+	}
+
+	private void Ajustes()
+	{
+		MostrarUIPanel(uiAjustes, !uiAjustes.Visible);
+		
+		foreach (var boton in BotonesDeInicio)
+		{
+			if(boton.Name == "SettingsButton") continue;
+			boton.Disabled = !boton.Disabled;
+		}
+	}
+
+	private void AceptarConfigAudio()
+	{
+		MostrarUIPanel(uiAjustes, false);
+		
+		foreach (var boton in BotonesDeInicio)
+		{
+			if(boton.Name == "SettingsButton") continue;
+			boton.Disabled = !boton.Disabled;
+		}
 	}
 }
