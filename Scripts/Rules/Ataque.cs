@@ -12,21 +12,11 @@ public class AttackLogic
 		return jugador != null && jugador.HP < 5;
 	}
 
-	public void DaniarJugador(AbejaReina jugador)
+	public void DaniarJugador(Abeja atacante,AbejaReina jugadorObjetivo)
 	{
-		if (jugador == null) return;
+		if (jugadorObjetivo == null) return;
 		
-		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
-			jugador.RestarVida(10);
-		}
-		else if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
-			jugador.RestarVida(2);
-		}
-		else
-		{
-			jugador.RestarVida(5);
-		}
+		jugadorObjetivo.RestarVida(atacante);
 
 		AudioManager.Instance.PlaySound(punchSound);
 	}

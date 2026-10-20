@@ -1,18 +1,30 @@
 using System;
 
 public partial class Abeja{
-	public int HP { get; private set; } = 15;
-	public string RecursoDeTransformacion { get ; private set; } 
+	public int HP { get; set; } = 15;
+	public string RecursoDeTransformacion { get ; set; } 
+	public int RecursosNecesarios {get; set;}
 	public bool FueraDeJuego {get; set;} = false;
+	public int PotenciaAtaque {get; set;}
 	public Colmena ColmenaHogar {get; set;}
 	public Celda CeldaActual { get; set; }
 
-	public bool AptaParaTransformar(Abeja otraAbeja, Colmena unaColmena){
-		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion);
+	public bool AptaParaTransformarEn(Abeja otraAbeja, Colmena unaColmena){
+		var tieneLosRecursosNecesarios = unaColmena.CantidadTotalDeUnRecurso(otraAbeja.RecursoDeTransformacion) == RecursosNecesarios;
+
+		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion) && tieneLosRecursosNecesarios;
 	}
 
-	public void RestarVida(int cantidad){
-		HP -= cantidad;
+	public void RestarVida(Abeja atacante)
+	{
+		if(atacante is AbejaReina reina && reina.AtaquePotenciado)
+		{
+			HP -= atacante.PotenciaAtaque * 2;
+		}
+		else
+		{
+			HP -= atacante.PotenciaAtaque;
+		}
 	}
 
 	public void Curar()

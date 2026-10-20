@@ -133,6 +133,9 @@ public partial class MenuRadial : Control
 			case "InvocarButton":
 				hud.InvocarSubdito();
 				break;
+			case "TransformarButton":
+				//hud.;
+				break;
 		}
 		
 		OcultarMenu();

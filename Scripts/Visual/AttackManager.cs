@@ -137,16 +137,18 @@ public partial class AttackManager : Node3D
 
 	private void AtacarJugador(){
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
-
+		Abeja atacante;
 		Celda celdaAtacante;
 
 		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
-			celdaAtacante = playerManager.tropasManager.SubditoActual.CeldaActual;
+			atacante = playerManager.tropasManager.SubditoActual;
+			celdaAtacante = atacante.CeldaActual;
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
 		}
 		else
 		{
+			atacante = GameManager.Instance.jugadorEnTurno;
 			celdaAtacante = playerManager.CeldaActualPorJugador[playerManager.VisualJugadorActual];
 		}
 
@@ -163,7 +165,7 @@ public partial class AttackManager : Node3D
 
 				GD.Print("¡Ataque exitoso al jugador " + reinaObjetivo.Id + "!");
 	
-				EfectuarAtaque(visualRival, reinaObjetivo.Id - 1);
+				EfectuarAtaque(visualRival, reinaObjetivo.Id - 1, atacante);
 				playerManager.animationManager.CambiarAnimacionDeJugador(reinaObjetivo, "RecibirDanio");
 				playerManager.tropasManager.OcultarAbejasCercanas();
 
@@ -182,11 +184,11 @@ public partial class AttackManager : Node3D
 		}
 	}
 
-	private void EfectuarAtaque(Node3D enemigo, int Id){
+	private void EfectuarAtaque(Node3D enemigo, int Id, Abeja abejaAtacante){
 		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[Id];
 
 		if(jugador is AbejaReina){
-			attackLogic.DaniarJugador(jugador);
+			attackLogic.DaniarJugador(abejaAtacante ,jugador);
 			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 		}
 

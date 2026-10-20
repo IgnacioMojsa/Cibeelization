@@ -156,11 +156,15 @@ public partial class GameManager
 		jugadorEnTurno.AccionConsumida = true;
 	}
 
-	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja, Colmena unaColmena)
+	public void TransformarAbejaObrera(Abeja unaAbeja, Abeja otraAbeja)
 	{
-		if(unaAbeja.AptaParaTransformar(otraAbeja, unaColmena))
+		if (jugadorEnTurno.AccionConsumida) return;
+		if (unaAbeja == null) return;
+		
+		if(unaAbeja.AptaParaTransformarEn(otraAbeja, jugadorEnTurno.ColmenaDeReina))
 		{
-			// Transformación
+			jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
+			jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(otraAbeja);
 		}
 	}
 

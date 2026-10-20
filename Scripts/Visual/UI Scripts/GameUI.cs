@@ -167,6 +167,7 @@ public partial class GameUI : Control {
 		AlternarEstadoDeInvocacion();
 		AlternarEstadoDeAbsorcion();
 		AlternarEstadoDeControl();
+		AlternarEstadoDeTransformacion();
 	}
 
 	public void OnControlarPressed()
@@ -285,6 +286,18 @@ public partial class GameUI : Control {
 		if (instanciaMenuRadial != null)
 		{
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
+		}
+	}
+
+	private void AlternarEstadoDeTransformacion(){
+		if (playerManager == null) return;
+
+		bool noEstaEnOtroModo = !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeTransformar = tropasManager.ExistenSubditosTransformables() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && noEstaEnOtroModo;
+
+		if (instanciaMenuRadial != null)
+		{
+			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
 		}
 	}
 

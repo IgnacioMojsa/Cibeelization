@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Colmena
 {
@@ -20,6 +21,11 @@ public partial class Colmena
 	
 	public bool TieneRecurso(string unRecurso){
 		return RecursosDeColmena.Contains(unRecurso);
+	}
+
+	public int CantidadTotalDeUnRecurso(string unRecurso)
+	{
+		return RecursosDeColmena.Where(r => r == unRecurso).ToList().Count;
 	}
 
 	public void CanjearRecurso(string unRecurso){

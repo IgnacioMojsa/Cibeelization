@@ -31,8 +31,9 @@ public partial class AbejaReina : Abeja
 	public AbejaReina(int id){
 		Id = id;
 		ColmenaDeReina = new Colmena(this);
+		PotenciaAtaque = 5;
 	}
-
+	
 	public bool AccionoRecien()
 	{
 		return AtacoRecien || InvocoRecien;

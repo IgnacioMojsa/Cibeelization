@@ -48,7 +48,7 @@ public partial class TroopsManager : Node3D
 	        return;
 	    }
 
-	    var abejaNueva = new Abeja();
+	    var abejaNueva = new Zangano();
 	    var InstanciaNueva = Assets[0].Instantiate<Node3D>();
 
 	    abejaNueva.ColmenaHogar = GameManager.Instance.jugadorEnTurno.ColmenaDeReina;
@@ -187,5 +187,18 @@ public partial class TroopsManager : Node3D
 		var celdasVecinasDeSubdito = tableroActual.ObtenerVecinos(SubditoActual.CeldaActual);
 		
 		return celdasVecinasDeSubdito.Contains(alguien.CeldaActual) && alguien != SubditoActual.ColmenaHogar.ReinaDeColmena;
+	}
+
+	public bool ExistenSubditosTransformables()
+	{
+		var reinaActual = GameManager.Instance.jugadorEnTurno;
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(reinaActual.CeldaActual);
+		var transformacion = new AbejaObrera();
+
+		if (celdasAdyacentes == null || celdasAdyacentes.Any(c => c == null)) return false;
+
+		return celdasAdyacentes.Any(c => reinaActual.ColmenaDeReina.AbejasDeColmena.Any(
+			abeja => abeja.CeldaActual == c && abeja.AptaParaTransformarEn(transformacion, reinaActual.ColmenaDeReina)
+		));
 	}
 }

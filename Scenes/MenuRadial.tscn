@@ -47,3 +47,13 @@ scale = Vector2(1e-05, 1e-05)
 theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Invocar
 Abeja"
+
+[node name="TransformarButton" type="Button" parent="ContenedorBotones" unique_id=338320811]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 50.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Transformar
+Abeja"
