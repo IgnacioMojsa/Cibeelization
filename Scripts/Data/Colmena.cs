@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public partial class Colmena
 {
@@ -31,6 +32,16 @@ public partial class Colmena
 	public void CanjearRecurso(string unRecurso){
 		if(TieneRecurso("JaleaReal")){
 			RecursosDeColmena.Add(unRecurso);
+		}
+	}
+
+	public void GenerarRecursosDeAbejas()
+	{
+		foreach (var abeja in AbejasDeColmena)
+		{
+			if(abeja == null) return;
+			
+			RecursosDeColmena.Add(abeja.RecursoGenerable);
 		}
 	}
 }

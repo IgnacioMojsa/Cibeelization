@@ -18,7 +18,6 @@ public partial class GameUI : Control {
 	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	private Button botonDado;
 	private Button botonAtacar;
-	//private Button botonCurar;
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 	private Button botonContinuar;
@@ -299,6 +298,8 @@ public partial class GameUI : Control {
 		{
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
 		}
+
+		GD.Print("Puede transformar = " + puedeTransformar);
 	}
 
 	public void MostrarResultadoDado(){

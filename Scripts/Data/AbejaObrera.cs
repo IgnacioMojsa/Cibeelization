@@ -3,8 +3,9 @@ public partial class AbejaObrera : Abeja{
 	public AbejaObrera()
 	{
 		PotenciaAtaque = 2;
-		RecursoDeTransformacion = "agua";
+		RecursoDeTransformacion = "Agua";
 		RecursosNecesarios = 2;
+		RecursoGenerable = "Nectar";
 	}
 	
 	public bool Construyendo(){

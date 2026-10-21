@@ -5,6 +5,7 @@ public partial class MenuRadial : Control
 {
 	[Export] private GameUI hud; 
 	private Control ContenedorDeBotones;
+	private Control ContenedorDeTransformaciones;
 	public bool Activo = false;
 	public Vector2 PosicionCentral;
 	public float Radio = 110f;
@@ -13,11 +14,25 @@ public partial class MenuRadial : Control
 	public override void _Ready()
 	{
 		ContenedorDeBotones = GetNode<Control>("%ContenedorBotones");
+		ContenedorDeTransformaciones = GetNode<Control>("%ContenedorTransformaciones");
 
 		PosicionCentral = GetViewportRect().Size / 2 - ContenedorDeBotones. GetRect().Size / 2;
 		ContenedorDeBotones.Hide();
+		ContenedorDeTransformaciones.Hide();
 
 		foreach (Node nodoHijo in ContenedorDeBotones.GetChildren()) 
+		{
+			if(nodoHijo is Button boton)
+			{
+				boton.PivotOffset = boton.Size / 2;
+				boton.Position = Vector2.Zero - (boton.Size / 2);
+				boton.Scale = Vector2.Zero;
+
+				boton.Pressed += () => SeleccionarOpcion(boton.Name);
+			}
+		}
+
+		foreach (Node nodoHijo in ContenedorDeTransformaciones.GetChildren()) 
 		{
 			if(nodoHijo is Button boton)
 			{
@@ -92,6 +107,37 @@ public partial class MenuRadial : Control
 		}
 	}
 
+	public void MostrarTransformaciones()
+	{
+		Activo = true;
+		ContenedorDeTransformaciones.Show();
+		Show();
+		MoveToFront();
+		
+		int cantidadDeBotones = ContenedorDeTransformaciones.GetChildCount();
+		if (cantidadDeBotones == 0) return;
+
+		float espaciado = MathF.Tau / cantidadDeBotones;
+
+		for (int b = 0; b < cantidadDeBotones; b++)
+		{
+			if(ContenedorDeTransformaciones.GetChild(b) is Button boton)
+			{
+				float angulo = b * espaciado;
+				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * Radio) - (boton.Size / 2);
+
+				Tween tween = CreateTween().SetParallel(true);
+				tween.TweenProperty(boton, "position", posicionObjetivo, VelocidadAnimacion)
+					.SetTrans(Tween.TransitionType.Back)
+					.SetEase(Tween.EaseType.Out);
+
+				tween.TweenProperty(boton, "scale", Vector2.One, VelocidadAnimacion)
+					.SetTrans(Tween.TransitionType.Back)
+					.SetEase(Tween.EaseType.Out);
+			}
+		}
+	}
+
 	public void OcultarMenu()
 	{
 		int cantidadBotones = ContenedorDeBotones.GetChildCount();
@@ -134,7 +180,7 @@ public partial class MenuRadial : Control
 				hud.InvocarSubdito();
 				break;
 			case "TransformarButton":
-				//hud.;
+				MostrarTransformaciones();
 				break;
 		}
 		

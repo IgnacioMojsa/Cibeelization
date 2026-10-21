@@ -57,3 +57,29 @@ scale = Vector2(1e-05, 1e-05)
 theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Transformar
 Abeja"
+
+[node name="ContenedorTransformaciones" type="Control" parent="." unique_id=2055922472]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ObreraButton" type="Button" parent="ContenedorTransformaciones" unique_id=822463909]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 74.0
+offset_bottom = 50.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Abeja
+Obrera"
+
+[node name="PolinizadoraButton" type="Button" parent="ContenedorTransformaciones" unique_id=1667925978]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 74.0
+offset_bottom = 50.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Abeja
+Polinizadora"

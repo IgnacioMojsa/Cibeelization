@@ -70,6 +70,8 @@ public class TurnManager
 		if(GameManager.Instance != null){
 			GameManager.Instance.jugadorEnTurno = jugadorEnTurno;
 		}
+
+		GameManager.Instance.jugadorEnTurno.ColmenaDeReina.GenerarRecursosDeAbejas();
 	}
 
 	private void IniciarTurnoJugadorActual()
