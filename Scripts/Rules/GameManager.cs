@@ -161,7 +161,7 @@ public partial class GameManager
 		if (jugadorEnTurno.AccionConsumida) return;
 		if (unaAbeja == null) return;
 		
-		if(unaAbeja.AptaParaTransformarEn(otraAbeja, jugadorEnTurno.ColmenaDeReina))
+		if(unaAbeja.AptaParaTransformar(jugadorEnTurno.ColmenaDeReina))
 		{
 			jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Remove(unaAbeja);
 			jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(otraAbeja);
@@ -257,5 +257,10 @@ public partial class GameManager
 	
 		// NO llamar a SetTiles acá → el nuevo Tablero lo hará en su _Ready()
 		//GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
+	}
+
+	public List<Abeja> ObtenerTransformacionesDisponibles(Abeja unaAbeja)
+	{
+		return unaAbeja.TransformacionesDisponibles;
 	}
 }

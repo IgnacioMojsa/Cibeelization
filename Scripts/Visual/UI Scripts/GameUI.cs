@@ -4,7 +4,7 @@ using System.Linq;
 
 public partial class GameUI : Control {
 	[Export] private PlayerManager playerManager;
-	[Export] private TroopsManager tropasManager;
+	[Export] public TroopsManager tropasManager;
 	[Export] public CeldasManager celdasManager; 
 	[Export] public AttackManager attackManager;
 	[Export] private Label feedback;
@@ -298,8 +298,6 @@ public partial class GameUI : Control {
 		{
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
 		}
-
-		GD.Print("Puede transformar = " + puedeTransformar);
 	}
 
 	public void MostrarResultadoDado(){

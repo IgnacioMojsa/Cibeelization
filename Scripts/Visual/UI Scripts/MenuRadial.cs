@@ -1,11 +1,13 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MenuRadial : Control
 {
 	[Export] private GameUI hud; 
 	private Control ContenedorDeBotones;
 	private Control ContenedorDeTransformaciones;
+	private HashSet<Abeja> TransformacionesDisponiblesActualmente = new HashSet<Abeja>();
 	public bool Activo = false;
 	public Vector2 PosicionCentral;
 	public float Radio = 110f;
@@ -57,6 +59,7 @@ public partial class MenuRadial : Control
 		if (Activo)
 		{
 			OcultarMenu();
+			if (ContenedorDeTransformaciones.Visible) OcultarTransformaciones();
 		}
 		else
 		{
@@ -127,6 +130,7 @@ public partial class MenuRadial : Control
 				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * Radio) - (boton.Size / 2);
 
 				Tween tween = CreateTween().SetParallel(true);
+
 				tween.TweenProperty(boton, "position", posicionObjetivo, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
@@ -134,6 +138,8 @@ public partial class MenuRadial : Control
 				tween.TweenProperty(boton, "scale", Vector2.One, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
+				
+				boton.Disabled = true;
 			}
 		}
 	}
@@ -162,10 +168,31 @@ public partial class MenuRadial : Control
 		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>
 		{
 			ContenedorDeBotones.Hide();
-			Activo = false;
+			Activo = ContenedorDeBotones.Visible || ContenedorDeTransformaciones.Visible;
 		};
 	}
 
+	public void OcultarTransformaciones()
+	{
+		foreach (var hijo in ContenedorDeTransformaciones.GetChildren())
+		{
+			if (hijo is Button boton)
+			{
+				Tween tween = CreateTween().SetParallel(true);
+				tween.TweenProperty(boton, "position", Vector2.Zero - (boton.Size / 2), VelocidadAnimacion)
+					.SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
+				tween.TweenProperty(boton, "scale", Vector2.Zero, VelocidadAnimacion)
+					.SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
+			}
+		}
+
+		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>
+		{
+			ContenedorDeTransformaciones.Hide();
+			Activo = ContenedorDeBotones.Visible || ContenedorDeTransformaciones.Visible;
+		};
+	}
+	
 	private void SeleccionarOpcion(string nombreBoton)
 	{
 		switch(nombreBoton)
@@ -181,6 +208,14 @@ public partial class MenuRadial : Control
 				break;
 			case "TransformarButton":
 				MostrarTransformaciones();
+				hud.tropasManager.ObtenerSubditosTransformables();
+				MostrarTransformacionesDisponibles();
+				break;
+			case "AbejaObrera":
+				OcultarTransformaciones();
+				break;
+			case "AbejaPolinizadora":
+				OcultarTransformaciones();
 				break;
 		}
 		
@@ -193,6 +228,35 @@ public partial class MenuRadial : Control
 		{
 			var boton = ContenedorDeBotones.GetNode<Button>(unBoton);
 			boton.Disabled = !condicion;
+		}
+	}
+
+	public void VerificarTransformacionesDisponibles()
+	{
+		TransformacionesDisponiblesActualmente.Clear();
+		
+		foreach (var abeja in hud.tropasManager.AbejasTransformables)
+		{
+			if(abeja == null) continue;
+			
+			List<Abeja> transformacionesObtenidas = new List<Abeja>();
+			
+			foreach (var t in GameManager.Instance.ObtenerTransformacionesDisponibles(abeja))
+			{
+				if (GameManager.Instance.jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion) >= t.RecursosNecesarios)
+					TransformacionesDisponiblesActualmente.Add(t); 
+			}
+		}
+	}
+
+	public void MostrarTransformacionesDisponibles()
+	{
+		VerificarTransformacionesDisponibles();
+
+		foreach (var transformacion in TransformacionesDisponiblesActualmente)
+		{
+			var boton = ContenedorDeTransformaciones.GetNodeOrNull<Button>(transformacion.GetType().Name);
+			if (boton != null) boton.Disabled = false;
 		}
 	}
 }

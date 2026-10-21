@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class Abeja{
 	public int HP { get; set; } = 15;
@@ -7,13 +9,15 @@ public partial class Abeja{
 	public string RecursoGenerable {get; set;}
 	public bool FueraDeJuego {get; set;} = false;
 	public int PotenciaAtaque {get; set;}
+	public List<Abeja> TransformacionesDisponibles {get; set;} 
 	public Colmena ColmenaHogar {get; set;}
 	public Celda CeldaActual { get; set; }
 
-	public bool AptaParaTransformarEn(Abeja otraAbeja, Colmena unaColmena){
-		var tieneLosRecursosNecesarios = unaColmena.CantidadTotalDeUnRecurso(otraAbeja.RecursoDeTransformacion) >= RecursosNecesarios;
+	public bool AptaParaTransformar(Colmena unaColmena){
+		var tieneLosRecursosNecesarios = TransformacionesDisponibles.Any(a => unaColmena.CantidadTotalDeUnRecurso(a.RecursoDeTransformacion) >= RecursosNecesarios);
+		var tieneElRecursoNecesario = TransformacionesDisponibles.Any(a => unaColmena.TieneRecurso(a.RecursoDeTransformacion));
 
-		return unaColmena.TieneRecurso(otraAbeja.RecursoDeTransformacion) && tieneLosRecursosNecesarios;
+		return tieneElRecursoNecesario && tieneLosRecursosNecesarios;
 	}
 
 	public void RestarVida(Abeja atacante)

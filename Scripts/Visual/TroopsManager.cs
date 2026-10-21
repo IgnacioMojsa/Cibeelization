@@ -11,6 +11,7 @@ public partial class TroopsManager : Node3D
 	public Dictionary<Abeja, Node3D> VisualAbejas = new();
 	public Dictionary<AbejaReina, Node3D> AlmacenJugadores = new();
 	public List<Abeja> AbejasCercanas = new();
+	public List<Abeja> AbejasTransformables = new List<Abeja>();
 	public Node3D VisualSubditoActual;
 	public Abeja SubditoActual;
     public override void _Ready()
@@ -193,12 +194,26 @@ public partial class TroopsManager : Node3D
 	{
 		var reinaActual = GameManager.Instance.jugadorEnTurno;
 		var celdasAdyacentes = tableroActual.ObtenerVecinos(reinaActual.CeldaActual);
-		var transformacion = new AbejaObrera();
 
 		if (celdasAdyacentes == null || celdasAdyacentes.Any(c => c == null)) return false;
 
 		return celdasAdyacentes.Any(c => reinaActual.ColmenaDeReina.AbejasDeColmena.Any(
-			abeja => abeja.CeldaActual == c && abeja.AptaParaTransformarEn(transformacion, reinaActual.ColmenaDeReina)
+			abeja => abeja.CeldaActual == c && abeja.AptaParaTransformar(reinaActual.ColmenaDeReina)
 		));
+	}
+
+	public void ObtenerSubditosTransformables()
+	{
+		if(!ExistenSubditosTransformables()) return;
+
+		var reinaActual = GameManager.Instance.jugadorEnTurno;
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(reinaActual.CeldaActual);
+
+		foreach (var celda in celdasAdyacentes)
+		{
+			var abejaTransformable = reinaActual.ColmenaDeReina.AbejasDeColmena.Find(abeja => abeja.CeldaActual == celda && abeja.AptaParaTransformar(reinaActual.ColmenaDeReina));
+
+			if(abejaTransformable != null) AbejasTransformables.Add(abejaTransformable);
+		}
 	}
 }

@@ -64,7 +64,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ObreraButton" type="Button" parent="ContenedorTransformaciones" unique_id=822463909]
+[node name="AbejaObrera" type="Button" parent="ContenedorTransformaciones" unique_id=822463909]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 0
 offset_right = 74.0
@@ -74,7 +74,7 @@ theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Abeja
 Obrera"
 
-[node name="PolinizadoraButton" type="Button" parent="ContenedorTransformaciones" unique_id=1667925978]
+[node name="AbejaPolinizadora" type="Button" parent="ContenedorTransformaciones" unique_id=1667925978]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 0
 offset_right = 74.0
