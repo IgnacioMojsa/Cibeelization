@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://svc08m31pt8b"]
+
+[ext_resource type="Script" uid="uid://ce8f6s27nbvh" path="res://Scripts/Visual/MultiplayerController.cs" id="1_nvaej"]
+
+[node name="MultiplayerController" type="Control" unique_id=1420421036]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nvaej")
+
+[node name="Host" type="Button" parent="." unique_id=140702952]
+layout_mode = 0
+offset_left = -224.0
+offset_right = -216.0
+offset_bottom = 8.0
+text = "Host"
+
+[node name="Cliente" type="Button" parent="." unique_id=1587828749]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Cliente"
+
+[node name="Jugar" type="Button" parent="." unique_id=674737168]
+layout_mode = 0
+offset_left = 232.0
+offset_right = 240.0
+offset_bottom = 8.0
+text = "Jugar"
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=193164328]
+layout_mode = 0
+offset_left = -168.0
+offset_top = -60.0
+offset_right = -99.5
+offset_bottom = -29.0
+scale = Vector2(6.5941114, 1.2115316)
+
+[node name="Label" type="Label" parent="." unique_id=1856583536]
+layout_mode = 0
+offset_left = -250.0
+offset_top = -58.0
+offset_right = -186.0
+offset_bottom = -9.0
+text = "Nombre"
+
+[connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="Cliente" to="." method="_on_cliente_button_down"]
+[connection signal="button_down" from="Jugar" to="." method="_on_jugar_button_down"]
