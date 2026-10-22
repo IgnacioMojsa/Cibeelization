@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +8,7 @@ public partial class TroopsManager : Node3D
     [Export] private Tablero tableroActual;
 	[Export] private PlayerManager playerManager;
 	[Export] public CeldasManager celdasManager;
-	private readonly List<PackedScene> Assets = new();
+	private readonly Dictionary<Type, PackedScene> Assets = new();
 	public Dictionary<Abeja, Node3D> VisualAbejas = new();
 	public Dictionary<AbejaReina, Node3D> AlmacenJugadores = new();
 	public List<Abeja> AbejasCercanas = new();
@@ -24,15 +25,10 @@ public partial class TroopsManager : Node3D
 
 	public void CargarAssets()
 	{
-	    // Limpiamos la lista por si venimos de un reinicio
-	    Assets.Clear();
+		Assets.Clear();
 	
-	    // Cargamos los tipos de abejas disponibles como catálogo
-	    Assets.Add(GD.Load<PackedScene>("res://Scenes/Zangano.tscn"));
-	
-	    // Si más adelante agregás otros tipos, simplemente los sumás acá:
-	    // Assets.Add(GD.Load<PackedScene>("res://Scenes/AbejaGuerrera.tscn"));
-	    // Assets.Add(GD.Load<PackedScene>("res://Scenes/AbejaSanadora.tscn"));
+	    Assets.Add(typeof(Zangano), GD.Load<PackedScene>("res://Scenes/Zangano.tscn"));
+		Assets.Add(typeof(AbejaObrera), GD.Load<PackedScene>("res://Scenes/AbejaObrera.tscn"));
 	}
 
     public void InstanciarAbeja(Celda celdaCliqueada)
@@ -50,7 +46,7 @@ public partial class TroopsManager : Node3D
 	    }
 
 	    var abejaNueva = new Zangano();
-	    var InstanciaNueva = Assets[0].Instantiate<Node3D>();
+	    var InstanciaNueva = Assets[typeof(Zangano)].Instantiate<Node3D>();
 
 	    abejaNueva.ColmenaHogar = GameManager.Instance.jugadorEnTurno.ColmenaDeReina;
 	    abejaNueva.CeldaActual = celdaCliqueada;
@@ -214,6 +210,48 @@ public partial class TroopsManager : Node3D
 			var abejaTransformable = reinaActual.ColmenaDeReina.AbejasDeColmena.Find(abeja => abeja.CeldaActual == celda && abeja.AptaParaTransformar(reinaActual.ColmenaDeReina));
 
 			if(abejaTransformable != null) AbejasTransformables.Add(abejaTransformable);
+		}
+	}
+
+	public void MostrarTransformablesEn(Type unTipoDeAbeja)
+	{
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+
+		if(ExistenSubditosTransformables())
+		{
+			ObtenerSubditosTransformables();
+		}
+		
+		foreach (var abeja in AbejasTransformables)
+		{
+			if(Activator.CreateInstance(unTipoDeAbeja) is Abeja nuevaAbeja && abeja.AptaParaTransformarEn(nuevaAbeja))
+        	{
+				playerManager.TransformacionSeleccionada = unTipoDeAbeja;
+				playerManager.vfxManager.EstablecerNextPass(VisualAbejas[abeja], materialAtaque);
+        	}
+		}
+	}
+
+	public void TransformarAbeja(Celda unaCelda)
+	{
+		var abejaTransformable = AbejasTransformables.Find(a => a.CeldaActual == unaCelda);
+
+		if (Activator.CreateInstance(playerManager.TransformacionSeleccionada) is Abeja abejaNueva)
+		{
+			GameManager.Instance.TransformarAbeja(abejaTransformable, abejaNueva);
+
+			AbejasCercanas.Remove(abejaTransformable);
+			VisualAbejas[abejaTransformable].QueueFree();
+
+			var InstanciaNueva = Assets[playerManager.TransformacionSeleccionada].Instantiate<Node3D>();;
+
+			abejaNueva.ColmenaHogar = GameManager.Instance.jugadorEnTurno.ColmenaDeReina;
+	    	abejaNueva.CeldaActual = unaCelda;
+
+			AbejasCercanas.Add(abejaNueva);
+			VisualAbejas.Add(abejaNueva, InstanciaNueva);
+			AlmacenJugadores[GameManager.Instance.jugadorEnTurno].AddChild(InstanciaNueva);
+			EstablecerPosicionDeAbeja(InstanciaNueva, unaCelda.Tile.GlobalPosition);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -25,6 +26,7 @@ public partial class PlayerManager : Node3D
 	public Vector3 PosicionEnMundo3D;
 	public Celda CeldaCliqueada;
 	public Celda CeldaOrigen;
+	public Type TransformacionSeleccionada;
 	
 	public override async void _Ready()
 	{
@@ -64,6 +66,11 @@ public partial class PlayerManager : Node3D
 		
 		else if(jugador.ModoAtaque && !jugador.AccionConsumida){
 			attackManager.Atacar();
+		}
+
+		else if(jugador.ModoTransformacion && !jugador.AccionConsumida){
+			CeldaCliqueada = ObtenerCeldaAlClickear();
+			tropasManager.TransformarAbeja(CeldaCliqueada);
 		}
 
 		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){

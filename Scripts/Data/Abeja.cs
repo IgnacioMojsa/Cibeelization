@@ -20,6 +20,13 @@ public partial class Abeja{
 		return tieneElRecursoNecesario && tieneLosRecursosNecesarios;
 	}
 
+	public bool AptaParaTransformarEn(Abeja unaAbeja){
+		var tieneLosRecursosNecesarios = ColmenaHogar.CantidadTotalDeUnRecurso(unaAbeja.RecursoDeTransformacion) >= RecursosNecesarios;
+		var tieneElRecursoNecesario = ColmenaHogar.TieneRecurso(unaAbeja.RecursoDeTransformacion);
+
+		return tieneElRecursoNecesario && tieneLosRecursosNecesarios;
+	}
+
 	public void RestarVida(Abeja atacante)
 	{
 		if(atacante is AbejaReina reina && reina.AtaquePotenciado)

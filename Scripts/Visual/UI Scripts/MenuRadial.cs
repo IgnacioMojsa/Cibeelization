@@ -59,7 +59,11 @@ public partial class MenuRadial : Control
 		if (Activo)
 		{
 			OcultarMenu();
-			if (ContenedorDeTransformaciones.Visible) OcultarTransformaciones();
+			
+			if (ContenedorDeTransformaciones.Visible){
+				OcultarTransformaciones();
+				GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
+			}
 		}
 		else
 		{
@@ -142,6 +146,8 @@ public partial class MenuRadial : Control
 				boton.Disabled = true;
 			}
 		}
+
+		GameManager.Instance.jugadorEnTurno.ModoTransformacion = true;
 	}
 
 	public void OcultarMenu()
@@ -213,9 +219,11 @@ public partial class MenuRadial : Control
 				break;
 			case "AbejaObrera":
 				OcultarTransformaciones();
+				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaObrera));
 				break;
 			case "AbejaPolinizadora":
 				OcultarTransformaciones();
+				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaPolinizadora));
 				break;
 		}
 		
@@ -259,4 +267,5 @@ public partial class MenuRadial : Control
 			if (boton != null) boton.Disabled = false;
 		}
 	}
+
 }
