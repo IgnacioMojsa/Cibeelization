@@ -46,7 +46,7 @@ public partial class MultiplayerController : Control
 	public void ConnectedToServer()
 	{
 		GD.Print("CONNECTED TO SERVER");
-		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
+		RpcId(1, nameof(SendPlayerInformation), GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
 	}
 
 	public void ConnectionFailed()
@@ -82,18 +82,18 @@ public partial class MultiplayerController : Control
 
 	public void _on_jugar_button_down()
 	{
-		Rpc("startGame");
+		Rpc(nameof(startGame));
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void startGame()
 	{
+		GameManager.Instance.cantidadJugadores = GameManager.Instance.JugadoresEnPartida.Count;
 		foreach (var item in GameManager.Instance.JugadoresEnPartida)
 		{
 			GD.Print(item.Id + "is playing");
 		}
-		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/escenaPrueba.tscn").Instantiate<Node3D>();
-		GetTree().Root.AddChild(scene);
+		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 		this.Hide();
 	}
 
@@ -101,21 +101,25 @@ public partial class MultiplayerController : Control
 
 	private void SendPlayerInformation(string name, int id)
 	{
-		AbejaReina infoJugadores = new AbejaReina(id)
+		var jugadorExistente = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
+		if(jugadorExistente == null)
 		{
-			Name = name,
-			Id = id
-		};
-
-		if(!GameManager.Instance.JugadoresEnPartida.Contains(infoJugadores))
-		{
+			AbejaReina infoJugadores = new AbejaReina(id)
+			{
+				Name = name,
+				Id = id
+			};
 			GameManager.Instance.JugadoresEnPartida.Add(infoJugadores);
+		}
+		else
+		{
+			jugadorExistente.Name = name;
 		}
 
 		if(Multiplayer.IsServer()){
 			foreach (var item in GameManager.Instance.JugadoresEnPartida)
 			{
-				Rpc("sendPlayerInformation", name, id);
+				Rpc(nameof(SendPlayerInformation), item.Name, item.Id);
 			}
 		}
 	}

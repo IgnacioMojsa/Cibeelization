@@ -802,6 +802,8 @@ texture = ExtResource("15_icj48")
 layout_mode = 1
 hud = NodePath("..")
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=137554309]
+
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
