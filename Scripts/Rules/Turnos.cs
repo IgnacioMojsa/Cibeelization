@@ -48,6 +48,14 @@ public class TurnManager
 		await Task.Delay(1000);
 		CambiarTurnoASiguienteJugador();
 	}
+	
+	public void DispararCambioDeTurno(AbejaReina nuevoJugador)
+	{
+		jugadorEnTurno = nuevoJugador;
+		PrepararJugadorParaTurno();
+		OnCambioDeTurnoJugador?.Invoke(jugadorEnTurno);
+		OnTurnoCambiado?.Invoke();
+	}
 
 	private void BuscarSiguienteJugadorActivo()
 	{

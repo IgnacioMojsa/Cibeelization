@@ -100,6 +100,8 @@ public partial class GameManager
 		return numeroAleatorio;
 	}
 
+	public event Action OnTurnoTerminadoPorMovimientos;
+
 	public async Task ConsumirMovimiento()
 	{
 		if (jugadorEnTurno == null) return;
@@ -110,7 +112,14 @@ public partial class GameManager
 
 		if (jugadorEnTurno.MovimientosDisponibles <= 0)
 		{
-            await TurnManager.TerminarTurno();
+			if (modoMultiplayer)
+			{
+				OnTurnoTerminadoPorMovimientos?.Invoke();
+			}
+			else
+			{
+				await TurnManager.TerminarTurno();
+			}
 		}
 	}
 

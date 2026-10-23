@@ -32,7 +32,6 @@ public partial class PlayerManager : Node3D
 		movimientoManager = new MovimientoManager(tablero);
 
 		InstanciarJugadores();
-		//GuardarOutlines();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 
 		if (GameManager.Instance.TurnManager != null)
@@ -40,10 +39,10 @@ public partial class PlayerManager : Node3D
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador += OnCambioDeTurnoJugador;
 		}
 
+		GameManager.Instance.OnTurnoTerminadoPorMovimientos += ManejarTurnoTerminadoPorMovimientos;
+
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 5, 5);
-
-		//GD.Print("El tablero cuenta con " + tablero.Celdas.Count + " celdas");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -415,6 +414,21 @@ public partial class PlayerManager : Node3D
 		attackManager.LimpiarAbejasEliminadas();
 	}
 
+	private void ManejarTurnoTerminadoPorMovimientos()
+	{
+		// Verificamos si el peer local es el dueño del turno actual o es el host
+		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id || GameManager.Instance.jugadorEsHost)
+		{
+			Rpc(nameof(SiguienteTurnoRpc));
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SiguienteTurnoRpc()
+	{
+		_ = GameManager.Instance.TurnManager.TerminarTurno();
+	}
+
 	public void TerminarControlDeSubdito()
 	{
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
@@ -430,5 +444,6 @@ public partial class PlayerManager : Node3D
 		{
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= OnCambioDeTurnoJugador;
 		}
+		GameManager.Instance.OnTurnoTerminadoPorMovimientos -= ManejarTurnoTerminadoPorMovimientos;
 	}
 }
