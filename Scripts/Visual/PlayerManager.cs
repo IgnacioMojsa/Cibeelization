@@ -20,7 +20,6 @@ public partial class PlayerManager : Node3D
 	public List<Abeja> AbejasObjetivo = new();
 
 	public MovimientoManager movimientoManager;
-	private AttackLogic attackLogic;
 
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
@@ -31,7 +30,6 @@ public partial class PlayerManager : Node3D
 	public override async void _Ready()
 	{
 		movimientoManager = new MovimientoManager(tablero);
-		attackLogic = new AttackLogic();
 
 		InstanciarJugadores();
 		//GuardarOutlines();
@@ -305,20 +303,42 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+//mejorar codigo aca
 	public void InstanciarJugadores()
 	{
-		CargarAssets(); 
-
-		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+		CargarAssets();
+		if (!GameManager.Instance.modoMultiplayer)
 		{
-			var Reina = GameManager.Instance.JugadoresEnPartida[j];
-			var InstanciaNueva = Assets[j].Instantiate<Node3D>();
-			AddChild(InstanciaNueva);
-			VisualesJugadores.Add(Reina, InstanciaNueva);
+			for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
+			{
+				var Reina = GameManager.Instance.JugadoresEnPartida[j];
+				var InstanciaNueva = Assets[j].Instantiate<Node3D>();
+				AddChild(InstanciaNueva);
+				VisualesJugadores.Add(Reina, InstanciaNueva);
+			}
+			animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
 		}
-
-		animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
+		else
+		{
+			for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
+			{
+				var Reina = GameManager.Instance.JugadoresEnPartida[j];
+				if(j < Assets.Count)
+				{
+					var InstanciaNueva = Assets[j].Instantiate<Node3D>();
+					if(Reina.Id > 0)
+					{
+						InstanciaNueva.SetMultiplayerAuthority((int)Reina.Id);
+					}
+					AddChild(InstanciaNueva);
+					VisualesJugadores.Add(Reina, InstanciaNueva);
+					GD.Print($"Jugador instanciado en red con ID: {Reina.Id}");
+				}
+			}
+			animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
+		}
 	}
+		
 
 	public void EstablecerSpawnsEnCeldas()
 	{
@@ -378,11 +398,13 @@ public partial class PlayerManager : Node3D
 			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
-		Node3D visualJugador = VisualesJugadores[jugadorNuevo]; 
-
-		if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador))
+		if(VisualesJugadores.TryGetValue(jugadorNuevo, out Node3D visualJugador))
 		{
-			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
+			VisualJugadorActual = visualJugador;
+			if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador))
+			{
+				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
+			}
 		}
 
 		tropasManager.OcultarAbejasCercanas();

@@ -9,7 +9,6 @@ public partial class UIPantallaDeInicio : GameUI {
 	private PanelContainer uiTutorial;
 	private PanelContainer uiAjustes;
 	private List<Button> BotonesDeInicio; 
-	private bool modoMultiplayer = false;
 
 	public override void _Ready(){
 		base._Ready();
@@ -50,7 +49,7 @@ public partial class UIPantallaDeInicio : GameUI {
 
 	private void MostrarOpcionesModoOnline()
 	{
-		modoMultiplayer = true;
+		GameManager.Instance.modoMultiplayer = true;
 		MostrarUIPanel(uiOpcionesOnline, true);
 		MostrarUIPanel(uiComienzo, false);
 	}
@@ -69,7 +68,7 @@ public partial class UIPantallaDeInicio : GameUI {
 		reinicioConfirmado = false;
 		hayJugadorVictorioso = false;
 
-		if (!modoMultiplayer)
+		if (!GameManager.Instance.modoMultiplayer)
 		{
 			ComenzarPartidaLocal(jugadores, size);
 		}

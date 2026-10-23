@@ -35,11 +35,17 @@ radius = 1.1733398
 height = 6.0920105
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4qnwh"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="AbejaReina4" unique_id=1816187034 instance=ExtResource("1_4qnwh")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(101673459) index="0" unique_id=968394264]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(543985292) index="0" unique_id=856196139]
 bones/0/position = Vector3(0.0005481247, 2.7866228, 0.11429813)
 bones/0/rotation = Quaternion(0.055799536, 0.0030890452, 0.05518859, 0.9969108)
 bones/1/rotation = Quaternion(0.006673013, 1.50023425e-05, -1.6844645e-06, 0.9999778)
@@ -70,23 +76,23 @@ bones/38/rotation = Quaternion(-0.07553636, -0.13265389, -0.68835896, 0.70912564
 bones/40/rotation = Quaternion(0.108813845, -3.7431335e-15, 2.5943237e-08, 0.9940621)
 bones/41/rotation = Quaternion(0.09715916, -2.866637e-15, 2.3164548e-08, 0.9952689)
 
-[node name="Cubo_001" parent="Esqueleto/Skeleton3D" index="0" unique_id=863683979]
+[node name="Cubo_001" parent="Esqueleto/Skeleton3D" index="0" unique_id=364151185]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_bvyen")
 surface_material_override/1 = SubResource("StandardMaterial3D_jawny")
 surface_material_override/2 = SubResource("StandardMaterial3D_bycmn")
 
-[node name="Cubo_002" parent="Esqueleto/Skeleton3D" index="1" unique_id=668234441]
+[node name="Cubo_002" parent="Esqueleto/Skeleton3D" index="1" unique_id=974729763]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_uwfaq")
 surface_material_override/1 = SubResource("StandardMaterial3D_4vikw")
 surface_material_override/2 = SubResource("StandardMaterial3D_jqpis")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=181630678]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=2016448348]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_2dopi")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1791633852]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1335286649]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]

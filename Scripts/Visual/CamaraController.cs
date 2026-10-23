@@ -16,8 +16,11 @@ public partial class CamaraController : Node3D
 	[Export] private float velocidadManual = 0.04f;
 
 	private bool enModoOrbita = false;
-
 	private Tween tweenCamara;
+
+	private Node3D objetivoSeguimiento = null;
+    private bool estaSiguiendo = false;
+    [Export] private float velocidadSeguimiento = 6.0f;
 
 	public override void _Ready()
 	{
@@ -41,12 +44,19 @@ public partial class CamaraController : Node3D
 	}
 
 	public override void _Process(double delta)
-	{
-	    if (!controlJugador && enModoOrbita)
-	    {
-	        RotateY((float)delta * velocidadRotacion);
-	    }
-	}
+    {
+        if (estaSiguiendo && objetivoSeguimiento != null && IsInstanceValid(objetivoSeguimiento))
+        {
+            Vector3 posicionDeseada = objetivoSeguimiento.GlobalPosition;
+            posicionDeseada.Y = 0;
+
+            GlobalPosition = GlobalPosition.Lerp(posicionDeseada, (float)(delta * velocidadSeguimiento));
+        }
+        if (!controlJugador && enModoOrbita)
+        {
+            RotateY((float)delta * velocidadRotacion);
+        }
+    }
 
 
 	public override void _Input(InputEvent @event)
@@ -93,6 +103,7 @@ public partial class CamaraController : Node3D
 		if (camera3D == null) return;
 
 		enModoOrbita = false;
+		estaSiguiendo = false;
 	
 		float anchoTablero = columnas * (tileSize * 1.732f); 
 		float profundidadTablero = filas * (tileSize * 1.5f);
@@ -152,7 +163,8 @@ public partial class CamaraController : Node3D
 	{
 		if (objetivo == null || camera3D == null) return;
 
-		enModoOrbita = false;
+		estaSiguiendo = false;
+        enModoOrbita = false;
 
 		if (tweenCamara != null && tweenCamara.IsValid())
 		{
@@ -171,14 +183,17 @@ public partial class CamaraController : Node3D
 
 		tweenCamara.Chain().TweenCallback(Callable.From(() => 
 		{
-			enModoOrbita = true;
+			objetivoSeguimiento = objetivo;
+            estaSiguiendo = true;
+            enModoOrbita = true;
 		}));
 	}
 
 	public void ResetearCamaraAutomaticamente(Node3D jugadorActual)
 	{
 	    controlJugador = false;
-	    enModoOrbita = false;
+        enModoOrbita = false;
+        estaSiguiendo = false;
 
 	    EnfocarNodo(jugadorActual, 1.0f, 1.0f); // vuelve a la lógica automática
 	}

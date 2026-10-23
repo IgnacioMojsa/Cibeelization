@@ -89,10 +89,18 @@ public partial class MultiplayerController : Control
 	private void startGame()
 	{
 		GameManager.Instance.cantidadJugadores = GameManager.Instance.JugadoresEnPartida.Count;
-		foreach (var item in GameManager.Instance.JugadoresEnPartida)
+		if(GameManager.Instance.TurnManager == null && GameManager.Instance.JugadoresEnPartida.Count > 0)
 		{
-			GD.Print(item.Id + "is playing");
+			GameManager.Instance.TurnManager = new TurnManager(GameManager.Instance.JugadoresEnPartida);
+			GameManager.Instance.TurnManager.EstablecerPrimerTurno();
+			GameManager.Instance.jugadorEnTurno = GameManager.Instance.TurnManager.jugadorEnTurno;
 		}
+
+		// foreach (var item in GameManager.Instance.JugadoresEnPartida)
+		// {
+		// 	GD.Print(item.Id + "is playing");
+		// }
+
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 		this.Hide();
 	}
@@ -123,4 +131,5 @@ public partial class MultiplayerController : Control
 			}
 		}
 	}
+
 }

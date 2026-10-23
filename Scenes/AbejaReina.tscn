@@ -38,11 +38,17 @@ radius = 0.97314453
 height = 6.4457397
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m5opc"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto_001" parent_id_path=PackedInt32Array(1803868723) index="0" unique_id=2097816843]
+[node name="Skeleton3D" parent="Esqueleto_001" parent_id_path=PackedInt32Array(1638544275) index="0" unique_id=129025379]
 bones/0/rotation = Quaternion(0.9942587, 1.27558355e-08, 1.18524866e-07, 0.10700372)
 bones/1/rotation = Quaternion(0.10659666, 2.4899843e-14, 2.541462e-08, 0.99430233)
 bones/2/rotation = Quaternion(0.026689513, -6.9442586e-15, 6.3632792e-09, 0.99964386)
@@ -72,20 +78,20 @@ bones/36/rotation = Quaternion(0.0015572766, -0.029504586, -0.84406894, 0.535420
 bones/37/rotation = Quaternion(-0.073036134, -0.18091635, -0.37767434, 0.9051504)
 bones/38/rotation = Quaternion(-0.17097805, -0.1562799, -0.32385573, 0.9173116)
 
-[node name="Cube_006" parent="Esqueleto_001/Skeleton3D" index="0" unique_id=1566735274]
+[node name="Cube_006" parent="Esqueleto_001/Skeleton3D" index="0" unique_id=1964832037]
 surface_material_override/0 = SubResource("StandardMaterial3D_mvxwy")
 surface_material_override/1 = SubResource("StandardMaterial3D_i22ah")
 surface_material_override/2 = SubResource("StandardMaterial3D_avlpo")
 
-[node name="Cube_007" parent="Esqueleto_001/Skeleton3D" index="1" unique_id=117707854]
+[node name="Cube_007" parent="Esqueleto_001/Skeleton3D" index="1" unique_id=2112278009]
 surface_material_override/0 = SubResource("StandardMaterial3D_clgnp")
 surface_material_override/1 = SubResource("StandardMaterial3D_iqnfv")
 surface_material_override/2 = SubResource("StandardMaterial3D_bdyce")
 
-[node name="Plano_003" parent="Esqueleto_001/Skeleton3D" index="2" unique_id=737173819]
+[node name="Plano_003" parent="Esqueleto_001/Skeleton3D" index="2" unique_id=1622671804]
 surface_material_override/0 = SubResource("StandardMaterial3D_md330")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=407265915]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1240243987]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]

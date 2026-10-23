@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://5vsbaonlm86g" path="res://Scripts/Visual/CeldasManager.cs" id="1_ap8h6"]
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
-[ext_resource type="MeshLibrary" uid="uid://h23adg5641ep" path="res://tiles.tres" id="2_gojdn"]
 [ext_resource type="Script" uid="uid://6cd1daexkf3j" path="res://Scripts/Visual/TroopsManager.cs" id="2_qqnew"]
 [ext_resource type="Script" uid="uid://df77aeggy475y" path="res://Scripts/Visual/VFXManager.cs" id="3_auhuj"]
 [ext_resource type="Script" uid="uid://c7ncbwx7eb0qd" path="res://Scripts/Visual/CamaraController.cs" id="3_cvlkt"]
@@ -48,6 +47,14 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gfcn"]
+properties/0/path = NodePath("Camara/Camera3D:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Camara/Camera3D:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Escena" type="Node3D" unique_id=104624866]
 
@@ -112,16 +119,6 @@ paddingFactor = 1.5
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
 transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802322e-08, -2.3283064e-10, 0, 0.9999999, -0.03760624, -6.095132, 3.5042114)
-
-[node name="GridMap" type="GridMap" parent="." unique_id=1993955833]
-visible = false
-mesh_library = ExtResource("2_gojdn")
-cell_size = Vector3(2.55, 2, 1.385)
-cell_center_y = false
-cell_center_z = false
-data = {
-"cells": PackedInt32Array(5, 3, 0, 6, 4, 0, 6, 2, 0, 7, 3, 0, 7, 5, 0, 6, 6, 0, 5, 5, 0, 7, 7, 0, 6, 8, 0, 5, 7, 0, 4, 6, 0, 4, 4, 0, 8, 4, 0, 8, 6, 0, 8, 8, 0, 7, 9, 0, 6, 10, 0, 5, 9, 0, 4, 8, 0, 9, 7, 0, 9, 5, 0, 3, 5, 0, 3, 7, 0, 6, 0, 0, 5, 1, 0, 4, 2, 0, 7, 1, 0, 8, 2, 0, 3, 3, 0, 2, 4, 0, 2, 6, 0, 6, 12, 0, 5, 11, 0, 4, 10, 0, 3, 9, 0, 2, 8, 0, 1, 7, 0, 1, 5, 0, 7, 11, 0, 8, 10, 0, 9, 9, 0, 9, 3, 0, 10, 4, 0, 10, 6, 0, 10, 8, 0, 11, 7, 0, 11, 5, 0, 0, 6, 0, 65535, 7, 0, 0, 8, 0, 65535, 5, 0, 0, 4, 0, 65535, 3, 0, 0, 2, 0, 1, 3, 0, 2, 2, 0, 1, 1, 0, 2, 0, 0, 3, 1, 0, 4, 0, 0, 3, 65535, 0, 4, 65534, 0, 5, 65535, 0, 65534, 4, 0, 65534, 6, 0, 65534, 8, 0, 65535, 9, 0, 0, 10, 0, 1, 9, 0, 1, 11, 0, 0, 12, 0, 2, 12, 0, 3, 13, 0, 3, 11, 0, 2, 10, 0, 4, 12, 0, 5, 13, 0, 6, 14, 0, 7, 15, 0, 7, 13, 0, 8, 14, 0, 8, 12, 0, 9, 11, 0, 10, 12, 0, 11, 11, 0, 11, 9, 0, 10, 10, 0, 6, 65534, 0, 7, 65535, 0, 8, 0, 0, 8, 65534, 0, 8, 65532, 0, 7, 65533, 0, 9, 65533, 0, 9, 65535, 0, 9, 1, 0, 10, 2, 0, 10, 0, 0, 10, 65534, 0, 11, 3, 0, 11, 1, 0, 11, 65535, 0, 10, 65532, 0, 11, 65533, 0, 0, 0, 0, 65535, 1, 0, 65534, 0, 0, 65534, 2, 0, 65533, 1, 0, 65533, 3, 0, 65533, 5, 0, 65533, 7, 0, 65533, 9, 0, 65533, 11, 0, 65534, 10, 0, 65535, 11, 0, 65535, 65535, 0, 65534, 65534, 0, 65533, 65535, 0, 65533, 65533, 0, 65532, 65534, 0, 65531, 65533, 0, 65531, 65535, 0, 65532, 0, 0, 65530, 65534, 0, 65530, 0, 0, 65529, 1, 0, 65530, 2, 0, 65531, 1, 0, 65530, 4, 0, 65529, 5, 0, 65528, 6, 0, 65529, 7, 0, 65530, 8, 0, 65530, 10, 0, 65530, 12, 0, 65529, 11, 0, 65531, 11, 0, 65532, 10, 0, 65531, 9, 0, 65532, 8, 0, 65531, 7, 0, 65530, 6, 0, 65531, 5, 0, 65532, 6, 0, 65532, 4, 0, 65531, 3, 0, 65532, 2, 0, 12, 10, 0, 12, 8, 0, 13, 9, 0, 12, 6, 0, 12, 4, 0, 12, 2, 0, 12, 0, 0, 13, 1, 0, 13, 3, 0, 13, 5, 0, 14, 2, 0, 14, 4, 0, 12, 65534, 0, 14, 0, 0, 15, 3, 0, 13, 11, 0, 14, 10, 0)
-}
 
 [node name="FondoCibeelization" parent="." unique_id=1028333430 node_paths=PackedStringArray("tablero") instance=ExtResource("6_3642x")]
 transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
@@ -802,7 +799,8 @@ texture = ExtResource("15_icj48")
 layout_mode = 1
 hud = NodePath("..")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=137554309]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
+replication_config = SubResource("SceneReplicationConfig_2gfcn")
 
 [connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]

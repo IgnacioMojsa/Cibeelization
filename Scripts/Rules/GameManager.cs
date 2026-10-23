@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public partial class GameManager 
 {
 	public static GameManager Instance { get; } = new GameManager();
-	public TurnManager TurnManager { get; private set; }
+	public TurnManager TurnManager { get; set; }
 	public List<string> TiposDeAbejas = new List<string>();
 	public List<AbejaReina> JugadoresEnPartida = new List<AbejaReina>();
 	public AbejaReina jugadorEnTurno;
@@ -22,6 +22,8 @@ public partial class GameManager
 	public int DimensionActual { get; private set; } = 15;
 	public Partida PartidaActual { get; private set; }
 	public bool jugadorEsHost = true;
+
+	public bool modoMultiplayer = false;
 
 	// Método para iniciar la partida con datos
 	public void IniciarPartida(int cantidadJugadores, int sizeTablero)
@@ -76,11 +78,6 @@ public partial class GameManager
 		if (TableroActual != null)
 		{
 			TableroActual.GenerarTablero(DimensionActual, DimensionActual);
-
-			if (CamaraActual != null)
-			{
-				CamaraActual.AjustarATablero(DimensionActual, DimensionActual, TableroActual.TileSize);
-			}
 		}
 	}
 
