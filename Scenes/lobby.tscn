@@ -18,13 +18,13 @@ layout_mode = 0
 offset_left = -224.0
 offset_right = -216.0
 offset_bottom = 8.0
-text = "Host"
+text = "Crear Partida"
 
 [node name="Cliente" type="Button" parent="." unique_id=1587828749]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
-text = "Cliente"
+text = "Unirse a Partida"
 
 [node name="Jugar" type="Button" parent="." unique_id=674737168]
 layout_mode = 0
@@ -35,11 +35,12 @@ text = "Jugar"
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=193164328]
 layout_mode = 0
-offset_left = -168.0
+offset_left = -173.0
 offset_top = -60.0
-offset_right = -99.5
+offset_right = 285.0
 offset_bottom = -29.0
-scale = Vector2(6.5941114, 1.2115316)
+placeholder_text = "Ingresar Nombre"
+max_length = 50
 
 [node name="Label" type="Label" parent="." unique_id=1856583536]
 layout_mode = 0

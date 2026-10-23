@@ -302,6 +302,93 @@ action_mode = 0
 text = "Modo Online
 "
 
+[node name="OpcionesModoOnline" type="PanelContainer" parent="." unique_id=1030908964]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -136.5
+offset_right = 216.0
+offset_bottom = 136.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+
+[node name="MarginContainer" type="MarginContainer" parent="OpcionesModoOnline" unique_id=2021022870]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OpcionesModoOnline/MarginContainer" unique_id=1557984566]
+layout_mode = 2
+alignment = 1
+
+[node name="Titulo" type="PanelContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer" unique_id=574625032]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/Titulo" unique_id=559305565]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/Titulo/MarginContainer" unique_id=1763938460]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "¿Quieres crear o unirte a una partida?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer" unique_id=470186380]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Crear" type="PanelContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer" unique_id=1220553137]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CrearPartidaNueva" type="Button" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer/Crear" unique_id=2097634719]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Crear partida nueva"
+
+[node name="MarginContainer2" type="MarginContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer" unique_id=1823018808]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Unirse" type="PanelContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer2" unique_id=690067669]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="UnirseAUnaPrtida" type="Button" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer2/Unirse" unique_id=926329027]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Unirse a una partida"
+
 [node name="MenuComienzo" type="PanelContainer" parent="." unique_id=627495092]
 visible = false
 layout_mode = 1
@@ -717,6 +804,9 @@ texture = ExtResource("7_3b2ad")
 [connection signal="pressed" from="BotonesMenuDeInicio/Credits/CreditsButton" to="." method="Creditos"]
 [connection signal="pressed" from="BotonesMenuDeInicio/Exit/ExitButton" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal/PlayButton" to="." method="Jugar"]
+[connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2/StartOnline/PlayButton" to="." method="MostrarOpcionesModoOnline"]
+[connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer/Crear/CrearPartidaNueva" to="." method="Jugar"]
+[connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer2/Unirse/UnirseAUnaPrtida" to="." method="EnviarJugadorAlLobby"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]

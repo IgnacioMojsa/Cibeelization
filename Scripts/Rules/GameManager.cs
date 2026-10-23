@@ -20,8 +20,8 @@ public partial class GameManager
 	public int cantidadJugadores { get; set; }
 	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
 	public int DimensionActual { get; private set; } = 15;
-
 	public Partida PartidaActual { get; private set; }
+	public bool jugadorEsHost = true;
 
 	// Método para iniciar la partida con datos
 	public void IniciarPartida(int cantidadJugadores, int sizeTablero)

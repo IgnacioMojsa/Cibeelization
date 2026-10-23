@@ -1,8 +1,4 @@
 using Godot;
-using System;
-using System.Data;
-
-//https://www.youtube.com/watch?v=MOJVjFngOs4&t=1154s
 
 public partial class MultiplayerController : Control
 {
@@ -10,16 +6,29 @@ public partial class MultiplayerController : Control
 	[Export] private string adress = "127.0.0.1";
 	private ENetMultiplayerPeer peer;
 
-	// Called when the node enters the scene tree for the first time.
+	public Button botonHost;
+	public Button botonCliente;
+
 	public override void _Ready()
 	{
 		Multiplayer.PeerConnected += PeerConnected;
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
+		
+		botonHost =	GetNode<Button>("Host");
+		botonCliente = GetNode<Button>("Cliente");
+
+		if(!GameManager.Instance.jugadorEsHost)
+		{
+			botonHost.Visible = false;
+		}
+		else
+		{
+			botonCliente.Visible = false;
+		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
@@ -37,6 +46,7 @@ public partial class MultiplayerController : Control
 	public void ConnectedToServer()
 	{
 		GD.Print("CONNECTED TO SERVER");
+		RpcId(1, "sendPlayerInformation", GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
 	}
 
 	public void ConnectionFailed()
@@ -46,6 +56,7 @@ public partial class MultiplayerController : Control
 
 	public void _on_host_button_down()
 	{
+		botonHost.Disabled = true;
 		peer = new ENetMultiplayerPeer();
 		var error = peer.CreateServer(port, 4);
 		if(error != Error.Ok)
@@ -56,10 +67,12 @@ public partial class MultiplayerController : Control
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for players");
+		SendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
 	}
 
 	public void _on_cliente_button_down()
 	{
+		botonCliente.Disabled = true;
 		peer = new ENetMultiplayerPeer();
 		peer.CreateClient(adress, port);
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
@@ -75,9 +88,35 @@ public partial class MultiplayerController : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void startGame()
 	{
+		foreach (var item in GameManager.Instance.JugadoresEnPartida)
+		{
+			GD.Print(item.Id + "is playing");
+		}
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/escenaPrueba.tscn").Instantiate<Node3D>();
 		GetTree().Root.AddChild(scene);
 		this.Hide();
 	}
 
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+
+	private void SendPlayerInformation(string name, int id)
+	{
+		AbejaReina infoJugadores = new AbejaReina(id)
+		{
+			Name = name,
+			Id = id
+		};
+
+		if(!GameManager.Instance.JugadoresEnPartida.Contains(infoJugadores))
+		{
+			GameManager.Instance.JugadoresEnPartida.Add(infoJugadores);
+		}
+
+		if(Multiplayer.IsServer()){
+			foreach (var item in GameManager.Instance.JugadoresEnPartida)
+			{
+				Rpc("sendPlayerInformation", name, id);
+			}
+		}
+	}
 }

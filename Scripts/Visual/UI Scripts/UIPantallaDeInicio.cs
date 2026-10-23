@@ -3,16 +3,19 @@ using System.Collections.Generic;
 public partial class UIPantallaDeInicio : GameUI {
 	
 	private PanelContainer uiModos;
+	private PanelContainer uiOpcionesOnline;
 	private PanelContainer uiComienzo;
 	private PanelContainer uiCreditos;
 	private PanelContainer uiTutorial;
 	private PanelContainer uiAjustes;
 	private List<Button> BotonesDeInicio; 
+	private bool modoMultiplayer = false;
 
 	public override void _Ready(){
 		base._Ready();
 		
 		uiModos = GetNode<PanelContainer>("ElegirModo");
+		uiOpcionesOnline = GetNode<PanelContainer>("OpcionesModoOnline");
 		uiComienzo = GetNode<PanelContainer>("MenuComienzo");
 		uiCreditos = GetNode<PanelContainer>("PantallaCreditos");
 		uiTutorial = GetNode<PanelContainer>("Tutorial");
@@ -45,7 +48,15 @@ public partial class UIPantallaDeInicio : GameUI {
 		}
 	}
 
+	private void MostrarOpcionesModoOnline()
+	{
+		modoMultiplayer = true;
+		MostrarUIPanel(uiOpcionesOnline, true);
+		MostrarUIPanel(uiComienzo, false);
+	}
+
 	private void Jugar(){
+		MostrarUIPanel(uiOpcionesOnline, false);
 		MostrarUIPanel(uiModos, false);
 		MostrarUIPanel(uiComienzo, true);
 
@@ -55,18 +66,44 @@ public partial class UIPantallaDeInicio : GameUI {
 	private void ComenzarPartida(){
 		int jugadores = ObtenerCantJugadores();
 		int size = ObtenerSizeTablero();
-	
-		GameManager.Instance.IniciarPartida(jugadores, size);
-
-		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
-		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
-
-		AudioManager.Instance.PlaySound(UiSound1);
-
 		reinicioConfirmado = false;
 		hayJugadorVictorioso = false;
 
+		if (!modoMultiplayer)
+		{
+			ComenzarPartidaLocal(jugadores, size);
+		}
+		else
+		{
+			ComenzarPartidaMultijugador(jugadores, size);
+		}
+	}
+
+	private void ComenzarPartidaLocal(int jugadores, int size)
+	{
+		GameManager.Instance.IniciarPartida(jugadores, size);
+		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
+		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
+		AudioManager.Instance.PlaySound(UiSound1);
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+		GameManager.Instance.jugadorEsHost = true;
+	}
+
+	private void ComenzarPartidaMultijugador(int jugadores, int size)
+	{
+		GameManager.Instance.cantidadJugadores = jugadores;
+		GameManager.Instance.sizeTablero = size;
+		GD.Print("Se creó una partida MILTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");
+		GD.Print("Tamaño del tablero elegido: " + GameManager.Instance.sizeTablero);
+		AudioManager.Instance.PlaySound(UiSound1);
+		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");
+
+	}
+
+	private void EnviarJugadorAlLobby()
+	{
+		GameManager.Instance.jugadorEsHost = false;
+		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");
 	}
 
 	private void SeleccionarCantidadDeJugadores(bool estaPresionado){

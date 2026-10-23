@@ -17,6 +17,7 @@ public partial class AbejaReina : Abeja
 	public bool MoviendoSubdito {get; set;} = false;
 	public int MovimientosDisponibles {get; set;}
 	public int Id {get; set;}
+	public string Name {get; set;}
 
 	public Colmena ColmenaDeReina;
 
