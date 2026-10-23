@@ -9,7 +9,7 @@ public partial class Abeja{
 	public string RecursoGenerable {get; set;}
 	public bool FueraDeJuego {get; set;} = false;
 	public int PotenciaAtaque {get; set;}
-	public List<Abeja> TransformacionesDisponibles {get; set;} 
+	public List<Abeja> TransformacionesDisponibles {get; set;} = new List<Abeja>();
 	public Colmena ColmenaHogar {get; set;}
 	public Celda CeldaActual { get; set; }
 

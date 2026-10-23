@@ -38,6 +38,10 @@ next_pass = ExtResource("2_cmi5a")
 shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cmi5a"]
+radius = 2.1191406
+height = 6.391567
+
 [node name="AbejaObrera" unique_id=1932119757 instance=ExtResource("1_falgf")]
 transform = Transform3D(-0.72499996, 0, 6.338151e-08, 0, 0.72499996, 0, -6.338151e-08, 0, -0.72499996, 0, 0, 0)
 
@@ -90,3 +94,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vy8hr")
 
 [node name="AnimationPlayer" parent="." index="1" unique_id=1001306476]
 autoplay = &"Idle"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1235929926]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=991535491]
+transform = Transform3D(0.9999999, 0, -2.3376856e-12, 0, 0.9999999, 0, 2.3376856e-12, 0, 0.9999999, 0.03499475, 3.6388118, -0.11017823)
+shape = SubResource("CapsuleShape3D_cmi5a")

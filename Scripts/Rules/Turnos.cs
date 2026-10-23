@@ -37,6 +37,7 @@ public class TurnManager
 		jugadorEnTurno.AtacoRecien = false;
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.ModoInvocacion = false;
+		jugadorEnTurno.ModoTransformacion = false;
 		jugadorEnTurno.ModoAbsorcion = false;
 		jugadorEnTurno.InvocoRecien = false; 
 		jugadorEnTurno.MenteColmena = false;

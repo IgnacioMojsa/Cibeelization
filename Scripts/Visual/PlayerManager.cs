@@ -136,7 +136,10 @@ public partial class PlayerManager : Node3D
 		return false; 
 
 		if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
-		return false; 
+		return false;
+
+		if(GameManager.Instance.jugadorEnTurno.ModoTransformacion)
+		return false;
 
 		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
 		//return vecinos.Contains(destino);
