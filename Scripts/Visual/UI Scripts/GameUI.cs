@@ -119,8 +119,7 @@ public partial class GameUI : Control {
 		MostrarMovimientosDisponibles();
 	}
 
-	private void MostrarMovimientosDisponibles()
-	{
+	private void MostrarMovimientosDisponibles(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(jugador != null){
 			resultadoDados.Text = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles.ToString();
@@ -158,10 +157,8 @@ public partial class GameUI : Control {
 		}
 	}
 
-	private void OnBotonColmenaPressed()
-	{
-		if (instanciaMenuRadial == null)
-		{
+	private void OnBotonColmenaPressed(){
+		if (instanciaMenuRadial == null){
 			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
 			AddChild(instanciaMenuRadial);
 			instanciaMenuRadial.EstablecerHUD(this);
@@ -177,8 +174,7 @@ public partial class GameUI : Control {
 		AlternarEstadoDeTransformacion();
 	}
 
-	public void OnControlarPressed()
-	{
+	public void OnControlarPressed(){
 		if(playerManager == null) return;
 
 		if(!GameManager.Instance.jugadorEnTurno.MenteColmena){		
@@ -186,8 +182,7 @@ public partial class GameUI : Control {
 
 			tropasManager.MostrarAbejasCercanas();
 		}
-		else if(GameManager.Instance.jugadorEnTurno.MenteColmena)
-		{
+		else if(GameManager.Instance.jugadorEnTurno.MenteColmena){
 			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
 			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
 
@@ -209,8 +204,7 @@ public partial class GameUI : Control {
 				GD.Print("Modo de absorcion = " + GameManager.Instance.jugadorEnTurno.ModoAbsorcion);
 			}
 		}
-		else if(GameManager.Instance.jugadorEnTurno.ModoAbsorcion)
-		{
+		else if(GameManager.Instance.jugadorEnTurno.ModoAbsorcion){
 			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = false;
 
 			tropasManager.OcultarAbejasCercanas();
@@ -257,22 +251,18 @@ public partial class GameUI : Control {
 		botonAtacar.Disabled = !puedeAtacar;
 	}
 
-	private void AlternarEstadoDeInvocacion()
-	{
+	private void AlternarEstadoDeInvocacion(){
 		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
 		
-		if (instanciaMenuRadial != null)
-		{
+		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
 		}
 	}
 
-	private void AlternarEstadoDeControl()
-	{
+	private void AlternarEstadoDeControl(){
 		bool puedeControlar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
 		
-		if (instanciaMenuRadial != null)
-		{
+		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
 		}
 	}
@@ -282,8 +272,7 @@ public partial class GameUI : Control {
 		
 		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
 
-		if (instanciaMenuRadial != null)
-		{
+		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
 		}
 	}
@@ -294,8 +283,7 @@ public partial class GameUI : Control {
 		bool noEstaEnOtroModo = !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
 		bool puedeTransformar = tropasManager.ExistenSubditosTransformables() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && noEstaEnOtroModo;
 
-		if (instanciaMenuRadial != null)
-		{
+		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
 		}
 	}

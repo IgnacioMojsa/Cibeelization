@@ -13,7 +13,8 @@ config_version=5
 config/name="Cibeelization"
 run/main_scene="uid://qt17q4ddcx2m"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.27405724, 0.0005001988, 0.40279946, 1)
+config/icon="uid://bf02bc7lfn21i"
 
 [audio]
 

@@ -9,13 +9,11 @@ public partial class AttackManager : Node3D
 	public readonly List<Abeja> AbejasObjetivo = new();
 	private AttackLogic attackLogic;
 
-	public override void _Ready()
-	{
+	public override void _Ready(){
 		attackLogic = new AttackLogic();
 	}
 
-	public void Atacar()
-	{
+	public void Atacar(){
 		if (!GameManager.Instance.PuedeAtacar())
 			return;
 
@@ -53,12 +51,10 @@ public partial class AttackManager : Node3D
 
 		var subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(j));
 
-		if(OtroJugadorCerca() || subditoAdyacenteAJugador)
-		{
+		if(OtroJugadorCerca() || subditoAdyacenteAJugador){
 			AtacarJugador();
 		}
-		else if(AbejasObjetivo.Count > 0)
-		{
+		else if(AbejasObjetivo.Count > 0){
 			AtacarAbeja();
 		}
 		
@@ -66,8 +62,7 @@ public partial class AttackManager : Node3D
 	}
 
 
-	private Abeja ObtenerAbejaDesdeCollider(Node collider)
-	{
+	private Abeja ObtenerAbejaDesdeCollider(Node collider){
 		if(collider == null || playerManager.tropasManager == null || playerManager.tropasManager.VisualAbejas == null)
 		return null;
 
@@ -85,24 +80,21 @@ public partial class AttackManager : Node3D
 		return null;
 	}
 
-	private void AtacarAbejaEspecifica(Abeja abejaObjetivo)
-	{
+	private void AtacarAbejaEspecifica(Abeja abejaObjetivo){
 		attackLogic.DaniarAbeja(abejaObjetivo);
 		if(playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			visual.QueueFree();
 		}
 		LimpiarAbejasEliminadas();
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
+		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
 			GD.Print("Camara reestablecida en reina");
 		}
 		GameManager.Instance.ConsumirAtaque();
 	}
 
-	public bool OtroJugadorCerca()
-	{
+	public bool OtroJugadorCerca(){
 		return playerManager.VisualesJugadores.Values.Any(v => playerManager.JugadorEnTurnoAdyacenteAOtro(v));
 	}
 
@@ -123,8 +115,7 @@ public partial class AttackManager : Node3D
 
 		attackLogic.DaniarAbeja(abejaObjetivo);
 		
-		if (playerManager.tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(playerManager.tropasManager.VisualAbejas[abejaObjetivo]))
-		{
+		if (playerManager.tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(playerManager.tropasManager.VisualAbejas[abejaObjetivo])){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			playerManager.tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
 		}
@@ -221,8 +212,7 @@ public partial class AttackManager : Node3D
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
 		Abeja jugadorActual;
 
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
 			jugadorActual = playerManager.tropasManager.SubditoActual;
 		}
 		else
@@ -230,8 +220,7 @@ public partial class AttackManager : Node3D
 			jugadorActual = GameManager.Instance.jugadorEnTurno;
 		}
 		
-		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena)
-		{
+		foreach (var abejaActual in jugadorRival.ColmenaDeReina.AbejasDeColmena){
 			var reinaEsDueñaDeUnSubdito = false;
 
 			if(jugadorActual is AbejaReina reinaJugadorActual){
@@ -247,26 +236,22 @@ public partial class AttackManager : Node3D
 		}
 	}
 
-	public void ActualizarAbejasObjetivo()
-	{
+	public void ActualizarAbejasObjetivo(){
 		AbejasObjetivo.Clear();
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
-		foreach (var jugador in GameManager.Instance.JugadoresEnPartida)
-		{
+		foreach (var jugador in GameManager.Instance.JugadoresEnPartida){
 			if (jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego) continue;
 			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
 		}
 
-		foreach (var abeja in AbejasObjetivo)
-		{
+		foreach (var abeja in AbejasObjetivo){
 			GD.Print(abeja.GetType() + ", ", abeja.ColmenaHogar.ReinaDeColmena.GetType() + " " + abeja.ColmenaHogar.ReinaDeColmena.Id);
 		}
 	}
 
 	public void LimpiarAbejasEliminadas(){
-		foreach (var abeja in AbejasObjetivo.Where(a => a.FueraDeJuego).ToList())
-		{
+		foreach (var abeja in AbejasObjetivo.Where(a => a.FueraDeJuego).ToList()){
 			if(abeja.FueraDeJuego){
 				AbejasObjetivo.Remove(abeja);
 				abeja.ColmenaHogar.AbejasDeColmena.Remove(abeja);

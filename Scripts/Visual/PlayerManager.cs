@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 public partial class PlayerManager : Node3D
 {
@@ -13,14 +12,11 @@ public partial class PlayerManager : Node3D
 	[Export] public AnimationManager animationManager;
 	[Export] public VFXManager vfxManager;
 	[Export] public AttackManager attackManager;
-
 	public readonly Dictionary<AbejaReina, Node3D> VisualesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 	public List<Abeja> AbejasObjetivo = new();
-
 	public MovimientoManager movimientoManager;
-
 	public Node3D VisualJugadorActual;
 	public Vector3 PosicionEnMundo3D;
 	public Celda CeldaCliqueada;
@@ -28,15 +24,13 @@ public partial class PlayerManager : Node3D
 	public Type TransformacionSeleccionada;
 	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
 	
-	public override async void _Ready()
-	{
+	public override async void _Ready(){
 		movimientoManager = new MovimientoManager(tablero);
 
 		InstanciarJugadores();
 		CallDeferred(nameof(EstablecerSpawnsEnCeldas));
 
-		if (GameManager.Instance.TurnManager != null)
-		{
+		if (GameManager.Instance.TurnManager != null){
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador += OnCambioDeTurnoJugador;
 		}
 
@@ -46,15 +40,12 @@ public partial class PlayerManager : Node3D
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 5, 5);
 	}
 
-	public override void _UnhandledInput(InputEvent @event)
-	{	
+	public override void _UnhandledInput(InputEvent @event){	
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		
-		if (!@event.IsActionPressed("move"))
-			return; 
+		if (!@event.IsActionPressed("move")) return; 
 
-		if (GetViewport().GuiGetHoveredControl() != null)
-			return;
+		if (GetViewport().GuiGetHoveredControl() != null) return;
 
 		camera ??= GetViewport().GetCamera3D();
 		
@@ -92,22 +83,16 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas, List<Node3D> visualesJugadores)
-	{
-		foreach (var keyValuePair in celdasOcupadas)
-		{
-			if (keyValuePair.Key == jugadorActual)
-			continue;
+	public bool CeldaTieneOtraReina(Celda celda, Node3D jugadorActual, Dictionary<Node3D, Celda> celdasOcupadas, List<Node3D> visualesJugadores){
+		foreach (var keyValuePair in celdasOcupadas){
+			if (keyValuePair.Key == jugadorActual) continue;
 
-			if (keyValuePair.Value == celda)
-			{
+			if (keyValuePair.Value == celda){
 				int indexJugador = visualesJugadores.IndexOf(keyValuePair.Key);
-				if (indexJugador != -1)
-				{
+				if (indexJugador != -1){
 					AbejaReina jugadorOcupante = GameManager.Instance.JugadoresEnPartida[indexJugador];
 
-					if (jugadorOcupante.FueraDeJuego)
-					{
+					if (jugadorOcupante.FueraDeJuego){
 						continue; 
 					}
 				}
@@ -147,8 +132,7 @@ public partial class PlayerManager : Node3D
 		return true;
 	}
 
-	private Celda ObtenerCeldaAlClickear()
-	{
+	private Celda ObtenerCeldaAlClickear(){
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
 		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
@@ -165,20 +149,17 @@ public partial class PlayerManager : Node3D
 		return CeldaCliqueada;
 	}
 
-	public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion) 
-	{
+	public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion){
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0) return null;
 
 		Celda celdaMasCercana = null;
 		float distanciaMinima = float.MaxValue;
 
-		foreach (Celda celda in tablero.Celdas)
-		{
+		foreach (Celda celda in tablero.Celdas){
 			if (celda.Tile == null) continue;
 
 			float dist = celda.Tile.GlobalPosition.DistanceTo(posicion);
-			if (dist < distanciaMinima)
-			{
+			if (dist < distanciaMinima){
 				distanciaMinima = dist;
 				celdaMasCercana = celda;
 			}
@@ -338,13 +319,10 @@ public partial class PlayerManager : Node3D
 	}
 
 //mejorar codigo aca
-	public void InstanciarJugadores()
-	{
+	public void InstanciarJugadores(){
 		CargarAssets();
-		if (!GameManager.Instance.modoMultiplayer)
-		{
-			for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++)
-			{
+		if (!GameManager.Instance.modoMultiplayer){
+			for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++){
 				var Reina = GameManager.Instance.JugadoresEnPartida[j];
 				var InstanciaNueva = Assets[j].Instantiate<Node3D>();
 				AddChild(InstanciaNueva);
@@ -352,16 +330,12 @@ public partial class PlayerManager : Node3D
 			}
 			animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
 		}
-		else
-		{
-			for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++)
-			{
+		else{
+			for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++){
 				var Reina = GameManager.Instance.JugadoresEnPartida[j];
-				if(j < Assets.Count)
-				{
+				if(j < Assets.Count){
 					var InstanciaNueva = Assets[j].Instantiate<Node3D>();
-					if(Reina.Id > 0)
-					{
+					if(Reina.Id > 0){
 						InstanciaNueva.SetMultiplayerAuthority((int)Reina.Id);
 					}
 					AddChild(InstanciaNueva);
@@ -372,16 +346,13 @@ public partial class PlayerManager : Node3D
 			animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
 		}
 	}
-		
 
-	public void EstablecerSpawnsEnCeldas()
-	{
+	public void EstablecerSpawnsEnCeldas(){
 		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0) return;
 
 		int totalCeldas = tablero.Celdas.Count;
 
-		for (int i = 0; i < VisualesJugadores.Count; i++)
-		{
+		for (int i = 0; i < VisualesJugadores.Count; i++){
 			int indiceCelda = i * totalCeldas / VisualesJugadores.Count % totalCeldas;
 			
 			Celda celdaInicio = tablero.Celdas[indiceCelda]; 
@@ -431,11 +402,9 @@ public partial class PlayerManager : Node3D
 			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
-		if(VisualesJugadores.TryGetValue(jugadorNuevo, out Node3D visualJugador))
-		{
+		if(VisualesJugadores.TryGetValue(jugadorNuevo, out Node3D visualJugador)){
 			VisualJugadorActual = visualJugador;
-			if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador))
-			{
+			if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador)){
 				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
 			}
 		}
@@ -447,30 +416,25 @@ public partial class PlayerManager : Node3D
 
 	private void ManejarTurnoTerminadoPorMovimientos()
 	{
-		// Verificamos si el peer local es el dueño del turno actual o es el host
-		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id)
-		{
+		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id){
 			Rpc(nameof(SiguienteTurnoRpc));
 		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void SiguienteTurnoRpc()
-	{
+	private void SiguienteTurnoRpc(){
 		_ = GameManager.Instance.TurnManager.TerminarTurno();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SincronizarDadoRpc(int resultado)
-	{
+	public void SincronizarDadoRpc(int resultado){
 		GameManager.Instance.OtorgarMovimientos(resultado);
 		GameManager.Instance.NotificarCambioDeEstado();
 	}
 
 	public void TerminarControlDeSubdito()
 	{
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
+		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
 			vfxManager.EstablecerUnOutlineAAbeja("res://outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
 		}
@@ -478,8 +442,7 @@ public partial class PlayerManager : Node3D
 
 	public override void _ExitTree()
 	{
-		if (GameManager.Instance.TurnManager != null)
-		{
+		if (GameManager.Instance.TurnManager != null){
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= OnCambioDeTurnoJugador;
 		}
 		GameManager.Instance.OnTurnoTerminadoPorMovimientos -= ManejarTurnoTerminadoPorMovimientos;
