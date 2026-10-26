@@ -46,20 +46,20 @@ properties/1/replication_mode = 1
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(543985292) index="0" unique_id=856196139]
-bones/0/position = Vector3(0.0005481247, 2.7866228, 0.11429813)
-bones/0/rotation = Quaternion(0.055799536, 0.0030890452, 0.05518859, 0.9969108)
-bones/1/rotation = Quaternion(0.006673013, 1.50023425e-05, -1.6844645e-06, 0.9999778)
-bones/2/rotation = Quaternion(0.04586331, -0.0037759515, 0.00042402674, 0.9989405)
+bones/0/position = Vector3(0.0004682928, 2.7866228, 0.11429813)
+bones/0/rotation = Quaternion(0.055803627, 0.0030145363, 0.053857427, 0.99698365)
+bones/1/rotation = Quaternion(0.006673013, 6.418616e-05, -7.2074827e-06, 0.9999778)
+bones/2/rotation = Quaternion(0.045863345, -0.0035756384, 0.0004015323, 0.9989413)
 bones/4/rotation = Quaternion(0.8112859, -0.39734298, 0.36131102, -0.23105882)
 bones/8/rotation = Quaternion(0.8112859, 0.39734286, -0.36131102, -0.23105885)
 bones/11/position = Vector3(-0.9571295, 0.7131658, -0.14607728)
-bones/11/rotation = Quaternion(0.07478994, -0.13601968, 0.93748325, 0.31149688)
-bones/12/rotation = Quaternion(0.21922636, 0.084235206, 0.12944722, 0.96337306)
-bones/13/rotation = Quaternion(-0.005151431, -0.059816185, -0.06786844, 0.99588627)
+bones/11/rotation = Quaternion(0.07497674, -0.13502277, 0.93753225, 0.3117382)
+bones/12/rotation = Quaternion(0.21533643, 0.08137135, 0.13032734, 0.96437734)
+bones/13/rotation = Quaternion(-0.0065879873, -0.05972565, -0.06598662, 0.9960097)
 bones/14/position = Vector3(0.9571298, 0.71316624, -0.14607736)
-bones/14/rotation = Quaternion(0.086847484, 0.070435435, -0.93853074, 0.3265832)
-bones/15/rotation = Quaternion(-0.040292203, 0.10283919, -0.17890732, 0.9776466)
-bones/16/rotation = Quaternion(-0.12377828, 0.051187266, -0.088957325, 0.98698807)
+bones/14/rotation = Quaternion(0.086666375, 0.071439594, -0.9385477, 0.32636425)
+bones/15/rotation = Quaternion(-0.036257282, 0.09999041, -0.17827709, 0.9782151)
+bones/16/rotation = Quaternion(-0.12237163, 0.051303554, -0.087080404, 0.9873248)
 bones/23/position = Vector3(1.8020357e-15, 2.7866228, 0.11429812)
 bones/23/rotation = Quaternion(0.9996223, -3.2761893e-09, 1.1916426e-07, -0.027482674)
 bones/24/rotation = Quaternion(-0.44014862, 0.88206244, 0.1620071, -0.044596072)
@@ -101,7 +101,7 @@ blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19799328, 0, -1.7309123e-08)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=304735886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.111103475, 3.4689088, 0.47928953)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15932901, 3.4689088, 0.47928956)
 shape = SubResource("CapsuleShape3D_4qnwh")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=2034304601]

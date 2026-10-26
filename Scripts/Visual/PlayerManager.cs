@@ -186,29 +186,41 @@ public partial class PlayerManager : Node3D
 		return celdaMasCercana;
 	}
 
-	private void IntentarMoverJugador()
-	{      
-		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
+	private void IntentarMoverJugador(){      
+	if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
 
-		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
+	VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
-		CeldaCliqueada = ObtenerCeldaAlClickear();
-		
-		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
+	CeldaCliqueada = ObtenerCeldaAlClickear();
+	
+	RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
 
-		EstablecerCeldaParaJugadorEnTurno();
+	EstablecerCeldaParaJugadorEnTurno();
 
-		if(PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList()))
+	if (PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList()))
+	{
+		vfxManager.OcultarAbejasObjetivo();
+
+		int indexJugador = VisualesJugadores.Values.ToList().IndexOf(VisualJugadorActual);
+		int indexCelda = tablero.Celdas.IndexOf(CeldaCliqueada);
+		Vector3 targetPos = CeldaCliqueada.Tile.GlobalPosition;
+		targetPos.Y = VisualJugadorActual.GlobalPosition.Y;
+
+		if (GameManager.Instance.modoMultiplayer)
 		{
-			vfxManager.OcultarAbejasObjetivo();
-			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
+			Rpc(nameof(MoverAbejaACeldaRpc), indexJugador, targetPos, indexCelda);
 		}
 		else
 		{
-			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
-			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
+			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 		}
 	}
+	else
+	{
+		GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
+		EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
+	}
+}
 
 	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino)
 	{
@@ -280,6 +292,26 @@ public partial class PlayerManager : Node3D
 		_ = GameManager.Instance.ConsumirMovimiento();
 		GameManager.Instance.NotificarCambioDeEstado();
 		
+		var sound = AudioManager.Instance.GameAudio.Sound2;
+		AudioManager.Instance.PlaySound(sound);
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void MoverAbejaACeldaRpc(int indexJugador, Vector3 nuevaPosicion, int indiceCeldaDestino)
+	{
+		var reinaJugador = GameManager.Instance.JugadoresEnPartida[indexJugador];
+		var reinaVisual = VisualesJugadores[reinaJugador];
+		var celdaDestino = tablero.Celdas[indiceCeldaDestino];
+
+		reinaVisual.GlobalPosition = nuevaPosicion;
+		CeldaActualPorJugador[reinaVisual] = celdaDestino;
+		reinaJugador.CeldaActual = celdaDestino;
+
+		GameManager.Instance.CamaraActual?.EnfocarNodo(reinaVisual, 2, 1);
+
+		_ = GameManager.Instance.ConsumirMovimiento();
+		GameManager.Instance.NotificarCambioDeEstado(); 
+
 		var sound = AudioManager.Instance.GameAudio.Sound2;
 		AudioManager.Instance.PlaySound(sound);
 	}
@@ -413,7 +445,7 @@ public partial class PlayerManager : Node3D
 	private void ManejarTurnoTerminadoPorMovimientos()
 	{
 		// Verificamos si el peer local es el dueño del turno actual o es el host
-		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id || GameManager.Instance.jugadorEsHost)
+		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id)
 		{
 			Rpc(nameof(SiguienteTurnoRpc));
 		}
