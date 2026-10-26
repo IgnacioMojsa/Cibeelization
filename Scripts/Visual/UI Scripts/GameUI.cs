@@ -56,11 +56,6 @@ public partial class GameUI : Control {
 			}else if(GetTree().CurrentScene.SceneFilePath == "res://Scenes/pantallaVictoria.tscn"){
 				MostrarPantallaDeVictoria();
 			}
-
-		if (GameManager.Instance.modoMultiplayer)
-		{
-			botonReiniciarPartida.Visible = false;
-		}
 	}
 	
 	private void OnCambioDeTurno(object _) => ActualizarUI();

@@ -45,7 +45,7 @@ height = 6.391567
 [node name="AbejaObrera" unique_id=1932119757 instance=ExtResource("1_falgf")]
 transform = Transform3D(-0.72499996, 0, 6.338151e-08, 0, 0.72499996, 0, -6.338151e-08, 0, -0.72499996, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1649468203) index="0" unique_id=1602042858]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(568321261) index="0" unique_id=1152611994]
 bones/0/position = Vector3(0, 0.31539217, -0.16194464)
 bones/0/scale = Vector3(1, 0.92354757, 1)
 bones/8/rotation = Quaternion(0.67577547, -0.040204152, 0.7103459, -0.19266513)
@@ -79,20 +79,20 @@ bones/38/position = Vector3(1.28078, 1.3596507, 0.13782384)
 bones/38/rotation = Quaternion(0.016604528, 0.0013449806, -0.07686736, 0.9969022)
 bones/39/rotation = Quaternion(-0.0014091496, 0.00044610485, 0.32616782, 0.9453108)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=958580768]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1529551278]
 surface_material_override/0 = SubResource("StandardMaterial3D_bmhr3")
 surface_material_override/1 = SubResource("StandardMaterial3D_ff508")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=2055716195]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=2011368663]
 surface_material_override/0 = SubResource("StandardMaterial3D_n6tta")
 surface_material_override/1 = SubResource("StandardMaterial3D_tgsfd")
 surface_material_override/2 = SubResource("StandardMaterial3D_1fwg5")
 surface_material_override/3 = SubResource("StandardMaterial3D_iarjc")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=427171734]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1521854815]
 surface_material_override/0 = SubResource("StandardMaterial3D_vy8hr")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1001306476]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1329114565]
 autoplay = &"Idle"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1235929926]

@@ -136,64 +136,77 @@ public partial class AttackManager : Node3D
 	}
 
 	private void AtacarJugador(){
-		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
-		Abeja atacante;
-		Celda celdaAtacante;
+        playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
+        Abeja atacante;
+        Celda celdaAtacante;
 
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
-			atacante = playerManager.tropasManager.SubditoActual;
-			celdaAtacante = atacante.CeldaActual;
-			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
-		}
-		else{
-			atacante = GameManager.Instance.jugadorEnTurno;
-			celdaAtacante = playerManager.CeldaActualPorJugador[playerManager.VisualJugadorActual];
-		}
+        if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+            atacante = playerManager.tropasManager.SubditoActual;
+            celdaAtacante = atacante.CeldaActual;
+            GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
+        }
+        else{
+            atacante = GameManager.Instance.jugadorEnTurno;
+            celdaAtacante = playerManager.CeldaActualPorJugador[playerManager.VisualJugadorActual];
+        }
 
-		List<Celda> celdasAdyacentes = playerManager.tablero.ObtenerVecinos(celdaAtacante);
+        List<Celda> celdasAdyacentes = playerManager.tablero.ObtenerVecinos(celdaAtacante);
 
-		AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(
-			j => !j.FueraDeJuego && j != GameManager.Instance.jugadorEnTurno 
-			&& j.CeldaActual == playerManager.CeldaCliqueada);
+        AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(
+            j => !j.FueraDeJuego && j != GameManager.Instance.jugadorEnTurno 
+            && j.CeldaActual == playerManager.CeldaCliqueada);
 
-		if (reinaObjetivo != null){
-			if (celdasAdyacentes.Any(c => c == reinaObjetivo.CeldaActual)){
-				Node3D visualRival = playerManager.VisualesJugadores[reinaObjetivo];
+        if (reinaObjetivo != null){
+            if (celdasAdyacentes.Any(c => c == reinaObjetivo.CeldaActual)){
+                
+                int indiceRival = GameManager.Instance.JugadoresEnPartida.IndexOf(reinaObjetivo);
 
-				GD.Print("¡Ataque exitoso al jugador " + reinaObjetivo.Id + "!");
+                if (GameManager.Instance.modoMultiplayer){
+                    Rpc(nameof(EjecutarAtaqueJugadorRpc), indiceRival);
+                }
+                else{
+                    ProcesarDanioJugador(indiceRival, atacante);
+                }
 
-				int indiceRival = GameManager.Instance.JugadoresEnPartida.IndexOf(reinaObjetivo);
-	
-				EfectuarAtaque(visualRival, indiceRival, atacante);
-				playerManager.animationManager.CambiarAnimacionDeJugador(reinaObjetivo, "RecibirDanio");
-				playerManager.tropasManager.OcultarAbejasCercanas();
+                GameManager.Instance.ConsumirAtaque();
+            }
+            else{
+                GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
+                EventosUI.MostrarMensaje("Esa abeja enemiga está muy lejos.");
+            }
+        }
+    }
 
-				GameManager.Instance.ConsumirAtaque();
-			}
-			else{
-				GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
-				EventosUI.MostrarMensaje("Esa abeja enemiga está muy lejos.");
-			}
-		}
-		else{
-			GD.Print("No hay ninguna Abeja Reina rival en la celda seleccionada.");
-			EventosUI.MostrarMensaje("No hay ninguna abeja enemiga para atacar ahí.");
-		}
-	}
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void EjecutarAtaqueJugadorRpc(int indiceRival){
+        if (indiceRival < 0 || indiceRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 
-	private void EfectuarAtaque(Node3D enemigo, int indiceJugador, Abeja abejaAtacante){
-		if (indiceJugador < 0 || indiceJugador >= GameManager.Instance.JugadoresEnPartida.Count) return;
-		AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[indiceJugador];
+        AbejaReina reinaRival = GameManager.Instance.JugadoresEnPartida[indiceRival];
+        //Node3D visualRival = playerManager.VisualesJugadores[reinaRival];
 
-		if(jugador != null){
-			attackLogic.DaniarJugador(abejaAtacante ,jugador);
-			GD.Print("Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
-		}
+        Abeja atacante = GameManager.Instance.jugadorEnTurno.MoviendoSubdito ? 
+		playerManager.tropasManager.SubditoActual : GameManager.Instance.jugadorEnTurno;
 
-		if(attackLogic.JugadorEstaEliminado(jugador)){
-			EliminarInstanciaDeJugador(enemigo, indiceJugador);
-		}
-	}
+        ProcesarDanioJugador(indiceRival, atacante);
+
+        playerManager.animationManager.CambiarAnimacionDeJugador(reinaRival, "RecibirDanio");
+        playerManager.tropasManager.OcultarAbejasCercanas();
+    }
+
+    private void ProcesarDanioJugador(int indiceJugador, Abeja abejaAtacante){
+        if (indiceJugador < 0 || indiceJugador >= GameManager.Instance.JugadoresEnPartida.Count) return;
+        AbejaReina jugador = GameManager.Instance.JugadoresEnPartida[indiceJugador];
+
+        if(jugador != null){
+            attackLogic.DaniarJugador(abejaAtacante, jugador);
+            GD.Print("¡Ataque exitoso! Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+        }
+
+        Node3D visualRival = playerManager.VisualesJugadores[jugador];
+        if(attackLogic.JugadorEstaEliminado(jugador)){
+            EliminarInstanciaDeJugador(visualRival, indiceJugador);
+        }
+    }
 
 	private void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
 		GameManager.Instance.EliminarJugador(Id);
