@@ -26,6 +26,7 @@ public partial class PlayerManager : Node3D
 	public Celda CeldaCliqueada;
 	public Celda CeldaOrigen;
 	public Type TransformacionSeleccionada;
+	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
 	
 	public override async void _Ready()
 	{
@@ -166,8 +167,7 @@ public partial class PlayerManager : Node3D
 
 	public Celda ObtenerCeldaDesdePosicion(List<Celda> Celdas, Vector3 posicion) 
 	{
-		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
-			return null;
+		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0) return null;
 
 		Celda celdaMasCercana = null;
 		float distanciaMinima = float.MaxValue;
@@ -183,14 +183,12 @@ public partial class PlayerManager : Node3D
 				celdaMasCercana = celda;
 			}
 		}
-
 		return celdaMasCercana;
 	}
 
 	private void IntentarMoverJugador()
 	{      
-		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0)
-			return;
+		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
 
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
@@ -210,7 +208,6 @@ public partial class PlayerManager : Node3D
 			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
 			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}
-
 	}
 
 	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino)
@@ -344,8 +341,7 @@ public partial class PlayerManager : Node3D
 
 	public void EstablecerSpawnsEnCeldas()
 	{
-		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0)
-			return;
+		if (tablero == null || tablero.Celdas == null || tablero.Celdas.Count == 0) return;
 
 		int totalCeldas = tablero.Celdas.Count;
 
@@ -427,6 +423,13 @@ public partial class PlayerManager : Node3D
 	private void SiguienteTurnoRpc()
 	{
 		_ = GameManager.Instance.TurnManager.TerminarTurno();
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void SincronizarDadoRpc(int resultado)
+	{
+		GameManager.Instance.OtorgarMovimientos(resultado);
+		GameManager.Instance.NotificarCambioDeEstado();
 	}
 
 	public void TerminarControlDeSubdito()

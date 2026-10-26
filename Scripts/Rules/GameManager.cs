@@ -88,16 +88,21 @@ public partial class GameManager
 		if(jugadorEnTurno.Estado != AbejaReina.EstadoTurno.EsperandoDado) return -1;
 		if(jugadorEnTurno.TiroLosDados) return -1;
 
-		//int numeroAleatorio = GD.RandRange(1, 6);
 		Random r = new Random();
 		int numeroAleatorio = r.Next(1, 7);
 
-		jugadorEnTurno.TiroLosDados = true;
-
-		jugadorEnTurno.MovimientosDisponibles = numeroAleatorio;
-		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
-		
+		OtorgarMovimientos(numeroAleatorio);		
 		return numeroAleatorio;
+	}
+
+//separado de TirarDado para poder reflejoar la cant de movimientos disponibles
+	public void OtorgarMovimientos(int resultado)
+	{
+		if(jugadorEnTurno == null) return;
+		
+		jugadorEnTurno.TiroLosDados = true;
+		jugadorEnTurno.MovimientosDisponibles = resultado;
+		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
 	public event Action OnTurnoTerminadoPorMovimientos;

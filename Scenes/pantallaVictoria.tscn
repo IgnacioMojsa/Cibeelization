@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://l80el5xp6v00"]
 
-[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/GameUI.cs" id="1_jtq2n"]
+[ext_resource type="Script" uid="uid://byh4kfjuhfpav" path="res://Scripts/Visual/UI Scripts/GameUI.cs" id="1_jtq2n"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="2_jtq2n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtq2n"]

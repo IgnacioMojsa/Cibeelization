@@ -1,5 +1,7 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 public partial class GameUI : Control {
@@ -16,6 +18,7 @@ public partial class GameUI : Control {
 	private HBoxContainer uiPausa;
 	private Label resultadoDados;
 	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
+	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
 	private Button botonDado;
 	private Button botonAtacar;
 	public bool hayJugadorVictorioso = false;
@@ -57,7 +60,6 @@ public partial class GameUI : Control {
 		if (GameManager.Instance.modoMultiplayer)
 		{
 			botonReiniciarPartida.Visible = false;
-			botonReiniciarPartidaVictoria.Visible = false;
 		}
 	}
 	
@@ -110,6 +112,7 @@ public partial class GameUI : Control {
 		//GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 	
 	private void ActualizarUI(){
@@ -118,6 +121,15 @@ public partial class GameUI : Control {
 		DeshabilitarDado();
 		AlternarEstadoDeAtaque();
 		AlternarEstadoDeAbsorcion();
+		MostrarMovimientosDisponibles();
+	}
+
+	private void MostrarMovimientosDisponibles()
+	{
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if(jugador != null){
+			resultadoDados.Text = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles.ToString();
+			}
 	}
 
 	public void MostrarDataDeJugadores(){
@@ -149,11 +161,6 @@ public partial class GameUI : Control {
 		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++){
 			HPJugadores[j].Text = GameManager.Instance.JugadoresEnPartida[j].HP + " HP";
 		}
-	}
-
-	private void OnTirarDadoPressed(){	
-		int resultado = GameManager.Instance.TirarDado();
-		resultadoDados.Text = resultado.ToString();
 	}
 
 	private void OnBotonColmenaPressed()
@@ -245,14 +252,6 @@ public partial class GameUI : Control {
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
-	private void DeshabilitarDado(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (jugador == null) return;
-
-		bool yaTiro = jugador.TiroLosDados || jugador.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
-		botonDado.Disabled = !jugador.EsSuTurno || yaTiro;
-	}
-
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null) return;
 
@@ -306,24 +305,46 @@ public partial class GameUI : Control {
 		}
 	}
 
-	public void MostrarResultadoDado(){
-		if (botonDado.Disabled) return;
-
+	private void OnTirarDadoPressed(){	
 		int resultado = GameManager.Instance.TirarDado();
+		resultadoDados.Text = resultado.ToString();
+	}
 
-		if (resultado != -1){
-			resultadoDados.Text = resultado.ToString();
-			ActualizarInstrucciones("Debes moverte antes de atacar o invocar.");
-			botonDado.Disabled = true;
+	private void DeshabilitarDado(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return;
 
-			if(AudioManager.Instance?.GameAudio?.Sound4 != null){
-				var dado = AudioManager.Instance.GameAudio.Sound4;
-				AudioManager.Instance.PlaySound(dado);
-			}
+		bool yaTiro = jugador.TiroLosDados || jugador.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+		bool esSuTurnoAhora = jugador.EsSuTurno && !yaTiro;
+
+		if(GameManager.Instance.modoMultiplayer){
+			long idLocal = Multiplayer.GetUniqueId();
+			bool esSuTurnoAhoraEnRed = (idLocal == jugador.Id) || (GameManager.Instance.jugadorEsHost && idLocal == 1);
+			botonDado.Disabled = !esSuTurnoAhora || !esSuTurnoAhoraEnRed;
+		}
+		else{
+			botonDado.Disabled = !esSuTurnoAhora;
 		}
 	}
 
-//hay q parametrizar esto
+	public void MostrarResultadoDado(){
+		if (botonDado.Disabled) return;
+		bool esTurnoLocal = !GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id;
+		if (!esTurnoLocal) return;
+		int resultado = GameManager.Instance.TirarDado();
+
+		if (resultado != -1){
+			if (GameManager.Instance.modoMultiplayer){
+				playerManager.Rpc(nameof(PlayerManager.SincronizarDadoRpc), resultado);
+			}
+
+			resultadoDados.Text = resultado.ToString();
+			ActualizarInstrucciones("Debes moverte antes de atacar o invocar.");
+			botonDado.Disabled = true;
+			AudioManager.Instance.PlaySound(UiSound4);
+		}
+	}
+
 	private void MostrarJugadorEnTurno(){ 
 		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		TextureRect iconoJugadorEnTurno = GetNode<TextureRect>("Elementos/IconoJugador");
