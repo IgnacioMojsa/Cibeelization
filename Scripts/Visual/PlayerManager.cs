@@ -222,13 +222,16 @@ public partial class PlayerManager : Node3D
 	}
 }
 
-	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino)
-	{
+	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino){
+		if (jugadorVisual == null || celdaDestino == null || celdaDestino.Tile == null) return;
+
 		Vector3 origen = jugadorVisual.GlobalPosition;
 		Vector3 destino = celdaDestino.Tile.GlobalPosition;
 
-		Vector3 dir = (destino - origen).Normalized();
+		Vector3 dir = (destino - origen).Normalized(); 
 		dir.Y = 0; // solo plano XZ
+
+		if (dir == Vector3.Zero) return;
 
 		// Ángulo en radianes
 		float anguloMouse = Mathf.Atan2(dir.X, dir.Z);
