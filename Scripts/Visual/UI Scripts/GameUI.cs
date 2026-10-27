@@ -345,10 +345,10 @@ public partial class GameUI : Control {
 		var colorJ3 = Color.FromHtml("#b33671");
 		var colorJ4 = Color.FromHtml("#8260e5");
 
-		var iconoJ1 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina1.svg");
-		var iconoJ2 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina2.svg");
-		var iconoJ3 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina3.svg");
-		var iconoJ4 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina4.svg");
+		var iconoJ1 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina1Contorno.svg");
+		var iconoJ2 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina2Contorno.svg");
+		var iconoJ3 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina3Contorno.svg");
+		var iconoJ4 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina4Contorno.svg");
 
 		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
 		List<Color> ColorJugadores = new List<Color>{ colorJ1, colorJ2, colorJ3, colorJ4};

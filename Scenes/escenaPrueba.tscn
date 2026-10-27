@@ -15,9 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://dyje042vdufud" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
 [ext_resource type="Texture2D" uid="uid://dgsjheir7majq" path="res://Assets/UI/RecursosDer.svg" id="14_iks2i"]
+[ext_resource type="Texture2D" uid="uid://drpmcipsv6qq7" path="res://Assets/UI/RecursosDerResplandor.png" id="14_kes84"]
 [ext_resource type="Texture2D" uid="uid://bvgg1815ujr8p" path="res://Assets/UI/RecursosIzq.svg" id="15_bojjk"]
 [ext_resource type="Texture2D" uid="uid://dxsn1ujve5xa4" path="res://Assets/UI/Dado.svg" id="15_icj48"]
-[ext_resource type="Texture2D" uid="uid://ewlnk7vyjprx" path="res://Assets/UI/AbejarReina1.svg" id="16_2gfcn"]
+[ext_resource type="Texture2D" uid="uid://cb6xap7ech1hx" path="res://Assets/UI/JugadorEnTurnoResplandor.png" id="16_bojjk"]
+[ext_resource type="Texture2D" uid="uid://cj7ay23vags66" path="res://Assets/UI/RecursosIzqResplandor.png" id="16_jlwyq"]
+[ext_resource type="Texture2D" uid="uid://w7ya46oq4vgs" path="res://Assets/UI/AbejarReina1Contorno.svg" id="17_iks2i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -737,35 +740,91 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Recursos1" type="TextureRect" parent="HUD/Elementos" unique_id=156705770]
+[node name="RecursosDer" type="Control" parent="HUD/Elementos" unique_id=1014677604]
+anchors_preset = 0
+offset_left = -686.0
+offset_top = -1186.155
+offset_right = -646.0
+offset_bottom = -1146.155
+
+[node name="RecursosResplandor" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=664540837]
 layout_mode = 0
-offset_left = 124.00006
-offset_top = -624.0
-offset_right = 522.00006
-offset_bottom = -449.0
+offset_left = 783.00006
+offset_top = 543.155
+offset_right = 1264.0
+offset_bottom = 800.155
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(0, 88.35)
+texture = ExtResource("14_kes84")
+
+[node name="RecursosDer" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=156705770]
+layout_mode = 0
+offset_left = 810.00006
+offset_top = 562.155
+offset_right = 1208.0
+offset_bottom = 737.155
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(0, 88.35)
 texture = ExtResource("14_iks2i")
 
-[node name="Recursos2" type="TextureRect" parent="HUD/Elementos" unique_id=1018539452]
-layout_mode = 0
+[node name="RecursosIzq" type="Control" parent="HUD/Elementos" unique_id=2124332722]
+anchors_preset = 0
 offset_left = -343.0
-offset_top = -624.0
-offset_right = 55.0
-offset_bottom = -449.0
+offset_top = -593.0775
+offset_right = -303.0
+offset_bottom = -553.0775
+
+[node name="RecursosIzqResplandor" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=95252804]
+layout_mode = 0
+offset_left = -27.0
+offset_top = -49.9225
+offset_right = 455.0
+offset_bottom = 207.0775
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(0, 88.35)
+texture = ExtResource("16_jlwyq")
+
+[node name="RecursosIzq" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=1018539452]
+layout_mode = 0
+offset_top = -30.9225
+offset_right = 398.0
+offset_bottom = 144.0775
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(0, 88.35)
 texture = ExtResource("15_bojjk")
 
-[node name="JugadorEnTurno" type="TextureRect" parent="HUD/Elementos" unique_id=155409841]
+[node name="JugadorEnTurno" type="Control" parent="HUD/Elementos" unique_id=157153633]
+anchors_preset = 0
+offset_left = -60.211273
+offset_top = -1023.5775
+offset_right = -20.211273
+offset_bottom = -983.5775
+
+[node name="JugadorEnTurnoResplandor" type="TextureRect" parent="HUD/Elementos/JugadorEnTurno" unique_id=1488043817]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -195.5
-offset_top = -620.00006
-offset_right = 195.5
-offset_bottom = -360.00006
+offset_left = -163.78876
+offset_top = 385.57764
+offset_right = 316.21124
+offset_bottom = 729.57764
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(200.5, -1)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("16_bojjk")
+
+[node name="JugadorEnTurno" type="TextureRect" parent="HUD/Elementos/JugadorEnTurno" unique_id=155409841]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.78874
+offset_top = 403.57748
+offset_right = 256.21124
+offset_bottom = 667.5775
 grow_horizontal = 2
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(200.5, -1)
@@ -781,7 +840,7 @@ offset_right = 175.84143
 offset_bottom = -312.79382
 scale = Vector2(0.365, 0.365)
 pivot_offset = Vector2(117.64697, 188.23528)
-texture = ExtResource("16_2gfcn")
+texture = ExtResource("17_iks2i")
 stretch_mode = 3
 
 [node name="Dado" type="TextureRect" parent="HUD/Elementos" unique_id=754489819]
