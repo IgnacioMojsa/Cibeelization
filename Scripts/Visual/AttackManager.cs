@@ -85,6 +85,8 @@ public partial class AttackManager : Node3D
 		if(playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			visual.QueueFree();
+			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
+			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
 		}
 		LimpiarAbejasEliminadas();
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
@@ -118,6 +120,9 @@ public partial class AttackManager : Node3D
 		if (playerManager.tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(playerManager.tropasManager.VisualAbejas[abejaObjetivo])){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			playerManager.tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
+			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
+			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
+
 		}
 
 		playerManager.TerminarControlDeSubdito();
@@ -169,6 +174,7 @@ public partial class AttackManager : Node3D
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+
     private void EjecutarAtaqueJugadorRpc(int indiceRival){
         if (indiceRival < 0 || indiceRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 

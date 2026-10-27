@@ -113,10 +113,15 @@ public partial class TroopsManager : Node3D
 
 		foreach (var abeja in AbejasCercanas)
 		{
+			if(abeja.FueraDeJuego) continue;
+			if(!VisualAbejas.TryGetValue(abeja, out var visual) || !IsInstanceValid(visual)) continue;
+
 			playerManager.vfxManager.EstablecerNextPass(VisualAbejas[abeja], materialOriginal);
 
 			//GD.Print(VisualAbejas[abeja]);
 		} 
+
+		AbejasCercanas.Clear();
 	}
 
 	public bool PuedeAbsorberSubdito()
@@ -163,14 +168,14 @@ public partial class TroopsManager : Node3D
 	{	
 		Abeja subditoAControlar = AbejasCercanas.Find(a => a.CeldaActual == unaCelda && !a.FueraDeJuego);
 		
-		if (!VisualAbejas.TryGetValue(subditoAControlar, out var visual) || !IsInstanceValid(visual))
-        	return;
-
 		if (subditoAControlar == null)
     	{
     	    EventosUI.MostrarMensaje("Elegí un subdito cercano para controlar.");
     	    return;
     	}
+		
+		if (!VisualAbejas.TryGetValue(subditoAControlar, out var visual) || !IsInstanceValid(visual))
+        	return;
 
 		GameManager.Instance.CamaraActual.EnfocarNodo(visual, 2, 1);
 		GameManager.Instance.jugadorEnTurno.MoviendoSubdito = true;

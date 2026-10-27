@@ -522,6 +522,17 @@ public partial class GameUI : Control {
 
 		HashSet<string> recursosActuales = new HashSet<string>();
 
+		if(recursosActuales.Count == 0)
+		{
+			var nodosHijos = recursos.GetChildren();
+
+			foreach (var hijo in nodosHijos){
+					if(hijo is Label hijoLabel)
+					
+					hijoLabel.Text = "0";
+				}
+		}
+
 		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena)
 		{
 			if(recurso == null) break;

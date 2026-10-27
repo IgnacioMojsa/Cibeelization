@@ -12,7 +12,7 @@ public class AttackLogic
 		return jugador != null && jugador.HP < 5;
 	}
 
-	public void DaniarJugador(Abeja atacante,AbejaReina jugadorObjetivo)
+	public void DaniarJugador(Abeja atacante, Abeja jugadorObjetivo)
 	{
 		if (jugadorObjetivo == null) return;
 		
