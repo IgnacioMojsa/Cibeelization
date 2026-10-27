@@ -12,6 +12,7 @@ public partial class PlayerManager : Node3D
 	[Export] public AnimationManager animationManager;
 	[Export] public VFXManager vfxManager;
 	[Export] public AttackManager attackManager;
+	[Export] public GameUI gameUI;
 	public readonly Dictionary<AbejaReina, Node3D> VisualesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
@@ -60,6 +61,7 @@ public partial class PlayerManager : Node3D
 		else if(jugador.ModoTransformacion && !jugador.AccionConsumida){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.TransformarAbeja(CeldaCliqueada);
+			gameUI.MostrarRecursosDeJugadorEnTurno();
 		}
 
 		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){
@@ -168,40 +170,40 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void IntentarMoverJugador(){      
-	if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
+		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
 
-	VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
+		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
-	CeldaCliqueada = ObtenerCeldaAlClickear();
+		CeldaCliqueada = ObtenerCeldaAlClickear();
 	
-	RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
+		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
 
-	EstablecerCeldaParaJugadorEnTurno();
+		EstablecerCeldaParaJugadorEnTurno();
 
-	if (PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList()))
-	{
-		vfxManager.OcultarAbejasObjetivo();
-
-		int indexJugador = VisualesJugadores.Values.ToList().IndexOf(VisualJugadorActual);
-		int indexCelda = tablero.Celdas.IndexOf(CeldaCliqueada);
-		Vector3 targetPos = CeldaCliqueada.Tile.GlobalPosition;
-		targetPos.Y = VisualJugadorActual.GlobalPosition.Y;
-
-		if (GameManager.Instance.modoMultiplayer)
+		if (PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList()))
 		{
-			Rpc(nameof(MoverAbejaACeldaRpc), indexJugador, targetPos, indexCelda);
+			vfxManager.OcultarAbejasObjetivo();
+
+			int indexJugador = VisualesJugadores.Values.ToList().IndexOf(VisualJugadorActual);
+			int indexCelda = tablero.Celdas.IndexOf(CeldaCliqueada);
+			Vector3 targetPos = CeldaCliqueada.Tile.GlobalPosition;
+			targetPos.Y = VisualJugadorActual.GlobalPosition.Y;
+
+			if (GameManager.Instance.modoMultiplayer)
+			{
+				Rpc(nameof(MoverAbejaACeldaRpc), indexJugador, targetPos, indexCelda);
+			}
+			else
+			{
+				MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
+			}
 		}
 		else
 		{
-			MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
+			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
+			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}
 	}
-	else
-	{
-		GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
-		EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
-	}
-}
 
 	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino){
 		if (jugadorVisual == null || celdaDestino == null || celdaDestino.Tile == null) return;

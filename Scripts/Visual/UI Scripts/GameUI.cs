@@ -16,6 +16,7 @@ public partial class GameUI : Control {
 	private Button botonColmena;
 	private PanelContainer containerPausa;
 	private HBoxContainer uiPausa;
+	private Control recursos;
 	private Label resultadoDados;
 	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
@@ -68,6 +69,7 @@ public partial class GameUI : Control {
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 
 		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+		recursos = GetNode<Control>("CantRecursos");
 		feedback = GetNode<Label>("Feedback");
 		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
 		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
@@ -113,6 +115,7 @@ public partial class GameUI : Control {
 	private void ActualizarUI(){
 		MostrarJugadorEnTurno();
 		MostrarHPDeJugaores();
+		MostrarRecursosDeJugadorEnTurno();
 		DeshabilitarDado();
 		AlternarEstadoDeAtaque();
 		AlternarEstadoDeAbsorcion();
@@ -510,6 +513,27 @@ public partial class GameUI : Control {
 				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
 				turnManager.OnTurnoCambiado -= ActualizarUI;
 			}
+		}
+	}
+
+	public void MostrarRecursosDeJugadorEnTurno()
+	{
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+
+		HashSet<string> recursosActuales = new HashSet<string>();
+
+		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena)
+		{
+			if(recurso == null) break;
+			
+			recursosActuales.Add(recurso);
+		}
+
+		foreach (var recurso in recursosActuales)
+		{
+			var cantRecurso = recursos.GetNode<Label>(recurso);
+
+			cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
 		}
 	}
 };

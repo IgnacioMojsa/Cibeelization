@@ -12,10 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
 [ext_resource type="Script" uid="uid://bx17vouq24c6b" path="res://Scripts/Visual/AttackManager.cs" id="6_iks2i"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
-[ext_resource type="Texture2D" uid="uid://ct82j6o3ymogj" path="res://Assets/UI/Recurso.svg" id="11_g66tl"]
-[ext_resource type="Texture2D" uid="uid://bpjrf4ly4gv8k" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
+[ext_resource type="Texture2D" uid="uid://dyje042vdufud" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
-[ext_resource type="Texture2D" uid="uid://cj0jh65b62hxa" path="res://Assets/UI/Dado.svg" id="15_icj48"]
+[ext_resource type="Texture2D" uid="uid://dgsjheir7majq" path="res://Assets/UI/RecursosDer.svg" id="14_iks2i"]
+[ext_resource type="Texture2D" uid="uid://bvgg1815ujr8p" path="res://Assets/UI/RecursosIzq.svg" id="15_bojjk"]
+[ext_resource type="Texture2D" uid="uid://dxsn1ujve5xa4" path="res://Assets/UI/Dado.svg" id="15_icj48"]
 [ext_resource type="Texture2D" uid="uid://ewlnk7vyjprx" path="res://Assets/UI/AbejarReina1.svg" id="16_2gfcn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
@@ -63,7 +64,7 @@ script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
 tablero = NodePath("../Tablero")
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager")]
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager", "gameUI")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
@@ -72,6 +73,7 @@ celdasManager = NodePath("../CeldasManager")
 animationManager = NodePath("../AnimationManager")
 vfxManager = NodePath("../VFXManager")
 attackManager = NodePath("../AttackManager")
+gameUI = NodePath("../HUD")
 
 [node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager", "attackManager")]
 script = ExtResource("3_auhuj")
@@ -736,7 +738,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Recursos1" type="TextureRect" parent="HUD/Elementos" unique_id=156705770]
-visible = false
 layout_mode = 0
 offset_left = 124.00006
 offset_top = -624.0
@@ -744,10 +745,9 @@ offset_right = 522.00006
 offset_bottom = -449.0
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(0, 88.35)
-texture = ExtResource("11_g66tl")
+texture = ExtResource("14_iks2i")
 
 [node name="Recursos2" type="TextureRect" parent="HUD/Elementos" unique_id=1018539452]
-visible = false
 layout_mode = 0
 offset_left = -343.0
 offset_top = -624.0
@@ -755,8 +755,7 @@ offset_right = 55.0
 offset_bottom = -449.0
 scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(0, 88.35)
-texture = ExtResource("11_g66tl")
-flip_h = true
+texture = ExtResource("15_bojjk")
 
 [node name="JugadorEnTurno" type="TextureRect" parent="HUD/Elementos" unique_id=155409841]
 layout_mode = 1
@@ -801,6 +800,107 @@ pivot_offset = Vector2(200.5, -1)
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = ExtResource("15_icj48")
+
+[node name="CantRecursos" type="Control" parent="HUD" unique_id=1493328901]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Agua" type="Label" parent="HUD/CantRecursos" unique_id=772591299]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -555.0
+offset_right = -280.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Polen" type="Label" parent="HUD/CantRecursos" unique_id=1409556553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -555.0
+offset_right = -222.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Propoleo" type="Label" parent="HUD/CantRecursos" unique_id=1806083869]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = -555.0
+offset_right = -166.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Nectar" type="Label" parent="HUD/CantRecursos" unique_id=1271235822]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 165.0
+offset_top = -555.0
+offset_right = 173.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Miel" type="Label" parent="HUD/CantRecursos" unique_id=1623621231]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 223.0
+offset_top = -555.0
+offset_right = 231.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="JaleaReal" type="Label" parent="HUD/CantRecursos" unique_id=780093425]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 279.0
+offset_top = -555.0
+offset_right = 287.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
 
 [node name="MenuRadial" parent="HUD" unique_id=1055766075 node_paths=PackedStringArray("hud") instance=ExtResource("13_gsowx")]
 layout_mode = 1

@@ -178,6 +178,11 @@ public partial class GameManager
 			jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Add(otraAbeja);
 		}
 
+		for (int r = 0; r < otraAbeja.RecursosNecesarios; r++)
+		{
+			jugadorEnTurno.ColmenaDeReina.RecursosDeColmena.Remove(otraAbeja.RecursoDeTransformacion);
+		}
+
 		jugadorEnTurno.ModoTransformacion = false;
 		jugadorEnTurno.AccionConsumida = true;
 	}

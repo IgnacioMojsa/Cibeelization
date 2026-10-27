@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct82j6o3ymogj"
-path="res://.godot/imported/Recurso.svg-61c348aaf4801e0a41632a1867fab127.ctex"
+uid="uid://bbtk7xwsrayob"
+path="res://.godot/imported/AbejarReina4Contorno.svg-666a314b82f70c2c1c9ab19d2fd0bab7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Recurso.svg"
-dest_files=["res://.godot/imported/Recurso.svg-61c348aaf4801e0a41632a1867fab127.ctex"]
+source_file="res://Assets/UI/AbejarReina4Contorno.svg"
+dest_files=["res://.godot/imported/AbejarReina4Contorno.svg-666a314b82f70c2c1c9ab19d2fd0bab7.ctex"]
 
 [params]
 

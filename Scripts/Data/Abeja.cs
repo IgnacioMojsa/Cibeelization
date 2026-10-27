@@ -11,7 +11,7 @@ public partial class Abeja{
 	public int PotenciaAtaque {get; set;}
 	public List<Abeja> TransformacionesDisponibles {get; set;} = new List<Abeja>();
 	public Colmena ColmenaHogar {get; set;}
-	public Celda CeldaActual { get; set; }
+	public Celda CeldaActual {get; set;}
 
 	public bool AptaParaTransformar(Colmena unaColmena){
 		var tieneLosRecursosNecesarios = TransformacionesDisponibles.Any(a => unaColmena.CantidadTotalDeUnRecurso(a.RecursoDeTransformacion) >= RecursosNecesarios);
