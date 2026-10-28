@@ -36,15 +36,17 @@ public partial class UIPantallaDeInicio : GameUI {
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 	
+	private void ConfigurarBoton(string nombre, bool? Estado = null){
+		foreach (var boton in BotonesDeInicio){
+			if (boton.Name == nombre) continue;
+			boton.Disabled = Estado ?? !boton.Disabled;
+		}
+	}
+
 	public void ElegirModo(){
 		MostrarUIPanel(uiModos, !uiModos.Visible);
 		MostrarUIPanel(uiComienzo, false);
-
-		foreach (var boton in BotonesDeInicio)
-		{
-			if(boton.Name == "PlayButton") continue;
-			boton.Disabled = !boton.Disabled;
-		}
+		ConfigurarBoton("PlayButton");
 	}
 
 	private void MostrarOpcionesModoOnline()
@@ -150,22 +152,12 @@ public partial class UIPantallaDeInicio : GameUI {
 
 	private void Creditos(){
 		MostrarUIPanel(uiCreditos, !uiCreditos.Visible);
-
-		foreach (var boton in BotonesDeInicio)
-		{
-			if(boton.Name == "CreditsButton") continue;
-			boton.Disabled = !boton.Disabled;
-		}
+		ConfigurarBoton("CreditsButton");
 	}
 
 	private void CerrarCreditos(){
 		MostrarUIPanel(uiCreditos, false);
-
-		foreach (var boton in BotonesDeInicio)
-		{
-			if(boton.Name == "CreditsButton") continue;
-			boton.Disabled = false;
-		}
+		ConfigurarBoton("CreditsButton", false);
 	}
 
 	private void MostrarTutorial(){
@@ -179,22 +171,12 @@ public partial class UIPantallaDeInicio : GameUI {
 	private void Ajustes()
 	{
 		MostrarUIPanel(uiAjustes, !uiAjustes.Visible);
-		
-		foreach (var boton in BotonesDeInicio)
-		{
-			if(boton.Name == "SettingsButton") continue;
-			boton.Disabled = !boton.Disabled;
-		}
+		ConfigurarBoton("SettingsButton");
 	}
 
 	private void AceptarConfigAudio()
 	{
 		MostrarUIPanel(uiAjustes, false);
-		
-		foreach (var boton in BotonesDeInicio)
-		{
-			if(boton.Name == "SettingsButton") continue;
-			boton.Disabled = !boton.Disabled;
-		}
+		ConfigurarBoton("SettingButton", false);
 	}
 }

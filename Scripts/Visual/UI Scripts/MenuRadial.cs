@@ -83,58 +83,39 @@ public partial class MenuRadial : Control
 		}
 	}
 
-	public void MostrarMenu()
-	{
+	public void MostrarMenu(){
 		Activo = true;
 		ContenedorDeBotones.Show();
 		Show();
 		MoveToFront();
-		
-		int cantidadDeBotones = ContenedorDeBotones.GetChildCount();
-		if (cantidadDeBotones == 0) return;
-
-		float espaciado = MathF.Tau / cantidadDeBotones;
-
-		for (int b = 0; b < cantidadDeBotones; b++)
-		{
-			if(ContenedorDeBotones.GetChild(b) is Button boton)
-			{
-				float angulo = b * espaciado;
-				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * Radio) - (boton.Size / 2);
-
-				Tween tween = CreateTween().SetParallel(true);
-				tween.TweenProperty(boton, "position", posicionObjetivo, VelocidadAnimacion)
-					.SetTrans(Tween.TransitionType.Back)
-					.SetEase(Tween.EaseType.Out);
-
-				tween.TweenProperty(boton, "scale", Vector2.One, VelocidadAnimacion)
-					.SetTrans(Tween.TransitionType.Back)
-					.SetEase(Tween.EaseType.Out);
-			}
-		}
+		AnimarAperturaContenedor(ContenedorDeBotones);
 	}
 
-	public void MostrarTransformaciones()
-	{
+	public void MostrarTransformaciones(){
 		Activo = true;
 		ContenedorDeTransformaciones.Show();
 		Show();
 		MoveToFront();
-		
-		int cantidadDeBotones = ContenedorDeTransformaciones.GetChildCount();
+		AnimarAperturaContenedor(ContenedorDeTransformaciones, deshabilitarBotones: true);
+		GameManager.Instance.jugadorEnTurno.ModoTransformacion = true;
+	}
+
+	public void OcultarMenu(){
+		OcultarContenedor(ContenedorDeBotones);
+	}
+
+	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false){
+		int cantidadDeBotones = contenedor.GetChildCount();
 		if (cantidadDeBotones == 0) return;
 
 		float espaciado = MathF.Tau / cantidadDeBotones;
 
-		for (int b = 0; b < cantidadDeBotones; b++)
-		{
-			if(ContenedorDeTransformaciones.GetChild(b) is Button boton)
-			{
+		for (int b = 0; b < cantidadDeBotones; b++){
+			if (contenedor.GetChild(b) is Button boton){
 				float angulo = b * espaciado;
 				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * Radio) - (boton.Size / 2);
 
 				Tween tween = CreateTween().SetParallel(true);
-
 				tween.TweenProperty(boton, "position", posicionObjetivo, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
@@ -142,22 +123,19 @@ public partial class MenuRadial : Control
 				tween.TweenProperty(boton, "scale", Vector2.One, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
-				
-				boton.Disabled = true;
+
+				boton.Disabled = deshabilitarBotones;
 			}
 		}
-
-		GameManager.Instance.jugadorEnTurno.ModoTransformacion = true;
 	}
 
-	public void OcultarMenu()
-	{
-		int cantidadBotones = ContenedorDeBotones.GetChildCount();
+	public void OcultarTransformaciones(){
+		OcultarContenedor(ContenedorDeTransformaciones);
+	}
 
-		for (int i = 0; i < cantidadBotones; i++)
-		{
-			if (ContenedorDeBotones.GetChild(i) is Button boton)
-			{
+	private void OcultarContenedor(Control contenedor){
+		foreach (var hijo in contenedor.GetChildren()){
+			if (hijo is Button boton){
 				Vector2 posicionCentroLocal = Vector2.Zero - (boton.Size / 2);
 				
 				Tween tween = CreateTween().SetParallel(true);
@@ -171,36 +149,13 @@ public partial class MenuRadial : Control
 			}
 		}
 
-		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>
-		{
-			ContenedorDeBotones.Hide();
-			Activo = ContenedorDeBotones.Visible || ContenedorDeTransformaciones.Visible;
-		};
-	}
-
-	public void OcultarTransformaciones()
-	{
-		foreach (var hijo in ContenedorDeTransformaciones.GetChildren())
-		{
-			if (hijo is Button boton)
-			{
-				Tween tween = CreateTween().SetParallel(true);
-				tween.TweenProperty(boton, "position", Vector2.Zero - (boton.Size / 2), VelocidadAnimacion)
-					.SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
-				tween.TweenProperty(boton, "scale", Vector2.Zero, VelocidadAnimacion)
-					.SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
-			}
-		}
-
-		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>
-		{
-			ContenedorDeTransformaciones.Hide();
+		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>{
+			contenedor.Hide();
 			Activo = ContenedorDeBotones.Visible || ContenedorDeTransformaciones.Visible;
 		};
 	}
 	
-	private void SeleccionarOpcion(string nombreBoton)
-	{
+	private void SeleccionarOpcion(string nombreBoton){
 		switch(nombreBoton)
 		{
 			case "ControlarButton":
@@ -232,8 +187,7 @@ public partial class MenuRadial : Control
 
 	public void ActualizarEstadoBoton(bool condicion, string unBoton)
 	{
-		if (ContenedorDeBotones.HasNode(unBoton))
-		{
+		if (ContenedorDeBotones.HasNode(unBoton)){
 			var boton = ContenedorDeBotones.GetNode<Button>(unBoton);
 			boton.Disabled = !condicion;
 		}
@@ -243,26 +197,22 @@ public partial class MenuRadial : Control
 	{
 		TransformacionesDisponiblesActualmente.Clear();
 		
-		foreach (var abeja in hud.tropasManager.AbejasTransformables)
-		{
+		foreach (var abeja in hud.tropasManager.AbejasTransformables){
 			if(abeja == null) continue;
 			
 			List<Abeja> transformacionesObtenidas = new List<Abeja>();
 			
-			foreach (var t in GameManager.Instance.ObtenerTransformacionesDisponibles(abeja))
-			{
+			foreach (var t in GameManager.Instance.ObtenerTransformacionesDisponibles(abeja)){
 				if (GameManager.Instance.jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion) >= t.RecursosNecesarios)
 					TransformacionesDisponiblesActualmente.Add(t); 
 			}
 		}
 	}
 
-	public void MostrarTransformacionesDisponibles()
-	{
+	public void MostrarTransformacionesDisponibles(){
 		VerificarTransformacionesDisponibles();
 
-		foreach (var transformacion in TransformacionesDisponiblesActualmente)
-		{
+		foreach (var transformacion in TransformacionesDisponiblesActualmente){
 			var boton = ContenedorDeTransformaciones.GetNodeOrNull<Button>(transformacion.GetType().Name);
 			if (boton != null) boton.Disabled = false;
 		}
