@@ -13,15 +13,15 @@ public partial class GameUI : Control {
 	[Export] private PackedScene menuRadialPrefab;
 	private MenuRadial instanciaMenuRadial;
 	private Button botonPausa;
-	private Button botonColmena;
+	private TextureButton botonColmena;
 	private PanelContainer containerPausa;
 	private HBoxContainer uiPausa;
 	private Control recursos;
 	private Label resultadoDados;
 	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
-	private Button botonDado;
-	private Button botonAtacar;
+	private TextureButton botonDado;
+	private TextureButton botonAtacar;
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 	private Button botonContinuar;
@@ -68,13 +68,13 @@ public partial class GameUI : Control {
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 
-		resultadoDados = GetNode<Label>("HBoxContainer/NumeroDado/MarginContainer/Label");
+		resultadoDados = GetNode<Label>("Dado/NumeroDado");
 		recursos = GetNode<Control>("CantRecursos");
 		feedback = GetNode<Label>("Feedback");
-		botonDado = GetNode<Button>("HBoxContainer/TirarDado/TirarDadoButton");
-		botonAtacar = GetNode<Button>("Atacar/AtacarButton");
+		botonDado = GetNode<TextureButton>("Dado/DadoButton");
+		botonAtacar = GetNode<TextureButton>("Atacar/AtacarButton");
 		//botonCurar = GetNode<Button>("Curar/CurarButton");
-		botonColmena = GetNode<Button>("Colmena/ColmenaButton");
+		botonColmena = GetNode<TextureButton>("Colmena/ColmenaButton");
 
 		//Pausa
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");

@@ -14,13 +14,26 @@
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
 [ext_resource type="Texture2D" uid="uid://dyje042vdufud" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
+[ext_resource type="Texture2D" uid="uid://c6sqp5a2673dg" path="res://Assets/UI/BotonColmena.svg" id="13_nqw0l"]
+[ext_resource type="Texture2D" uid="uid://fhfwkyit7xt5" path="res://Assets/UI/DadoResplandor.svg" id="13_vu10v"]
+[ext_resource type="Texture2D" uid="uid://rhfjqxlayw3p" path="res://Assets/UI/DadoPresionado.svg" id="14_3m86p"]
+[ext_resource type="Texture2D" uid="uid://etp6v35cq8j7" path="res://Assets/UI/BotonAtaque.svg" id="14_duaa4"]
 [ext_resource type="Texture2D" uid="uid://dgsjheir7majq" path="res://Assets/UI/RecursosDer.svg" id="14_iks2i"]
+[ext_resource type="Texture2D" uid="uid://ctk3dikaslsxg" path="res://Assets/UI/BotonColmenaPresionado.svg" id="14_j1m1u"]
 [ext_resource type="Texture2D" uid="uid://drpmcipsv6qq7" path="res://Assets/UI/RecursosDerResplandor.png" id="14_kes84"]
 [ext_resource type="Texture2D" uid="uid://bvgg1815ujr8p" path="res://Assets/UI/RecursosIzq.svg" id="15_bojjk"]
 [ext_resource type="Texture2D" uid="uid://dxsn1ujve5xa4" path="res://Assets/UI/Dado.svg" id="15_icj48"]
+[ext_resource type="Texture2D" uid="uid://bu5ochixbwan3" path="res://Assets/UI/BotonAtaquePresionado.svg" id="15_j3cmi"]
+[ext_resource type="Texture2D" uid="uid://c0f84u8cvc5bj" path="res://Assets/UI/BotonColmenaSeleccionado.svg" id="15_qwcee"]
+[ext_resource type="Texture2D" uid="uid://b0575ayigfyi2" path="res://Assets/UI/DadoSeleccionado.svg" id="15_vu10v"]
+[ext_resource type="Texture2D" uid="uid://bbdvmg1xs344e" path="res://Assets/UI/BotonAtaqueSeleccionado.svg" id="16_0y31t"]
+[ext_resource type="Texture2D" uid="uid://dwnwjmcgxrugp" path="res://Assets/UI/BotonColmenaDeshabilitado.svg" id="16_8d1v5"]
 [ext_resource type="Texture2D" uid="uid://cb6xap7ech1hx" path="res://Assets/UI/JugadorEnTurnoResplandor.png" id="16_bojjk"]
 [ext_resource type="Texture2D" uid="uid://cj7ay23vags66" path="res://Assets/UI/RecursosIzqResplandor.png" id="16_jlwyq"]
+[ext_resource type="Texture2D" uid="uid://bsej43mdcttf" path="res://Assets/UI/DadoDeshabilitado.svg" id="16_ohwqx"]
 [ext_resource type="Texture2D" uid="uid://w7ya46oq4vgs" path="res://Assets/UI/AbejarReina1Contorno.svg" id="17_iks2i"]
+[ext_resource type="Texture2D" uid="uid://bqdyacmbrecbj" path="res://Assets/UI/BotonAtaqueResplandor.svg" id="18_ohwqx"]
+[ext_resource type="Texture2D" uid="uid://bqqvegxejtmfk" path="res://Assets/UI/BotonAtaqueDeshabilitado.svg" id="19_qwcee"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -151,51 +164,6 @@ celdasManager = NodePath("../CeldasManager")
 attackManager = NodePath("../AttackManager")
 menuRadialPrefab = ExtResource("13_gsowx")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=987035873]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -109.5
-offset_top = -114.0
-offset_right = 109.5
-offset_bottom = -12.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="TirarDado" type="PanelContainer" parent="HUD/HBoxContainer" unique_id=471096321]
-layout_mode = 2
-
-[node name="TirarDadoButton" type="Button" parent="HUD/HBoxContainer/TirarDado" unique_id=1843459633]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = "Tirar 
-Dado "
-
-[node name="NumeroDado" type="PanelContainer" parent="HUD/HBoxContainer" unique_id=1217809531]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/NumeroDado" unique_id=1399781390]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
-
-[node name="Label" type="Label" parent="HUD/HBoxContainer/NumeroDado/MarginContainer" unique_id=933910515]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 34
-text = "???"
-
 [node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
 visible = false
 layout_mode = 0
@@ -229,40 +197,119 @@ theme_override_font_sizes/font_size = 19
 text = "Invocar 
 subdito"
 
-[node name="Atacar" type="PanelContainer" parent="HUD" unique_id=120025344]
+[node name="Dado" type="Control" parent="HUD" unique_id=1706497029]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DadoResplandor" type="TextureRect" parent="HUD/Dado" unique_id=1538380290]
 layout_mode = 0
-offset_left = -220.0
-offset_top = -48.0
-offset_right = -101.0
-offset_bottom = 11.0
+offset_left = -211.00002
+offset_top = -235.99998
+offset_right = 252.99998
+offset_bottom = 80.000015
+scale = Vector2(0.67, 0.67)
+pivot_offset = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 1)
+texture = ExtResource("13_vu10v")
 
-[node name="AtacarButton" type="Button" parent="HUD/Atacar" unique_id=968980427]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 40
-text = "Atacar"
+[node name="DadoButton" type="TextureButton" parent="HUD/Dado" unique_id=125544432]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_top = -121.0
+offset_right = 264.0
+offset_bottom = 156.0
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+action_mode = 0
+texture_normal = ExtResource("15_icj48")
+texture_pressed = ExtResource("14_3m86p")
+texture_hover = ExtResource("15_vu10v")
+texture_disabled = ExtResource("16_ohwqx")
 
-[node name="Colmena" type="PanelContainer" parent="HUD" unique_id=1212104814]
+[node name="NumeroDado" type="Label" parent="HUD/Dado" unique_id=933910515]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 124.0
-offset_top = -68.0
-offset_right = 268.0
-offset_bottom = -9.0
+offset_left = -16.0
+offset_top = -76.0
+offset_right = 24.0
+offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ColmenaButton" type="Button" parent="HUD/Colmena" unique_id=329072945]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+scale = Vector2(0.81, 0.81)
+theme_override_colors/font_color = Color(0.99607843, 0.8, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.24313726, 0.015686275, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.95686275, 0.6901961, 0.15686275, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 18
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 40
-text = "Colmena"
+theme_override_font_sizes/font_size = 89
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Colmena" type="Control" parent="HUD" unique_id=340200140]
+anchors_preset = 0
+offset_left = -308.0
+offset_top = -64.0
+offset_right = -268.0
+offset_bottom = -24.0
+
+[node name="ColmenaResplandor" type="TextureRect" parent="HUD/Colmena" unique_id=1381282156]
+layout_mode = 0
+offset_left = 418.0
+offset_top = -20.0
+offset_right = 866.0
+offset_bottom = 210.0
+scale = Vector2(0.59, 0.59)
+texture = ExtResource("18_ohwqx")
+flip_h = true
+
+[node name="ColmenaButton" type="TextureButton" parent="HUD/Colmena" unique_id=1804188807]
+layout_mode = 0
+offset_left = 440.0
+offset_right = 838.0
+offset_bottom = 175.0
+scale = Vector2(0.55, 0.55)
+texture_normal = ExtResource("13_nqw0l")
+texture_pressed = ExtResource("14_j1m1u")
+texture_hover = ExtResource("15_qwcee")
+texture_disabled = ExtResource("16_8d1v5")
+
+[node name="Atacar" type="Control" parent="HUD" unique_id=123719189]
+anchors_preset = 0
+offset_left = -308.0
+offset_top = -64.0
+offset_right = -268.0
+offset_bottom = -24.0
+
+[node name="AtacarResplandor" type="TextureRect" parent="HUD/Atacar" unique_id=561995293]
+layout_mode = 0
+offset_left = -22.0
+offset_top = -20.0
+offset_right = 426.0
+offset_bottom = 210.0
+scale = Vector2(0.59, 0.59)
+texture = ExtResource("18_ohwqx")
+
+[node name="AtacarButton" type="TextureButton" parent="HUD/Atacar" unique_id=1072471944]
+layout_mode = 0
+offset_right = 398.0
+offset_bottom = 175.0
+scale = Vector2(0.55, 0.55)
+texture_normal = ExtResource("14_duaa4")
+texture_pressed = ExtResource("15_j3cmi")
+texture_hover = ExtResource("16_0y31t")
+texture_disabled = ExtResource("19_qwcee")
 
 [node name="Pausa" type="PanelContainer" parent="HUD" unique_id=830340097]
 layout_mode = 0
@@ -626,10 +673,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -137.5
-offset_top = -128.0
-offset_right = 137.5
-offset_bottom = -96.0
+offset_left = -136.0
+offset_top = -172.0
+offset_right = 139.0
+offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/outline_size = 8
@@ -843,23 +890,6 @@ pivot_offset = Vector2(117.64697, 188.23528)
 texture = ExtResource("17_iks2i")
 stretch_mode = 3
 
-[node name="Dado" type="TextureRect" parent="HUD/Elementos" unique_id=754489819]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -195.5
-offset_top = -121.0
-offset_right = 195.5
-offset_bottom = 155.0
-grow_horizontal = 2
-scale = Vector2(0.65, 0.65)
-pivot_offset = Vector2(200.5, -1)
-size_flags_horizontal = 4
-size_flags_vertical = 0
-texture = ExtResource("15_icj48")
-
 [node name="CantRecursos" type="Control" parent="HUD" unique_id=1493328901]
 anchors_preset = 0
 offset_right = 40.0
@@ -968,7 +998,7 @@ hud = NodePath("..")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
 replication_config = SubResource("SceneReplicationConfig_2gfcn")
 
-[connection signal="pressed" from="HUD/HBoxContainer/TirarDado/TirarDadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
+[connection signal="pressed" from="HUD/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
