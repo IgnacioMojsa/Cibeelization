@@ -37,6 +37,11 @@ public partial class Abeja{
 		{
 			HP -= atacante.PotenciaAtaque;
 		}
+
+		if(HP <= 0)
+		{
+			MatarAbeja();
+		}
 	}
 
 	public void Curar()
@@ -45,7 +50,6 @@ public partial class Abeja{
 	}
 
 	public void MatarAbeja(){
-		HP -= HP;
 		FueraDeJuego = true;
 	}
 }

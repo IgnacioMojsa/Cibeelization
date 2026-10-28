@@ -81,14 +81,28 @@ public partial class AttackManager : Node3D
 	}
 
 	private void AtacarAbejaEspecifica(Abeja abejaObjetivo){
-		attackLogic.DaniarAbeja(abejaObjetivo);
-		if(playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
+		Abeja abejaControlada;
+
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			abejaControlada = playerManager.tropasManager.SubditoActual;
+		}
+		else
+		{
+			abejaControlada = GameManager.Instance.jugadorEnTurno;
+		}
+		
+		attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
+
+		if(abejaObjetivo.FueraDeJuego && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
 			visual.QueueFree();
 			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
 			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
 		}
+		
 		LimpiarAbejasEliminadas();
+		
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
 			GD.Print("Camara reestablecida en reina");
@@ -107,6 +121,17 @@ public partial class AttackManager : Node3D
 	}
 
 	private void AtacarAbeja(){
+		Abeja abejaControlada;
+
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		{
+			abejaControlada = playerManager.tropasManager.SubditoActual;
+		}
+		else
+		{
+			abejaControlada = GameManager.Instance.jugadorEnTurno;
+		}
+		
 		var abejaObjetivo = AbejasObjetivo.Find(a => a.CeldaActual == playerManager.CeldaCliqueada);
 
 		if(abejaObjetivo == null){
@@ -115,7 +140,7 @@ public partial class AttackManager : Node3D
 			return;
 		}
 
-		attackLogic.DaniarAbeja(abejaObjetivo);
+		attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
 		
 		if (playerManager.tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(playerManager.tropasManager.VisualAbejas[abejaObjetivo])){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);

@@ -21,7 +21,7 @@ public class AttackLogic
 		AudioManager.Instance.PlaySound(punchSound);
 	}
 	
-	public void DaniarAbeja(Abeja unaAbeja)
+	public void DaniarAbeja(Abeja unaAbeja, Abeja abejaAtacante)
 	{
 		if(unaAbeja == null) return;
 
@@ -29,6 +29,6 @@ public class AttackLogic
 
 		// Aca hay que usar unaAbeja.RestarVida(), el actual es solamente provsiorio;
 		
-		unaAbeja.MatarAbeja();
+		unaAbeja.RestarVida(abejaAtacante);
 	}
 }
