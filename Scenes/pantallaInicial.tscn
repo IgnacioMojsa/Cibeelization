@@ -2,11 +2,30 @@
 
 [ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UI Scripts/UIPantallaDeInicio.cs" id="1_3b2ad"]
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
-[ext_resource type="LabelSettings" uid="uid://pe1k6bm7vfnc" path="res://ui.tres" id="1_uuyxf"]
+[ext_resource type="Texture2D" uid="uid://docfwh7c0c0fx" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugar.svg" id="3_canpy"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
+[ext_resource type="Texture2D" uid="uid://57ol0hdn5q41" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarPresionado.svg" id="4_6hrbw"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
+[ext_resource type="Texture2D" uid="uid://bhh7emb4jb3d8" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarSeleccionado.svg" id="5_plf46"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="6_e1fak"]
+[ext_resource type="Texture2D" uid="uid://bekwrmfu7l6ly" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarDeshabilitado.svg" id="6_mpr3k"]
 [ext_resource type="Texture2D" uid="uid://corx426tq0bdl" path="res://Assets/PNGS/mouses.png" id="7_3b2ad"]
+[ext_resource type="Texture2D" uid="uid://c3c0v8si53r14" path="res://Assets/UI/UIPantallaInicial/BotonTutorial/BotonTutorial.svg" id="7_ty7e5"]
+[ext_resource type="Texture2D" uid="uid://cktlx7787h2sw" path="res://Assets/UI/UIPantallaInicial/BotonTutorial/BotonTutorialPresionado.svg" id="8_ka0dp"]
+[ext_resource type="Texture2D" uid="uid://vqr5s1u78igm" path="res://Assets/UI/UIPantallaInicial/BotonTutorial/BotonTutorialSeleccionado.svg" id="9_k2pyu"]
+[ext_resource type="Texture2D" uid="uid://cg5fosnpwn3e1" path="res://Assets/UI/UIPantallaInicial/BotonTutorial/BotonTutorialDeshabilitado.svg" id="10_giqap"]
+[ext_resource type="Texture2D" uid="uid://c45jcgvf85ns2" path="res://Assets/UI/UIPantallaInicial/BotonAjustes/BotonAjustes.svg" id="11_w5w1a"]
+[ext_resource type="Texture2D" uid="uid://ggem7a3k4vhv" path="res://Assets/UI/UIPantallaInicial/BotonAjustes/BotonAjustesPresionado.svg" id="12_4q4d1"]
+[ext_resource type="Texture2D" uid="uid://dw5n7sbu57s14" path="res://Assets/UI/UIPantallaInicial/BotonAjustes/BotonAjustesSeleccionado.svg" id="13_ss54m"]
+[ext_resource type="Texture2D" uid="uid://cghjjb4gplrwq" path="res://Assets/UI/UIPantallaInicial/BotonAjustes/BotonAjustesDeshabilitado.svg" id="14_n5hoi"]
+[ext_resource type="Texture2D" uid="uid://dne1krv0ayy58" path="res://Assets/UI/UIPantallaInicial/BotonCreditos/BotonCreditos.svg" id="15_h55tx"]
+[ext_resource type="Texture2D" uid="uid://du1c74dta14tc" path="res://Assets/UI/UIPantallaInicial/BotonCreditos/BotonCreditosPresionado.svg" id="16_o5mjb"]
+[ext_resource type="Texture2D" uid="uid://bkjbrmjk4bm7a" path="res://Assets/UI/UIPantallaInicial/BotonCreditos/BotonCreditosSeleccionado.svg" id="17_604xw"]
+[ext_resource type="Texture2D" uid="uid://bfv4tq5klhwv8" path="res://Assets/UI/UIPantallaInicial/BotonCreditos/BotonCreditosDeshabilitado.svg" id="18_6n1as"]
+[ext_resource type="Texture2D" uid="uid://c72s6gt4qemwv" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalir.svg" id="19_m5pus"]
+[ext_resource type="Texture2D" uid="uid://p0v655ci2l7g" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirPresionado.svg" id="20_d2nxm"]
+[ext_resource type="Texture2D" uid="uid://p3sa8rmyggbe" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirSeleccionado.svg" id="21_jhu0f"]
+[ext_resource type="Texture2D" uid="uid://boy8k0je3kgbo" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirDeshabilitado.svg" id="22_d4bk0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
@@ -65,154 +84,53 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -414.5
-offset_top = -78.0
-offset_right = 414.5
-offset_bottom = -11.0
+offset_left = -1312.5
+offset_top = -317.0
+offset_right = 1312.5
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.395, 0.395)
+pivot_offset = Vector2(0.5, 1)
+pivot_offset_ratio = Vector2(0.5, 1)
 size_flags_horizontal = 4
 theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Play" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1349428790]
+[node name="Play" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=778522179]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+texture_normal = ExtResource("3_canpy")
+texture_pressed = ExtResource("4_6hrbw")
+texture_hover = ExtResource("5_plf46")
+texture_disabled = ExtResource("6_mpr3k")
 
-[node name="PlayButton" type="Button" parent="BotonesMenuDeInicio/Play" unique_id=1613627018]
+[node name="Tutorial" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=672420463]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Jugar "
+texture_normal = ExtResource("7_ty7e5")
+texture_pressed = ExtResource("8_ka0dp")
+texture_hover = ExtResource("9_k2pyu")
+texture_disabled = ExtResource("10_giqap")
 
-[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Play" unique_id=1666260787]
-visible = false
+[node name="Settings" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=60168221]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
+texture_normal = ExtResource("11_w5w1a")
+texture_pressed = ExtResource("12_4q4d1")
+texture_hover = ExtResource("13_ss54m")
+texture_disabled = ExtResource("14_n5hoi")
 
-[node name="Label" type="Label" parent="BotonesMenuDeInicio/Play/MarginContainer" unique_id=737140488]
+[node name="Credits" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=870622266]
 layout_mode = 2
-text = "Jugar"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
+texture_normal = ExtResource("15_h55tx")
+texture_pressed = ExtResource("16_o5mjb")
+texture_hover = ExtResource("17_604xw")
+texture_disabled = ExtResource("18_6n1as")
 
-[node name="Tutorial" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1613145265]
+[node name="Exit" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=241801519]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="TutorialButton" type="Button" parent="BotonesMenuDeInicio/Tutorial" unique_id=1809885054]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Tutorial "
-
-[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Tutorial" unique_id=1206430386]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="BotonesMenuDeInicio/Tutorial/MarginContainer" unique_id=683723399]
-layout_mode = 2
-text = "Tutorial"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Settings" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=929770029]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="SettingsButton" type="Button" parent="BotonesMenuDeInicio/Settings" unique_id=77355305]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Ajustes "
-
-[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Settings" unique_id=300069358]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="BotonesMenuDeInicio/Settings/MarginContainer" unique_id=1725274790]
-layout_mode = 2
-text = "Ajustes"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Credits" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=1366396267]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="CreditsButton" type="Button" parent="BotonesMenuDeInicio/Credits" unique_id=1265861417]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = "Créditos
-"
-
-[node name="Exit" type="PanelContainer" parent="BotonesMenuDeInicio" unique_id=320194545]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="ExitButton" type="Button" parent="BotonesMenuDeInicio/Exit" unique_id=1820525158]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("3_cluwn")
-theme_override_font_sizes/font_size = 37
-action_mode = 0
-text = " Salir "
-
-[node name="MarginContainer" type="MarginContainer" parent="BotonesMenuDeInicio/Exit" unique_id=1069439262]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="BotonesMenuDeInicio/Exit/MarginContainer" unique_id=1537871213]
-layout_mode = 2
-text = "Salir"
-label_settings = ExtResource("1_uuyxf")
-horizontal_alignment = 1
-vertical_alignment = 1
+texture_normal = ExtResource("19_m5pus")
+texture_pressed = ExtResource("20_d2nxm")
+texture_hover = ExtResource("21_jhu0f")
+texture_disabled = ExtResource("22_d4bk0")
 
 [node name="ElegirModo" type="PanelContainer" parent="." unique_id=140227141]
 visible = false
@@ -798,11 +716,11 @@ position = Vector2(590.0748, 327.00003)
 scale = Vector2(0.6591759, 0.65917593)
 texture = ExtResource("7_3b2ad")
 
-[connection signal="pressed" from="BotonesMenuDeInicio/Play/PlayButton" to="." method="ElegirModo"]
-[connection signal="pressed" from="BotonesMenuDeInicio/Tutorial/TutorialButton" to="." method="MostrarTutorial"]
-[connection signal="pressed" from="BotonesMenuDeInicio/Settings/SettingsButton" to="." method="Ajustes"]
-[connection signal="pressed" from="BotonesMenuDeInicio/Credits/CreditsButton" to="." method="Creditos"]
-[connection signal="pressed" from="BotonesMenuDeInicio/Exit/ExitButton" to="." method="SalirDelJuego"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Play" to="." method="ElegirModo"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Tutorial" to="." method="MostrarTutorial"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Settings" to="." method="Ajustes"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Credits" to="." method="Creditos"]
+[connection signal="pressed" from="BotonesMenuDeInicio/Exit" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal/PlayButton" to="." method="Jugar"]
 [connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2/StartOnline/PlayButton" to="." method="MostrarOpcionesModoOnline"]
 [connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer/Crear/CrearPartidaNueva" to="." method="Jugar"]

@@ -8,7 +8,7 @@ public partial class UIPantallaDeInicio : GameUI {
 	private PanelContainer uiCreditos;
 	private PanelContainer uiTutorial;
 	private PanelContainer uiAjustes;
-	private List<Button> BotonesDeInicio; 
+	private List<TextureButton> BotonesDeInicio; 
 
 	public override void _Ready(){
 		base._Ready();
@@ -20,12 +20,12 @@ public partial class UIPantallaDeInicio : GameUI {
 		uiTutorial = GetNode<PanelContainer>("Tutorial");
 		uiAjustes = GetNode<PanelContainer>("Ajustes");
 
-		BotonesDeInicio = new List<Button>{
-				GetNode<Button>("BotonesMenuDeInicio/Play/PlayButton"),
-				GetNode<Button>("BotonesMenuDeInicio/Tutorial/TutorialButton"),
-				GetNode<Button>("BotonesMenuDeInicio/Settings/SettingsButton"),
-				GetNode<Button>("BotonesMenuDeInicio/Credits/CreditsButton"),
-				GetNode<Button>("BotonesMenuDeInicio/Exit/ExitButton"),
+		BotonesDeInicio = new List<TextureButton>{
+				GetNode<TextureButton>("BotonesMenuDeInicio/Play"),
+				GetNode<TextureButton>("BotonesMenuDeInicio/Tutorial"),
+				GetNode<TextureButton>("BotonesMenuDeInicio/Settings"),
+				GetNode<TextureButton>("BotonesMenuDeInicio/Credits"),
+				GetNode<TextureButton>("BotonesMenuDeInicio/Exit"),
 			};
 	}
 
