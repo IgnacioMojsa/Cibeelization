@@ -122,11 +122,8 @@ public partial class AttackManager : Node3D
 			playerManager.tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
 			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
 			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
-
 		}
-
 		playerManager.TerminarControlDeSubdito();
-
 		LimpiarAbejasEliminadas();
 		GameManager.Instance.ConsumirAtaque();
 	}
@@ -161,7 +158,7 @@ public partial class AttackManager : Node3D
                     Rpc(nameof(EjecutarAtaqueJugadorRpc), indiceRival);
                 }
                 else{
-                    ProcesarDanioJugador(indiceRival, atacante);
+                    EjecutarAtaqueJugadorRpc(indiceRival);
                 }
 
                 GameManager.Instance.ConsumirAtaque();
@@ -235,8 +232,7 @@ public partial class AttackManager : Node3D
 			
 			if (playerManager.movimientoManager.CeldasSonAdyacentes(jugadorActual.CeldaActual, abejaActual.CeldaActual) 
 			&& !abejaActual.FueraDeJuego
-			&& (!reinaEsDueñaDeUnSubdito))
-			{
+			&& (!reinaEsDueñaDeUnSubdito)){
 				listaDeAbejas.Add(abejaActual);
 			}
 		}
@@ -250,7 +246,6 @@ public partial class AttackManager : Node3D
 			if (jugador == GameManager.Instance.jugadorEnTurno || jugador.FueraDeJuego) continue;
 			BuscarAbejasObjetivo(jugador, AbejasObjetivo);
 		}
-
 		foreach (var abeja in AbejasObjetivo){
 			GD.Print(abeja.GetType() + ", ", abeja.ColmenaHogar.ReinaDeColmena.GetType() + " " + abeja.ColmenaHogar.ReinaDeColmena.Id);
 		}
@@ -262,7 +257,6 @@ public partial class AttackManager : Node3D
 				AbejasObjetivo.Remove(abeja);
 				abeja.ColmenaHogar.AbejasDeColmena.Remove(abeja);
 			}
-
 			AbejasObjetivo.RemoveAll(a => a.FueraDeJuego);
 		}
 	}
