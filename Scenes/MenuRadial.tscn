@@ -83,3 +83,13 @@ scale = Vector2(1e-05, 1e-05)
 theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Abeja
 Polinizadora"
+
+[node name="AbejaGuardiana" type="Button" parent="ContenedorTransformaciones" unique_id=758848345]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 70.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Abeja
+Guardiana"

@@ -5,7 +5,7 @@ public partial class AbejaPolinizadora : Abeja{
     {
         HP = 3;
 		PotenciaAtaque = 2;
-		RecursoDeTransformacion = "Nectar";
+		RecursoDeTransformacion = "Propoleo";
 		RecursosNecesarios = 3;
 		RecursoGenerable = "Polen";
     }

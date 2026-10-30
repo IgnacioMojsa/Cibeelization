@@ -30,6 +30,7 @@ public partial class TroopsManager : Node3D
 	    Assets.Add(typeof(Zangano), GD.Load<PackedScene>("res://Scenes/Zangano.tscn"));
 		Assets.Add(typeof(AbejaObrera), GD.Load<PackedScene>("res://Scenes/AbejaObrera.tscn"));
 		Assets.Add(typeof(AbejaPolinizadora), GD.Load<PackedScene>("res://Scenes/AbejaPolinizadora.tscn"));
+		Assets.Add(typeof(AbejaGuardiana), GD.Load<PackedScene>("res://Scenes/AbejaGuardiana.tscn"));
 	}
 
     public void InstanciarAbeja(Celda celdaCliqueada)

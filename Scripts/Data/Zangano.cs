@@ -7,6 +7,6 @@ public partial class Zangano : Abeja{
         HP = 1;
         PotenciaAtaque = 1;
         RecursoGenerable = "Agua";
-        TransformacionesDisponibles = new List<Abeja>(){new AbejaObrera(), new AbejaPolinizadora()};
+        TransformacionesDisponibles = new List<Abeja>(){new AbejaObrera(), new AbejaPolinizadora(), new AbejaGuardiana()};
     }
 }

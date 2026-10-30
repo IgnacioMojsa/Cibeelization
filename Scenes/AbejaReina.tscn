@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dhxsyv712fnga" path="res://Assets/3DModels/AbejaReina.glb" id="1_3g5vb"]
 [ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_m5opc"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_mvxwy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mvxwy"]
 next_pass = ExtResource("2_m5opc")
@@ -46,9 +47,9 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="AbejaReina" unique_id=687298848 instance=ExtResource("1_3g5vb")]
-transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0.55086184)
 
-[node name="Skeleton3D" parent="Esqueleto_001" parent_id_path=PackedInt32Array(1638544275) index="0" unique_id=129025379]
+[node name="Skeleton3D" parent="Esqueleto_001" parent_id_path=PackedInt32Array(65879535) index="0" unique_id=1636249196]
 bones/0/rotation = Quaternion(0.9942587, 1.27558355e-08, 1.18524866e-07, 0.10700372)
 bones/1/rotation = Quaternion(0.10659666, 2.4899843e-14, 2.541462e-08, 0.99430233)
 bones/2/rotation = Quaternion(0.026689513, -6.9442586e-15, 6.3632792e-09, 0.99964386)
@@ -78,20 +79,20 @@ bones/36/rotation = Quaternion(0.0015572766, -0.029504586, -0.84406894, 0.535420
 bones/37/rotation = Quaternion(-0.073036134, -0.18091635, -0.37767434, 0.9051504)
 bones/38/rotation = Quaternion(-0.17097805, -0.1562799, -0.32385573, 0.9173116)
 
-[node name="Cube_006" parent="Esqueleto_001/Skeleton3D" index="0" unique_id=1964832037]
+[node name="Cube_006" parent="Esqueleto_001/Skeleton3D" index="0" unique_id=766449179]
 surface_material_override/0 = SubResource("StandardMaterial3D_mvxwy")
 surface_material_override/1 = SubResource("StandardMaterial3D_i22ah")
 surface_material_override/2 = SubResource("StandardMaterial3D_avlpo")
 
-[node name="Cube_007" parent="Esqueleto_001/Skeleton3D" index="1" unique_id=2112278009]
+[node name="Cube_007" parent="Esqueleto_001/Skeleton3D" index="1" unique_id=1279720977]
 surface_material_override/0 = SubResource("StandardMaterial3D_clgnp")
 surface_material_override/1 = SubResource("StandardMaterial3D_iqnfv")
 surface_material_override/2 = SubResource("StandardMaterial3D_bdyce")
 
-[node name="Plano_003" parent="Esqueleto_001/Skeleton3D" index="2" unique_id=1622671804]
+[node name="Plano_003" parent="Esqueleto_001/Skeleton3D" index="2" unique_id=450318437]
 surface_material_override/0 = SubResource("StandardMaterial3D_md330")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1240243987]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1405675075]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]
@@ -104,3 +105,10 @@ shape = SubResource("CapsuleShape3D_3g5vb")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=145204333]
 replication_config = SubResource("SceneReplicationConfig_m5opc")
+
+[node name="Vida" type="Label3D" parent="." index="4" unique_id=290737768]
+transform = Transform3D(-0.9999993, 8.74227e-08, 1.748454e-07, 1.7484554e-07, -4.3711385e-08, 0.9999999, 8.74227e-08, 0.9999993, 4.3711335e-08, 0.110109285, 0.34206867, 0.17215693)
+visible = false
+text = "15"
+font = ExtResource("3_mvxwy")
+font_size = 786

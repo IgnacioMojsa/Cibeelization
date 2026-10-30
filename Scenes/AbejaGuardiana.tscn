@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://dn8s0rv74dltu"]
+
+[ext_resource type="PackedScene" uid="uid://dc7l4dq8ne3jq" path="res://Assets/3DModels/AbejaGuardiana.glb" id="1_4vs4c"]
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_waouq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8ehf"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(0.9764706, 0.7137255, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ysuu"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(0.98039216, 0.38039216, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a3ec6"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(0.98039216, 0.38039216, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38ho0"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(0.80784315, 0.24705882, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kq175"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(1, 0.5686275, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jja46"]
+next_pass = ExtResource("2_waouq")
+shading_mode = 0
+albedo_color = Color(1, 0.5686275, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4vs4c"]
+radius = 1.6835938
+height = 5.6158404
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_waouq"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="AbejaGuardiana" unique_id=1162566400 instance=ExtResource("1_4vs4c")]
+transform = Transform3D(-1.095, 0, -1.6534041e-07, 0, 1.095, 0, 1.6534041e-07, 0, -1.095, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(2043043952) index="0" unique_id=1122602432]
+bones/0/position = Vector3(0, 0.35553285, -0.16194464)
+bones/0/rotation = Quaternion(-0.0015059564, 1.1920916e-07, -1.7952399e-10, 0.99999887)
+bones/1/rotation = Quaternion(0.123564705, 3.8039093e-15, 2.946012e-08, 0.9923365)
+bones/2/rotation = Quaternion(-0.016372193, 4.6126172e-11, -3.806571e-09, 0.999866)
+bones/4/rotation = Quaternion(-0.74806356, -0.024525078, 0.49267912, 0.443922)
+bones/5/rotation = Quaternion(-0.20213069, 0.0055083265, 0.006635633, 0.97932065)
+bones/8/rotation = Quaternion(0.7480635, -0.024525004, 0.49267915, -0.44392207)
+bones/9/rotation = Quaternion(-0.20213069, -0.0055082785, -0.00663559, 0.97932065)
+bones/11/position = Vector3(-1.7433113, 0.61609477, 0.03288409)
+bones/11/rotation = Quaternion(0.28219563, 0.10153023, 0.9119851, 0.27989373)
+bones/12/rotation = Quaternion(-0.11125055, -0.10016595, 0.28362298, 0.9471791)
+bones/13/rotation = Quaternion(0.090100445, -0.028740903, 0.045497715, 0.9944777)
+bones/16/position = Vector3(-0.41483834, 0.4400174, 1.4490908)
+bones/16/rotation = Quaternion(0.7600294, -0.2706101, -0.5885732, 0.0520309)
+bones/17/rotation = Quaternion(-0.095340036, -0.10104635, -0.118830614, 0.9831476)
+bones/18/rotation = Quaternion(-0.053631604, -0.01937682, -0.029637517, 0.99793273)
+bones/19/position = Vector3(1.7433113, 0.61609477, 0.032884926)
+bones/19/rotation = Quaternion(0.2821959, -0.101530366, -0.911985, 0.2798939)
+bones/20/rotation = Quaternion(-0.111250535, 0.10016595, -0.28362292, 0.947179)
+bones/21/rotation = Quaternion(0.09010044, 0.028740892, -0.04549773, 0.9944777)
+bones/23/rotation = Quaternion(2.650994e-07, 8.48144e-08, -0.32147706, 0.94691736)
+bones/24/position = Vector3(0.41483763, 0.4400174, 1.4490911)
+bones/24/rotation = Quaternion(0.76002926, 0.27061003, 0.58857334, 0.052030783)
+bones/25/rotation = Quaternion(-0.09534001, 0.10104632, 0.11883068, 0.9831476)
+bones/26/rotation = Quaternion(-0.05363162, 0.019376887, 0.029637521, 0.99793273)
+bones/27/position = Vector3(4.2188475e-15, 0.35553282, -0.16194464)
+bones/27/rotation = Quaternion(0.9987633, 5.9267267e-09, 1.19061866e-07, 0.049717013)
+bones/28/rotation = Quaternion(0.2961601, -1.2878587e-14, 7.0610085e-08, 0.9551383)
+bones/29/rotation = Quaternion(0.026438296, 3.5527137e-15, 6.3033636e-09, 0.9996505)
+bones/30/position = Vector3(-1.6473757, 0.5046894, -0.3633869)
+bones/30/rotation = Quaternion(-0.033958092, 0.06591238, 0.27837086, 0.9576075)
+bones/31/rotation = Quaternion(0.041436728, -0.0014700642, -0.18742047, 0.98140436)
+bones/32/rotation = Quaternion(0.06142534, 0.0019776062, -0.19418453, 0.97903806)
+bones/33/position = Vector3(-1.6064724, 1.428161, 0.4737195)
+bones/33/rotation = Quaternion(0.14748757, 3.209051e-05, -0.0019555534, 0.989062)
+bones/34/rotation = Quaternion(-0.14172357, -0.010352185, -0.097383305, 0.98505014)
+bones/35/position = Vector3(1.647376, 0.5046894, -0.36338615)
+bones/35/rotation = Quaternion(-0.03395799, -0.065912604, -0.27837074, 0.95760745)
+bones/36/rotation = Quaternion(0.0414367, 0.0014700814, 0.18742038, 0.9814043)
+bones/37/rotation = Quaternion(0.061425366, -0.001977602, 0.19418459, 0.979038)
+bones/38/position = Vector3(1.6064721, 1.428161, 0.47372028)
+bones/38/rotation = Quaternion(0.14748757, -3.232718e-05, 0.0019555807, 0.989062)
+bones/39/rotation = Quaternion(-0.14172357, 0.010352182, 0.09738332, 0.98505014)
+
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=66183649]
+surface_material_override/0 = SubResource("StandardMaterial3D_w8ehf")
+surface_material_override/1 = SubResource("StandardMaterial3D_1ysuu")
+
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=801357411]
+surface_material_override/0 = SubResource("StandardMaterial3D_a3ec6")
+surface_material_override/1 = SubResource("StandardMaterial3D_38ho0")
+surface_material_override/2 = SubResource("StandardMaterial3D_w8ehf")
+surface_material_override/3 = SubResource("StandardMaterial3D_kq175")
+
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1086317489]
+surface_material_override/0 = SubResource("StandardMaterial3D_jja46")
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=491819519]
+autoplay = &"Idle"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1036293386]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=217384420]
+transform = Transform3D(0.9999999, 0, -2.3376856e-12, 0, 0.9999999, 0, 2.3376856e-12, 0, 0.9999999, 0.03499475, 2.993742, -0.0942862)
+shape = SubResource("CapsuleShape3D_4vs4c")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=1201498204]
+replication_config = SubResource("SceneReplicationConfig_waouq")
