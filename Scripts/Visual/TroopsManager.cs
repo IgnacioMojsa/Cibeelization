@@ -35,7 +35,23 @@ public partial class TroopsManager : Node3D
 
     public void InstanciarAbeja(Celda celdaCliqueada)
 	{
-	    if (Assets.Count == 0)
+	    int indiceCelda = tableroActual.Celdas.IndexOf(celdaCliqueada);
+		if(GameManager.Instance.modoMultiplayer){
+			Rpc(nameof(InstanciarAbejaRpc), indiceCelda);
+		} else {
+			InstanciarAbejaLocal(celdaCliqueada);
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void InstanciarAbejaRpc(int indiceCelda){
+		if(indiceCelda < 0 || indiceCelda >= tableroActual.Celdas.Count) return;
+		Celda celdaCliqueada = tableroActual.Celdas[indiceCelda];
+		InstanciarAbejaLocal(celdaCliqueada);
+	}
+
+	private void InstanciarAbejaLocal(Celda celdaCliqueada){
+		if (Assets.Count == 0)
 	    {
 	        GD.PrintErr("No hay assets cargados para invocar abejas");
 	        return;
@@ -63,7 +79,7 @@ public partial class TroopsManager : Node3D
 	    GD.Print("Abeja instanciada en " + celdaCliqueada);
 	}
 
-    public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){
+	public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){
 		instanciaNueva.GlobalPosition = posicion;
     }
 
@@ -82,12 +98,40 @@ public partial class TroopsManager : Node3D
 	public void AbsorberSubdito(Celda unaCelda)
 	{
 		var abejaSacrificio = GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Find(a => a.CeldaActual == unaCelda);
+		if(abejaSacrificio == null) return;
 
+		int indexAbeja = GameManager.Instance.jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.IndexOf(abejaSacrificio);
+		int indexCelda = tableroActual.Celdas.IndexOf(unaCelda);
+
+		if(GameManager.Instance.modoMultiplayer){
+			Rpc(nameof(AbsorberSubditoRpc), indexAbeja, indexCelda);
+		} else {
+			AbsorberSubditoLocal(abejaSacrificio, unaCelda);
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void AbsorberSubditoRpc(int indexAbeja, int indexCelda){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if(indexAbeja < 0 || indexAbeja >= jugador.ColmenaDeReina.AbejasDeColmena.Count) return;
+		if(indexCelda < 0 || indexCelda >= tableroActual.Celdas.Count) return;
+
+		var abejaSacrificio = jugador.ColmenaDeReina.AbejasDeColmena[indexAbeja];
+		var unaCelda = tableroActual.Celdas[indexCelda];
+		
+		AbsorberSubditoLocal(abejaSacrificio, unaCelda);
+	}
+
+	private void AbsorberSubditoLocal(Abeja abejaSacrificio, Celda unaCelda){
 		celdasManager.DespintarCeldaDeAbeja(unaCelda);
 		GameManager.Instance.ConsumirAbsorcion(abejaSacrificio);
 		AbejasCercanas.Remove(abejaSacrificio);
-		VisualAbejas[abejaSacrificio].QueueFree();
 
+		if(VisualAbejas.TryGetValue(abejaSacrificio, out var visual) && IsInstanceValid(visual)){
+			visual.QueueFree();
+		}
+
+		VisualAbejas.Remove(abejaSacrificio);
 		GD.Print("El jugador " + GameManager.Instance.jugadorEnTurno.Id + " tiene " + GameManager.Instance.jugadorEnTurno.HP + " puntos de vida");
 	}
 
@@ -137,8 +181,7 @@ public partial class TroopsManager : Node3D
 		return celdasAdyacentes.Any(c => reinaActual.ColmenaDeReina.AbejasDeColmena.Any(abeja => abeja.CeldaActual == c)) && reinaActual.HP < 15;
 	}
 
-	public void IntentarMoverSubdito(Celda unaCelda)
-	{
+	public void IntentarMoverSubdito(Celda unaCelda){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 
 		if (jugador.MovimientosDisponibles <= 0) return;
@@ -147,8 +190,30 @@ public partial class TroopsManager : Node3D
     	if (playerManager.movimientoManager.CeldaTieneOtraAbeja(unaCelda)) return;
     	if (GameManager.Instance.JugadoresEnPartida.Any(j => !j.FueraDeJuego && j.CeldaActual == unaCelda)) return;
 
-		MoverSubdito(unaCelda);
+		int indexSubdito = jugador.ColmenaDeReina.AbejasDeColmena.IndexOf(SubditoActual);
+		int indexCelda = tableroActual.Celdas.IndexOf(unaCelda);
+
+		if(GameManager.Instance.modoMultiplayer){
+			Rpc(nameof(MoverSubditoRpc), indexSubdito, indexCelda);
+		} else {
+			MoverSubdito(unaCelda);
+		}
+		
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualSubditoActual, 2, 1);
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void MoverSubditoRpc(int indexSubdito, int indexCelda){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (indexSubdito < 0 || indexSubdito >= jugador.ColmenaDeReina.AbejasDeColmena.Count) return;
+        if (indexCelda < 0 || indexCelda >= tableroActual.Celdas.Count) return;
+
+        SubditoActual = jugador.ColmenaDeReina.AbejasDeColmena[indexSubdito];
+        if (!VisualAbejas.TryGetValue(SubditoActual, out var visual) || !IsInstanceValid(visual)) return;
+        VisualSubditoActual = visual;
+
+        Celda unaCelda = tableroActual.Celdas[indexCelda];
+        MoverSubdito(unaCelda);
 	}
 
 	private void MoverSubdito(Celda unaCelda)
@@ -160,7 +225,7 @@ public partial class TroopsManager : Node3D
     	SubditoActual.CeldaActual = unaCelda;
     	celdasManager.PintarCeldaDeAbeja(unaCelda, SubditoActual);
 
-    	GameManager.Instance.ConsumirMovimiento();
+    	_ = GameManager.Instance.ConsumirMovimiento();
     	GameManager.Instance.NotificarCambioDeEstado();
     	AudioManager.Instance.PlaySound(AudioManager.Instance.GameAudio.Sound2);
 	}

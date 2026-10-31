@@ -47,17 +47,6 @@ albedo_color = Color(1, 0.5686275, 0, 1)
 radius = 1.8857422
 height = 4.6805267
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mmv4g"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:scale")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-
 [node name="Zangano" unique_id=800501426 instance=ExtResource("1_snhb3")]
 transform = Transform3D(-0.59, 0, 5.1579438e-08, 0, 0.59, 0, -5.1579438e-08, 0, -0.59, 0, 0.09356356, 0)
 
@@ -122,6 +111,3 @@ autoplay = &"Idle"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=364062059]
 transform = Transform3D(1, 0, -2.3590019e-12, 0, 1, 0, 2.3590019e-12, 0, 1, 0.034994755, 3.1427016, -0.11017825)
 shape = SubResource("CapsuleShape3D_mmv4g")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=344646011]
-replication_config = SubResource("SceneReplicationConfig_mmv4g")
