@@ -80,58 +80,21 @@ public partial class AttackManager : Node3D
 		return null;
 	}
 
-	private void AtacarAbejaEspecifica(Abeja abejaObjetivo){
-		Abeja abejaControlada;
-
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
-			abejaControlada = playerManager.tropasManager.SubditoActual;
-		}
-		else
-		{
-			abejaControlada = GameManager.Instance.jugadorEnTurno;
-		}
-		
-		attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
-
-		if(abejaObjetivo.FueraDeJuego && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
-			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
-			visual.QueueFree();
-			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
-			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
-		}
-		
-		LimpiarAbejasEliminadas();
-		
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
-			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
-			GD.Print("Camara reestablecida en reina");
-		}
-		GameManager.Instance.ConsumirAtaque();
-	}
-
 	public bool OtroJugadorCerca(){
 		return playerManager.VisualesJugadores.Values.Any(v => playerManager.JugadorEnTurnoAdyacenteAOtro(v));
 	}
 
 	public bool TieneObjetivosCerca(){	
 		ActualizarAbejasObjetivo();
-		
 		return AbejasObjetivo.Count > 0 || OtroJugadorCerca();
 	}
 
-	private void AtacarAbeja(){
-		Abeja abejaControlada;
+	private void AtacarAbejaEspecifica(Abeja abejaObjetivo){
+		if(abejaObjetivo == null) return;
+		ProcesarAtaqueDeAbeja(abejaObjetivo);
+	}
 
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
-		{
-			abejaControlada = playerManager.tropasManager.SubditoActual;
-		}
-		else
-		{
-			abejaControlada = GameManager.Instance.jugadorEnTurno;
-		}
-		
+	private void AtacarAbeja(){
 		var abejaObjetivo = AbejasObjetivo.Find(a => a.CeldaActual == playerManager.CeldaCliqueada);
 
 		if(abejaObjetivo == null){
@@ -140,17 +103,59 @@ public partial class AttackManager : Node3D
 			return;
 		}
 
-		attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
-		
-		if (playerManager.tropasManager.VisualAbejas[abejaObjetivo] != null && IsInstanceValid(playerManager.tropasManager.VisualAbejas[abejaObjetivo])){
-			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
-			playerManager.tropasManager.VisualAbejas[abejaObjetivo].QueueFree();
-			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
-			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
-		}
+		ProcesarAtaqueDeAbeja(abejaObjetivo);
 		playerManager.TerminarControlDeSubdito();
-		LimpiarAbejasEliminadas();
-		GameManager.Instance.ConsumirAtaque();
+	}
+
+	private void ProcesarAtaqueDeAbeja(Abeja abejaObjetivo){
+		int indexJugadorRival = -1;
+        int indexAbejaRival = -1;
+
+        for (int i = 0; i < GameManager.Instance.JugadoresEnPartida.Count; i++){
+            var jugador = GameManager.Instance.JugadoresEnPartida[i];
+            int index = jugador.ColmenaDeReina.AbejasDeColmena.IndexOf(abejaObjetivo);
+            if (index != -1){
+                indexJugadorRival = i;
+                indexAbejaRival = index;
+                break;
+            }
+        }
+
+        if (indexJugadorRival == -1 || indexAbejaRival == -1) return;
+        if (GameManager.Instance.modoMultiplayer){
+            Rpc(nameof(AtacarAbejaRpc), indexJugadorRival, indexAbejaRival);
+        } else {
+            AtacarAbejaRpc(indexJugadorRival, indexAbejaRival);
+        }
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void AtacarAbejaRpc(int indexJugadorRival, int indexAbejaRival){
+		if (indexJugadorRival < 0 || indexJugadorRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
+        var jugadorRival = GameManager.Instance.JugadoresEnPartida[indexJugadorRival];
+
+        if (indexAbejaRival < 0 || indexAbejaRival >= jugadorRival.ColmenaDeReina.AbejasDeColmena.Count) return;
+        var abejaObjetivo = jugadorRival.ColmenaDeReina.AbejasDeColmena[indexAbejaRival];
+
+        Abeja abejaControlada = GameManager.Instance.jugadorEnTurno.MoviendoSubdito ?
+		playerManager.tropasManager.SubditoActual : GameManager.Instance.jugadorEnTurno;
+        
+        attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
+
+        if(abejaObjetivo.FueraDeJuego && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
+            playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
+            visual.QueueFree();
+            playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
+            playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
+        }
+        
+        LimpiarAbejasEliminadas();
+        
+        if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+            GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
+            GD.Print("Cámara restablecida en reina");
+        }
+        GameManager.Instance.ConsumirAtaque();
 	}
 
 	private void AtacarJugador(){
@@ -180,10 +185,10 @@ public partial class AttackManager : Node3D
                 int indiceRival = GameManager.Instance.JugadoresEnPartida.IndexOf(reinaObjetivo);
 
                 if (GameManager.Instance.modoMultiplayer){
-                    Rpc(nameof(EjecutarAtaqueJugadorRpc), indiceRival);
+                    Rpc(nameof(AtacarJugadorRpc), indiceRival);
                 }
                 else{
-                    EjecutarAtaqueJugadorRpc(indiceRival);
+                    AtacarJugadorRpc(indiceRival);
                 }
 
                 GameManager.Instance.ConsumirAtaque();
@@ -195,9 +200,9 @@ public partial class AttackManager : Node3D
         }
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 
-    private void EjecutarAtaqueJugadorRpc(int indiceRival){
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void AtacarJugadorRpc(int indiceRival){
         if (indiceRival < 0 || indiceRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 
         AbejaReina reinaRival = GameManager.Instance.JugadoresEnPartida[indiceRival];
