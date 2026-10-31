@@ -60,7 +60,7 @@ public partial class PlayerManager : Node3D
 
 		else if(jugador.ModoTransformacion && !jugador.AccionConsumida){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
-			tropasManager.TransformarAbeja(CeldaCliqueada);
+			tropasManager.PrepararTransformaciónDeAbeja(CeldaCliqueada);
 			gameUI.MostrarRecursosDeJugadorEnTurno();
 		}
 
