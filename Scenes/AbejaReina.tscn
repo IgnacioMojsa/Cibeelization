@@ -10,24 +10,29 @@ shading_mode = 0
 albedo_color = Color(1, 0.5686275, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i22ah"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
+albedo_color = Color(0.98039216, 0.38039216, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avlpo"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
+albedo_color = Color(0.80784315, 0.24705882, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clgnp"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.9764706, 0.7137255, 0.003921569, 1)
+albedo_color = Color(0.9764706, 0.7137255, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqnfv"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.98039216, 0.38039216, 0.007843138, 1)
+albedo_color = Color(0.98039216, 0.38039216, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdyce"]
+next_pass = ExtResource("2_m5opc")
 shading_mode = 0
-albedo_color = Color(0.80784315, 0.24705882, 0.011764706, 1)
+albedo_color = Color(0.80784315, 0.24705882, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_md330"]
 next_pass = ExtResource("2_m5opc")

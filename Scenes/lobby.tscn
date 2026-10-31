@@ -1,6 +1,20 @@
 [gd_scene format=3 uid="uid://svc08m31pt8b"]
 
 [ext_resource type="Script" uid="uid://ce8f6s27nbvh" path="res://Scripts/Visual/MultiplayerController.cs" id="1_nvaej"]
+[ext_resource type="PackedScene" uid="uid://be5yc5wwbd0uv" path="res://Scenes/AbejaReina.tscn" id="2_ruji2"]
+[ext_resource type="PackedScene" uid="uid://cw0cc53xhs7lw" path="res://Scenes/AbejaReina2.tscn" id="3_jigxi"]
+[ext_resource type="PackedScene" uid="uid://c4fkyv6s5yq7s" path="res://Scenes/AbejaReina3.tscn" id="4_4233d"]
+[ext_resource type="PackedScene" uid="uid://dxew122gj1ci6" path="res://Scenes/AbejaReina4.tscn" id="5_bvheq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6mnlh"]
+size = Vector2(73.375, 86.965)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ruji2"]
+albedo_color = Color(0.5803922, 0.2901961, 0.4509804, 1)
+
+[sub_resource type="Environment" id="Environment_ruji2"]
+background_mode = 1
+background_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
 
 [node name="MultiplayerController" type="Control" unique_id=1420421036]
 layout_mode = 3
@@ -49,6 +63,43 @@ offset_top = -58.0
 offset_right = -186.0
 offset_bottom = -9.0
 text = "Nombre"
+
+[node name="SalaDeEspera" type="Node3D" parent="." unique_id=294018974]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SalaDeEspera" unique_id=360960277]
+transform = Transform3D(1, -1.1145075e-07, 1.347208e-07, 0, 0.77051324, 0.637424, -1.7484555e-07, -0.637424, 0.77051324, 0, 14.318879, 0)
+light_energy = 0.25
+light_bake_mode = 1
+shadow_enabled = true
+shadow_opacity = 0.66
+shadow_blur = 10.0
+directional_shadow_max_distance = 639.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SalaDeEspera" unique_id=1203111304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09200239, -16.721481)
+mesh = SubResource("PlaneMesh_6mnlh")
+surface_material_override/0 = SubResource("StandardMaterial3D_ruji2")
+
+[node name="AbejaReina" parent="SalaDeEspera" unique_id=687298848 instance=ExtResource("2_ruji2")]
+transform = Transform3D(-0.8660252, 0, -0.5, 0, 1, 0, 0.5, 0, -0.8660252, -10.745002, -0.32827353, -10.7425375)
+visible = false
+
+[node name="AbejaReina2" parent="SalaDeEspera" unique_id=2063009922 instance=ExtResource("3_jigxi")]
+transform = Transform3D(-0.9319382, 0, -0.3626172, 0, 1, 0, 0.3626172, 0, -0.9319382, -6.243595, 0, -15.72797)
+visible = false
+
+[node name="AbejaReina3" parent="SalaDeEspera" unique_id=669288535 instance=ExtResource("4_4233d")]
+transform = Transform3D(-0.91688, 0, 0.399163, 0, 1, 0, -0.399163, 0, -0.91688, 0.273499, 0, -18.248507)
+visible = false
+
+[node name="AbejaReina4" parent="SalaDeEspera" unique_id=1816187034 instance=ExtResource("5_bvheq")]
+transform = Transform3D(-0.516949, 0, 0.85601634, 0, 1, 0, -0.85601634, 0, -0.516949, 5.5153284, 0.024179697, -13.487925)
+visible = false
+
+[node name="Camera3D" type="Camera3D" parent="SalaDeEspera" unique_id=337531691]
+transform = Transform3D(0.9999905, -0.00065653876, -0.004313632, 0, 0.98861486, -0.15046811, 0.0043633087, 0.15046667, 0.9886055, -3.4331255, 2.318863, -2.12331)
+environment = SubResource("Environment_ruji2")
+fov = 76.6
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Cliente" to="." method="_on_cliente_button_down"]
