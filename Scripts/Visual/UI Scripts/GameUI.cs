@@ -120,6 +120,7 @@ public partial class GameUI : Control {
 		AlternarEstadoDeAtaque();
 		AlternarEstadoDeAbsorcion();
 		MostrarMovimientosDisponibles();
+		ValidarTurnoLocalUI();
 	}
 
 	private void MostrarMovimientosDisponibles(){
@@ -161,6 +162,7 @@ public partial class GameUI : Control {
 	}
 
 	private void OnBotonColmenaPressed(){
+		if(!EsTurnoLocal()) return;
 		if (instanciaMenuRadial == null){
 			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
 			AddChild(instanciaMenuRadial);
@@ -305,10 +307,8 @@ public partial class GameUI : Control {
 
 		if(GameManager.Instance.modoMultiplayer){
 			long idLocal = Multiplayer.GetUniqueId();
-			bool esSuTurnoAhoraEnRed = (idLocal == jugador.Id) || (GameManager.Instance.jugadorEsHost && idLocal == 1);
-			botonDado.Disabled = !esSuTurnoAhora || !esSuTurnoAhoraEnRed;
-		}
-		else{
+			botonDado.Disabled = !esSuTurnoAhora || (idLocal != jugador.Id);
+		} else {
 			botonDado.Disabled = !esSuTurnoAhora;
 		}
 	}
@@ -503,6 +503,53 @@ public partial class GameUI : Control {
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
+	public void MostrarRecursosDeJugadorEnTurno(){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+
+		HashSet<string> recursosActuales = new HashSet<string>();
+
+		if(recursosActuales.Count == 0){
+			var nodosHijos = recursos.GetChildren();
+
+			foreach (var hijo in nodosHijos){
+					if(hijo is Label hijoLabel)
+					
+					hijoLabel.Text = "0";
+				}
+		}
+
+		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena){
+			if(recurso == null) break;
+			
+			recursosActuales.Add(recurso);
+		}
+
+		foreach (var recurso in recursosActuales){
+			var cantRecurso = recursos.GetNode<Label>(recurso);
+
+			cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
+		}
+	}
+
+	private bool EsTurnoLocal(){
+		if (!GameManager.Instance.modoMultiplayer) return true;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return false;
+		return Multiplayer.GetUniqueId() == jugador.Id;
+	}
+
+	private void ValidarTurnoLocalUI(){
+		bool esNuestroTurno = EsTurnoLocal();
+
+		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno || botonAtacar.Disabled;
+		if (botonColmena != null) botonColmena.Disabled = !esNuestroTurno;
+		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
+			instanciaMenuRadial.OcultarMenu();
+			if (instanciaMenuRadial.ContenedorDeTransformaciones != null)
+				instanciaMenuRadial.OcultarTransformaciones();
+		}
+	}
+
 	public override void _ExitTree(){
 		if (GameManager.Instance != null){
 			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
@@ -513,38 +560,6 @@ public partial class GameUI : Control {
 				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
 				turnManager.OnTurnoCambiado -= ActualizarUI;
 			}
-		}
-	}
-
-	public void MostrarRecursosDeJugadorEnTurno()
-	{
-		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
-
-		HashSet<string> recursosActuales = new HashSet<string>();
-
-		if(recursosActuales.Count == 0)
-		{
-			var nodosHijos = recursos.GetChildren();
-
-			foreach (var hijo in nodosHijos){
-					if(hijo is Label hijoLabel)
-					
-					hijoLabel.Text = "0";
-				}
-		}
-
-		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena)
-		{
-			if(recurso == null) break;
-			
-			recursosActuales.Add(recurso);
-		}
-
-		foreach (var recurso in recursosActuales)
-		{
-			var cantRecurso = recursos.GetNode<Label>(recurso);
-
-			cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
 		}
 	}
 };

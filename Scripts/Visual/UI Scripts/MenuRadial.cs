@@ -6,7 +6,7 @@ public partial class MenuRadial : Control
 {
 	[Export] private GameUI hud; 
 	private Control ContenedorDeBotones;
-	private Control ContenedorDeTransformaciones;
+	public Control ContenedorDeTransformaciones;
 	private HashSet<Abeja> TransformacionesDisponiblesActualmente = new HashSet<Abeja>();
 	public bool Activo = false;
 	public Vector2 PosicionCentral;
@@ -156,6 +156,16 @@ public partial class MenuRadial : Control
 	}
 	
 	private void SeleccionarOpcion(string nombreBoton){
+		if (GameManager.Instance.modoMultiplayer){
+			long idLocal = Multiplayer.GetUniqueId();
+			var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+			bool esTurnoLocal = (idLocal == jugadorEnTurno.Id) || (GameManager.Instance.jugadorEsHost && idLocal == 1);
+			if (!esTurnoLocal){
+				OcultarMenu();
+				return;
+			}
+		}
+
 		switch(nombreBoton)
 		{
 			case "ControlarButton":

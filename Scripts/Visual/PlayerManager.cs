@@ -43,7 +43,13 @@ public partial class PlayerManager : Node3D
 
 	public override void _UnhandledInput(InputEvent @event){	
 		var jugador = GameManager.Instance.jugadorEnTurno;
-		
+		if(jugador == null) return;
+
+		if (GameManager.Instance.modoMultiplayer){
+			long idLocal = Multiplayer.GetUniqueId();
+			if (idLocal != jugador.Id) return;
+		}
+
 		if (!@event.IsActionPressed("move")) return; 
 
 		if (GetViewport().GuiGetHoveredControl() != null) return;
@@ -74,8 +80,7 @@ public partial class PlayerManager : Node3D
 			tropasManager.ControlarAbeja(CeldaCliqueada);
 		}
 
-		else if(jugador.MenteColmena && jugador.MoviendoSubdito)
-		{
+		else if(jugador.MenteColmena && jugador.MoviendoSubdito){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.IntentarMoverSubdito(CeldaCliqueada);
 		}
@@ -171,17 +176,12 @@ public partial class PlayerManager : Node3D
 
 	private void IntentarMoverJugador(){      
 		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
-
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
-
 		CeldaCliqueada = ObtenerCeldaAlClickear();
-	
 		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
-
 		EstablecerCeldaParaJugadorEnTurno();
 
-		if (PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList()))
-		{
+		if (PuedeMoverseEntre(CeldaOrigen, CeldaCliqueada, CeldaActualPorJugador, VisualJugadorActual, VisualesJugadores.Values.ToList())){
 			vfxManager.OcultarAbejasObjetivo();
 
 			int indexJugador = VisualesJugadores.Values.ToList().IndexOf(VisualJugadorActual);
@@ -189,17 +189,12 @@ public partial class PlayerManager : Node3D
 			Vector3 targetPos = CeldaCliqueada.Tile.GlobalPosition;
 			targetPos.Y = VisualJugadorActual.GlobalPosition.Y;
 
-			if (GameManager.Instance.modoMultiplayer)
-			{
+			if (GameManager.Instance.modoMultiplayer){
 				Rpc(nameof(MoverAbejaACeldaRpc), indexJugador, targetPos, indexCelda);
-			}
-			else
-			{
+			} else {
 				MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 			}
-		}
-		else
-		{
+		} else {
 			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
 			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}
@@ -238,10 +233,8 @@ public partial class PlayerManager : Node3D
 		jugadorVisual.Rotation = new Vector3(0, anguloFinalRad, 0);
 	}
 
-	private void EstablecerCeldaParaJugadorEnTurno()
-	{
-		if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual))
-		{
+	private void EstablecerCeldaParaJugadorEnTurno(){
+		if (!CeldaActualPorJugador.ContainsKey(VisualJugadorActual)){
 			CeldaActualPorJugador[VisualJugadorActual] = ObtenerCeldaDesdePosicion(tablero.Celdas, VisualJugadorActual.GlobalPosition);
 		}
 	
@@ -399,6 +392,19 @@ public partial class PlayerManager : Node3D
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo)
 	{
 		if (jugadorNuevo == null) return;
+
+		jugadorNuevo.AccionConsumida = false;
+		jugadorNuevo.TiroLosDados = false;
+		jugadorNuevo.ModoAtaque = false;
+		jugadorNuevo.ModoInvocacion = false;
+		jugadorNuevo.ModoAbsorcion = false;
+		jugadorNuevo.ModoTransformacion = false;
+		jugadorNuevo.MenteColmena = false;
+		jugadorNuevo.MoviendoSubdito = false;
+		jugadorNuevo.AtacoRecien = false;
+		jugadorNuevo.InvocoRecien = false;
+		jugadorNuevo.MovimientosDisponibles = 0;
+		jugadorNuevo.Estado = AbejaReina.EstadoTurno.EsperandoDado;
 
 		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
 			celdasManager.DespintarCeldaDeAbejaBuffeada();
