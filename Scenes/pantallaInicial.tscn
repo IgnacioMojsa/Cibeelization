@@ -182,7 +182,7 @@ vertical_alignment = 1
 [node name="MarginContainer" type="MarginContainer" parent="ElegirModo/MarginContainer/VBoxContainer" unique_id=1587568628]
 layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
@@ -219,6 +219,25 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Modo Online
 "
+
+[node name="Margin4" type="MarginContainer" parent="ElegirModo/MarginContainer/VBoxContainer" unique_id=278149901]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Volver" type="PanelContainer" parent="ElegirModo/MarginContainer/VBoxContainer/Margin4" unique_id=113230082]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VolverButton" type="Button" parent="ElegirModo/MarginContainer/VBoxContainer/Margin4/Volver" unique_id=1542241359]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Volver"
 
 [node name="OpcionesModoOnline" type="PanelContainer" parent="." unique_id=1030908964]
 visible = false
@@ -306,6 +325,25 @@ theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Unirse a una partida"
+
+[node name="Margin4" type="MarginContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer" unique_id=719811937]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Volver" type="PanelContainer" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/Margin4" unique_id=790112235]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VolverButton" type="Button" parent="OpcionesModoOnline/MarginContainer/VBoxContainer/Margin4/Volver" unique_id=1473806790]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Volver"
 
 [node name="MenuComienzo" type="PanelContainer" parent="." unique_id=627495092]
 visible = false
@@ -478,19 +516,47 @@ text = "Grande"
 alignment = 1
 icon_alignment = 1
 
-[node name="Start" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=1643263735]
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuComienzo/MarginContainer/VBoxContainer" unique_id=1646974581]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer" unique_id=68605846]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Volver" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1978633843]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="PlayButton" type="Button" parent="MenuComienzo/MarginContainer/VBoxContainer/Start" unique_id=805710664]
+[node name="VolverButton" type="Button" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Volver" unique_id=1896998633]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
-text = " Comenzar "
+text = "Volver "
+
+[node name="MarginContainer2" type="MarginContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer" unique_id=328205755]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="Start2" type="PanelContainer" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2" unique_id=527322738]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayButton" type="Button" parent="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/Start2" unique_id=1421140675]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 37
+action_mode = 0
+text = "Comenzar"
 
 [node name="Ajustes" type="PanelContainer" parent="." unique_id=519198103]
 visible = false
@@ -723,15 +789,18 @@ texture = ExtResource("7_3b2ad")
 [connection signal="pressed" from="BotonesMenuDeInicio/Exit" to="." method="SalirDelJuego"]
 [connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal/PlayButton" to="." method="Jugar"]
 [connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2/StartOnline/PlayButton" to="." method="MostrarOpcionesModoOnline"]
+[connection signal="pressed" from="ElegirModo/MarginContainer/VBoxContainer/Margin4/Volver/VolverButton" to="." method="OcultarModos"]
 [connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer/Crear/CrearPartidaNueva" to="." method="Jugar"]
 [connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/MarginContainer2/Unirse/UnirseAUnaPrtida" to="." method="EnviarJugadorAlLobby"]
+[connection signal="pressed" from="OpcionesModoOnline/MarginContainer/VBoxContainer/Margin4/Volver/VolverButton" to="." method="OcultarOpcionesModoOnline"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players/CheckBox" to="." method="SeleccionarCantidadDeJugadores"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
-[connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/Start/PlayButton" to="." method="ComenzarPartida"]
+[connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Volver/VolverButton" to="." method="OcultarConfiguracionDePartida"]
+[connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/Start2/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
 [connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]
 [connection signal="pressed" from="Tutorial/VBoxContainer/MarginContainer2/Volver/VolverButton2" to="." method="OcultarTutorial"]

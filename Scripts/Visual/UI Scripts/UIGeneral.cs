@@ -39,6 +39,12 @@ public partial class UIGeneral : Control {
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
+	public void MostrarUIPanel(Control panel, bool mostrar){
+		if (panel == null) return;
+		panel.Visible = mostrar;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
 	public void ActualizarInstrucciones(string texto){
 		if(feedback != null){
 		feedback.Text = texto;
@@ -54,17 +60,15 @@ public partial class UIGeneral : Control {
 
 		if (GetTree().Paused){
 			GD.Print("Pausa activada");
-			containerPausa.Visible = false;
+			MostrarUIPanel(containerPausa, false);
 		}else{
 			GD.Print("Juego Reanudado");
-			containerPausa.Visible = true;
+			MostrarUIPanel(containerPausa, true);
 		}
 	}
 
 	private void OcultarConfirmacionSalir(){
-		confirmacionSalir.Visible = false;
-		uiPausa.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
+		CambiarMenu(confirmacionSalir, uiPausa);
 	}
 
 	public void Reiniciar(){
@@ -100,14 +104,12 @@ public partial class UIGeneral : Control {
 
 	private void Ajustes(){
 		PanelContainer UIAjustes = GetNode<PanelContainer>("Ajustes");
-		AudioManager.Instance.PlaySound(UiSound1);
-		UIAjustes.Visible = true;
+		MostrarUIPanel(UIAjustes, true);
 	}
 
 	private void AceptarConfigAudio(){
 		PanelContainer UIAjustesMenuPrincipal = GetNode<PanelContainer>("Ajustes");
-		AudioManager.Instance.PlaySound(UiSound1);
-		UIAjustesMenuPrincipal.Visible = false;
+		MostrarUIPanel(UIAjustesMenuPrincipal, false);
 	}
 
 	public void MostrarPantallaDeVictoria(){

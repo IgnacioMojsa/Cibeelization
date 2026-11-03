@@ -5,25 +5,24 @@ public partial class MultiplayerController : Control
 	[Export] private int port = 8910;
 	[Export] private string adress = "127.0.0.1";
 	private ENetMultiplayerPeer peer;
-
 	public Button botonHost;
 	public Button botonCliente;
+	private Button opciones;
+	private Button ajustes;
+	private Button volver;
+	private Button salir;
+	private PanelContainer confirmacionSalir;
+	private HBoxContainer opcionesContainer;
+	private PanelContainer ajustesContainer;
+	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
 
 	public override void _Ready(){
 		Multiplayer.PeerConnected += PeerConnected;
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
-		
-		botonHost =	GetNode<Button>("Host");
-		botonCliente = GetNode<Button>("Cliente");
 
-		if(!GameManager.Instance.jugadorEsHost){
-			botonHost.Visible = false;
-		}
-		else{
-			botonCliente.Visible = false;
-		}
+		cargarUI();
 	}
 
 	public void PeerConnected(long id){
@@ -107,4 +106,65 @@ public partial class MultiplayerController : Control
 		}
 	}
 
+	private void cargarUI(){
+		botonHost =	GetNode<Button>("Host");
+		botonCliente = GetNode<Button>("Cliente");		
+
+		if(!GameManager.Instance.jugadorEsHost){
+			botonHost.Visible = false;
+		}
+		else{
+			botonCliente.Visible = false;
+		}
+
+		opciones = GetNode<Button>("AjustesDeJuego/PausaButton");
+		ajustes = GetNode<Button>("Opciones/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton");
+		volver = GetNode<Button>("Opciones/PausaBorder/MarginContainer/VBoxContainer/Cerrar/CerrarButton");
+		salir = GetNode<Button>("Opciones/PausaBorder/MarginContainer/VBoxContainer/SalirAMenuPrincipal/SalirButton");
+
+		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
+		opcionesContainer = GetNode<HBoxContainer>("Opciones");
+		ajustesContainer = GetNode<PanelContainer>("Ajustes");
+	}
+
+	private void MostrarUIPanel(Control panel, bool mostrar){
+		if (panel == null) return;
+		panel.Visible = mostrar;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	private void CambiarMenu(Control menuAOcultar, Control menuAMostrar){
+		menuAOcultar.Visible = false;
+		menuAMostrar.Visible = true;
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	private void MostrarOpciones(){
+		CambiarMenu(opciones, opcionesContainer);
+	}
+
+	private void OcultarOpciones(){
+		CambiarMenu(opcionesContainer, opciones);
+	}
+
+	private void Ajustes(){
+		MostrarUIPanel(ajustesContainer, true);
+	}
+
+	private void AceptarConfigAudio(){
+		MostrarUIPanel(ajustesContainer, false);
+	}
+
+	private void MostrarConfirmacionDeSalir(){
+		CambiarMenu(opcionesContainer, confirmacionSalir);
+	}
+
+	private void OcultarConfirmacionSalir(){
+		CambiarMenu(confirmacionSalir, opcionesContainer);
+	}
+
+	private void VolverAPantallaDeInicio(){
+		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+		this.Hide();
+	}
 }

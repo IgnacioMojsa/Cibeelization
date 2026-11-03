@@ -492,16 +492,15 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 1
 
-[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
+[node name="Ajustes" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1048416280]
 layout_mode = 2
 
-[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
-process_mode = 3
+[node name="AjustesButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes" unique_id=378474905]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
-text = "Continuar"
+text = "Ajustes"
 
 [node name="Reiniciar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1336349814]
 layout_mode = 2
@@ -522,17 +521,18 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
-text = "Menu Principal"
+text = "Salir"
 
-[node name="Ajustes" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1048416280]
+[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
 layout_mode = 2
 
-[node name="AjustesButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes" unique_id=378474905]
+[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+process_mode = 3
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
-text = "Ajustes"
+text = "Continuar"
 
 [node name="ConfirmacionReiniciar" type="PanelContainer" parent="HUD" unique_id=738415298]
 visible = false
@@ -822,6 +822,7 @@ offset_right = -303.0
 offset_bottom = -553.0775
 
 [node name="RecursosIzqResplandor" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=95252804]
+visible = false
 layout_mode = 0
 offset_left = -27.0
 offset_top = -49.9225

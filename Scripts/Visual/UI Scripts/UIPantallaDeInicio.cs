@@ -29,8 +29,7 @@ public partial class UIPantallaDeInicio : GameUI {
 			};
 	}
 
-	public void MostrarUIPanel(Control panel, bool mostrar)
-	{
+	public void MostrarUIPanel(Control panel, bool mostrar){
 		if (panel == null) return;
 		panel.Visible = mostrar;
 		AudioManager.Instance.PlaySound(UiSound1);
@@ -49,19 +48,32 @@ public partial class UIPantallaDeInicio : GameUI {
 		ConfigurarBoton("PlayButton");
 	}
 
-	private void MostrarOpcionesModoOnline()
-	{
+	private void OcultarModos(){
+		MostrarUIPanel(uiModos, false);
+		ConfigurarBoton("PlayButton", false);
+	}
+
+	private void MostrarOpcionesModoOnline(){
 		GameManager.Instance.modoMultiplayer = true;
 		MostrarUIPanel(uiOpcionesOnline, true);
 		MostrarUIPanel(uiComienzo, false);
+	}
+
+	private void OcultarOpcionesModoOnline(){
+		GameManager.Instance.modoMultiplayer = false;
+		MostrarUIPanel(uiOpcionesOnline, false);
 	}
 
 	private void Jugar(){
 		MostrarUIPanel(uiOpcionesOnline, false);
 		MostrarUIPanel(uiModos, false);
 		MostrarUIPanel(uiComienzo, true);
+	}
 
-		GD.Print("El botón play ha sido presionado");
+	private void OcultarConfiguracionDePartida(){
+		MostrarUIPanel(uiOpcionesOnline, true);
+		MostrarUIPanel(uiModos, true);
+		MostrarUIPanel(uiComienzo, false);
 	}
 
 	private void ComenzarPartida(){
@@ -70,18 +82,14 @@ public partial class UIPantallaDeInicio : GameUI {
 		reinicioConfirmado = false;
 		hayJugadorVictorioso = false;
 
-		if (!GameManager.Instance.modoMultiplayer)
-		{
+		if(!GameManager.Instance.modoMultiplayer){
 			ComenzarPartidaLocal(jugadores, size);
-		}
-		else
-		{
+		} else {
 			ComenzarPartidaMultijugador(jugadores, size);
 		}
 	}
 
-	private void ComenzarPartidaLocal(int jugadores, int size)
-	{
+	private void ComenzarPartidaLocal(int jugadores, int size){
 		GameManager.Instance.IniciarPartida(jugadores, size);
 		GD.Print("La partida se desarrollará con " + GameManager.Instance.cantidadJugadores + " jugadores");
 		GD.Print("Opción de tamaño seleccionada: " + GameManager.Instance.sizeTablero);
@@ -90,19 +98,16 @@ public partial class UIPantallaDeInicio : GameUI {
 		GameManager.Instance.jugadorEsHost = true;
 	}
 
-	private void ComenzarPartidaMultijugador(int jugadores, int size)
-	{
+	private void ComenzarPartidaMultijugador(int jugadores, int size){
 		GameManager.Instance.cantidadJugadores = jugadores;
 		GameManager.Instance.sizeTablero = size;
 		GD.Print("Se creó una partida MILTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");
 		GD.Print("Tamaño del tablero elegido: " + GameManager.Instance.sizeTablero);
 		AudioManager.Instance.PlaySound(UiSound1);
 		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");
-
 	}
 
-	private void EnviarJugadorAlLobby()
-	{
+	private void EnviarJugadorAlLobby(){
 		GameManager.Instance.jugadorEsHost = false;
 		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");
 	}
