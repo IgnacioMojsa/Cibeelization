@@ -142,7 +142,7 @@ transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802
 transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
 tablero = NodePath("../Tablero")
 
-[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("playerManager", "tropasManager", "celdasManager", "attackManager")]
+[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("tropasManager", "celdasManager", "attackManager", "playerManager")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 7
@@ -158,11 +158,11 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 script = ExtResource("4_2lok1")
-playerManager = NodePath("../PlayerManager")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
 attackManager = NodePath("../AttackManager")
 menuRadialPrefab = ExtResource("13_gsowx")
+playerManager = NodePath("../PlayerManager")
 
 [node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
 visible = false
