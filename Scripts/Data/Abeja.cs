@@ -52,4 +52,10 @@ public partial class Abeja{
 	public void MatarAbeja(){
 		FueraDeJuego = true;
 	}
+
+	public virtual void HabilidadDeAbeja()
+	{
+		
+	}
+
 }

@@ -126,26 +126,25 @@ theme_override_fonts/font = ExtResource("3_bvheq")
 text = "Nombre"
 
 [node name="AjustesDeJuego" type="Control" parent="." unique_id=1975124092]
-anchors_preset = 0
-offset_left = 566.0
-offset_top = 323.0
-offset_right = 606.0
-offset_bottom = 363.0
+layout_mode = 1
+anchor_left = 0.8958333
+anchor_top = 0.022222223
+anchor_right = 0.9875
+anchor_bottom = 0.08148148
+grow_horizontal = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="PausaButton" type="Button" parent="AjustesDeJuego" unique_id=186040483]
 process_mode = 3
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 360.0
-offset_top = -308.0
-offset_right = 532.0
-offset_bottom = -249.0
+anchor_bottom = 1.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("2_4233d")
 theme_override_font_sizes/font_size = 40
 text = " Opciones "
+metadata/_edit_use_anchors_ = true
 
 [node name="Opciones" type="HBoxContainer" parent="." unique_id=467376529]
 process_mode = 3
@@ -406,19 +405,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ruji2")
 
 [node name="AbejaReina" parent="SalaDeEspera" unique_id=687298848 instance=ExtResource("2_ruji2")]
 transform = Transform3D(-0.8660252, 0, -0.5, 0, 1, 0, 0.5, 0, -0.8660252, -10.745002, -0.32827353, -10.7425375)
-visible = false
 
 [node name="AbejaReina2" parent="SalaDeEspera" unique_id=2063009922 instance=ExtResource("3_jigxi")]
 transform = Transform3D(-0.9319382, 0, -0.3626172, 0, 1, 0, 0.3626172, 0, -0.9319382, -6.243595, 0, -15.72797)
-visible = false
 
 [node name="AbejaReina3" parent="SalaDeEspera" unique_id=669288535 instance=ExtResource("4_4233d")]
 transform = Transform3D(-0.91688, 0, 0.399163, 0, 1, 0, -0.399163, 0, -0.91688, 0.273499, 0, -18.248507)
-visible = false
 
 [node name="AbejaReina4" parent="SalaDeEspera" unique_id=1816187034 instance=ExtResource("5_bvheq")]
 transform = Transform3D(-0.516949, 0, 0.85601634, 0, 1, 0, -0.85601634, 0, -0.516949, 5.5153284, 0.024179697, -13.487925)
-visible = false
 
 [node name="Camera3D" type="Camera3D" parent="SalaDeEspera" unique_id=337531691]
 transform = Transform3D(0.9999905, -0.00065653876, -0.004313632, 0, 0.98861486, -0.15046811, 0.0043633087, 0.15046667, 0.9886055, -3.4331255, 2.318863, -2.12331)

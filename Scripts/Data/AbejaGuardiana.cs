@@ -9,4 +9,11 @@ public partial class AbejaGuardiana : Abeja{
 		RecursosNecesarios = 3;
 		RecursoGenerable = "Nectar";
     }
+
+	override public void HabilidadDeAbeja()
+	{
+		var movimientos = ColmenaHogar.ReinaDeColmena.MovimientosDisponibles / 2;
+
+		ColmenaHogar.ReinaDeColmena.MovimientosDisponibles = movimientos;
+	} 
 }

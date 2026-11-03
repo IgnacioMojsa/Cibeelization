@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UI Scripts/UIPantallaDeInicio.cs" id="1_3b2ad"]
 [ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
+[ext_resource type="Texture2D" uid="uid://dqqcxuibj5i3l" path="res://Assets/PNGS/PantallaDeInicio.png" id="2_6hrbw"]
 [ext_resource type="Texture2D" uid="uid://docfwh7c0c0fx" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugar.svg" id="3_canpy"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="Texture2D" uid="uid://57ol0hdn5q41" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarPresionado.svg" id="4_6hrbw"]
@@ -59,7 +60,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3b2ad")
 
+[node name="PantallaInicial" type="TextureRect" parent="." unique_id=700981318]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_6hrbw")
+metadata/_edit_use_anchors_ = true
+
 [node name="Titulo" type="Label" parent="." unique_id=1414714438]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -90,7 +99,7 @@ offset_right = 1312.5
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(0.395, 0.395)
+scale = Vector2(0.68, 0.68)
 pivot_offset = Vector2(0.5, 1)
 pivot_offset_ratio = Vector2(0.5, 1)
 size_flags_horizontal = 4
@@ -722,12 +731,17 @@ text = "Volver
 [node name="Tutorial" type="PanelContainer" parent="." unique_id=1395941169]
 visible = false
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchor_left = 0.1777778
+anchor_top = 0.17777778
+anchor_right = 0.8222222
+anchor_bottom = 0.82222223
 theme_override_styles/panel = SubResource("StyleBoxFlat_awl3a")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Tutorial" unique_id=151754619]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="Tutorial/VBoxContainer" unique_id=719654130]
 layout_mode = 2
