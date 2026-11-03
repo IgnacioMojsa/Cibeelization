@@ -1,35 +1,9 @@
 using Godot;
+using System.Collections.Generic;
 using System.Linq;
 
-public partial class GameUI : UIJugadores {
-	[Export] public TroopsManager tropasManager;
-	[Export] public CeldasManager celdasManager; 
-	[Export] public AttackManager attackManager;
-	[Export] private Label feedback;
-	[Export] private PackedScene menuRadialPrefab;
-	private MenuRadial instanciaMenuRadial;
-	private Button botonPausa;
-	private TextureButton botonColmena;
-	private PanelContainer containerPausa;
-	private HBoxContainer uiPausa;
-	private Label resultadoDados;
-	public AudioSetting UiSound1 => AudioManager.Instance?.GameAudio?.Sound1;
-	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
-	private TextureButton botonDado;
-	private TextureButton botonAtacar;
-	public bool hayJugadorVictorioso = false;
-	public bool reinicioConfirmado = false;
-	private Button botonContinuar;
-	private Button botonReiniciarPartida;
-	private Button botonMenuPrincipal;
-	private PanelContainer confirmacionSalir;
-	private PanelContainer confirmacionReiniciar;
-	private PanelContainer confirmacionSalirVictoria;
-	private PanelContainer confirmacionReiniciarVictoria;
-	private HBoxContainer MenuVictoria;
-	private Button botonSalirVictoria;
-	private Button botonReiniciarPartidaVictoria;
-	
+public partial class GameUI : UIGeneral {
+
 	public override void _Ready(){
 		ProcessMode = ProcessModeEnum.Always;
 		
@@ -43,7 +17,7 @@ public partial class GameUI : UIJugadores {
 		}
 	}
 
-	private void ConfigurarEscenaDeJuego(){
+	public void ConfigurarEscenaDeJuego(){
 		var root = GetTree().CurrentScene; 
 		GameManager.Instance.TableroActual = root.GetNodeOrNull<Tablero>("Tablero");
 		if (GameManager.Instance.TableroActual == null)
@@ -59,7 +33,7 @@ public partial class GameUI : UIJugadores {
 		ActualizarUI();
 	}
 	
-	private void OnCambioDeTurno(object _) => ActualizarUI();
+	public void OnCambioDeTurno(object _) => ActualizarUI();
 	
 	public void InicializarGameUI(){
 		botonPausa = GetNode<Button>("Pausa/PausaButton");
@@ -105,12 +79,6 @@ public partial class GameUI : UIJugadores {
 		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 
-	public void CambiarMenu(Control menuAOcultar, Control menuAMostrar){
-		menuAOcultar.Visible = false;
-		menuAMostrar.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-	
 	private void ActualizarUI(){
 		MostrarJugadorEnTurno();
 		MostrarHPDeJugaores();
@@ -120,6 +88,105 @@ public partial class GameUI : UIJugadores {
 		AlternarEstadoDeAbsorcion();
 		MostrarMovimientosDisponibles();
 		ValidarTurnoLocalUI();
+	}
+
+	public void MostrarDataDeJugadores(){
+		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
+		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
+		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
+		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
+
+		jugador1.Visible = true;
+		jugador2.Visible = true;
+
+		if(GameManager.Instance.cantidadJugadores == 3){
+			jugador3.Visible = true;
+		}
+		else if(GameManager.Instance.cantidadJugadores == 4){
+			jugador3.Visible = true;
+			jugador4.Visible = true;
+		}
+	}
+
+	public void MostrarHPDeJugaores(){
+		var hpJ1 = GetNode<Label>("VBoxContainer/Jugador1/HBoxContainer/MarginContainer2/Label");
+		var hpJ2 = GetNode<Label>("VBoxContainer/Jugador2/HBoxContainer/MarginContainer2/Label");
+		var hpJ3 = GetNode<Label>("VBoxContainer/Jugador3/HBoxContainer/MarginContainer2/Label");
+		var hpJ4 = GetNode<Label>("VBoxContainer/Jugador4/HBoxContainer/MarginContainer2/Label");
+
+		List<Label> HPJugadores = new List<Label>{ hpJ1, hpJ2, hpJ3, hpJ4};
+
+		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++){
+			HPJugadores[j].Text = GameManager.Instance.JugadoresEnPartida[j].HP + " HP";
+		}
+	}
+
+	public void MostrarJugadorEnTurno(){ 
+		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		TextureRect iconoJugadorEnTurno = GetNode<TextureRect>("Elementos/IconoJugador");
+
+		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
+		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
+		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
+		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
+
+		var colorJ1 = Color.FromHtml("#6a268f");
+		var colorJ2 = Color.FromHtml("#4c1dae");
+		var colorJ3 = Color.FromHtml("#b33671");
+		var colorJ4 = Color.FromHtml("#8260e5");
+
+		var iconoJ1 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina1Contorno.svg");
+		var iconoJ2 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina2Contorno.svg");
+		var iconoJ3 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina3Contorno.svg");
+		var iconoJ4 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina4Contorno.svg");
+
+		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
+		List<Color> ColorJugadores = new List<Color>{ colorJ1, colorJ2, colorJ3, colorJ4};
+		List<CompressedTexture2D> IconosJugadores = new List<CompressedTexture2D>{iconoJ1, iconoJ2, iconoJ3, iconoJ4};
+
+		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++){
+			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
+				UIJugadores[j].Modulate = ColorJugadores[j];
+				iconoJugadorEnTurno.Texture = IconosJugadores[j];
+			}else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
+				UIJugadores[j].Visible = false;
+			}else{
+				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
+			}
+		}
+
+		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id){
+			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno];
+			playerManager.vfxManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
+		}
+	}
+
+	public void MostrarRecursosDeJugadorEnTurno(){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+
+		HashSet<string> recursosActuales = new HashSet<string>();
+
+		if(recursosActuales.Count == 0){
+			var nodosHijos = recursos.GetChildren();
+
+			foreach (var hijo in nodosHijos){
+					if(hijo is Label hijoLabel)
+					
+					hijoLabel.Text = "0";
+				}
+		}
+
+		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena){
+			if(recurso == null) break;
+			
+			recursosActuales.Add(recurso);
+		}
+
+		foreach (var recurso in recursosActuales){
+			var cantRecurso = recursos.GetNode<Label>(recurso);
+
+			cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
+		}
 	}
 
 	private void OnBotonColmenaPressed(){
@@ -290,7 +357,8 @@ public partial class GameUI : UIJugadores {
 	}
 
 	public void InvocarSubdito(){
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
+		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.AccionConsumida 
+		&& !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
 			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
 
 			AlternarEstadoDeAtaque();
@@ -305,122 +373,6 @@ public partial class GameUI : UIJugadores {
 		}
 
 		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	public void ActualizarInstrucciones(string texto){
-		if(feedback != null){
-		feedback.Text = texto;
-		}
-	}
-
-	private void PausarPartida(){
-		GetTree().Paused = !GetTree().Paused;
-	
-		uiPausa.Visible = GetTree().Paused;
-
-		AudioManager.Instance.PlaySound(UiSound1);
-
-		if (GetTree().Paused){
-			GD.Print("Pausa activada");
-			containerPausa.Visible = false;
-		}else{
-			GD.Print("Juego Reanudado");
-			containerPausa.Visible = true;
-		}
-	}
-
-	private void OcultarConfirmacionSalir(){
-		confirmacionSalir.Visible = false;
-		uiPausa.Visible = true;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	public void Reiniciar(){
-		GetTree().Paused = false;
-
-		GameManager.Instance.ReiniciarPartida();
-
-		reinicioConfirmado = true;
-		hayJugadorVictorioso = false;
-
-		if (confirmacionReiniciar != null) confirmacionReiniciar.Visible = false;
-		if (confirmacionReiniciarVictoria != null) confirmacionReiniciarVictoria.Visible = false;
-		if (containerPausa != null) containerPausa.Visible = true;
-
-		GD.Print("Comienza nueva partida");
-		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
-	}
-
-	public void IrAlMenuPrincipal(){
-		GetTree().Paused = false;
-
-		GameManager.Instance.ResetearEstadoPartida();
-		reinicioConfirmado = false;
-		hayJugadorVictorioso = false;
-
-		if (confirmacionSalir != null) confirmacionSalir.Visible = false;
-		if (confirmacionSalirVictoria != null) confirmacionSalirVictoria.Visible = false;
-		if (containerPausa != null) containerPausa.Visible = true;
-	
-		GD.Print("Regresando al menú principal");
-		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
-	}
-
-	private void Ajustes(){
-		PanelContainer UIAjustes = GetNode<PanelContainer>("Ajustes");
-		AudioManager.Instance.PlaySound(UiSound1);
-		UIAjustes.Visible = true;
-	}
-
-	private void AceptarConfigAudio(){
-		PanelContainer UIAjustesMenuPrincipal = GetNode<PanelContainer>("Ajustes");
-		AudioManager.Instance.PlaySound(UiSound1);
-		UIAjustesMenuPrincipal.Visible = false;
-	}
-
-	private bool EsTurnoLocal(){
-		if (!GameManager.Instance.modoMultiplayer) return true;
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (jugador == null) return false;
-		return Multiplayer.GetUniqueId() == jugador.Id;
-	}
-
-	private void ValidarTurnoLocalUI(){
-		bool esNuestroTurno = EsTurnoLocal();
-		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno || botonAtacar.Disabled;
-		if (botonColmena != null) botonColmena.Disabled = !esNuestroTurno;
-		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
-			instanciaMenuRadial.OcultarMenu();
-			if (instanciaMenuRadial.ContenedorDeTransformaciones != null)
-				instanciaMenuRadial.OcultarTransformaciones();
-		}
-	}
-
-	private void MostrarPantallaDeVictoria(){
-		hayJugadorVictorioso = true;
-		MostrarMensajeVictoria();
-		UIVictoria();
-	}
-
-	public void MostrarMensajeVictoria(){
-		var mensajeVictoria = GetNode<Label>("Titulo");
-		mensajeVictoria.Text = "EL  JUGADOR   " + GameManager.Instance.JugadorGanador.Id + "   ES  EL  GANADOR";
-	}
-	
-	public void UIVictoria(){
-		MenuVictoria = GetNode<HBoxContainer>("MenuVictoria");
-		botonSalirVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
-		botonReiniciarPartidaVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
-		confirmacionReiniciarVictoria = GetNode<PanelContainer>("ConfirmacionReiniciarVictoria");
-		confirmacionSalirVictoria = GetNode<PanelContainer>("ConfirmacionSalirVictoria");
-
-		botonSalirVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionSalirVictoria);
-		botonReiniciarPartidaVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionReiniciarVictoria);
-
-		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
-		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalirVictoria, MenuVictoria);
-		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
-		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciarVictoria, MenuVictoria);
 	}
 
 	public override void _ExitTree(){
