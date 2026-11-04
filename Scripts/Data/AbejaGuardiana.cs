@@ -15,5 +15,7 @@ public partial class AbejaGuardiana : Abeja{
 		var movimientos = ColmenaHogar.ReinaDeColmena.MovimientosDisponibles / 2;
 
 		ColmenaHogar.ReinaDeColmena.MovimientosDisponibles = movimientos;
+
+		HabilidadActiva = true;
 	} 
 }

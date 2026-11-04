@@ -135,7 +135,7 @@ public partial class CeldasManager : Node3D
 		{
 			if(!celda.EstaPintada)
 			{
-				PintarCelda(celda, Color.FromHtml("#c97100"));
+				PintarCelda(celda, Color.FromHtml("#f9b600"));
 			}
 			else
 			{
@@ -180,12 +180,12 @@ public partial class CeldasManager : Node3D
 		var materialDeMesh = hexagono.GetChild<MeshInstance3D>(0).GetActiveMaterial(0); 
 
 		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-		nuevoMaterial.AlbedoColor = Color.FromHtml("#c97100");
+		nuevoMaterial.AlbedoColor = Color.FromHtml("#f9b600");
 
 		hexagono.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial);
 
 		unaCelda.EstaPintada = false;
-		unaCelda.ColorActual = Color.FromHtml("#c97100");
+		unaCelda.ColorActual = Color.FromHtml("#f9b600");
 		unaCelda.Ocupante = null;
 	}
 }

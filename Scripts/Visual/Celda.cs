@@ -12,5 +12,5 @@ public class Celda : PosicionCelda
 
 	public bool EstaPintada {get; set;} = false;
 	public Abeja Ocupante {get; set;}
-	public Color ColorActual {get; set;} = Color.FromHtml("#c97100");
+	public Color ColorActual {get; set;} = Color.FromHtml("#f9b600");
 }

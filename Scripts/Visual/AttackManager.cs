@@ -57,7 +57,8 @@ public partial class AttackManager : Node3D
 		else if(AbejasObjetivo.Count > 0){
 			AtacarAbeja();
 		}
-		
+
+		GameManager.Instance.ConsumirAtaque();
 		playerManager.vfxManager.OcultarAbejasObjetivo();
 	}
 
@@ -89,7 +90,7 @@ public partial class AttackManager : Node3D
 		return AbejasObjetivo.Count > 0 || OtroJugadorCerca();
 	}
 
-	private void AtacarAbejaEspecifica(Abeja abejaObjetivo){
+	public void AtacarAbejaEspecifica(Abeja abejaObjetivo){
 		if(abejaObjetivo == null) return;
 		ProcesarAtaqueDeAbeja(abejaObjetivo);
 	}
@@ -155,7 +156,6 @@ public partial class AttackManager : Node3D
             GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
             GD.Print("Cámara restablecida en reina");
         }
-        GameManager.Instance.ConsumirAtaque();
 	}
 
 	private void AtacarJugador(){
@@ -190,8 +190,6 @@ public partial class AttackManager : Node3D
                 else{
                     AtacarJugadorRpc(indiceRival);
                 }
-
-                GameManager.Instance.ConsumirAtaque();
             }
             else{
                 GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
@@ -266,6 +264,27 @@ public partial class AttackManager : Node3D
 				listaDeAbejas.Add(abejaActual);
 			}
 		}
+	}
+
+	public void AtacarConGuardiana()
+	{
+		ActualizarAbejasObjetivo();
+
+		foreach (var abeja in AbejasObjetivo.ToList())
+		{
+			if (abeja.FueraDeJuego) continue;
+			
+			if(abeja is AbejaReina)
+			{
+				AtacarJugador();
+			}
+			else
+			{
+				AtacarAbejaEspecifica(abeja);
+			}
+		}
+		
+		GameManager.Instance.ConsumirAtaque();
 	}
 
 	public void ActualizarAbejasObjetivo(){

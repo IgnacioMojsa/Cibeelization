@@ -13,6 +13,7 @@ public partial class PlayerManager : Node3D
 	[Export] public VFXManager vfxManager;
 	[Export] public AttackManager attackManager;
 	[Export] public GameUI gameUI;
+	[Export] public TextEdit secretito;
 	public readonly Dictionary<AbejaReina, Node3D> VisualesJugadores = new();
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
@@ -23,6 +24,8 @@ public partial class PlayerManager : Node3D
 	public Celda CeldaCliqueada;
 	public Celda CeldaOrigen;
 	public Type TransformacionSeleccionada;
+	public bool HaciendoMagia = false;
+	public string CodigoMagico;
 	public AudioSetting UiSound4 => AudioManager.Instance?.GameAudio?.Sound4;
 	
 	public override async void _Ready(){
@@ -48,6 +51,11 @@ public partial class PlayerManager : Node3D
 		if (GameManager.Instance.modoMultiplayer){
 			long idLocal = Multiplayer.GetUniqueId();
 			if (idLocal != jugador.Id) return;
+		}
+
+		if (@event.IsActionPressed("secreto"))
+		{
+			secretito.Visible = true;
 		}
 
 		if (!@event.IsActionPressed("move")) return; 
@@ -83,6 +91,11 @@ public partial class PlayerManager : Node3D
 		else if(jugador.MenteColmena && jugador.MoviendoSubdito){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.IntentarMoverSubdito(CeldaCliqueada);
+		}
+
+		else if(HaciendoMagia)
+		{
+			GenerarMagia();
 		}
 
 		else{
@@ -443,6 +456,9 @@ public partial class PlayerManager : Node3D
 	public void TerminarControlDeSubdito()
 	{
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
+			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
+			
 			vfxManager.EstablecerUnOutlineAAbeja("res://outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
 		}
@@ -454,5 +470,37 @@ public partial class PlayerManager : Node3D
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= OnCambioDeTurnoJugador;
 		}
 		GameManager.Instance.OnTurnoTerminadoPorMovimientos -= ManejarTurnoTerminadoPorMovimientos;
+	}
+
+	public void HacerMagia()
+	{
+		var transformaciones = new List<Type>(){typeof(AbejaGuardiana), typeof(AbejaPolinizadora)};
+		
+		if (transformaciones.Any(t => t.ToString() == secretito.Text))
+		{
+			CodigoMagico = secretito.Text;
+			secretito.Clear();
+
+			HaciendoMagia = true;
+		}
+	}
+
+	public void GenerarMagia()
+	{
+		if (!HaciendoMagia) return;
+
+    	CeldaCliqueada = ObtenerCeldaAlClickear();
+    	if (CeldaCliqueada == null) return;
+
+    	var transformaciones = new List<Type>() { typeof(AbejaGuardiana), typeof(AbejaPolinizadora) };
+    	var tipo = transformaciones.Find(t => t.ToString() == CodigoMagico);
+		
+    	if (tipo == null) { GD.PrintErr("Código mágico inválido: " + CodigoMagico); return; }
+
+    	secretito.Visible = false;
+
+		tropasManager.InstanciarAbejaDeTipoDebug(CeldaCliqueada, tipo);
+		
+		HaciendoMagia = false;
 	}
 }

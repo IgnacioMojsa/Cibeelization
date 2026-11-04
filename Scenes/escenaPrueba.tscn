@@ -78,7 +78,7 @@ script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
 tablero = NodePath("../Tablero")
 
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager", "gameUI")]
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager", "gameUI", "secretito")]
 script = ExtResource("2_2lok1")
 camera = NodePath("../Camara/Camera3D")
 tablero = NodePath("../Tablero")
@@ -88,6 +88,7 @@ animationManager = NodePath("../AnimationManager")
 vfxManager = NodePath("../VFXManager")
 attackManager = NodePath("../AttackManager")
 gameUI = NodePath("../HUD")
+secretito = NodePath("../HUD/Codigo")
 
 [node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager", "attackManager")]
 script = ExtResource("3_auhuj")
@@ -1035,6 +1036,23 @@ text = "0"
 layout_mode = 1
 hud = NodePath("..")
 
+[node name="Codigo" type="TextEdit" parent="HUD" unique_id=573298322]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.33331
+offset_top = -528.0
+offset_right = 253.33331
+offset_bottom = -452.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+placeholder_text = " INTRODUCIR ABEJA"
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
 replication_config = SubResource("SceneReplicationConfig_2gfcn")
 
@@ -1042,3 +1060,4 @@ replication_config = SubResource("SceneReplicationConfig_2gfcn")
 [connection signal="pressed" from="HUD/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
+[connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]

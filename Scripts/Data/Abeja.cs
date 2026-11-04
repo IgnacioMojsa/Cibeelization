@@ -8,6 +8,7 @@ public partial class Abeja{
 	public int RecursosNecesarios {get; set;}
 	public string RecursoGenerable {get; set;}
 	public bool FueraDeJuego {get; set;} = false;
+	public bool HabilidadActiva {get; set;} = false;
 	public int PotenciaAtaque {get; set;}
 	public List<Abeja> TransformacionesDisponibles {get; set;} = new List<Abeja>();
 	public Colmena ColmenaHogar {get; set;}
@@ -55,7 +56,7 @@ public partial class Abeja{
 
 	public virtual void HabilidadDeAbeja()
 	{
-		
+		HabilidadActiva = true;
 	}
 
 }

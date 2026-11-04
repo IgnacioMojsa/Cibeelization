@@ -79,6 +79,14 @@ public partial class TroopsManager : Node3D
 	    GD.Print("Abeja instanciada en " + celdaCliqueada);
 	}
 
+	public void GuardarAbejasCercanas()
+	{
+		var reinaActual = GameManager.Instance.jugadorEnTurno;
+		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
+		
+		AbejasCercanas = reinaActual.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Contains(a.CeldaActual)).ToList();
+	}
+
 	public void EstablecerPosicionDeAbeja(Node3D instanciaNueva, Vector3 posicion){
 		instanciaNueva.GlobalPosition = posicion;
     }
@@ -139,10 +147,7 @@ public partial class TroopsManager : Node3D
 	{
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
 		
-		var reinaActual = GameManager.Instance.jugadorEnTurno;
-		var celdasAdyacentes = tableroActual.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
-
-		AbejasCercanas = reinaActual.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Contains(a.CeldaActual)).ToList();
+		GuardarAbejasCercanas();
 
 		foreach (var abeja in AbejasCercanas)
 		{
@@ -243,6 +248,8 @@ public partial class TroopsManager : Node3D
 		GameManager.Instance.jugadorEnTurno.MoviendoSubdito = true;
 		VisualSubditoActual = visual;
 		SubditoActual = subditoAControlar;
+
+		SubditoActual.HabilidadDeAbeja(); 
 	}
 
 	public bool SubditoTieneAAlguienCerca(Abeja alguien){
@@ -352,5 +359,27 @@ public partial class TroopsManager : Node3D
             AlmacenJugadores[enTurno].AddChild(InstanciaNueva);
             EstablecerPosicionDeAbeja(InstanciaNueva, unaCelda.Tile.GlobalPosition);
         }
+	}
+
+	public void InstanciarAbejaDeTipoDebug(Celda celda, Type tipo)
+	{
+    	if (!Assets.ContainsKey(tipo)) { GD.PrintErr("Tipo sin asset: " + tipo.Name); return; }
+
+    	var enTurno = GameManager.Instance.jugadorEnTurno;
+		
+    	if (!AlmacenJugadores.ContainsKey(enTurno)) return;
+
+    	if (Activator.CreateInstance(tipo) is not Abeja abeja) return;
+
+    	abeja.ColmenaHogar = enTurno.ColmenaDeReina;
+    	abeja.CeldaActual = celda;
+    	enTurno.ColmenaDeReina.AbejasDeColmena.Add(abeja);   
+
+    	var visual = Assets[tipo].Instantiate<Node3D>();      
+    	VisualAbejas.Add(abeja, visual);
+    	AlmacenJugadores[enTurno].AddChild(visual);
+    	EstablecerPosicionDeAbeja(visual, celda.Tile.GlobalPosition);
+
+    	celdasManager.PintarCeldaDeAbeja(celda, abeja);
 	}
 }

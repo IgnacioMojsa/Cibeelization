@@ -15,5 +15,7 @@ public partial class AbejaPolinizadora : Abeja{
 		var movimientoMejorado = ColmenaHogar.ReinaDeColmena.MovimientosDisponibles * 2;
 
 		ColmenaHogar.ReinaDeColmena.MovimientosDisponibles = movimientoMejorado;
+
+		HabilidadActiva = true;
 	} 
 }

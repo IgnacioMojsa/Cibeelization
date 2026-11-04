@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 
 public partial class GameUI : UIGeneral {
 
@@ -213,10 +214,12 @@ public partial class GameUI : UIGeneral {
 			tropasManager.MostrarAbejasCercanas();
 		}
 		else if(GameManager.Instance.jugadorEnTurno.MenteColmena){
-			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
-			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
+			if(tropasManager.SubditoActual is AbejaPolinizadora) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles /= 2;
+			if(tropasManager.SubditoActual is AbejaGuardiana) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles *= 2;
+			
+			
 			tropasManager.OcultarAbejasCercanas();
-			GameManager.Instance.CamaraActual.EnfocarNodo(playerManager.VisualJugadorActual, 2, 1);
+			playerManager.TerminarControlDeSubdito();
 		}
 	}
 
@@ -255,12 +258,21 @@ public partial class GameUI : UIGeneral {
 					playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
 				}
 			}
-		}else if(GameManager.Instance.jugadorEnTurno.ModoAtaque){
+		}
+
+		else if(GameManager.Instance.jugadorEnTurno.ModoAtaque){
 			GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
 			playerManager.vfxManager.EsconderOutlineDeJugadores();
 			playerManager.vfxManager.OcultarAbejasObjetivo();
 			playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
+
+		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito && tropasManager.SubditoActual is AbejaGuardiana)
+		{
+			attackManager.AtacarConGuardiana();
+			playerManager.TerminarControlDeSubdito();
+		}
+
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
