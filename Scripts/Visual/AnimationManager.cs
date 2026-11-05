@@ -4,6 +4,7 @@ using System.Linq;
 
 public partial class AnimationManager : Node3D
 {
+    public bool AnimacionFinalizada = false;
     private Dictionary<AbejaReina, AnimationPlayer> AnimacionesJugadores = new Dictionary<AbejaReina, AnimationPlayer>();
 
     public void GuardarInstanciasDeJugadores(Dictionary<AbejaReina, Node3D> visualesJugadores)
@@ -26,6 +27,17 @@ public partial class AnimationManager : Node3D
         }
         
         animacionDeJugador.Play(animacionNueva);
+    }
+
+    public void CambiarAnimacion(Node3D unaAbeja, string animacionNueva)
+    {
+        var animacionDeAbeja = unaAbeja.GetNode<AnimationPlayer>("AnimationPlayer");
+
+        if(!animacionDeAbeja.HasAnimation(animacionNueva)) return;
+        
+        animacionDeAbeja.Play(animacionNueva);
+
+        if(animacionDeAbeja.CurrentAnimation != "Idle" && !animacionDeAbeja.IsAnimationActive()) AnimacionFinalizada = true;
     }
 
     public void ReestablecerVelocidadAnimacion()

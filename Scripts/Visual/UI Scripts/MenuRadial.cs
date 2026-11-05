@@ -190,10 +190,15 @@ public partial class MenuRadial : Control
 				OcultarTransformaciones();
 				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaPolinizadora));
 				break;
+			case "AbejaConstructora":
+				OcultarTransformaciones();
+				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaConstructora));
+				break;
 			case "AbejaGuardiana":
 				OcultarTransformaciones();
 				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaGuardiana));
 				break;
+				
 		}
 		
 		OcultarMenu();

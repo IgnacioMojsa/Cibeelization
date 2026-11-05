@@ -474,7 +474,7 @@ public partial class PlayerManager : Node3D
 
 	public void HacerMagia()
 	{
-		var transformaciones = new List<Type>(){typeof(AbejaGuardiana), typeof(AbejaPolinizadora)};
+		var transformaciones = new List<Type>(){typeof(AbejaGuardiana), typeof(AbejaPolinizadora), typeof(AbejaConstructora)};
 		
 		if (transformaciones.Any(t => t.ToString() == secretito.Text))
 		{
@@ -492,7 +492,7 @@ public partial class PlayerManager : Node3D
     	CeldaCliqueada = ObtenerCeldaAlClickear();
     	if (CeldaCliqueada == null) return;
 
-    	var transformaciones = new List<Type>() { typeof(AbejaGuardiana), typeof(AbejaPolinizadora) };
+    	var transformaciones = new List<Type>() { typeof(AbejaGuardiana), typeof(AbejaPolinizadora), typeof(AbejaConstructora) };
     	var tipo = transformaciones.Find(t => t.ToString() == CodigoMagico);
 		
     	if (tipo == null) { GD.PrintErr("Código mágico inválido: " + CodigoMagico); return; }
