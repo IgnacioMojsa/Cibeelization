@@ -13,5 +13,6 @@ public partial class AbejaConstructora : Abeja{
 	override public void HabilidadDeAbeja()
 	{
 		HabilidadActiva = true;
+		CeldaActual.EstaReforzada = true;
 	} 
 }

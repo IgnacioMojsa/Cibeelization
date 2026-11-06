@@ -204,6 +204,11 @@ public partial class TroopsManager : Node3D
 		} else {
 			MoverSubdito(unaCelda);
 		}
+
+		if(SubditoActual.HabilidadActiva && SubditoActual is AbejaConstructora)
+		{
+			celdasManager.ReforzarCelda(unaCelda, SubditoActual);
+		}
 		
 		GameManager.Instance.CamaraActual.EnfocarNodo(VisualSubditoActual, 2, 1);
 	}
@@ -223,7 +228,9 @@ public partial class TroopsManager : Node3D
 	}
 
 	private void MoverSubdito(Celda unaCelda){
-    	Vector3 pos = unaCelda.Tile.GlobalPosition;
+    	if(unaCelda.EstaReforzada && !(SubditoActual is AbejaConstructora)) return;
+
+		Vector3 pos = unaCelda.Tile.GlobalPosition;
     	pos.Y = VisualSubditoActual.GlobalPosition.Y;
     	VisualSubditoActual.GlobalPosition = pos;
 
@@ -359,6 +366,8 @@ public partial class TroopsManager : Node3D
             VisualAbejas.Add(abejaNueva, InstanciaNueva);
             AlmacenJugadores[enTurno].AddChild(InstanciaNueva);
             EstablecerPosicionDeAbeja(InstanciaNueva, unaCelda.Tile.GlobalPosition);
+
+			if(tipoTransformacion == typeof(AbejaConstructora)) celdasManager.ReforzarCelda(unaCelda, abejaNueva);
         }
 	}
 

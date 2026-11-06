@@ -146,6 +146,9 @@ public partial class PlayerManager : Node3D
 		if(GameManager.Instance.jugadorEnTurno.ModoTransformacion)
 		return false;
 
+		if(destino.EstaReforzada) 
+		return false;
+
 		//List<Celda> vecinos = tablero.ObtenerVecinos(origen);
 		//return vecinos.Contains(destino);
 
@@ -189,6 +192,7 @@ public partial class PlayerManager : Node3D
 
 	private void IntentarMoverJugador(){      
 		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
+
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 		CeldaCliqueada = ObtenerCeldaAlClickear();
 		RotarJugadorHex(VisualJugadorActual, CeldaCliqueada);
@@ -207,7 +211,8 @@ public partial class PlayerManager : Node3D
 			} else {
 				MoverAbejaACelda(VisualJugadorActual, CeldaCliqueada);
 			}
-		} else {
+		} 
+		else {
 			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
 			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}

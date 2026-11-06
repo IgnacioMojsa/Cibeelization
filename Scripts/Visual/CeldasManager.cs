@@ -188,4 +188,20 @@ public partial class CeldasManager : Node3D
 		unaCelda.ColorActual = Color.FromHtml("#f9b600");
 		unaCelda.Ocupante = null;
 	}
+
+	public void ReforzarCelda(Celda unaCelda, Abeja unaAbeja)
+	{
+		var jugadorActual = unaAbeja.ColmenaHogar.ReinaDeColmena;
+		int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorActual);
+		
+		var visualFortificada = unaCelda.Tile.GetNode<Node3D>("hexagon_fortified");
+		var materialFortificacion = visualFortificada.GetChild<MeshInstance3D>(0).GetActiveMaterial(0);
+
+		StandardMaterial3D nuevoMaterial = (StandardMaterial3D)materialFortificacion.Duplicate();
+		nuevoMaterial.AlbedoColor = ColoresDeJugadores[indiceJugador];
+
+		//visualFortificada.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial); // Lo desactive por ahora pero porque me gusta mas como queda con el amarillo
+		visualFortificada.Visible = true;
+		unaCelda.EstaReforzada = true;
+	}
 }

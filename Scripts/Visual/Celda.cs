@@ -11,6 +11,7 @@ public class Celda : PosicionCelda
 		) : base(id, widthRow, heightRow) {}
 
 	public bool EstaPintada {get; set;} = false;
+	public bool EstaReforzada {get; set;} = false;
 	public Abeja Ocupante {get; set;}
 	public Color ColorActual {get; set;} = Color.FromHtml("#f9b600");
 }
