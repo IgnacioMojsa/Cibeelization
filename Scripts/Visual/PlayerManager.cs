@@ -494,15 +494,15 @@ public partial class PlayerManager : Node3D
 	{
 		if (!HaciendoMagia) return;
 
-    	CeldaCliqueada = ObtenerCeldaAlClickear();
-    	if (CeldaCliqueada == null) return;
+		CeldaCliqueada = ObtenerCeldaAlClickear();
+		if (CeldaCliqueada == null) return;
 
-    	var transformaciones = new List<Type>() { typeof(AbejaGuardiana), typeof(AbejaPolinizadora), typeof(AbejaConstructora) };
-    	var tipo = transformaciones.Find(t => t.ToString() == CodigoMagico);
+		var transformaciones = new List<Type>() { typeof(AbejaGuardiana), typeof(AbejaPolinizadora), typeof(AbejaConstructora) };
+		var tipo = transformaciones.Find(t => t.ToString() == CodigoMagico);
 		
-    	if (tipo == null) { GD.PrintErr("Código mágico inválido: " + CodigoMagico); return; }
+		if (tipo == null) { GD.PrintErr("Código mágico inválido: " + CodigoMagico); return; }
 
-    	secretito.Visible = false;
+		secretito.Visible = false;
 
 		tropasManager.InstanciarAbejaDeTipoDebug(CeldaCliqueada, tipo);
 		

@@ -2,8 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class MenuRadial : Control
-{
+public partial class MenuRadial : UIBase {
 	[Export] private GameUI hud; 
 	private Control ContenedorDeBotones;
 	public Control ContenedorDeTransformaciones;
@@ -13,8 +12,7 @@ public partial class MenuRadial : Control
 	public float Radio = 110f;
 	public float VelocidadAnimacion = 0.25f;
 
-	public override void _Ready()
-	{
+	public override void _Ready(){
 		ContenedorDeBotones = GetNode<Control>("%ContenedorBotones");
 		ContenedorDeTransformaciones = GetNode<Control>("%ContenedorTransformaciones");
 
@@ -22,51 +20,35 @@ public partial class MenuRadial : Control
 		ContenedorDeBotones.Hide();
 		ContenedorDeTransformaciones.Hide();
 
-		foreach (Node nodoHijo in ContenedorDeBotones.GetChildren()) 
-		{
-			if(nodoHijo is Button boton)
-			{
-				boton.PivotOffset = boton.Size / 2;
-				boton.Position = Vector2.Zero - (boton.Size / 2);
-				boton.Scale = Vector2.Zero;
-
-				boton.Pressed += () => SeleccionarOpcion(boton.Name);
+		foreach (Node nodoHijo in ContenedorDeBotones.GetChildren()){
+			if(nodoHijo is Button boton){
+				ConfigurarBotonRadial(boton);
 			}
 		}
 
-		foreach (Node nodoHijo in ContenedorDeTransformaciones.GetChildren()) 
-		{
-			if(nodoHijo is Button boton)
-			{
-				boton.PivotOffset = boton.Size / 2;
-				boton.Position = Vector2.Zero - (boton.Size / 2);
-				boton.Scale = Vector2.Zero;
-
-				boton.Pressed += () => SeleccionarOpcion(boton.Name);
+		foreach (Node nodoHijo in ContenedorDeTransformaciones.GetChildren()){
+			if(nodoHijo is Button boton){
+				ConfigurarBotonRadial(boton);
 			}
 		}
 	}
 
-	public void EstablecerHUD(GameUI gameUI)
-	{
-		hud = gameUI;
+	private void ConfigurarBotonRadial(Button boton){
+		boton.PivotOffset = boton.Size / 2;
+		boton.Position = Vector2.Zero - (boton.Size / 2);
+		boton.Scale = Vector2.Zero;
+		boton.Pressed += () => SeleccionarOpcion(boton.Name);
 	}
 
-	public void DesplegarEnPosicion(Vector2 posicionGlobal)
-	{
+	public void DesplegarEnPosicion(Vector2 posicionGlobal){
 		GlobalPosition = posicionGlobal;
-
-		if (Activo)
-		{
+		if (Activo){
 			OcultarMenu();
-			
 			if (ContenedorDeTransformaciones.Visible){
 				OcultarTransformaciones();
 				GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
 			}
-		}
-		else
-		{
+		} else {
 			MostrarMenu();
 		}
 	}
@@ -104,6 +86,14 @@ public partial class MenuRadial : Control
 		OcultarContenedor(ContenedorDeBotones);
 	}
 
+	public void OcultarTransformaciones(){
+		OcultarContenedor(ContenedorDeTransformaciones);
+	}
+
+	public void EstablecerHUD(GameUI gameUI){
+		hud = gameUI;
+	}
+
 	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false){
 		int cantidadDeBotones = contenedor.GetChildCount();
 		if (cantidadDeBotones == 0) return;
@@ -127,10 +117,6 @@ public partial class MenuRadial : Control
 				boton.Disabled = deshabilitarBotones;
 			}
 		}
-	}
-
-	public void OcultarTransformaciones(){
-		OcultarContenedor(ContenedorDeTransformaciones);
 	}
 
 	private void OcultarContenedor(Control contenedor){
@@ -204,16 +190,14 @@ public partial class MenuRadial : Control
 		OcultarMenu();
 	}
 
-	public void ActualizarEstadoBoton(bool condicion, string unBoton)
-	{
+	public void ActualizarEstadoBoton(bool condicion, string unBoton){
 		if (ContenedorDeBotones.HasNode(unBoton)){
 			var boton = ContenedorDeBotones.GetNode<Button>(unBoton);
 			boton.Disabled = !condicion;
 		}
 	}
 
-	public void VerificarTransformacionesDisponibles()
-	{
+	public void VerificarTransformacionesDisponibles(){
 		TransformacionesDisponiblesActualmente.Clear();
 		
 		foreach (var abeja in hud.tropasManager.AbejasTransformables){

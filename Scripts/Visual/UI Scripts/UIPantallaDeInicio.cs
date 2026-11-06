@@ -1,6 +1,6 @@
 using Godot;
 using System.Collections.Generic;
-public partial class UIPantallaDeInicio : GameUI {
+public partial class UIPantallaDeInicio : UIBase {
 	
 	private PanelContainer uiModos;
 	private PanelContainer uiOpcionesOnline;
@@ -9,10 +9,10 @@ public partial class UIPantallaDeInicio : GameUI {
 	private PanelContainer uiTutorial;
 	private PanelContainer uiAjustes;
 	private List<TextureButton> BotonesDeInicio; 
+	public bool hayJugadorVictorioso = false;
+	public bool reinicioConfirmado = false;
 
-	public override void _Ready(){
-		base._Ready();
-		
+	public override void _Ready(){		
 		uiModos = GetNode<PanelContainer>("ElegirModo");
 		uiOpcionesOnline = GetNode<PanelContainer>("OpcionesModoOnline");
 		uiComienzo = GetNode<PanelContainer>("MenuComienzo");
@@ -28,12 +28,6 @@ public partial class UIPantallaDeInicio : GameUI {
 				GetNode<TextureButton>("BotonesMenuDeInicio/Exit"),
 			};
 	}
-
-	public void MostrarUIPanel(Control panel, bool mostrar){
-		if (panel == null) return;
-		panel.Visible = mostrar;
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
 	
 	private void ConfigurarBoton(string nombre, bool? Estado = null){
 		foreach (var boton in BotonesDeInicio){
@@ -42,7 +36,7 @@ public partial class UIPantallaDeInicio : GameUI {
 		}
 	}
 
-	public void ElegirModo(){
+	private void ElegirModo(){
 		MostrarUIPanel(uiModos, !uiModos.Visible);
 		MostrarUIPanel(uiComienzo, false);
 		ConfigurarBoton("PlayButton");

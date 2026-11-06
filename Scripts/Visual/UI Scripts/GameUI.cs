@@ -3,7 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
 
-public partial class GameUI : UIGeneral {
+public partial class GameUI : UIBase {
+	
+	[Export] public TroopsManager tropasManager;
+	[Export] public CeldasManager celdasManager; 
+	[Export] public AttackManager attackManager;
+	[Export] public Label feedback;
+	[Export] public PackedScene menuRadialPrefab;
+	public MenuRadial instanciaMenuRadial;
+	public Button botonPausa;
+	public TextureButton botonColmena;
+	public PanelContainer containerPausa;
+	public HBoxContainer uiPausa;
+	public Label resultadoDados;
+	public TextureButton botonDado;
+	public TextureButton botonAtacar;
+	public bool hayJugadorVictorioso = false;
+	public bool reinicioConfirmado = false;
+	public Button botonContinuar;
+	public Button botonReiniciarPartida;
+	public Button botonMenuPrincipal;
+	public PanelContainer confirmacionSalir;
+	public PanelContainer confirmacionReiniciar;
+	public PanelContainer confirmacionSalirVictoria;
+	public PanelContainer confirmacionReiniciarVictoria;
+	public HBoxContainer MenuVictoria;
+	public Button botonSalirVictoria;
+	public Button botonReiniciarPartidaVictoria;
+
+	[Export] public PlayerManager playerManager;
+	public Control recursos;
 
 	public override void _Ready(){
 		ProcessMode = ProcessModeEnum.Always;
@@ -18,7 +47,7 @@ public partial class GameUI : UIGeneral {
 		}
 	}
 
-	public void ConfigurarEscenaDeJuego(){
+	private void ConfigurarEscenaDeJuego(){
 		var root = GetTree().CurrentScene; 
 		GameManager.Instance.TableroActual = root.GetNodeOrNull<Tablero>("Tablero");
 		if (GameManager.Instance.TableroActual == null)
@@ -34,9 +63,9 @@ public partial class GameUI : UIGeneral {
 		ActualizarUI();
 	}
 	
-	public void OnCambioDeTurno(object _) => ActualizarUI();
+	private void OnCambioDeTurno(object _) => ActualizarUI();
 	
-	public void InicializarGameUI(){
+	private void InicializarGameUI(){
 		botonPausa = GetNode<Button>("Pausa/PausaButton");
 		containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
@@ -91,7 +120,119 @@ public partial class GameUI : UIGeneral {
 		ValidarTurnoLocalUI();
 	}
 
-	public void MostrarDataDeJugadores(){
+	private void ActualizarInstrucciones(string texto){
+		if(feedback != null){
+		feedback.Text = texto;
+		}
+	}
+
+	private void PausarPartida(){
+		GetTree().Paused = !GetTree().Paused;
+	
+		uiPausa.Visible = GetTree().Paused;
+
+		AudioManager.Instance.PlaySound(UiSound1);
+
+		if (GetTree().Paused){
+			GD.Print("Pausa activada");
+			MostrarUIPanel(containerPausa, false);
+		}else{
+			GD.Print("Juego Reanudado");
+			MostrarUIPanel(containerPausa, true);
+		}
+	}
+
+	private void OcultarConfirmacionSalir(){
+		CambiarMenu(confirmacionSalir, uiPausa);
+	}
+
+	private void Reiniciar(){
+		GetTree().Paused = false;
+
+		GameManager.Instance.ReiniciarPartida();
+
+		reinicioConfirmado = true;
+		hayJugadorVictorioso = false;
+
+		if (confirmacionReiniciar != null) confirmacionReiniciar.Visible = false;
+		if (confirmacionReiniciarVictoria != null) confirmacionReiniciarVictoria.Visible = false;
+		if (containerPausa != null) containerPausa.Visible = true;
+
+		GD.Print("Comienza nueva partida");
+		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
+	}
+
+	private void IrAlMenuPrincipal(){
+		GetTree().Paused = false;
+
+		GameManager.Instance.ResetearEstadoPartida();
+		reinicioConfirmado = false;
+		hayJugadorVictorioso = false;
+
+		if (confirmacionSalir != null) confirmacionSalir.Visible = false;
+		if (confirmacionSalirVictoria != null) confirmacionSalirVictoria.Visible = false;
+		if (containerPausa != null) containerPausa.Visible = true;
+	
+		GD.Print("Regresando al menú principal");
+		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+	}
+
+	private void Ajustes(){
+		PanelContainer UIAjustes = GetNode<PanelContainer>("Ajustes");
+		MostrarUIPanel(UIAjustes, true);
+	}
+
+	private void AceptarConfigAudio(){
+		PanelContainer UIAjustesMenuPrincipal = GetNode<PanelContainer>("Ajustes");
+		MostrarUIPanel(UIAjustesMenuPrincipal, false);
+	}
+
+	private void MostrarPantallaDeVictoria(){
+		hayJugadorVictorioso = true;
+		MostrarMensajeVictoria();
+		UIVictoria();
+	}
+
+	private void MostrarMensajeVictoria(){
+		var mensajeVictoria = GetNode<Label>("Titulo");
+		mensajeVictoria.Text = "EL  JUGADOR   " + GameManager.Instance.JugadorGanador.Id + "   ES  EL  GANADOR";
+	}
+
+	public bool EsTurnoLocal(){
+		if (!GameManager.Instance.modoMultiplayer) return true;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return false;
+		return Multiplayer.GetUniqueId() == jugador.Id;
+	}
+
+	private void ValidarTurnoLocalUI(){
+		bool esNuestroTurno = EsTurnoLocal();
+		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno || botonAtacar.Disabled;
+		if (botonColmena != null) botonColmena.Disabled = !esNuestroTurno;
+		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
+			instanciaMenuRadial.OcultarMenu();
+			if (instanciaMenuRadial.ContenedorDeTransformaciones != null)
+				instanciaMenuRadial.OcultarTransformaciones();
+		}
+	}
+	
+	private void UIVictoria(){
+		MenuVictoria = GetNode<HBoxContainer>("MenuVictoria");
+		botonSalirVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
+		botonReiniciarPartidaVictoria = GetNode<Button>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+		confirmacionReiniciarVictoria = GetNode<PanelContainer>("ConfirmacionReiniciarVictoria");
+		confirmacionSalirVictoria = GetNode<PanelContainer>("ConfirmacionSalirVictoria");
+
+		botonSalirVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionSalirVictoria);
+		botonReiniciarPartidaVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionReiniciarVictoria);
+
+		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
+		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalirVictoria, MenuVictoria);
+		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
+		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciarVictoria, MenuVictoria);
+	}
+
+	private void MostrarDataDeJugadores(){
 		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
 		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
 		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
@@ -109,7 +250,7 @@ public partial class GameUI : UIGeneral {
 		}
 	}
 
-	public void MostrarHPDeJugaores(){
+	private void MostrarHPDeJugaores(){
 		var hpJ1 = GetNode<Label>("VBoxContainer/Jugador1/HBoxContainer/MarginContainer2/Label");
 		var hpJ2 = GetNode<Label>("VBoxContainer/Jugador2/HBoxContainer/MarginContainer2/Label");
 		var hpJ3 = GetNode<Label>("VBoxContainer/Jugador3/HBoxContainer/MarginContainer2/Label");
@@ -122,7 +263,7 @@ public partial class GameUI : UIGeneral {
 		}
 	}
 
-	public void MostrarJugadorEnTurno(){ 
+	private void MostrarJugadorEnTurno(){ 
 		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		TextureRect iconoJugadorEnTurno = GetNode<TextureRect>("Elementos/IconoJugador");
 
@@ -350,7 +491,7 @@ public partial class GameUI : UIGeneral {
 			}
 	}
 
-	public void MostrarResultadoDado(){
+	private void MostrarResultadoDado(){
 		if (botonDado.Disabled) return;
 		bool esTurnoLocal = !GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id;
 		if (!esTurnoLocal) return;
