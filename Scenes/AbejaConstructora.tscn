@@ -58,7 +58,7 @@ properties/1/replication_mode = 1
 [node name="AbejaConstructora" unique_id=1977052639 instance=ExtResource("1_15rxj")]
 transform = Transform3D(-0.74, 0, -1.11736895e-07, 0, 0.74, 0, 1.11736895e-07, 0, -0.74, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(561855984) index="0" unique_id=536727645]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(716411317) index="0" unique_id=1595776021]
 bones/0/position = Vector3(0, 0.016129136, 0.013105954)
 bones/4/rotation = Quaternion(0.6769397, 0.19751363, -0.65485734, -0.2718509)
 bones/8/rotation = Quaternion(0.6769396, -0.19751354, 0.6548574, -0.27185097)
@@ -96,22 +96,23 @@ bones/36/position = Vector3(1.1598729, 1.0275608, 0.360276)
 bones/36/rotation = Quaternion(0.044581775, 0.0011165759, -0.019159183, 0.99882144)
 bones/37/rotation = Quaternion(-0.001196013, 0.000120813056, 0.11916315, 0.99287397)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=440883142]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1753415204]
 surface_material_override/0 = SubResource("StandardMaterial3D_mn166")
 surface_material_override/1 = SubResource("StandardMaterial3D_agp26")
 surface_material_override/2 = SubResource("StandardMaterial3D_r20rf")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=601396757]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1325193898]
 surface_material_override/0 = SubResource("StandardMaterial3D_x362u")
 surface_material_override/1 = SubResource("StandardMaterial3D_egnhj")
 surface_material_override/2 = SubResource("StandardMaterial3D_xpfh0")
 surface_material_override/3 = SubResource("StandardMaterial3D_xg87v")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1889300266]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=2129068924]
 surface_material_override/0 = SubResource("StandardMaterial3D_psfdi")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=281449550]
+[node name="AnimationPlayer" parent="." index="1" unique_id=171280898]
 autoplay = &"Idle"
+next/RecibirDanio = &"Idle"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1597478175]
 

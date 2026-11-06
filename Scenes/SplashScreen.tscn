@@ -1,3 +1,222 @@
 [gd_scene format=3 uid="uid://btk2icyrb4oyf"]
 
+[ext_resource type="Texture2D" uid="uid://bi7bsh56vvfh3" path="res://Assets/PNGS/PanalFondo.png" id="1_lus2m"]
+[ext_resource type="Script" uid="uid://brp5or3xny35y" path="res://Scripts/Visual/SplashScreen.cs" id="1_mpken"]
+[ext_resource type="Texture2D" uid="uid://ykt4avr1uixj" path="res://Assets/PNGS/Titulo.png" id="2_pufkq"]
+[ext_resource type="Texture2D" uid="uid://docfwh7c0c0fx" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugar.svg" id="3_kfthl"]
+[ext_resource type="Texture2D" uid="uid://c3c0v8si53r14" path="res://Assets/UI/UIPantallaInicial/BotonTutorial/BotonTutorial.svg" id="7_awwf4"]
+[ext_resource type="Texture2D" uid="uid://c45jcgvf85ns2" path="res://Assets/UI/UIPantallaInicial/BotonAjustes/BotonAjustes.svg" id="11_2ts1w"]
+[ext_resource type="Texture2D" uid="uid://dne1krv0ayy58" path="res://Assets/UI/UIPantallaInicial/BotonCreditos/BotonCreditos.svg" id="15_m2g6m"]
+[ext_resource type="Texture2D" uid="uid://c72s6gt4qemwv" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalir.svg" id="19_8jy7v"]
+
+[sub_resource type="Animation" id="Animation_kfthl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Titulo:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Titulo:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Play:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.68, 0.68)]
+}
+
+[sub_resource type="Animation" id="Animation_bx3fq"]
+resource_name = "SplashScreen"
+length = 3.0000000000000004
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Titulo:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.3, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(1.11, 1.11), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Titulo:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2, 1.3, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.10471976, 0.11519173, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Play:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.8, 1.9, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.75, 0.75), Vector2(0.68, 0.68)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Tutorial:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.9666666, 2.0666666, 2.1666665),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.75, 0.75), Vector2(0.68, 0.68)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Settings:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2.1333334, 2.2333333, 2.3333335),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.75, 0.75), Vector2(0.68, 0.68)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Credits:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2.3000002, 2.4, 2.5000002),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.75, 0.75), Vector2(0.68, 0.68)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Exit:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(2.4666667, 2.5666666, 2.6666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.75, 0.75), Vector2(0.68, 0.68)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ncj05"]
+_data = {
+&"RESET": SubResource("Animation_kfthl"),
+&"SplashScreen": SubResource("Animation_bx3fq")
+}
+
 [node name="SplashScreen" type="Node2D" unique_id=1090221138]
+script = ExtResource("1_mpken")
+
+[node name="Fondo" type="TextureRect" parent="." unique_id=2144827133]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lus2m")
+metadata/_edit_use_anchors_ = true
+
+[node name="Titulo" type="TextureRect" parent="." unique_id=1634842692]
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.06666667
+anchor_right = 0.9714384
+anchor_bottom = 0.76296294
+offset_left = 48.0
+offset_top = 72.0
+offset_right = 1865.1617
+offset_bottom = 824.0
+grow_horizontal = 2
+pivot_offset = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_pufkq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Play" type="TextureButton" parent="." unique_id=563881693]
+offset_left = -10.0
+offset_top = 811.0
+offset_right = 475.0
+offset_bottom = 1106.0
+scale = Vector2(0.68, 0.68)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("3_kfthl")
+
+[node name="Tutorial" type="TextureButton" parent="." unique_id=1725326546]
+offset_left = 354.0
+offset_top = 811.0
+offset_right = 839.0
+offset_bottom = 1106.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("7_awwf4")
+
+[node name="Settings" type="TextureButton" parent="." unique_id=480289563]
+offset_left = 718.0
+offset_top = 811.0
+offset_right = 1203.0001
+offset_bottom = 1106.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("11_2ts1w")
+
+[node name="Credits" type="TextureButton" parent="." unique_id=1557818708]
+offset_left = 1081.0
+offset_top = 811.0
+offset_right = 1566.0
+offset_bottom = 1106.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("15_m2g6m")
+
+[node name="Exit" type="TextureButton" parent="." unique_id=45315912]
+offset_left = 1444.0
+offset_top = 811.0
+offset_right = 1929.0
+offset_bottom = 1106.0
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("19_8jy7v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1646132723]
+libraries/ = SubResource("AnimationLibrary_ncj05")
+autoplay = &"SplashScreen"

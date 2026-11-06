@@ -11,10 +11,13 @@ config_version=5
 [application]
 
 config/name="Cibeelization"
-run/main_scene="uid://qt17q4ddcx2m"
+run/main_scene="uid://btk2icyrb4oyf"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
-boot_splash/bg_color=Color(0.27405724, 0.0005001988, 0.40279946, 1)
+boot_splash/bg_color=Color(0.34901962, 0.07450981, 0.19607843, 1)
+boot_splash/use_filter=false
+boot_splash/image="uid://bi7bsh56vvfh3"
 config/icon="uid://bf02bc7lfn21i"
+boot_splash/minimum_display_time=1500
 
 [audio]
 

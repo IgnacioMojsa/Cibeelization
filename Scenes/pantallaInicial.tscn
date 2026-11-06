@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://qt17q4ddcx2m"]
 
 [ext_resource type="Script" uid="uid://c11jphtn0d57o" path="res://Scripts/Visual/UI Scripts/UIPantallaDeInicio.cs" id="1_3b2ad"]
-[ext_resource type="LabelSettings" uid="uid://5s7xsujkkuve" path="res://tittle.tres" id="1_71g57"]
-[ext_resource type="Texture2D" uid="uid://dqqcxuibj5i3l" path="res://Assets/PNGS/PantallaDeInicio.png" id="2_6hrbw"]
+[ext_resource type="Texture2D" uid="uid://bi7bsh56vvfh3" path="res://Assets/PNGS/PanalFondo.png" id="2_6hrbw"]
 [ext_resource type="Texture2D" uid="uid://docfwh7c0c0fx" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugar.svg" id="3_canpy"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
+[ext_resource type="Texture2D" uid="uid://ykt4avr1uixj" path="res://Assets/PNGS/Titulo.png" id="3_plf46"]
 [ext_resource type="Texture2D" uid="uid://57ol0hdn5q41" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarPresionado.svg" id="4_6hrbw"]
 [ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
 [ext_resource type="Texture2D" uid="uid://bhh7emb4jb3d8" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarSeleccionado.svg" id="5_plf46"]
@@ -60,31 +60,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3b2ad")
 
-[node name="PantallaInicial" type="TextureRect" parent="." unique_id=700981318]
+[node name="Fondo" type="TextureRect" parent="." unique_id=700981318]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource("2_6hrbw")
 metadata/_edit_use_anchors_ = true
 
-[node name="Titulo" type="Label" parent="." unique_id=1414714438]
-visible = false
+[node name="Titulo" type="TextureRect" parent="." unique_id=186048856]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -535.0
-offset_top = -77.0
-offset_right = 520.0
-offset_bottom = 77.0
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.06666667
+anchor_right = 0.9714384
+anchor_bottom = 0.76296294
 grow_horizontal = 2
-grow_vertical = 2
-text = "CIBEELIZATION"
-label_settings = ExtResource("1_71g57")
-horizontal_alignment = 1
-vertical_alignment = 1
+pivot_offset = Vector2(0.5, 0)
+pivot_offset_ratio = Vector2(0.5, 0)
+texture = ExtResource("3_plf46")
+metadata/_edit_use_anchors_ = true
 
 [node name="BotonesMenuDeInicio" type="HBoxContainer" parent="." unique_id=1833663844]
 layout_mode = 1

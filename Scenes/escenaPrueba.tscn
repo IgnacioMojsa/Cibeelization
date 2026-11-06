@@ -754,7 +754,12 @@ theme_override_font_sizes/font_size = 25
 text = "General"
 horizontal_alignment = 1
 
-[node name="Master" parent="HUD/Ajustes/VBoxContainer" unique_id=1666788886 instance=ExtResource("9_y8nye")]
+[node name="MarginMaster" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1723171536]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="Master" parent="HUD/Ajustes/VBoxContainer/MarginMaster" unique_id=1666788886 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 BusName = "Master"
 
@@ -769,7 +774,12 @@ theme_override_font_sizes/font_size = 25
 text = "Música"
 horizontal_alignment = 1
 
-[node name="Music" parent="HUD/Ajustes/VBoxContainer" unique_id=823332244 instance=ExtResource("9_y8nye")]
+[node name="MarginMusic" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1526370745]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="Music" parent="HUD/Ajustes/VBoxContainer/MarginMusic" unique_id=823332244 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 BusName = "Music"
 
@@ -784,7 +794,12 @@ theme_override_font_sizes/font_size = 25
 text = "Efectos de sonido"
 horizontal_alignment = 1
 
-[node name="SFX" parent="HUD/Ajustes/VBoxContainer" unique_id=1898905141 instance=ExtResource("9_y8nye")]
+[node name="MarginSFX" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1311659591]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="SFX" parent="HUD/Ajustes/VBoxContainer/MarginSFX" unique_id=1898905141 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 BusName = "SFX"
 
@@ -818,24 +833,44 @@ metadata/_edit_use_anchors_ = true
 [node name="RecursosDer" type="Control" parent="HUD/Elementos" unique_id=1014677604]
 layout_mode = 1
 anchor_left = 4.9
-anchor_top = -14.525
-anchor_right = 12.5
-anchor_bottom = -11.325
+anchor_top = -14.844999
+anchor_right = 14.020001
+anchor_bottom = -11.004999
+offset_top = 12.799988
+offset_right = -60.80005
+offset_bottom = -12.800049
 scale = Vector2(1.2, 1.2)
 pivot_offset_ratio = Vector2(0, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Resplandor" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=1499445718]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.07626182
+anchor_top = -0.157552
+anchor_right = 1.0884229
+anchor_bottom = 1.196615
+offset_left = -826.14966
+offset_top = -202.22223
+offset_right = 6.1035156e-05
+offset_bottom = 202.22223
+scale = Vector2(0.3, 0.3)
+pivot_offset_ratio = Vector2(1, 0.5)
+texture = ExtResource("18_ohwqx")
+flip_h = true
+flip_v = true
 metadata/_edit_use_anchors_ = true
 
 [node name="RecursosDer" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=156705770]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 17.935675
-anchor_top = 12.669126
-anchor_right = 20.307653
-anchor_bottom = 15.512875
-offset_left = -5453.474
-offset_top = -1770.6481
-offset_right = -5157.793
-offset_bottom = -1709.3981
+anchor_left = -0.0033842388
+anchor_top = -0.0012698174
+anchor_right = 1.0
+anchor_bottom = 0.9954096
+offset_top = -148.83746
+offset_right = 711.7339
+offset_bottom = 148.83745
 scale = Vector2(0.3, 0.3)
 pivot_offset_ratio = Vector2(0, 0.5)
 texture = ExtResource("14_iks2i")
@@ -843,13 +878,33 @@ metadata/_edit_use_anchors_ = true
 
 [node name="RecursosIzq" type="Control" parent="HUD/Elementos" unique_id=36097867]
 layout_mode = 1
-anchor_left = -11.5
-anchor_top = -14.525
-anchor_right = -4.7
-anchor_bottom = -11.325
-offset_right = 32.0
+anchor_left = -13.020001
+anchor_top = -14.844999
+anchor_right = -3.9000008
+anchor_bottom = -11.004999
+offset_left = 60.80005
+offset_top = 12.799988
+offset_right = 3.0517578e-05
+offset_bottom = -12.800049
 scale = Vector2(1.2, 1.2)
 pivot_offset_ratio = Vector2(1, 0.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Resplandor" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=79581593]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.07626182
+anchor_top = -0.157552
+anchor_right = 1.0884229
+anchor_bottom = 1.196615
+offset_left = -826.14966
+offset_top = -202.22223
+offset_right = 6.1035156e-05
+offset_bottom = 202.22223
+scale = Vector2(0.3, 0.3)
+pivot_offset_ratio = Vector2(1, 0.5)
+texture = ExtResource("18_ohwqx")
+flip_v = true
 metadata/_edit_use_anchors_ = true
 
 [node name="RecursosIzq" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=1018539452]
@@ -915,11 +970,16 @@ texture = ExtResource("12_gsowx")
 metadata/_edit_use_anchors_ = true
 
 [node name="IconoJugador" type="TextureRect" parent="HUD/Elementos" unique_id=1352185011]
-layout_mode = 0
-offset_left = -119.0
-offset_top = -765.0
-offset_right = 159.84131
-offset_bottom = -315.7937
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.1451038
+anchor_top = -16.177084
+anchor_right = 2.1661365
+anchor_bottom = -10.84276
+offset_left = -73.19585
+offset_top = -117.916626
+offset_right = 73.19585
+offset_bottom = 117.91669
 scale = Vector2(0.475, 0.475)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("17_iks2i")
