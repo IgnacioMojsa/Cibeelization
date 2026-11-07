@@ -45,6 +45,25 @@ public partial class GameUI : UIBase {
 		else if(currentScene == "res://Scenes/pantallaVictoria.tscn"){
 			MostrarPantallaDeVictoria();
 		}
+
+		Multiplayer.PeerDisconnected += OnPeerDisconnectedInGame;
+	}
+
+	private void OnPeerDisconnectedInGame(long id){
+		GD.Print($"Un jugador se desconectó en plena partida: {id}");
+		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
+		if (jugador != null){
+			jugador.HP = 0;
+			jugador.FueraDeJuego = true;
+
+			if (playerManager != null && playerManager.VisualesJugadores.TryGetValue(jugador, out Node3D visualJugador)){
+				int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugador);
+				
+				if (attackManager != null){
+					attackManager.EliminarInstanciaDeJugador(visualJugador, indiceJugador);
+				}
+			}
+		}
 	}
 
 	private void ConfigurarEscenaDeJuego(){
@@ -82,6 +101,12 @@ public partial class GameUI : UIBase {
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
 		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
 		botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
+		
+		var contenedorReiniciarPausa = GetNodeOrNull<Control>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar");
+		if (contenedorReiniciarPausa != null){
+			contenedorReiniciarPausa.Visible = !GameManager.Instance.modoMultiplayer;
+		}
+
 		botonContinuar.Pressed += PausarPartida;
 		botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
 		botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
@@ -97,12 +122,14 @@ public partial class GameUI : UIBase {
 	}
 
 	private void SuscribirAEventos(){
-		_ExitTree();
+		//_ExitTree();
 
 		var turnManager = GameManager.Instance.TurnManager;
 		EventosUI.OnMensajeAMostrar += ActualizarInstrucciones;
-		turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
-		turnManager.OnTurnoCambiado += ActualizarUI;
+		if (turnManager != null){
+			turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
+			turnManager.OnTurnoCambiado += ActualizarUI;
+		}
 
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
@@ -164,17 +191,26 @@ public partial class GameUI : UIBase {
 
 	private void IrAlMenuPrincipal(){
 		GetTree().Paused = false;
-
-		GameManager.Instance.ResetearEstadoPartida();
-		reinicioConfirmado = false;
-		hayJugadorVictorioso = false;
-
+		ForzarDesconexionYLimpiezaTotal();
 		if (confirmacionSalir != null) confirmacionSalir.Visible = false;
 		if (confirmacionSalirVictoria != null) confirmacionSalirVictoria.Visible = false;
 		if (containerPausa != null) containerPausa.Visible = true;
-	
+		
 		GD.Print("Regresando al menú principal");
-		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+
+		reinicioConfirmado = false;
+    	hayJugadorVictorioso = false;
+	}
+
+	public void ForzarDesconexionYLimpiezaTotal(){
+		if (Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
+		GameManager.Instance.ResetearEstadoPartida();
+		if (GetTree().CurrentScene.SceneFilePath != "res://Scenes/pantallaInicial.tscn"){
+			GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+		}
 	}
 
 	private void Ajustes(){
@@ -225,6 +261,11 @@ public partial class GameUI : UIBase {
 
 		botonSalirVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionSalirVictoria);
 		botonReiniciarPartidaVictoria.Pressed += () => CambiarMenu(MenuVictoria, confirmacionReiniciarVictoria);
+
+		var contenedorReiniciarVictoria = GetNodeOrNull<Control>("MenuVictoria/VictoriaBorder/MarginContainer/VBoxContainer/Reiniciar");
+		if (contenedorReiniciarVictoria != null){
+			contenedorReiniciarVictoria.Visible = !GameManager.Instance.modoMultiplayer;
+		}
 
 		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
 		GetNode<Button>("ConfirmacionSalirVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalirVictoria, MenuVictoria);
@@ -290,9 +331,9 @@ public partial class GameUI : UIBase {
 			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
 				UIJugadores[j].Modulate = ColorJugadores[j];
 				iconoJugadorEnTurno.Texture = IconosJugadores[j];
-			}else if(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
+			} else if (GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
 				UIJugadores[j].Visible = false;
-			}else{
+			} else {
 				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
 			}
 		}
@@ -529,15 +570,18 @@ public partial class GameUI : UIBase {
 	}
 
 	public override void _ExitTree(){
-		if (GameManager.Instance != null){
-			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+    Multiplayer.PeerDisconnected -= OnPeerDisconnectedInGame;
 
-			if (GameManager.Instance.TurnManager != null){
-				var turnManager = GameManager.Instance.TurnManager;
-				EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
-				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
-				turnManager.OnTurnoCambiado -= ActualizarUI;
-			}
-		}
-	}
+    if(GameManager.Instance != null){
+        GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+
+        if(GameManager.Instance.TurnManager != null){
+            var turnManager = GameManager.Instance.TurnManager;
+            EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
+            turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
+            turnManager.OnTurnoCambiado -= ActualizarUI;
+        }
+    }
+    base._ExitTree();
+}
 };

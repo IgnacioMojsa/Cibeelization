@@ -230,14 +230,16 @@ public partial class AttackManager : Node3D
         }
     }
 
-	private void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
+	public void EliminarInstanciaDeJugador(Node3D unJugador, int Id){
 		GameManager.Instance.EliminarJugador(Id);
-		unJugador.Visible = false;
+		if(unJugador != null && IsInstanceValid(unJugador)){
+			unJugador.Visible = false;
+		}
 
 		if(GameManager.Instance.CondicionVictoria()){
 			GameManager.Instance.EstablecerJugadorGanador();
 			GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn"); 
-		};
+		}
 	}
 
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
@@ -245,9 +247,7 @@ public partial class AttackManager : Node3D
 
 		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
 			jugadorActual = playerManager.tropasManager.SubditoActual;
-		}
-		else
-		{
+		} else {
 			jugadorActual = GameManager.Instance.jugadorEnTurno;
 		}
 		

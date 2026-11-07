@@ -96,8 +96,7 @@ public partial class GameManager
 	}
 
 //separado de TirarDado para poder reflejoar la cant de movimientos disponibles
-	public void OtorgarMovimientos(int resultado)
-	{
+	public void OtorgarMovimientos(int resultado){
 		if(jugadorEnTurno == null) return;
 		
 		jugadorEnTurno.TiroLosDados = true;
@@ -107,22 +106,17 @@ public partial class GameManager
 
 	public event Action OnTurnoTerminadoPorMovimientos;
 
-	public async Task ConsumirMovimiento()
-	{
+	public async Task ConsumirMovimiento(){
 		if (jugadorEnTurno == null) return;
 
 		jugadorEnTurno.MovimientosDisponibles--;
 
 		//GD.Print("Movimientos restantes: " + jugadorEnTurno.MovimientosDisponibles);
 
-		if (jugadorEnTurno.MovimientosDisponibles <= 0)
-		{
-			if (modoMultiplayer)
-			{
+		if (jugadorEnTurno.MovimientosDisponibles <= 0){
+			if (modoMultiplayer){
 				OnTurnoTerminadoPorMovimientos?.Invoke();
-			}
-			else
-			{
+			} else {
 				await TurnManager.TerminarTurno();
 			}
 		}
@@ -152,10 +146,12 @@ public partial class GameManager
 		jugadorEnTurno.AccionConsumida = true;
 	}
 
-	public void EliminarJugador(int Id)
-	{
-		JugadoresEnPartida[Id].FueraDeJuego = true;
-		//GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
+	public void EliminarJugador(int Id){
+		if (Id >= 0 && Id < JugadoresEnPartida.Count){
+			JugadoresEnPartida[Id].HP = 0;
+			JugadoresEnPartida[Id].FueraDeJuego = true;
+			//GD.Print("El jugador " + JugadoresEnPartida[Id].Id + " ha sido eliminado");
+		}
 	}
 
 	public void GenerarAbejaNueva(Abeja unaAbeja){
@@ -212,12 +208,10 @@ public partial class GameManager
 		return jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Any(c => c == a.CeldaActual)).ToList();
 	}
 
-	public void PotenciarAtaqueDeJugadorEnTurno()
-	{
+	public void PotenciarAtaqueDeJugadorEnTurno(){
 		var subditosAdyacentes = SubditosAdyacentes();
 
-		if(subditosAdyacentes.Count() > 2)
-		{
+		if(subditosAdyacentes.Count() > 2){
 			//GD.Print("Ataque de jugador " + jugadorEnTurno.Id + " potenciado"); 
 			jugadorEnTurno.AtaquePotenciado = true;
 		}
@@ -237,31 +231,31 @@ public partial class GameManager
 		jugadorEnTurno.AccionConsumida = true;
 	}
 
-	public void ResetearEstadoPartida()
-	{
-		//GD.Print("Reseteando la partida");
-		JugadoresEnPartida.Clear();
+	public void ResetearEstadoPartida(){
+		TableroActual = null;
+		CamaraActual = null;
 		jugadorEnTurno = null;
 		JugadorGanador = null;
 		OnEstadoAccionesCambiado = null;
-		CamaraActual = null;
 
-		if(TurnManager != null)
-		{
+		if (TurnManager != null){
 			TurnManager.ReiniciarTurnos();
+			TurnManager = null;
 		}
-		else
-		{
-			TurnManager = new TurnManager(JugadoresEnPartida);
-			cantidadJugadores = 0;
-			sizeTablero = 0;
+
+		foreach (var jugador in JugadoresEnPartida){
+			jugador.ColmenaDeReina?.AbejasDeColmena.Clear();
 		}
+		JugadoresEnPartida.Clear();
+
+		cantidadJugadores = 0;
+		sizeTablero = 0;
+		modoMultiplayer = false;
+		jugadorEsHost = true;
 	}
 
-	public void ReiniciarPartida()
-	{
-		if (PartidaActual == null)
-		{
+	public void ReiniciarPartida(){
+		if (PartidaActual == null){
 			//GD.PrintErr("No hay partida inicializada para reiniciar.");
 			return;
 		}

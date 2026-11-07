@@ -15,6 +15,7 @@ public partial class MultiplayerController : Node
 		Multiplayer.PeerDisconnected += PeerDisconnected;
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
+		Multiplayer.ServerDisconnected += ServerDisconnected;
 
 		ConfigurarBotones();
 	}
@@ -50,10 +51,19 @@ public partial class MultiplayerController : Node
 
 	private void PeerDisconnected(long id){
 		GD.Print("PLAYER DISCONNECTED: " + id.ToString());
+		
+		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
+		if (jugador != null){
+			jugador.HP = 0;
+			jugador.FueraDeJuego = true;
+			GD.Print($"Jugador {jugador.Id} se desconectó. HP establecido en 0 y marcado fuera de juego.");
 
-		var jugadorAEliminar = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
-		if (jugadorAEliminar != null){
-			GameManager.Instance.JugadoresEnPartida.Remove(jugadorAEliminar);
+			if (GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
+				if (GameManager.Instance.CondicionVictoria()){
+					GameManager.Instance.EstablecerJugadorGanador();
+					GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn");
+				}
+			}
 		}
 		ActualizarEstadoBotonJugar();
 	}
@@ -68,6 +78,25 @@ public partial class MultiplayerController : Node
 	private void ConnectionFailed(){
 		GD.Print("CONNECTION FAILED");
 		ActualizarEstadoBotonJugar();
+	}
+
+	private void ServerDisconnected(){
+		GD.Print("SERVER DISCONNECTED");
+		LimpiarYVolverAlMenu();
+	}
+
+	public void LimpiarYVolverAlMenu(){
+		if(Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
+
+		GameManager.Instance.ResetearEstadoPartida();
+		estaConectadoAlServidor = false;
+
+		if(GetTree().CurrentScene.SceneFilePath != "res://Scenes/pantallaInicial.tscn"){
+			GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+		}
 	}
 
 	private void _on_host_button_down(){
@@ -124,7 +153,6 @@ public partial class MultiplayerController : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-
 	private void SendPlayerInformation(string name, int id){
 		var jugadorExistente = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
 		if(jugadorExistente == null){
@@ -150,6 +178,17 @@ public partial class MultiplayerController : Node
 	
 		GameManager.Instance.JugadoresEnPartida.Clear();
 		estaConectadoAlServidor = false;
+	}
+
+	public override void _ExitTree(){
+		if (Multiplayer != null){
+			Multiplayer.PeerConnected -= PeerConnected;
+			Multiplayer.PeerDisconnected -= PeerDisconnected;
+			Multiplayer.ConnectedToServer -= ConnectedToServer;
+			Multiplayer.ConnectionFailed -= ConnectionFailed;
+			Multiplayer.ServerDisconnected -= ServerDisconnected;
+		}
+		base._ExitTree();
 	}
 
 }
