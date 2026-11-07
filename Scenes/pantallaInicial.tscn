@@ -102,6 +102,7 @@ alignment = 1
 
 [node name="Play" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=778522179]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_canpy")
 texture_pressed = ExtResource("4_6hrbw")
 texture_hover = ExtResource("5_plf46")
@@ -109,6 +110,7 @@ texture_disabled = ExtResource("6_mpr3k")
 
 [node name="Tutorial" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=672420463]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("7_ty7e5")
 texture_pressed = ExtResource("8_ka0dp")
 texture_hover = ExtResource("9_k2pyu")
@@ -116,6 +118,7 @@ texture_disabled = ExtResource("10_giqap")
 
 [node name="Settings" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=60168221]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("11_w5w1a")
 texture_pressed = ExtResource("12_4q4d1")
 texture_hover = ExtResource("13_ss54m")
@@ -123,6 +126,7 @@ texture_disabled = ExtResource("14_n5hoi")
 
 [node name="Credits" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=870622266]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("15_h55tx")
 texture_pressed = ExtResource("16_o5mjb")
 texture_hover = ExtResource("17_604xw")
@@ -130,6 +134,7 @@ texture_disabled = ExtResource("18_6n1as")
 
 [node name="Exit" type="TextureButton" parent="BotonesMenuDeInicio" unique_id=241801519]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("19_m5pus")
 texture_pressed = ExtResource("20_d2nxm")
 texture_hover = ExtResource("21_jhu0f")
@@ -197,6 +202,7 @@ size_flags_vertical = 4
 [node name="PlayButton" type="Button" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer/StartLocal" unique_id=675129464]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -217,6 +223,7 @@ size_flags_vertical = 4
 [node name="PlayButton" type="Button" parent="ElegirModo/MarginContainer/VBoxContainer/MarginContainer2/StartOnline" unique_id=247777471]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -237,6 +244,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -343,6 +351,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -408,6 +417,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/2Players" unique_id=797830412]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = ExtResource("4_8of7i")
@@ -424,6 +434,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/3Players" unique_id=35158241]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = ExtResource("4_8of7i")
@@ -440,6 +451,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/VBoxContainer/4Players" unique_id=703798753]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = ExtResource("4_8of7i")
@@ -480,6 +492,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Small" unique_id=1431452816]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = SubResource("ButtonGroup_8of7i")
@@ -496,6 +509,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Mid" unique_id=1028795721]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = SubResource("ButtonGroup_8of7i")
@@ -512,6 +526,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="CheckBox" type="CheckBox" parent="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big" unique_id=1324931718]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 27
 button_group = SubResource("ButtonGroup_8of7i")
@@ -537,6 +552,7 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -556,6 +572,7 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -653,6 +670,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -716,6 +734,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
@@ -779,6 +798,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
 action_mode = 0

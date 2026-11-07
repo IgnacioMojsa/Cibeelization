@@ -228,12 +228,12 @@ anchor_right = 0.9137932
 anchor_bottom = 1.0
 grow_horizontal = 2
 pivot_offset_ratio = Vector2(0.5, 1)
+mouse_default_cursor_shape = 2
 action_mode = 0
 texture_normal = ExtResource("15_icj48")
 texture_pressed = ExtResource("14_3m86p")
 texture_hover = ExtResource("15_vu10v")
 texture_disabled = ExtResource("16_ohwqx")
-metadata/_edit_use_anchors_ = true
 
 [node name="NumeroDado" type="Label" parent="HUD/Dado" unique_id=933910515]
 layout_mode = 1
@@ -293,11 +293,11 @@ anchor_top = 0.11111111
 anchor_right = 0.92410713
 anchor_bottom = 0.9212963
 pivot_offset_ratio = Vector2(0, 0.5)
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("13_nqw0l")
 texture_pressed = ExtResource("14_j1m1u")
 texture_hover = ExtResource("15_qwcee")
 texture_disabled = ExtResource("16_8d1v5")
-metadata/_edit_use_anchors_ = true
 
 [node name="Atacar" type="Control" parent="HUD" unique_id=123719189]
 layout_mode = 1
@@ -330,11 +330,11 @@ anchor_top = 0.11111111
 anchor_right = 0.88839287
 anchor_bottom = 0.9212963
 pivot_offset_ratio = Vector2(1, 0.5)
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("14_duaa4")
 texture_pressed = ExtResource("15_j3cmi")
 texture_hover = ExtResource("16_0y31t")
 texture_disabled = ExtResource("19_qwcee")
-metadata/_edit_use_anchors_ = true
 
 [node name="Pausa" type="PanelContainer" parent="HUD" unique_id=830340097]
 layout_mode = 0
@@ -346,6 +346,7 @@ offset_bottom = -957.0
 [node name="PausaButton" type="Button" parent="HUD/Pausa" unique_id=134833338]
 process_mode = 3
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 40
 text = "Pausa"
@@ -606,6 +607,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 4
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
@@ -620,6 +622,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 action_mode = 0
@@ -672,6 +675,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 4
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
@@ -686,6 +690,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 action_mode = 0
@@ -761,6 +766,7 @@ theme_override_constants/margin_right = 15
 
 [node name="Master" parent="HUD/Ajustes/VBoxContainer/MarginMaster" unique_id=1666788886 instance=ExtResource("9_y8nye")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "Master"
 
 [node name="Margin2" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1465954372]
@@ -781,6 +787,7 @@ theme_override_constants/margin_right = 15
 
 [node name="Music" parent="HUD/Ajustes/VBoxContainer/MarginMusic" unique_id=823332244 instance=ExtResource("9_y8nye")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "Music"
 
 [node name="Margin3" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1472759120]
@@ -801,6 +808,7 @@ theme_override_constants/margin_right = 15
 
 [node name="SFX" parent="HUD/Ajustes/VBoxContainer/MarginSFX" unique_id=1898905141 instance=ExtResource("9_y8nye")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "SFX"
 
 [node name="Margin4" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=2089517757]
@@ -817,6 +825,7 @@ process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 37
 action_mode = 0
