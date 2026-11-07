@@ -7,6 +7,8 @@ public partial class MultiplayerController : Node
 	private ENetMultiplayerPeer peer;
 	public Button botonHost;
 	public Button botonCliente;
+	public Button botonJugar;
+	private bool estaConectadoAlServidor = false;
 
 	public override void _Ready(){
 		Multiplayer.PeerConnected += PeerConnected;
@@ -20,11 +22,25 @@ public partial class MultiplayerController : Node
 	private void ConfigurarBotones(){
 		botonHost =	GetNode<Button>("Host");
 		botonCliente = GetNode<Button>("Cliente");		
+		botonJugar = GetNode<Button>("Jugar");
 
 		if(!GameManager.Instance.jugadorEsHost){
 			botonHost.Visible = false;
 		} else {
 			botonCliente.Visible = false;
+		}
+		ActualizarEstadoBotonJugar();
+	}
+
+	private void ActualizarEstadoBotonJugar(){
+		if (botonJugar == null) return;
+
+		if (GameManager.Instance.jugadorEsHost){
+			bool hayClientesConectados = GameManager.Instance.JugadoresEnPartida.Count > 1;
+			botonJugar.Disabled = !hayClientesConectados;
+		} else {
+			botonJugar.Disabled = !estaConectadoAlServidor;
+			botonJugar.Visible = false;
 		}
 	}
 
@@ -38,11 +54,14 @@ public partial class MultiplayerController : Node
 
 	private void ConnectedToServer(){
 		GD.Print("CONNECTED TO SERVER");
+		estaConectadoAlServidor = true;
+		ActualizarEstadoBotonJugar();
 		RpcId(1, nameof(SendPlayerInformation), GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
 	}
 
 	private void ConnectionFailed(){
 		GD.Print("CONNECTION FAILED");
+		ActualizarEstadoBotonJugar();
 	}
 
 	private void _on_host_button_down(){
@@ -57,6 +76,7 @@ public partial class MultiplayerController : Node
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for players");
 		SendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
+		ActualizarEstadoBotonJugar();
 	}
 
 	private void _on_cliente_button_down(){
@@ -105,5 +125,6 @@ public partial class MultiplayerController : Node
 				Rpc(nameof(SendPlayerInformation), item.Name, item.Id);
 			}
 		}
+		ActualizarEstadoBotonJugar();
 	}
 }
