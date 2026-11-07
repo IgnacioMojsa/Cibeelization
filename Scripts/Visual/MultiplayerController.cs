@@ -50,6 +50,12 @@ public partial class MultiplayerController : Node
 
 	private void PeerDisconnected(long id){
 		GD.Print("PLAYER DISCONNECTED: " + id.ToString());
+
+		var jugadorAEliminar = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
+		if (jugadorAEliminar != null){
+			GameManager.Instance.JugadoresEnPartida.Remove(jugadorAEliminar);
+		}
+		ActualizarEstadoBotonJugar();
 	}
 
 	private void ConnectedToServer(){
@@ -65,13 +71,21 @@ public partial class MultiplayerController : Node
 	}
 
 	private void _on_host_button_down(){
+		if (Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
+
 		botonHost.Disabled = true;
 		peer = new ENetMultiplayerPeer();
 		var error = peer.CreateServer(port, 4);
+
 		if(error != Error.Ok){
 			GD.Print("Error cannot host: " + error.ToString());
+			botonHost.Disabled = false;
 			return;
 		}
+
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
 		GD.Print("Waiting for players");
@@ -127,4 +141,15 @@ public partial class MultiplayerController : Node
 		}
 		ActualizarEstadoBotonJugar();
 	}
+
+	private void DesconectarYLimpiarDatos(){
+		if (Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
+	
+		GameManager.Instance.JugadoresEnPartida.Clear();
+		estaConectadoAlServidor = false;
+	}
+
 }
