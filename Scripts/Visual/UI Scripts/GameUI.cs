@@ -145,6 +145,9 @@ public partial class GameUI : UIBase {
 		AlternarEstadoDeAbsorcion();
 		MostrarMovimientosDisponibles();
 		ValidarTurnoLocalUI();
+
+		if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible) instanciaMenuRadial.OcultarTransformaciones();
+		else instanciaMenuRadial.OcultarMenu();
 	}
 
 	private void ActualizarInstrucciones(string texto){
