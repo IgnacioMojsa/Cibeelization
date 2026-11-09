@@ -87,6 +87,7 @@ public partial class PlayerManager : Node3D
 		else if(jugador.MenteColmena && !jugador.AccionConsumida && !jugador.MoviendoSubdito){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.ControlarAbeja(CeldaCliqueada);
+			gameUI.MostrarMovimientosDisponibles();
 		}
 
 		else if(jugador.MenteColmena && jugador.MoviendoSubdito){
@@ -472,6 +473,11 @@ public partial class PlayerManager : Node3D
 			
 			vfxManager.EstablecerUnOutlineAAbeja("res://outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
 			GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
+
+			gameUI.MostrarMovimientosDisponibles();
+
+			if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && GameManager.Instance.modoMultiplayer) Rpc(nameof(SiguienteTurnoRpc));
+			else if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) GameManager.Instance.TurnManager.TerminarTurno();
 		}
 	}
 

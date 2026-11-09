@@ -62,7 +62,6 @@ public partial class AttackManager : Node3D
 		playerManager.vfxManager.OcultarAbejasObjetivo();
 	}
 
-
 	private Abeja ObtenerAbejaDesdeCollider(Node collider){
 		if(collider == null || playerManager.tropasManager == null || playerManager.tropasManager.VisualAbejas == null)
 		return null;

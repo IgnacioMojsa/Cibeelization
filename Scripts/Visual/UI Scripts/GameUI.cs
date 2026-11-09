@@ -525,7 +525,7 @@ public partial class GameUI : UIBase {
 		}
 	}
 
-	private void MostrarMovimientosDisponibles(){
+	public void MostrarMovimientosDisponibles(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(jugador != null){
 			resultadoDados.Text = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles.ToString();
