@@ -7,6 +7,28 @@ public partial class AnimationManager : Node3D
     public bool AnimacionFinalizada = false;
     private Dictionary<AbejaReina, AnimationPlayer> AnimacionesJugadores = new Dictionary<AbejaReina, AnimationPlayer>();
 
+    public void ReproducirConCallback(Node3D unaAbeja, string animacion, System.Action alTerminar)
+    {
+        var abeja = unaAbeja.GetNode<AnimationPlayer>("AnimationPlayer");
+
+        if (!abeja.HasAnimation(animacion))
+        {
+            alTerminar?.Invoke();
+            return;
+        }
+
+        void Handler(StringName nombre)
+        {
+            if (nombre.ToString() != animacion) return;
+
+            abeja.AnimationFinished -= Handler;
+            alTerminar?.Invoke();
+        }
+
+        abeja.AnimationFinished += Handler;
+        abeja.Play(animacion);
+    }
+
     public void GuardarInstanciasDeJugadores(Dictionary<AbejaReina, Node3D> visualesJugadores)
     {
         for (int j = 0; j < visualesJugadores.Count(); j++)

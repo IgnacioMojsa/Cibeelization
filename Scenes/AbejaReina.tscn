@@ -113,6 +113,7 @@ replication_config = SubResource("SceneReplicationConfig_m5opc")
 
 [node name="Vida" type="Label3D" parent="." index="4" unique_id=290737768]
 transform = Transform3D(-0.9999993, 8.74227e-08, 1.748454e-07, 1.7484554e-07, -4.3711385e-08, 0.9999999, 8.74227e-08, 0.9999993, 4.3711335e-08, 0.110109285, 0.34206867, 0.17215693)
+visible = false
 text = "15"
 font = ExtResource("3_mvxwy")
 font_size = 786

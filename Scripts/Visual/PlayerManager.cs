@@ -15,6 +15,7 @@ public partial class PlayerManager : Node3D
 	[Export] public GameUI gameUI;
 	[Export] public TextEdit secretito;
 	public readonly Dictionary<AbejaReina, Node3D> VisualesJugadores = new();
+	public readonly Dictionary <AbejaReina, Label3D> VidaDeReina = new();
 	private readonly List<PackedScene> Assets = new();
 	public Dictionary<Node3D, Celda> CeldaActualPorJugador = new();
 	public List<Abeja> AbejasObjetivo = new();
@@ -340,6 +341,8 @@ public partial class PlayerManager : Node3D
 				var InstanciaNueva = Assets[j].Instantiate<Node3D>();
 				AddChild(InstanciaNueva);
 				VisualesJugadores.Add(Reina, InstanciaNueva);
+				InstanciaNueva.GetNode<Label3D>("Vida").Visible = true;
+				VidaDeReina.Add(Reina, InstanciaNueva.GetNode<Label3D>("Vida"));
 			}
 			animationManager.GuardarInstanciasDeJugadores(VisualesJugadores);
 		}
@@ -353,6 +356,8 @@ public partial class PlayerManager : Node3D
 					}
 					AddChild(InstanciaNueva);
 					VisualesJugadores.Add(Reina, InstanciaNueva);
+					InstanciaNueva.GetNode<Label3D>("Vida").Visible = true;
+					VidaDeReina.Add(Reina, InstanciaNueva.GetNode<Label3D>("Vida"));
 					GD.Print($"Jugador instanciado en red con ID: {Reina.Id}");
 				}
 			}
@@ -435,6 +440,7 @@ public partial class PlayerManager : Node3D
 			}
 		}
 
+		// OcultarAbejasObjetivo
 		tropasManager.OcultarAbejasCercanas();
 		animationManager.ReestablecerVelocidadAnimacion();
 		attackManager.LimpiarAbejasEliminadas();
@@ -477,7 +483,7 @@ public partial class PlayerManager : Node3D
 		GameManager.Instance.OnTurnoTerminadoPorMovimientos -= ManejarTurnoTerminadoPorMovimientos;
 	}
 
-	public void HacerMagia()
+	private void HacerMagia()
 	{
 		var transformaciones = new List<Type>(){typeof(AbejaGuardiana), typeof(AbejaPolinizadora), typeof(AbejaConstructora)};
 		
@@ -490,7 +496,7 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
-	public void GenerarMagia()
+	private void GenerarMagia()
 	{
 		if (!HaciendoMagia) return;
 

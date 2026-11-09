@@ -191,6 +191,8 @@ public partial class AttackManager : Node3D
                 else{
                     AtacarJugadorRpc(indiceRival);
                 }
+
+				playerManager.VidaDeReina[reinaObjetivo].Text = reinaObjetivo.HP.ToString();
             }
             else{
                 GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
@@ -270,21 +272,27 @@ public partial class AttackManager : Node3D
 	{
 		ActualizarAbejasObjetivo();
 
-		playerManager.animationManager.CambiarAnimacion(playerManager.tropasManager.VisualSubditoActual, "Atacar");
+		playerManager.animationManager.ReproducirConCallback(playerManager.tropasManager.VisualSubditoActual, "Atacar", () => EfectuarAtaqueGuardiana());
+	}
 
+	public void EfectuarAtaqueGuardiana()
+	{
 		foreach (var abeja in AbejasObjetivo.ToList())
 		{
 			if(abeja.FueraDeJuego) continue;
 
-			if(abeja is AbejaReina)
+			if(abeja is AbejaReina reina)
 			{
-				AtacarJugador();
+				int indice = GameManager.Instance.JugadoresEnPartida.IndexOf(reina);
+
+            	if (GameManager.Instance.modoMultiplayer) Rpc(nameof(AtacarJugadorRpc), indice);
+           		else AtacarJugadorRpc(indice);
 			}
 			else
 			{
 				AtacarAbejaEspecifica(abeja);
 			}
-		}
+		}	
 		
 		GameManager.Instance.ConsumirAtaque();
 	}

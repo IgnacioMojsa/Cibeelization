@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://buppbncamca7f" path="res://Assets/3DModels/AbejaReina4.glb" id="1_4qnwh"]
 [ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_heyax"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_haw62"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_haw62"]
 next_pass = ExtResource("2_heyax")
@@ -114,3 +115,10 @@ shape = SubResource("CapsuleShape3D_4qnwh")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="3" unique_id=2034304601]
 replication_config = SubResource("SceneReplicationConfig_4qnwh")
+
+[node name="Vida" type="Label3D" parent="." index="4" unique_id=1598039343]
+transform = Transform3D(-0.9999993, 8.74227e-08, 1.748454e-07, 1.7484554e-07, -4.3711385e-08, 0.9999999, 8.74227e-08, 0.9999993, 4.3711335e-08, 0.110109285, 0.11732185, 0.17215693)
+visible = false
+text = "15"
+font = ExtResource("3_haw62")
+font_size = 786
