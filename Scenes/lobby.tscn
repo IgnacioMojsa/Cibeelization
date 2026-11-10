@@ -44,8 +44,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nvaej")
-port = null
-adress = null
 
 [node name="Host" type="Button" parent="." unique_id=140702952]
 z_index = 3

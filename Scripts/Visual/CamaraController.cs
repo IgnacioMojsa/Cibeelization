@@ -1,37 +1,32 @@
 using Godot;
+using System.Linq;
 
 public partial class CamaraController : Node3D
 {
 	[Export] private Camera3D camera3D;
 	[Export] private float paddingFactor = 1.25f; // Margen de seguridad alrededor del tablero
 	[Export] private float anguloInclinacionDeg = -85.0f; // Grados de inclinación de la cámara
-
 	[Export] private float alturaZoomTurno = 12.5f;  
 	[Export] private float offsetZTurno = 4.5f;     
 	[Export] private float duracionAnimacion = 0.8f;
 	[Export] private float velocidadRotacion = 0.07f;
-
 	private bool controlJugador = false;
 	private Vector2 ultimaPosMouse;
 	[Export] private float velocidadManual = 0.04f;
-
 	private bool enModoOrbita = false;
 	private Tween tweenCamara;
-
 	private Node3D objetivoSeguimiento = null;
     private bool estaSiguiendo = false;
     [Export] private float velocidadSeguimiento = 6.0f;
+	private int indiceJugadorInspeccionado = -1;
 
-	public override void _Ready()
-	{
-		if (camera3D == null)
-		{
+	public override void _Ready(){
+		if (camera3D == null){
 			camera3D = GetNodeOrNull<Camera3D>("Camera3D");
 		}
 
 		// Aseguramos que el nodo Camera3D esté centrado respecto a este padre
-		if (camera3D != null)
-		{
+		if (camera3D != null){
 			camera3D.Position = Vector3.Zero;
 			camera3D.RotationDegrees = Vector3.Zero;
 		}
@@ -43,24 +38,19 @@ public partial class CamaraController : Node3D
 		CallDeferred(nameof(AjustarAlInicio));
 	}
 
-	public override void _Process(double delta)
-    {
-        if (estaSiguiendo && objetivoSeguimiento != null && IsInstanceValid(objetivoSeguimiento))
-        {
+	public override void _Process(double delta){
+        if (estaSiguiendo && objetivoSeguimiento != null && IsInstanceValid(objetivoSeguimiento)){
             Vector3 posicionDeseada = objetivoSeguimiento.GlobalPosition;
             posicionDeseada.Y = 0;
 
             GlobalPosition = GlobalPosition.Lerp(posicionDeseada, (float)(delta * velocidadSeguimiento));
         }
-        if (!controlJugador && enModoOrbita)
-        {
+        if (!controlJugador && enModoOrbita){
             RotateY((float)delta * velocidadRotacion);
         }
     }
 
-
-	public override void _Input(InputEvent @event)
-	{
+	public override void _Input(InputEvent @event){
 	    if (@event is InputEventMouseButton mouseEvent)
 	    {
 	        if (mouseEvent.ButtonIndex == MouseButton.Right)
@@ -77,19 +67,85 @@ public partial class CamaraController : Node3D
 	            }
 	        }
 	    }
-	    else if (@event is InputEventMouseMotion motionEvent && controlJugador)
-	    {
+		else if (@event is InputEventMouseMotion motionEvent && controlJugador){
 	        float deltaX = motionEvent.Position.X - ultimaPosMouse.X;
 	        ultimaPosMouse = motionEvent.Position;
-
 	        RotateY(deltaX * velocidadManual * -1f);
+		} 
+		else if (GameManager.Instance.modoMultiplayer && !EsTurnoLocal()){
+	        //hay que agregar botones también, así no depende del input del teclado solamente 
+			if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo){
+	            if (keyEvent.Keycode == Key.Right || keyEvent.Keycode == Key.D){
+	                EnfocarJugadorSiguiente();
+	                GetViewport().SetInputAsHandled();
+	            } 
+				else if (keyEvent.Keycode == Key.Left || keyEvent.Keycode == Key.A){
+	                EnfocarJugadorPrevio();
+	                GetViewport().SetInputAsHandled();
+	            }
+	        }
 	    }
 	}
 
-	private void AjustarAlInicio()
-	{
-		if (GameManager.Instance.TableroActual != null)
-		{
+	private bool EsTurnoLocal(){
+		if (!GameManager.Instance.modoMultiplayer) return true;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return true;
+		return Multiplayer.GetUniqueId() == jugador.Id;
+	}
+
+	private void EnfocarJugadorLocal(){
+		if (!GameManager.Instance.modoMultiplayer) return;
+		long localId = Multiplayer.GetUniqueId();
+		var jugadorLocal = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == localId);
+		var playerManager = GetTree().CurrentScene.GetNodeOrNull<PlayerManager>("PlayerManager");
+		
+		if (jugadorLocal != null && playerManager != null && playerManager.VisualesJugadores.TryGetValue(jugadorLocal, out Node3D visualLocal)){
+			indiceJugadorInspeccionado = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorLocal);
+			EnfocarNodo(visualLocal, 1.0f, 1.0f);
+		}
+	}
+
+	private void EnfocarJugadorSiguiente(){
+		var jugadoresVivos = GameManager.Instance.JugadoresEnPartida.Where(j => !j.FueraDeJuego).ToList();
+		if (jugadoresVivos.Count <= 1) return;
+
+		var jugadorActualInspeccionado = GameManager.Instance.JugadoresEnPartida.ElementAtOrDefault(indiceJugadorInspeccionado);
+		int idxActualVivos = jugadoresVivos.IndexOf(jugadorActualInspeccionado);
+
+		if (idxActualVivos == -1) idxActualVivos = 0;
+
+		idxActualVivos = (idxActualVivos + 1) % jugadoresVivos.Count;
+		var siguienteJugador = jugadoresVivos[idxActualVivos];
+		indiceJugadorInspeccionado = GameManager.Instance.JugadoresEnPartida.IndexOf(siguienteJugador);
+
+		var playerManager = GetTree().CurrentScene.GetNodeOrNull<PlayerManager>("PlayerManager");
+		if (playerManager != null && playerManager.VisualesJugadores.TryGetValue(siguienteJugador, out Node3D visual)){
+			EnfocarNodo(visual, 1.0f, 1.0f);
+		}
+	}
+
+	private void EnfocarJugadorPrevio(){
+		var jugadoresVivos = GameManager.Instance.JugadoresEnPartida.Where(j => !j.FueraDeJuego).ToList();
+		if (jugadoresVivos.Count <= 1) return;
+
+		var jugadorActualInspeccionado = GameManager.Instance.JugadoresEnPartida.ElementAtOrDefault(indiceJugadorInspeccionado);
+		int idxActualVivos = jugadoresVivos.IndexOf(jugadorActualInspeccionado);
+
+		if (idxActualVivos == -1) idxActualVivos = 0;
+
+		idxActualVivos = (idxActualVivos - 1 + jugadoresVivos.Count) % jugadoresVivos.Count;
+		var anteriorJugador = jugadoresVivos[idxActualVivos];
+		indiceJugadorInspeccionado = GameManager.Instance.JugadoresEnPartida.IndexOf(anteriorJugador);
+
+		var playerManager = GetTree().CurrentScene.GetNodeOrNull<PlayerManager>("PlayerManager");
+		if (playerManager != null && playerManager.VisualesJugadores.TryGetValue(anteriorJugador, out Node3D visual)){
+			EnfocarNodo(visual, 1.0f, 1.0f);
+		}
+	}
+
+	private void AjustarAlInicio(){
+		if (GameManager.Instance.TableroActual != null){
 			AjustarATablero(
 				GameManager.Instance.DimensionActual, 
 				GameManager.Instance.DimensionActual, 
@@ -98,8 +154,7 @@ public partial class CamaraController : Node3D
 		}
 	}
 
-	public void AjustarATablero(int filas, int columnas, float tileSize)
-	{
+	public void AjustarATablero(int filas, int columnas, float tileSize) {
 		if (camera3D == null) return;
 
 		enModoOrbita = false;
@@ -109,20 +164,15 @@ public partial class CamaraController : Node3D
 		float profundidadTablero = filas * (tileSize * 1.5f);
 		float valorFloat;
 
-		if(filas == 15)
-		{
+		if(filas == 15) {
 			valorFloat = 40.0f;
 		}
-		else if(filas == 25)
-		{
+		else if(filas == 25) {
 			valorFloat = 2.5f; 
 		}
-		else if(filas == 30)
-		{
+		else if(filas == 30) {
 			valorFloat = 2.0f;
-		}
-		else
-		{
+		} else {
 			valorFloat = 40.0f;
 		}
 
@@ -139,8 +189,7 @@ public partial class CamaraController : Node3D
 		float distanciaRequerida = (dimensionMaxima * paddingFactor / 2.0f) / Mathf.Tan(fovRad / 2.0f);
 	
 		// Ajustar si la pantalla es más alta que ancha
-		if (aspectRatio < 1.0f)
-		{
+		if (aspectRatio < 1.0f){
 			distanciaRequerida /= aspectRatio;
 		}
 	
@@ -159,15 +208,13 @@ public partial class CamaraController : Node3D
 		camera3D.LookAt(centroTablero, Vector3.Up);
 	}
 
-	public void EnfocarNodo(Node3D objetivo, float multiplicadorPivote, float multiplicadorCamara)
-	{
+	public void EnfocarNodo(Node3D objetivo, float multiplicadorPivote, float multiplicadorCamara){
 		if (objetivo == null || camera3D == null) return;
 
 		estaSiguiendo = false;
         enModoOrbita = false;
 
-		if (tweenCamara != null && tweenCamara.IsValid())
-		{
+		if (tweenCamara != null && tweenCamara.IsValid()){
 			tweenCamara.Kill();
 		}
 
@@ -189,8 +236,7 @@ public partial class CamaraController : Node3D
 		}));
 	}
 
-	public void ResetearCamaraAutomaticamente(Node3D jugadorActual)
-	{
+	public void ResetearCamaraAutomaticamente(Node3D jugadorActual){
 	    controlJugador = false;
         enModoOrbita = false;
         estaSiguiendo = false;

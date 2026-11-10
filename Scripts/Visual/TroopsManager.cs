@@ -210,7 +210,9 @@ public partial class TroopsManager : Node3D
 			celdasManager.ReforzarCelda(unaCelda, SubditoActual);
 		}
 		
-		GameManager.Instance.CamaraActual.EnfocarNodo(VisualSubditoActual, 2, 1);
+		if(playerManager.EsTurnoLocal()){
+			GameManager.Instance.CamaraActual.EnfocarNodo(VisualSubditoActual, 2, 1);
+			}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -252,7 +254,9 @@ public partial class TroopsManager : Node3D
 		
 		if (!VisualAbejas.TryGetValue(subditoAControlar, out var visual) || !IsInstanceValid(visual)) return;
 
-		GameManager.Instance.CamaraActual.EnfocarNodo(visual, 2, 1);
+		if(playerManager.EsTurnoLocal()){
+			GameManager.Instance.CamaraActual.EnfocarNodo(visual, 2, 1);
+		}
 		GameManager.Instance.jugadorEnTurno.MoviendoSubdito = true;
 		VisualSubditoActual = visual;
 		SubditoActual = subditoAControlar;
