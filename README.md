@@ -10,6 +10,7 @@
 
 ## Pila tecnológica
 - Motor: Godot 4.7.2 (C# support)
+- GDUnit4
 - Declaración sobre el uso de IA Generativa: Gemini AI de Google.
 
 #### Instrucciones de juego
