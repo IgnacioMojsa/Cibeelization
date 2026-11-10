@@ -12,7 +12,8 @@ public partial class UIPantallaDeInicio : UIBase {
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 
-	public override void _Ready(){		
+	public override void _Ready(){	
+		GameManager.Instance.modoMultiplayer = false;	
 		uiModos = GetNode<PanelContainer>("ElegirModo");
 		uiOpcionesOnline = GetNode<PanelContainer>("OpcionesModoOnline");
 		uiComienzo = GetNode<PanelContainer>("MenuComienzo");
@@ -95,7 +96,7 @@ public partial class UIPantallaDeInicio : UIBase {
 	private void ComenzarPartidaMultijugador(int jugadores, int size){
 		GameManager.Instance.cantidadJugadores = jugadores;
 		GameManager.Instance.sizeTablero = size;
-		GD.Print("Se creó una partida MILTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");
+		GD.Print("Se creó una partida MULTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");
 		GD.Print("Tamaño del tablero elegido: " + GameManager.Instance.sizeTablero);
 		AudioManager.Instance.PlaySound(UiSound1);
 		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");

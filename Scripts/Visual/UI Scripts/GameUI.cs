@@ -146,12 +146,17 @@ public partial class GameUI : UIBase {
 		MostrarMovimientosDisponibles();
 		ValidarTurnoLocalUI();
 
-		if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible) instanciaMenuRadial.OcultarTransformaciones();
-		else instanciaMenuRadial.OcultarMenu();
+		if (instanciaMenuRadial != null && instanciaMenuRadial.ContenedorDeTransformaciones != null){
+			if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible){
+				instanciaMenuRadial.OcultarTransformaciones();
+			} else {
+				instanciaMenuRadial.OcultarMenu();
+			}
+		}
 	}
 
 	private void ActualizarInstrucciones(string texto){
-		if(feedback != null){
+		if(feedback != null && IsInstanceValid(feedback)){
 		feedback.Text = texto;
 		}
 	}
@@ -202,7 +207,7 @@ public partial class GameUI : UIBase {
 		GD.Print("Regresando al menú principal");
 
 		reinicioConfirmado = false;
-    	hayJugadorVictorioso = false;
+		hayJugadorVictorioso = false;
 	}
 
 	public void ForzarDesconexionYLimpiezaTotal(){
@@ -573,18 +578,20 @@ public partial class GameUI : UIBase {
 	}
 
 	public override void _ExitTree(){
-    Multiplayer.PeerDisconnected -= OnPeerDisconnectedInGame;
+	Multiplayer.PeerDisconnected -= OnPeerDisconnectedInGame;
+	EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
 
-    if(GameManager.Instance != null){
-        GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+	if(GameManager.Instance != null){
+		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
 
-        if(GameManager.Instance.TurnManager != null){
-            var turnManager = GameManager.Instance.TurnManager;
-            EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
-            turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
-            turnManager.OnTurnoCambiado -= ActualizarUI;
-        }
-    }
-    base._ExitTree();
+		if(GameManager.Instance.TurnManager != null){
+			var turnManager = GameManager.Instance.TurnManager;
+			turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
+			turnManager.OnTurnoCambiado -= ActualizarUI;
+		}
+	}
+	base._ExitTree();
 }
 };
