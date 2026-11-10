@@ -44,6 +44,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nvaej")
+port = null
+adress = null
 
 [node name="Host" type="Button" parent="." unique_id=140702952]
 z_index = 3
@@ -327,8 +329,6 @@ size_flags_vertical = 4
 [node name="AceptarButton" type="Button" parent="HUD/Ajustes/VBoxContainer/Margin4/Aceptar" unique_id=51742278]
 process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_4233d")
 theme_override_font_sizes/font_size = 37
