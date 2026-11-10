@@ -42,7 +42,7 @@ Click izquierdo y arrastre para mover la dirección de la cámara.
     - Azar
  
 #### UML
-<img width="1262" height="712" alt="Image" src="https://github.com/user-attachments/assets/6ddfbdcc-9d42-4b72-a5e8-3cf7db0313f9" />
+<img width="2434" height="1778" alt="Image" src="https://github.com/user-attachments/assets/283470be-95a5-4dcb-8d3e-3a7f057bf649" />
 
 ## Patrones de diseño [^1]
 
@@ -61,7 +61,7 @@ Elegimos el patrón de diseño observer ya que lo hemos estado utilizando en la 
 
 La interfaz de nuestro juego mantiene informado a todos los jugadores constantemente de:
 - Turno del jugador actual
-- Número que salió en el dado
+- Número que salió en el dado y movimientos disponibles
 - Puntos de vida de cada jugador (HP)
 - Instrucciones de juego y mensajes de alerta
 - A qué jugador pertenecen las abejas súbditas invocadas en el tablero
