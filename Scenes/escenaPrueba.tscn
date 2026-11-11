@@ -32,6 +32,8 @@
 [ext_resource type="Texture2D" uid="uid://w7ya46oq4vgs" path="res://Assets/UI/AbejarReina1Contorno.svg" id="17_iks2i"]
 [ext_resource type="Texture2D" uid="uid://bqdyacmbrecbj" path="res://Assets/UI/BotonAtaqueResplandor.svg" id="18_ohwqx"]
 [ext_resource type="Texture2D" uid="uid://bqqvegxejtmfk" path="res://Assets/UI/BotonAtaqueDeshabilitado.svg" id="19_qwcee"]
+[ext_resource type="Script" uid="uid://dj7v4kfj6lp15" path="res://Scripts/Visual/UI Scripts/Timers.cs" id="33_ohwqx"]
+[ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="33_vu10v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
 sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
@@ -1121,6 +1123,55 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 21
 placeholder_text = " INTRODUCIR ABEJA"
+
+[node name="Timers" type="Control" parent="HUD" unique_id=1628260154]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -723.5
+offset_top = -1016.0
+offset_right = 723.5
+offset_bottom = -961.0
+grow_horizontal = 2
+script = ExtResource("33_ohwqx")
+
+[node name="LabelTimerTurno" type="Label" parent="HUD/Timers" unique_id=1002019096]
+layout_mode = 1
+offset_right = 97.0
+offset_bottom = 46.0
+theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 45
+text = "00:00"
+
+[node name="TimerTurno" type="Timer" parent="HUD/Timers" unique_id=1558110202]
+wait_time = 10.0
+
+[node name="LabelTimerPartida" type="Label" parent="HUD/Timers" unique_id=463321455]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -97.0
+offset_bottom = 46.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 45
+text = "00:00"
+
+[node name="TimerPartida" type="Timer" parent="HUD/Timers" unique_id=2012866865]
+wait_time = 15.0
+one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
 replication_config = SubResource("SceneReplicationConfig_2gfcn")
