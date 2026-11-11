@@ -13,17 +13,38 @@ public partial class Timers : Control{
 		timerPartida = GetNode<Timer>("TimerPartida");
 		timerTurno = GetNode<Timer>("TimerTurno");
 
+		timerTurno.Timeout += OnTimerTurnoTimeout;
+
+		if(GameManager.Instance.TurnManager != null){
+            GameManager.Instance.TurnManager.OnTurnoCambiado += ReiniciarTimerTurno;
+        }
+
 		timerPartida.Start();
+		timerTurno.Start();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta){
 		labelTimerPartida.Text = TiempoRestanteDeTimer(timerPartida.TimeLeft);
+		labelTimerTurno.Text = TiempoRestanteDeTimer(timerTurno.TimeLeft);
 	}
+
+	private void OnTimerTurnoTimeout() => GameManager.Instance.ForzarFinDeTurnoPorTiempo();
+    
+	private void ReiniciarTimerTurno(){
+		timerTurno.Stop();
+        timerTurno.Start();
+    }
 
 	private string TiempoRestanteDeTimer(double tiempoRestante){
 		int minutos = (int)(tiempoRestante / 60);
 		int segundos = (int)(tiempoRestante % 60);
 		return $"{minutos:D2}:{segundos:D2}";
 	}
+
+	public override void _ExitTree(){
+        if (GameManager.Instance?.TurnManager != null){
+            GameManager.Instance.TurnManager.OnTurnoCambiado -= ReiniciarTimerTurno;
+        }
+    }
 }

@@ -29,7 +29,19 @@ public class TurnManager
 
 	public async Task TerminarTurno(){
 		if (jugadorEnTurno == null) return;
+		ReiniciarVariablesPorCambioDeTurno();
+		//GD.Print("Terminó su turno");
+		await Task.Delay(1000);
+		CambiarTurnoASiguienteJugador();
+	}
 
+	public void ForzarFinDeTurnoPorTiempo(){
+		if (jugadorEnTurno == null) return;
+		ReiniciarVariablesPorCambioDeTurno();
+		CambiarTurnoASiguienteJugador();
+	}
+
+	private void ReiniciarVariablesPorCambioDeTurno(){
 		jugadorEnTurno.EsSuTurno = false;
 		jugadorEnTurno.TiroLosDados = false;
 		jugadorEnTurno.AccionConsumida = false;
@@ -43,10 +55,6 @@ public class TurnManager
 		jugadorEnTurno.MenteColmena = false;
 		jugadorEnTurno.MoviendoSubdito = false;
 		jugadorEnTurno.Estado = AbejaReina.EstadoTurno.TurnoTerminado;
-
-		//GD.Print("Terminó su turno");
-		await Task.Delay(1000);
-		CambiarTurnoASiguienteJugador();
 	}
 	
 	public void DispararCambioDeTurno(AbejaReina nuevoJugador)

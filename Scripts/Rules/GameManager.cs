@@ -272,8 +272,10 @@ public partial class GameManager
 		//GD.Print($"Partida reiniciada con {PartidaActual.CantidadJugadores} jugadores y tablero {PartidaActual.SizeTablero}");
 	}
 
-	public List<Abeja> ObtenerTransformacionesDisponibles(Abeja unaAbeja)
-	{
+	public List<Abeja> ObtenerTransformacionesDisponibles(Abeja unaAbeja){
 		return unaAbeja.TransformacionesDisponibles;
 	}
+
+	public void ForzarFinDeTurnoPorTiempo() => TurnManager?.ForzarFinDeTurnoPorTiempo();
+	
 }
