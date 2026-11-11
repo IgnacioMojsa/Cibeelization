@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class Timers : Control{
-	private Label labelTimerPartida;
+	private Label labelTimerPartida; 
 	private Label labelTimerTurno;
 	private Timer timerPartida;
 	private Timer timerTurno;

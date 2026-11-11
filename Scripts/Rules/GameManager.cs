@@ -252,7 +252,7 @@ public partial class GameManager
 		sizeTablero = 0;
 		modoMultiplayer = false;
 		jugadorEsHost = true;
-	}
+	} 
 
 	public void ReiniciarPartida(){
 		if (PartidaActual == null){

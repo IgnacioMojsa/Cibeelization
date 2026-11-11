@@ -15,7 +15,7 @@ public class TurnManager
 	{
 		JugadoresEnPartida = jugadores;
 	}
-
+ 
 	public void EstablecerPrimerTurno(){
 		if(JugadoresEnPartida == null || JugadoresEnPartida.Count == 0) return;
 
