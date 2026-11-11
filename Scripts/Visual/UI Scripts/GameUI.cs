@@ -45,6 +45,9 @@ public partial class GameUI : UIBase {
 		else if(currentScene == "res://Scenes/pantallaVictoria.tscn"){
 			MostrarPantallaDeVictoria();
 		}
+		else if(currentScene == "res://Scenes/pantallaEmpate.tscn"){
+			MostrarPantallaDeEmpate();
+		}
 
 		Multiplayer.PeerDisconnected += OnPeerDisconnectedInGame;
 	}
@@ -240,6 +243,12 @@ public partial class GameUI : UIBase {
 	private void MostrarMensajeVictoria(){
 		var mensajeVictoria = GetNode<Label>("Titulo");
 		mensajeVictoria.Text = "EL  JUGADOR   " + GameManager.Instance.JugadorGanador.Id + "   ES  EL  GANADOR";
+	}
+
+	private void MostrarPantallaDeEmpate(){
+		var mensajeEmpate = GetNode<Label>("Titulo");
+		mensajeEmpate.Text = "Empate";
+		UIVictoria();
 	}
 
 	public bool EsTurnoLocal(){

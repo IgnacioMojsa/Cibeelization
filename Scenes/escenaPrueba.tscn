@@ -1170,7 +1170,7 @@ theme_override_font_sizes/font_size = 45
 text = "00:00"
 
 [node name="TimerPartida" type="Timer" parent="HUD/Timers" unique_id=2012866865]
-wait_time = 15.0
+wait_time = 30.0
 one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]

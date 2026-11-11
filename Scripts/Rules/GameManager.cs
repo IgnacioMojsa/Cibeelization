@@ -277,5 +277,42 @@ public partial class GameManager
 	}
 
 	public void ForzarFinDeTurnoPorTiempo() => TurnManager?.ForzarFinDeTurnoPorTiempo();
+
+	public void ResolverPartidaPorTiempo(){
+		var jugadoresActivos = JugadoresEnPartida.Where(j => !j.FueraDeJuego).ToList();
+
+		if(jugadoresActivos.Count == 0){
+			JugadorGanador = null;
+			return;
+		}
+
+		if(jugadoresActivos.Count == 1){
+			JugadorGanador = jugadoresActivos[0];
+			return;
+		}
+
+		var puntuaciones = jugadoresActivos.Select(j => new 
+		{
+			Jugador = j,
+			PorcentajeTablero = TableroActual != null ? TableroActual.PorcentajeDelTableroOcupadoPorUnaReina(j) : 0f,
+			VidaRestante = j.HP
+		}).ToList();
+
+		float maxPorcentaje = puntuaciones.Max(p => p.PorcentajeTablero);
+		var candidatosPorTablero = puntuaciones.Where(p => p.PorcentajeTablero == maxPorcentaje).ToList();
+		if (candidatosPorTablero.Count == 1){
+			JugadorGanador = candidatosPorTablero[0].Jugador;
+			return;
+		}
+
+		int maxVida = candidatosPorTablero.Max(p => p.VidaRestante);
+		var candidatosPorVida = candidatosPorTablero.Where(p => p.VidaRestante == maxVida).ToList();
+
+		if(candidatosPorVida.Count == 1){
+			JugadorGanador = candidatosPorVida[0].Jugador;
+		} else {
+			JugadorGanador = null;
+		}
+	}
 	
 }

@@ -14,6 +14,7 @@ public partial class Timers : Control{
 		timerTurno = GetNode<Timer>("TimerTurno");
 
 		timerTurno.Timeout += OnTimerTurnoTimeout;
+		timerPartida.Timeout += OnTimerPartidaTimeout;
 
 		if(GameManager.Instance.TurnManager != null){
             GameManager.Instance.TurnManager.OnTurnoCambiado += ReiniciarTimerTurno;
@@ -30,6 +31,18 @@ public partial class Timers : Control{
 	}
 
 	private void OnTimerTurnoTimeout() => GameManager.Instance.ForzarFinDeTurnoPorTiempo();
+
+	private void OnTimerPartidaTimeout(){
+		timerPartida.Stop();
+        timerTurno.Stop();
+        GameManager.Instance.ResolverPartidaPorTiempo();
+
+        if(GameManager.Instance.JugadorGanador != null){
+            GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn");
+        } else {
+            GetTree().ChangeSceneToFile("res://Scenes/pantallaEmpate.tscn");
+        }
+	}
     
 	private void ReiniciarTimerTurno(){
 		timerTurno.Stop();
