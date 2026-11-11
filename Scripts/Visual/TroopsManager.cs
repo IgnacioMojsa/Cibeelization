@@ -146,7 +146,7 @@ public partial class TroopsManager : Node3D
 
 	public void MostrarAbejasCercanas()
 	{
-		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineAttack.tres");
 		
 		GuardarAbejasCercanas();
 
@@ -160,7 +160,7 @@ public partial class TroopsManager : Node3D
 
 	public void OcultarAbejasCercanas()
 	{
-		var materialOriginal = GD.Load<StandardMaterial3D>("res://outlineBase.tres");
+		var materialOriginal = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineBase.tres");
 
 		foreach (var abeja in AbejasCercanas)
 		{
@@ -298,7 +298,7 @@ public partial class TroopsManager : Node3D
 	}
 
 	public void MostrarTransformablesEn(Type unTipoDeAbeja){
-		var materialAtaque = GD.Load<StandardMaterial3D>("res://outlineAttack.tres");
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineAttack.tres");
 
 		if(ExistenSubditosTransformables()){
 			ObtenerSubditosTransformables();

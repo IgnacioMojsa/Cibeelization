@@ -469,7 +469,7 @@ public partial class PlayerManager : Node3D
 			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
 			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
 			
-			vfxManager.EstablecerUnOutlineAAbeja("res://outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
+			vfxManager.EstablecerUnOutlineAAbeja("res://Assets/Resources/outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
 			if(EsTurnoLocal()){
 				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
 			}

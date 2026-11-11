@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cw0cc53xhs7lw"]
 
 [ext_resource type="PackedScene" uid="uid://31y60fwa2hd1" path="res://Assets/3DModels/AbejaReina2.glb" id="1_mfljo"]
-[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_gmiq5"]
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://Assets/Resources/outlineBase.tres" id="2_gmiq5"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_tx025"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tx025"]

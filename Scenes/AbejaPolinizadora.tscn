@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpmbkt0j74a8j"]
 
 [ext_resource type="PackedScene" uid="uid://dmdud8iwckmsh" path="res://Assets/3DModels/AbejaPolinizadora.glb" id="1_w8ffe"]
-[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_n8ilj"]
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://Assets/Resources/outlineBase.tres" id="2_n8ilj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uohl5"]
 next_pass = ExtResource("2_n8ilj")

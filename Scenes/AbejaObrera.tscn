@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xt5c4rh0myu1"]
 
 [ext_resource type="PackedScene" uid="uid://bwqm4lupn37r7" path="res://Assets/3DModels/AbejaObrera.glb" id="1_falgf"]
-[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://outlineBase.tres" id="2_cmi5a"]
+[ext_resource type="Material" uid="uid://dtuh3l8xgic6i" path="res://Assets/Resources/outlineBase.tres" id="2_cmi5a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bmhr3"]
 next_pass = ExtResource("2_cmi5a")

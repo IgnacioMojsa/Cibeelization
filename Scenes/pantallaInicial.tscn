@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="3_cluwn"]
 [ext_resource type="Texture2D" uid="uid://ykt4avr1uixj" path="res://Assets/PNGS/Titulo.png" id="3_plf46"]
 [ext_resource type="Texture2D" uid="uid://57ol0hdn5q41" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarPresionado.svg" id="4_6hrbw"]
-[ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://players_option.tres" id="4_8of7i"]
+[ext_resource type="ButtonGroup" uid="uid://085mcnfud6rp" path="res://Assets/Resources/players_option.tres" id="4_8of7i"]
 [ext_resource type="Texture2D" uid="uid://bhh7emb4jb3d8" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarSeleccionado.svg" id="5_plf46"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="6_e1fak"]
 [ext_resource type="Texture2D" uid="uid://bekwrmfu7l6ly" path="res://Assets/UI/UIPantallaInicial/BotonJugar/BotonJugarDeshabilitado.svg" id="6_mpr3k"]
