@@ -76,28 +76,31 @@ Nuestra clase TurnManager posee un constructor que recibe como parámetros una l
 public event Action<AbejaReina> OnCambioDeTurnoJugador;
 public event Action OnTurnoCambiado;
 
-public TurnManager(List<AbejaReina> jugadores)
-   {
+public TurnManager(List<AbejaReina> jugadores){
        JugadoresEnPartida = jugadores;
    }
 ```
 
 También, en Godot, la forma en la que conectamos señales con eventos en los botones y en los textos de la UI en Godot son parte del patrón observer. En este caso, nos suscribimos a varios eventos antes de comenzar la partida.
 ```ruby
-private void SuscribirAEventos()
-	{
-		_ExitTree();
-
+private void SuscribirAEventos(){
+		//_ExitTree();
 		var turnManager = GameManager.Instance.TurnManager;
 		EventosUI.OnMensajeAMostrar += ActualizarInstrucciones;
-		turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
-		turnManager.OnTurnoCambiado += ActualizarUI;
+		if (turnManager != null){
+			turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
+			turnManager.OnTurnoCambiado += ActualizarUI;
+		}
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
+		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 ```
 
 Estamos usando esta estructura de código también en nuestra clase PlayerManager.
 ```ruby
+botonAtacar.Pressed += OnAtacarPressed;
+botonColmena.Pressed += OnBotonColmenaPressed;
 botonPausa.Pressed += PausarPartida;
 ```
 
@@ -112,51 +115,40 @@ PlayerManager permite la coordinación de los subsistemas de Tablero, Movimiento
 
 Por ejemplo, este método recibe una instancia visual y una ubicación en sus parámetros (obtenida también de un raycast en el PlayerManager). Mueve esa instancia visual a la posición recibida, notifica al GameManager de la acción realizada, actualiza la cámara enfocando al nodo 3D en su nueva posición. También indica al AudioManager que reproduzca un sonido.
 ```ruby
-private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino)
-	{
+private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino){
+		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+			celdasManager.DespintarCeldaDeAbejaBuffeada();
+		}
 		Vector3 targetPos = celdaDestino.Tile.GlobalPosition;
 		targetPos.Y = jugador.GlobalPosition.Y; 
 		jugador.GlobalPosition = targetPos;
 		CeldaActualPorJugador[jugador] = celdaDestino;
-        [...]
+		int index = VisualesJugadores.Values.ToList().IndexOf(jugador);
 		if (index != -1){
-			GameManager.Instance.JugadoresEnPartida[index].UbicacionActual = celdaDestino;
-			GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 2, 1);
+			GameManager.Instance.JugadoresEnPartida[index].CeldaActual = celdaDestino;
+			if(EsTurnoLocal()){
+				GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 2, 1);
+			}
 		}
-
-		GameManager.Instance.ConsumirMovimiento();
+		_ = GameManager.Instance.ConsumirMovimiento();
 		GameManager.Instance.NotificarCambioDeEstado();
-		[...]
-		AudioManager.Instance.PlaySound(sound);
+		AudioManager.Instance.PlaySound(Sound2);
 	}
 ```
 
 En el caso de invocar una abeja nueva, este método permite también obtener una posición en las celdas mediante raycast, consultar dentro de la lista de celdas disponibles y permite que tropasManager se encargue de instanciar la abeja nueva. Oculta los outlines de las abejas objetivo para el cambio de turno y reproduce un sonido.
 ```ruby
 public void InvocarAbejaNueva(){
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
-	
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
-		var result = spaceState.IntersectRay(query);
-
-		if(result.Count == 0) return;
-
-		PosicionEnMundo3D = result["position"].AsVector3();
-		CeldaCliqueada = ObtenerCeldaDesdePosicion(tablero.Celdas, PosicionEnMundo3D);
-	
-		if(CeldaCliqueada == null) return;
-
-		if(CeldasDisponibles.Contains(CeldaCliqueada)){
-			OcultarCeldasDisponiblesParaInvocar();	
-			OcultarAbejasObjetivo();
+		CeldaCliqueada = ObtenerCeldaAlClickear();
+		if(celdasManager.CeldasDisponibles.Contains(CeldaCliqueada)){
+			celdasManager.OcultarCeldasDisponiblesParaInvocar();	
+			vfxManager.OcultarAbejasObjetivo();
 			tropasManager.InstanciarAbeja(CeldaCliqueada);
 			var bee1 = AudioManager.Instance.GameAudio.Sound5;
 			AudioManager.Instance.PlaySound(bee1);
 		}
 		else{
+			GD.Print("No se puede invocar una abeja sobre esta celda");
 			EventosUI.MostrarMensaje("No se puede invocar una abeja sobre esta celda");
 		}
 	}
