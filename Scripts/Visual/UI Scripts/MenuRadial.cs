@@ -112,6 +112,7 @@ public partial class MenuRadial : UIBase {
 		MoveToFront();
 		AnimarAperturaContenedor(ContenedorDeAtaque, deshabilitarBotones: true);
 		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		if (hud != null) hud.ActualizarUIAtaques();
 	}
 
 	public void OcultarMenu(){
@@ -232,22 +233,28 @@ public partial class MenuRadial : UIBase {
 				OcultarAtaques();
 				break;
 			case "ComandarButton":
+				hud.ComandarAtaque();
 				OcultarAtaques();
+				GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
 				break;
-				
 		}
 		
 		OcultarMenu();
 	}
 
-	public void ActualizarEstadoBoton(bool condicion, string unBoton){
-		foreach (var contenedor in new[] { ContenedorDeBotones, ContenedorDeAtaque }){
-    	    var boton = contenedor?.GetNodeOrNull<Button>(unBoton);
-    	    if (boton != null){
-    	        boton.Disabled = !condicion;
-    	        return;
-    	    }
-    	}
+	public void ActualizarEstadoBoton(bool condicion, string unBoton, Control unContenedor = null){
+		//para ver si hay contenedores con nombres repetidos
+		Control[] contenedoresAProbar = unContenedor != null 
+			? new[] { unContenedor } 
+			: new[] { ContenedorDeBotones, ContenedorDeAtaque };
+
+		foreach (var contenedor in contenedoresAProbar){
+			var boton = contenedor?.GetNodeOrNull<Button>(unBoton);
+			if (boton != null){
+				boton.Disabled = !condicion;
+				return;
+			}
+		}
 	}
 
 	public void VerificarTransformacionesDisponibles(){
@@ -267,7 +274,7 @@ public partial class MenuRadial : UIBase {
 
 	public void MostrarTransformacionesDisponibles(){
 		VerificarTransformacionesDisponibles();
-
+		
 		foreach (var transformacion in TransformacionesDisponiblesActualmente){
 			var boton = ContenedorDeTransformaciones.GetNodeOrNull<Button>(transformacion.GetType().Name);
 			if (boton != null) boton.Disabled = false;

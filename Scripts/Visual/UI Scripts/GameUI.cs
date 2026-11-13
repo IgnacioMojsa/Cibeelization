@@ -53,12 +53,12 @@ public partial class GameUI : UIBase {
 	}
 
 	private MenuRadial ObtenerMenuRadial(){
-	    if (instanciaMenuRadial == null){
-	        instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
-	        AddChild(instanciaMenuRadial);
-	        instanciaMenuRadial.EstablecerHUD(this);
-	    }
-	    return instanciaMenuRadial;
+		if (instanciaMenuRadial == null){
+			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
+			AddChild(instanciaMenuRadial);
+			instanciaMenuRadial.EstablecerHUD(this);
+		}
+		return instanciaMenuRadial;
 	}
 
 	private void OnPeerDisconnectedInGame(long id){
@@ -157,6 +157,8 @@ public partial class GameUI : UIBase {
 		AlternarEstadoDeAbsorcion();
 		MostrarMovimientosDisponibles();
 		ValidarTurnoLocalUI();
+		ActualizarUIAtaques();
+		AlternarComandoDeAtaque();
 
 		if (instanciaMenuRadial != null && instanciaMenuRadial.ContenedorDeTransformaciones != null){
 			if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible){
@@ -269,7 +271,7 @@ public partial class GameUI : UIBase {
 
 	private void ValidarTurnoLocalUI(){
 		bool esNuestroTurno = EsTurnoLocal();
-		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno || botonAtacar.Disabled;
+		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno;
 		if (botonColmena != null) botonColmena.Disabled = !esNuestroTurno;
 		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
 			instanciaMenuRadial.OcultarMenu();
@@ -464,7 +466,7 @@ public partial class GameUI : UIBase {
 		if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 
 		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
-    	AlternarEstadoDeAtaque();
+		AlternarEstadoDeAtaque();
 
 		AudioManager.Instance.PlaySound(UiSound1);
 	}
@@ -492,12 +494,16 @@ public partial class GameUI : UIBase {
 
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null || instanciaMenuRadial == null) return;
-
-		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador) && modoAtaqueDisponible;
+		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && attackManager.TieneObjetivosCerca() && modoAtaqueDisponible;
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeAtacar, "AtacarButton", instanciaMenuRadial.ContenedorDeAtaque);
+	}
 
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeAtacar, "AtacarButton");
+	private void AlternarEstadoDeComandar(){
+		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
+		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 
 	private void AlternarEstadoDeInvocacion(){
@@ -599,6 +605,23 @@ public partial class GameUI : UIBase {
 		}
 
 		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	public void ActualizarUIAtaques(){
+		AlternarEstadoDeAtaque();
+		AlternarEstadoDeComandar();
+	}
+
+	public void ComandarAtaque(){
+		if(playerManager == null || attackManager == null || !EsTurnoLocal()) return;
+		attackManager.ComandarAtaque();
+	}
+
+	private void AlternarComandoDeAtaque(){
+		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
+		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton");
 	}
 
 	public override void _ExitTree(){
