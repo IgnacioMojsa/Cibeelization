@@ -512,7 +512,7 @@ public partial class GameUI : UIBase {
 	private void AlternarEstadoDeComandar(){
 		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
-		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
+		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible && GameManager.Instance.jugadorEnTurno.MovimientosDisponibles >= 3;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 

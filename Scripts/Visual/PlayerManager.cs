@@ -68,13 +68,13 @@ public partial class PlayerManager : Node3D
 			InvocarAbejaNueva();
 		}
 		
-		else if(EnModoDestruccion() && !jugador.AccionConsumida)
+		else if(EnModoDestruccion() && !jugador.AtaqueConsumido)
 		{
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			IntentarDestruirCelda();
 		}
 
-		else if(jugador.ModoAtaque && !jugador.AccionConsumida){
+		else if(jugador.ModoAtaque && !jugador.AtaqueConsumido){
 			attackManager.Atacar();
 			gameUI.ActualizarUI();
 		}

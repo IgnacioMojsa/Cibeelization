@@ -143,7 +143,7 @@ public partial class GameManager
 			
 		jugadorEnTurno.ModoAtaque = false;
 		jugadorEnTurno.AtacoRecien = true;
-		jugadorEnTurno.AccionConsumida = true;
+		jugadorEnTurno.AtaqueConsumido = true;
 	}
 
 	public void EliminarJugador(int Id){
