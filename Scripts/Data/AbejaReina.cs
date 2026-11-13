@@ -11,6 +11,7 @@ public partial class AbejaReina : Abeja
 	public bool ModoAbsorcion {get; set;} = false;
 	public bool ModoTransformacion {get; set;} = false;
 	public bool ModoAtaque {get; set;} = false;
+	public bool AtaqueAObjetivo {get; set;} = false;
 	public bool ModoInvocacion {get; set;} = false;
 	public bool InvocoRecien {get; set;} = false;
 	public bool MenteColmena {get; set;} = false;

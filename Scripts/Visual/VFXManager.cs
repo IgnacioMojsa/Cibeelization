@@ -126,7 +126,7 @@ public partial class VFXManager : Node3D
 	public void OcultarAbejasObjetivo(){
 		var outlineBase = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineBase.tres");
 
-		foreach (var abejaVisual in playerManager.AbejasObjetivo)
+		foreach (var abejaVisual in attackManager.AbejasObjetivo)
 		{
 			if(abejaVisual != null)
 			{

@@ -229,9 +229,23 @@ public partial class MenuRadial : UIBase {
 				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaGuardiana));
 				break;
 			case "AtacarButton":
-				hud.AtaqueAObjetivo();
-				OcultarAtaques();
-				break;
+				if (GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo)
+				{
+					GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = false;
+					hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
+					hud.playerManager.vfxManager.OcultarAbejasObjetivo();
+					hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
+					OcultarAtaques();
+					break;
+				}
+				else
+				{
+					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = true;
+					hud.AtaqueAObjetivo();
+					OcultarAtaques();
+					break;
+				}
 			case "ComandarButton":
 				hud.ComandarAtaque();
 				OcultarAtaques();

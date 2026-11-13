@@ -36,7 +36,8 @@ offset_bottom = 50.0
 scale = Vector2(1e-05, 1e-05)
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_p45bt")
-text = "Comandar Ataque"
+text = "Comandar 
+Ataque"
 
 [node name="ContenedorBotones" type="Control" parent="." unique_id=1222717018]
 unique_name_in_owner = true

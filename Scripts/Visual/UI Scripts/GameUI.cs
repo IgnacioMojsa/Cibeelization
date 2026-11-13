@@ -438,7 +438,6 @@ public partial class GameUI : UIBase {
 			if(tropasManager.SubditoActual is AbejaPolinizadora) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles /= 2;
 			if(tropasManager.SubditoActual is AbejaGuardiana) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles *= 2;
 			
-			
 			tropasManager.OcultarAbejasCercanas();
 			playerManager.TerminarControlDeSubdito();
 		}
@@ -465,7 +464,7 @@ public partial class GameUI : UIBase {
 	private void OnAtacarPressed(){
 		if(playerManager == null || !EsTurnoLocal()) return;
 
-		if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)GameManager.Instance.jugadorEnTurno.ModoAtaque = true; 
 
 		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
 		AlternarEstadoDeAtaque();
