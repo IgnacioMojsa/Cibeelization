@@ -371,30 +371,39 @@ public partial class GameUI : UIBase {
 	}
 
 	public void MostrarRecursosDeJugadorEnTurno(){
-		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 
-		HashSet<string> recursosActuales = new HashSet<string>();
-
-		if(recursosActuales.Count == 0){
-			var nodosHijos = recursos.GetChildren();
-
-			foreach (var hijo in nodosHijos){
-					if(hijo is Label hijoLabel)
-					
-					hijoLabel.Text = "0";
-				}
+		if(GameManager.Instance.modoMultiplayer){
+			long idLocal = Multiplayer.GetUniqueId();
+			var jugadorLocal = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idLocal);
+			if(jugadorLocal != null){
+				jugadorEnTurno = jugadorLocal;
+			}
 		}
 
+		if(jugadorEnTurno == null || jugadorEnTurno.ColmenaDeReina == null) return;
+		
+		var nodosHijos = recursos.GetChildren();
+		foreach (var hijo in nodosHijos){
+			if(hijo is Label hijoLabel){
+				hijoLabel.Text = "0";
+			}
+		}
+
+		//if(recursosActuales.Count == 0){
+		//}
+
+		HashSet<string> recursosActuales = new HashSet<string>();
 		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena){
-			if(recurso == null) break;
-			
+			if(recurso == null) continue; //break
 			recursosActuales.Add(recurso);
 		}
 
 		foreach (var recurso in recursosActuales){
 			var cantRecurso = recursos.GetNode<Label>(recurso);
-
-			cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
+			if(cantRecurso != null){
+				cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
+			}
 		}
 	}
 
@@ -430,7 +439,6 @@ public partial class GameUI : UIBase {
 			playerManager.TerminarControlDeSubdito();
 		}
 	}
-
 	public void OnCurarPressed(){
 		if(playerManager == null) return;
 

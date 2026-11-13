@@ -481,6 +481,23 @@ public partial class PlayerManager : Node3D
 		}
 	}
 
+	public void ProducirYSincronizarRecursosDesdeServer(AbejaReina jugador){
+		if(!Multiplayer.IsServer()) return;
+		jugador.ColmenaDeReina.GenerarRecursosDeAbejas();
+		Rpc(nameof(SincronizarRecursosRpc), jugador.Id, jugador.ColmenaDeReina.RecursosDeColmena.ToArray());
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SincronizarRecursosRpc(long idJugador, string[] recursos){
+		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idJugador);
+		if(jugador != null && jugador.ColmenaDeReina != null){
+			jugador.ColmenaDeReina.RecursosDeColmena = new List<string>(recursos);
+			if(GameManager.Instance.modoMultiplayer && Multiplayer.GetUniqueId() == idJugador){
+				gameUI.MostrarRecursosDeJugadorEnTurno();
+			}
+		}
+	} 
+
 	public override void _ExitTree(){
 		if (GameManager.Instance.TurnManager != null){
 			GameManager.Instance.TurnManager.OnCambioDeTurnoJugador -= OnCambioDeTurnoJugador;

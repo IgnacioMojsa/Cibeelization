@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
 
 public partial class Colmena
 {
@@ -40,7 +39,6 @@ public partial class Colmena
 		foreach (var abeja in AbejasDeColmena)
 		{
 			if(abeja == null) return;
-			
 			RecursosDeColmena.Add(abeja.RecursoGenerable);
 		}
 	}
