@@ -148,7 +148,7 @@ public partial class GameUI : UIBase {
 		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 
-	private void ActualizarUI(){
+	public void ActualizarUI(){
 		MostrarJugadorEnTurno();
 		MostrarHPDeJugaores();
 		MostrarRecursosDeJugadorEnTurno();
@@ -271,8 +271,10 @@ public partial class GameUI : UIBase {
 
 	private void ValidarTurnoLocalUI(){
 		bool esNuestroTurno = EsTurnoLocal();
-		if (botonAtacar != null) botonAtacar.Disabled = !esNuestroTurno;
-		if (botonColmena != null) botonColmena.Disabled = !esNuestroTurno;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		bool turnoHabilitado = esNuestroTurno && jugador != null && jugador.TiroLosDados;
+		if (botonAtacar != null) botonAtacar.Disabled = !turnoHabilitado;
+		if (botonColmena != null) botonColmena.Disabled = !turnoHabilitado;
 		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
 			instanciaMenuRadial.OcultarMenu();
 			if (instanciaMenuRadial.ContenedorDeTransformaciones != null)
@@ -585,6 +587,8 @@ public partial class GameUI : UIBase {
 			ActualizarInstrucciones("Debes moverte antes de atacar o invocar.");
 			botonDado.Disabled = true;
 			AudioManager.Instance.PlaySound(UiSound4);
+
+			ActualizarUI();
 		}
 	}
 

@@ -70,6 +70,7 @@ public partial class PlayerManager : Node3D
 		
 		else if(jugador.ModoAtaque && !jugador.AccionConsumida){
 			attackManager.Atacar();
+			gameUI.ActualizarUI();
 		}
 
 		else if(jugador.ModoTransformacion && !jugador.AccionConsumida){
