@@ -42,7 +42,7 @@ public partial class PlayerManager : Node3D
 		GameManager.Instance.OnTurnoTerminadoPorMovimientos += ManejarTurnoTerminadoPorMovimientos;
 
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-		GameManager.Instance.CamaraActual.EnfocarNodo(VisualJugadorActual, 5, 5);
+		GameManager.Instance.CamaraActual.EnfocarNodo(VisualesJugadores[GameManager.Instance.jugadorEnTurno], 5, 5);
 	}
 
 	public override void _UnhandledInput(InputEvent @event){	

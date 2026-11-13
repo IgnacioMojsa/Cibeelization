@@ -52,6 +52,15 @@ public partial class GameUI : UIBase {
 		Multiplayer.PeerDisconnected += OnPeerDisconnectedInGame;
 	}
 
+	private MenuRadial ObtenerMenuRadial(){
+	    if (instanciaMenuRadial == null){
+	        instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
+	        AddChild(instanciaMenuRadial);
+	        instanciaMenuRadial.EstablecerHUD(this);
+	    }
+	    return instanciaMenuRadial;
+	}
+
 	private void OnPeerDisconnectedInGame(long id){
 		GD.Print($"Un jugador se desconectó en plena partida: {id}");
 		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
@@ -442,28 +451,28 @@ public partial class GameUI : UIBase {
 	}
 
 	private void OnAtacarPressed(){
-		if(playerManager == null) return;
-		
+		if(playerManager == null || !EsTurnoLocal()) return;
+
+		if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+
+		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
+    	AlternarEstadoDeAtaque();
+
+		AudioManager.Instance.PlaySound(UiSound1);
+	}
+
+	public void AtaqueAObjetivo()
+	{
 		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 
-		if (!GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			if(GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
-				GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
-				playerManager.vfxManager.MostrarJugadoresObjetivo();
-				playerManager.vfxManager.MostrarAbejasObjetivo();
-				GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
-
-				if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
-					playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
-				}
+		if(GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
+			GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+			playerManager.vfxManager.MostrarJugadoresObjetivo();
+			playerManager.vfxManager.MostrarAbejasObjetivo();
+			GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
+			if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+				playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
 			}
-		}
-
-		else if(GameManager.Instance.jugadorEnTurno.ModoAtaque){
-			GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
-			playerManager.vfxManager.EsconderOutlineDeJugadores();
-			playerManager.vfxManager.OcultarAbejasObjetivo();
-			playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
 		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito && tropasManager.SubditoActual is AbejaGuardiana)
@@ -471,18 +480,16 @@ public partial class GameUI : UIBase {
 			attackManager.AtacarConGuardiana();
 			playerManager.TerminarControlDeSubdito();
 		}
-
-		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void AlternarEstadoDeAtaque(){
-		if (playerManager == null) return;
+		if (playerManager == null || instanciaMenuRadial == null) return;
 
 		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
 		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador) && modoAtaqueDisponible;
 
-		botonAtacar.Disabled = !puedeAtacar;
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeAtacar, "AtacarButton");
 	}
 
 	private void AlternarEstadoDeInvocacion(){

@@ -12,6 +12,32 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g5qvg")
 
+[node name="ContenedorAtaque" type="Control" parent="." unique_id=941642120]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AtacarButton" type="Button" parent="ContenedorAtaque" unique_id=141728969]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 82.0
+offset_bottom = 54.0
+scale = Vector2(1e-05, 1e-05)
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Atacar"
+
+[node name="ComandarButton" type="Button" parent="ContenedorAtaque" unique_id=1743239500]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 74.0
+offset_bottom = 50.0
+scale = Vector2(1e-05, 1e-05)
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Comandar "
+
 [node name="ContenedorBotones" type="Control" parent="." unique_id=1222717018]
 unique_name_in_owner = true
 anchors_preset = 0

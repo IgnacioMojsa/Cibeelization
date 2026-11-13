@@ -6,7 +6,9 @@ public partial class MenuRadial : UIBase {
 	[Export] private GameUI hud; 
 	private Control ContenedorDeBotones;
 	public Control ContenedorDeTransformaciones;
+	public Control ContenedorDeAtaque;
 	private HashSet<Abeja> TransformacionesDisponiblesActualmente = new HashSet<Abeja>();
+	private readonly HashSet<Control> contenedoresCerrandose = new();
 	public bool Activo = false;
 	public Vector2 PosicionCentral;
 	public float Radio = 110f;
@@ -15,10 +17,12 @@ public partial class MenuRadial : UIBase {
 	public override void _Ready(){
 		ContenedorDeBotones = GetNode<Control>("%ContenedorBotones");
 		ContenedorDeTransformaciones = GetNode<Control>("%ContenedorTransformaciones");
+		ContenedorDeAtaque = GetNode<Control>("%ContenedorAtaque");
 
 		PosicionCentral = GetViewportRect().Size / 2 - ContenedorDeBotones. GetRect().Size / 2;
 		ContenedorDeBotones.Hide();
 		ContenedorDeTransformaciones.Hide();
+		ContenedorDeAtaque.Hide();
 
 		foreach (Node nodoHijo in ContenedorDeBotones.GetChildren()){
 			if(nodoHijo is Button boton){
@@ -27,6 +31,12 @@ public partial class MenuRadial : UIBase {
 		}
 
 		foreach (Node nodoHijo in ContenedorDeTransformaciones.GetChildren()){
+			if(nodoHijo is Button boton){
+				ConfigurarBotonRadial(boton);
+			}
+		}
+
+		foreach (Node nodoHijo in ContenedorDeAtaque.GetChildren()){
 			if(nodoHijo is Button boton){
 				ConfigurarBotonRadial(boton);
 			}
@@ -44,11 +54,24 @@ public partial class MenuRadial : UIBase {
 		GlobalPosition = posicionGlobal;
 		if (Activo){
 			OcultarMenu();
+
 			if (ContenedorDeTransformaciones.Visible){
 				OcultarTransformaciones();
 				GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
 			}
-		} else {
+
+			if (ContenedorDeAtaque.Visible){
+				OcultarAtaques();
+				GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+				hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
+				hud.playerManager.vfxManager.OcultarAbejasObjetivo();
+				hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
+			}
+		} else if (GameManager.Instance.jugadorEnTurno.ModoAtaque){
+			MostrarAtaques();
+		}
+		else
+		{
 			MostrarMenu();
 		}
 	}
@@ -82,6 +105,15 @@ public partial class MenuRadial : UIBase {
 		GameManager.Instance.jugadorEnTurno.ModoTransformacion = true;
 	}
 
+	public void MostrarAtaques(){
+		Activo = true;
+		ContenedorDeAtaque.Show();
+		Show();
+		MoveToFront();
+		AnimarAperturaContenedor(ContenedorDeAtaque, deshabilitarBotones: true);
+		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+	}
+
 	public void OcultarMenu(){
 		OcultarContenedor(ContenedorDeBotones);
 	}
@@ -90,11 +122,17 @@ public partial class MenuRadial : UIBase {
 		OcultarContenedor(ContenedorDeTransformaciones);
 	}
 
+	public void OcultarAtaques(){
+		OcultarContenedor(ContenedorDeAtaque);
+	}
+
 	public void EstablecerHUD(GameUI gameUI){
 		hud = gameUI;
 	}
 
 	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false){
+		contenedoresCerrandose.Remove(contenedor);
+		
 		int cantidadDeBotones = contenedor.GetChildCount();
 		if (cantidadDeBotones == 0) return;
 
@@ -120,6 +158,8 @@ public partial class MenuRadial : UIBase {
 	}
 
 	private void OcultarContenedor(Control contenedor){
+		contenedoresCerrandose.Add(contenedor);
+		
 		foreach (var hijo in contenedor.GetChildren()){
 			if (hijo is Button boton){
 				Vector2 posicionCentroLocal = Vector2.Zero - (boton.Size / 2);
@@ -136,9 +176,12 @@ public partial class MenuRadial : UIBase {
 		}
 
 		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>{
-			contenedor.Hide();
-			Activo = ContenedorDeBotones.Visible || ContenedorDeTransformaciones.Visible;
-		};
+        	if (!contenedoresCerrandose.Remove(contenedor)) return;
+        	contenedor.Hide();
+        	Activo = ContenedorDeBotones.Visible
+        	      || ContenedorDeTransformaciones.Visible
+        	      || ContenedorDeAtaque.Visible;
+    	};
 	}
 	
 	private void SeleccionarOpcion(string nombreBoton){
@@ -184,6 +227,13 @@ public partial class MenuRadial : UIBase {
 				OcultarTransformaciones();
 				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaGuardiana));
 				break;
+			case "AtacarButton":
+				hud.AtaqueAObjetivo();
+				OcultarAtaques();
+				break;
+			case "ComandarButton":
+				OcultarAtaques();
+				break;
 				
 		}
 		
@@ -191,10 +241,13 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void ActualizarEstadoBoton(bool condicion, string unBoton){
-		if (ContenedorDeBotones.HasNode(unBoton)){
-			var boton = ContenedorDeBotones.GetNode<Button>(unBoton);
-			boton.Disabled = !condicion;
-		}
+		foreach (var contenedor in new[] { ContenedorDeBotones, ContenedorDeAtaque }){
+    	    var boton = contenedor?.GetNodeOrNull<Button>(unBoton);
+    	    if (boton != null){
+    	        boton.Disabled = !condicion;
+    	        return;
+    	    }
+    	}
 	}
 
 	public void VerificarTransformacionesDisponibles(){

@@ -25,10 +25,10 @@ public partial class CamaraController : Node3D
 			camera3D = GetNodeOrNull<Camera3D>("Camera3D");
 		}
 
-		// Aseguramos que el nodo Camera3D esté centrado respecto a este padre
 		if (camera3D != null){
-			camera3D.Position = Vector3.Zero;
-			camera3D.RotationDegrees = Vector3.Zero;
+		    camera3D.Position = Vector3.Zero;
+		    camera3D.RotationDegrees = Vector3.Zero;
+		    camera3D.MakeCurrent();
 		}
 
 		// Registrar la cámara en el Singleton
@@ -234,6 +234,8 @@ public partial class CamaraController : Node3D
             estaSiguiendo = true;
             enModoOrbita = true;
 		}));
+
+		GD.Print($"EnfocarNodo -> {objetivo?.Name} pos={objetivo?.GlobalPosition}");
 	}
 
 	public void ResetearCamaraAutomaticamente(Node3D jugadorActual){

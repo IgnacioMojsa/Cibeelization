@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://djv6bcnwwovcg"]
+[gd_scene format=3 uid="uid://b6p7qhrr1t1i6"]
 
 [ext_resource type="Script" uid="uid://5vsbaonlm86g" path="res://Scripts/Visual/CeldasManager.cs" id="1_ap8h6"]
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
@@ -35,20 +35,6 @@
 [ext_resource type="Script" uid="uid://dj7v4kfj6lp15" path="res://Scripts/Visual/UI Scripts/Timers.cs" id="33_ohwqx"]
 [ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="33_vu10v"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
-sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_gojdn"]
-sky_material = SubResource("ProceduralSkyMaterial_21dei")
-
-[sub_resource type="Environment" id="Environment_6nc1v"]
-background_mode = 1
-background_color = Color(0.1584819, 0.052934557, 0.27029577, 1)
-background_energy_multiplier = 1.49
-sky = SubResource("Sky_gojdn")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvlkt"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
 border_width_left = 5
@@ -65,6 +51,20 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_21dei"]
+sky_top_color = Color(0.81, 0.59075993, 0.3564, 1)
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_gojdn"]
+sky_material = SubResource("ProceduralSkyMaterial_21dei")
+
+[sub_resource type="Environment" id="Environment_6nc1v"]
+background_mode = 1
+background_color = Color(0.1584819, 0.052934557, 0.27029577, 1)
+background_energy_multiplier = 1.49
+sky = SubResource("Sky_gojdn")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2gfcn"]
 properties/0/path = NodePath("Camara/Camera3D:position")
 properties/0/spawn = true
@@ -74,74 +74,6 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="Escena" type="Node3D" unique_id=104624866]
-
-[node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
-script = ExtResource("1_ap8h6")
-playerManager = NodePath("../PlayerManager")
-tablero = NodePath("../Tablero")
-
-[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager", "gameUI", "secretito")]
-script = ExtResource("2_2lok1")
-camera = NodePath("../Camara/Camera3D")
-tablero = NodePath("../Tablero")
-tropasManager = NodePath("../TroopsManager")
-celdasManager = NodePath("../CeldasManager")
-animationManager = NodePath("../AnimationManager")
-vfxManager = NodePath("../VFXManager")
-attackManager = NodePath("../AttackManager")
-gameUI = NodePath("../HUD")
-secretito = NodePath("../HUD/Codigo")
-
-[node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager", "attackManager")]
-script = ExtResource("3_auhuj")
-playerManager = NodePath("../PlayerManager")
-attackManager = NodePath("../AttackManager")
-
-[node name="AnimationManager" type="Node3D" parent="." unique_id=2110061658]
-script = ExtResource("3_xolvn")
-
-[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager", "celdasManager")]
-script = ExtResource("2_qqnew")
-tableroActual = NodePath("../Tablero")
-playerManager = NodePath("../PlayerManager")
-celdasManager = NodePath("../CeldasManager")
-
-[node name="AttackManager" type="Node3D" parent="." unique_id=2099182655 node_paths=PackedStringArray("playerManager", "camera")]
-script = ExtResource("6_iks2i")
-playerManager = NodePath("../PlayerManager")
-camera = NodePath("../Camara/Camera3D")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
-light_energy = 3.059
-light_indirect_energy = 1.23
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1925802151]
-environment = SubResource("Environment_6nc1v")
-
-[node name="AbejaReina" type="Node3D" parent="." unique_id=376051322]
-transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, -6, 0, 2.5)
-visible = false
-
-[node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
-transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, 0, 0, -27)
-script = ExtResource("2_cvlkt")
-TileSize = 2.08
-WidthRows = 15
-HeightRows = 15
-
-[node name="Camara" type="Node3D" parent="." unique_id=132948044 node_paths=PackedStringArray("camera3D")]
-transform = Transform3D(-0.9999615, 0.0011679508, -0.008699837, -0.006959975, 0.49843937, 0.86689687, 0.0053488323, 0.86692435, -0.49841186, 15.563, 19.085, -26.227)
-script = ExtResource("3_cvlkt")
-camera3D = NodePath("Camera3D")
-paddingFactor = 1.5
-
-[node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802322e-08, -2.3283064e-10, 0, 0.9999999, -0.03760624, -6.095132, 3.5042114)
-
-[node name="FondoCibeelization" parent="." unique_id=1028333430 node_paths=PackedStringArray("tablero") instance=ExtResource("6_3642x")]
-transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
-tablero = NodePath("../Tablero")
 
 [node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("tropasManager", "celdasManager", "attackManager", "playerManager")]
 process_mode = 3
@@ -1150,7 +1082,7 @@ theme_override_font_sizes/font_size = 45
 text = "00:00"
 
 [node name="TimerTurno" type="Timer" parent="HUD/Timers" unique_id=1558110202]
-wait_time = 10.0
+wait_time = 1000.0
 
 [node name="LabelTimerPartida" type="Label" parent="HUD/Timers" unique_id=463321455]
 layout_mode = 1
@@ -1170,8 +1102,76 @@ theme_override_font_sizes/font_size = 45
 text = "00:00"
 
 [node name="TimerPartida" type="Timer" parent="HUD/Timers" unique_id=2012866865]
-wait_time = 30.0
+wait_time = 3000.0
 one_shot = true
+
+[node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
+script = ExtResource("1_ap8h6")
+playerManager = NodePath("../PlayerManager")
+tablero = NodePath("../Tablero")
+
+[node name="PlayerManager" type="Node3D" parent="." unique_id=321656698 node_paths=PackedStringArray("camera", "tablero", "tropasManager", "celdasManager", "animationManager", "vfxManager", "attackManager", "gameUI", "secretito")]
+script = ExtResource("2_2lok1")
+camera = NodePath("../Camara/Camera3D")
+tablero = NodePath("../Tablero")
+tropasManager = NodePath("../TroopsManager")
+celdasManager = NodePath("../CeldasManager")
+animationManager = NodePath("../AnimationManager")
+vfxManager = NodePath("../VFXManager")
+attackManager = NodePath("../AttackManager")
+gameUI = NodePath("../HUD")
+secretito = NodePath("../HUD/Codigo")
+
+[node name="VFXManager" type="Node3D" parent="." unique_id=16501355 node_paths=PackedStringArray("playerManager", "attackManager")]
+script = ExtResource("3_auhuj")
+playerManager = NodePath("../PlayerManager")
+attackManager = NodePath("../AttackManager")
+
+[node name="AnimationManager" type="Node3D" parent="." unique_id=2110061658]
+script = ExtResource("3_xolvn")
+
+[node name="TroopsManager" type="Node3D" parent="." unique_id=310064133 node_paths=PackedStringArray("tableroActual", "playerManager", "celdasManager")]
+script = ExtResource("2_qqnew")
+tableroActual = NodePath("../Tablero")
+playerManager = NodePath("../PlayerManager")
+celdasManager = NodePath("../CeldasManager")
+
+[node name="AttackManager" type="Node3D" parent="." unique_id=2099182655 node_paths=PackedStringArray("playerManager", "camera")]
+script = ExtResource("6_iks2i")
+playerManager = NodePath("../PlayerManager")
+camera = NodePath("../Camara/Camera3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1062419877]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 14.247646, 22.124794, -7.9076557)
+light_energy = 3.059
+light_indirect_energy = 1.23
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1925802151]
+environment = SubResource("Environment_6nc1v")
+
+[node name="AbejaReina" type="Node3D" parent="." unique_id=376051322]
+transform = Transform3D(-0.69841534, 0, -0.7156927, 0, 1, 0, 0.7156927, 0, -0.69841534, -6, 0, 2.5)
+visible = false
+
+[node name="Tablero" type="Node3D" parent="." unique_id=1610432507]
+transform = Transform3D(2.608859, 0, 0, 0, 1, 0, 0, 0, 2.637266, 0, 0, -27)
+script = ExtResource("2_cvlkt")
+TileSize = 2.08
+WidthRows = 15
+HeightRows = 15
+
+[node name="Camara" type="Node3D" parent="." unique_id=132948044 node_paths=PackedStringArray("camera3D")]
+transform = Transform3D(-0.9999615, 0.0011679508, -0.008699837, -0.006959975, 0.49843937, 0.86689687, 0.0053488323, 0.86692435, -0.49841186, 15.563, 19.085, -26.227)
+script = ExtResource("3_cvlkt")
+camera3D = NodePath("Camera3D")
+paddingFactor = 1.5
+
+[node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
+transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802322e-08, -2.3283064e-10, 0, 0.9999999, -0.03760624, -6.095132, 3.5042114)
+
+[node name="FondoCibeelization" parent="." unique_id=1028333430 node_paths=PackedStringArray("tablero") instance=ExtResource("6_3642x")]
+transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)
+tablero = NodePath("../Tablero")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
 replication_config = SubResource("SceneReplicationConfig_2gfcn")
