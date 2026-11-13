@@ -1,4 +1,8 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 public partial class AbejaObrera : Abeja{
+	
+	public bool ModoDestruccion {get; set;} = false;
 	
 	public AbejaObrera()
 	{
@@ -9,8 +13,10 @@ public partial class AbejaObrera : Abeja{
 		RecursoGenerable = "Propoleo";
 	}
 	
-	public bool Construyendo(){
-		return true;
+	override public void HabilidadDeAbeja()
+	{
+		HabilidadActiva = true;
+		ModoDestruccion = true;
 	}
 	
 }

@@ -39,6 +39,17 @@ theme_override_fonts/font = ExtResource("2_p45bt")
 text = "Comandar 
 Ataque"
 
+[node name="DestruirButton" type="Button" parent="ContenedorAtaque" unique_id=662528742]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 0
+offset_right = 74.0
+offset_bottom = 70.0
+scale = Vector2(1e-05, 1e-05)
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_p45bt")
+text = "Destruir
+Muro"
+
 [node name="ContenedorBotones" type="Control" parent="." unique_id=1222717018]
 unique_name_in_owner = true
 anchors_preset = 0

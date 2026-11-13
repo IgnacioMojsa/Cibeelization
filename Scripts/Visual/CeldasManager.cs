@@ -1,12 +1,14 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 public partial class CeldasManager : Node3D
 {
     [Export] public PlayerManager playerManager;
     [Export] public Tablero tablero; 
     private Tween TweenBuffArcoiris;
+	private readonly List<Celda> celdasReforzadasResaltadas = new();
     public List<Celda> CeldasDisponibles = new();
 	public List<Color> ColoresDeJugadores = new List<Color>{Color.FromHtml("#6a268f"), Color.FromHtml("#4c1dae"), Color.FromHtml("#b33671"), Color.FromHtml("#8260e5")};
 
@@ -203,5 +205,55 @@ public partial class CeldasManager : Node3D
 		//visualFortificada.GetChild<MeshInstance3D>(0).SetSurfaceOverrideMaterial(0, nuevoMaterial); // Lo desactive por ahora pero porque me gusta mas como queda con el amarillo
 		visualFortificada.Visible = true;
 		unaCelda.EstaReforzada = true;
+	}
+
+	public bool ExistenCeldasReforzadasCerca(Abeja unaAbeja)
+	{
+		return tablero.ObtenerVecinos(unaAbeja.CeldaActual).Any(c => c.EstaReforzada);
+	}
+
+	public void MostrarCeldasReforzadasCercanas(Abeja unaAbeja)
+	{
+		OcultarCeldasReforzadasCercanas();
+
+		var materialAtaque = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineAttack.tres");
+		celdasReforzadasResaltadas.AddRange(tablero.ObtenerVecinos(unaAbeja.CeldaActual).Where(c => c.EstaReforzada));
+
+		foreach (var celda in celdasReforzadasResaltadas)
+		{
+			var refuerzo = celda.Tile.GetNode<Node3D>("hexagon_fortified");
+			
+			playerManager.vfxManager.EstablecerNextPass(refuerzo, materialAtaque);
+		}
+	}
+
+	public void OcultarCeldasReforzadasCercanas()
+	{
+		var outlineBase = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineCeldas.tres");
+
+		foreach (var celda in celdasReforzadasResaltadas)
+		{
+			var refuerzo = celda.Tile.GetNode<Node3D>("hexagon_fortified");
+			playerManager.vfxManager.EstablecerNextPass(refuerzo, outlineBase);
+		}
+		celdasReforzadasResaltadas.Clear();
+	}
+
+	public bool DestruirCeldaReforzada(Celda unaCelda)
+	{
+		if(unaCelda == null) return false;
+
+		var subdito = playerManager.tropasManager.SubditoActual;
+		if(subdito is not AbejaObrera obrera || !obrera.ModoDestruccion) return false; 
+
+		if(!unaCelda.EstaReforzada || !tablero.ObtenerVecinos(subdito.CeldaActual).Contains(unaCelda))
+		{
+			EventosUI.MostrarMensaje("Esa celda no esta reforzada, no puede ser destruida");
+			return false;
+		}
+	
+		unaCelda.EstaReforzada = false;
+		unaCelda.Tile.GetNode<Node3D>("hexagon_fortified").Visible = false;
+		return true;
 	}
 }

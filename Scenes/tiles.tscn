@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://y6w6vdnh10lp"]
 
+[ext_resource type="Material" uid="uid://rjevb47yyhl3" path="res://Assets/Resources/outlineCeldas.tres" id="2_1nd0u"]
 [ext_resource type="PackedScene" uid="uid://h0o4ur0ghpm3" path="res://Assets/3DModels/hexagon_tile.glb" id="2_3p6xg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sii6b"]
@@ -66,20 +67,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4isam")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlaw6"]
-render_priority = 1
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0.96862745, 0.33333334, 0, 1)
-grow = true
-grow_amount = 0.087
-stencil_mode = 3
-stencil_flags = 1
-stencil_compare = 5
-metadata/_stencil_owned = true
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1nd0u"]
-next_pass = SubResource("StandardMaterial3D_mlaw6")
+next_pass = ExtResource("2_1nd0u")
 shading_mode = 0
 albedo_color = Color(0.9490196, 0.70980394, 0.019607844, 1)
 stencil_mode = 1
@@ -131,7 +120,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="hexagon_tile" parent="." unique_id=1404079147 instance=ExtResource("2_3p6xg")]
 
-[node name="Plane" parent="hexagon_tile" index="0" unique_id=757295566]
+[node name="Plane" parent="hexagon_tile" index="0" unique_id=1308314411]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_sii6b")
 

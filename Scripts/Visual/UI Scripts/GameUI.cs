@@ -493,6 +493,15 @@ public partial class GameUI : UIBase {
 		}
 	}
 
+	public void DestruirCeldasReforzadas()
+	{
+		var subdito = playerManager.tropasManager.SubditoActual;
+		
+		if(subdito is AbejaObrera obrera) obrera.ModoDestruccion = true;
+		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		celdasManager.MostrarCeldasReforzadasCercanas(tropasManager.SubditoActual);
+	}
+
 	private void AlternarEstadoDeAtaque(){
 		if (playerManager == null || instanciaMenuRadial == null) return;
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
@@ -505,6 +514,13 @@ public partial class GameUI : UIBase {
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
 		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton", instanciaMenuRadial.ContenedorDeAtaque);
+	}
+
+	private void AlternarEstadoDeDestruccion(){
+		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
+		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool puedeDestruir = GameManager.Instance.PuedeAtacar() && modoAtaqueDisponible && tropasManager.SubditoActual is AbejaObrera && celdasManager.ExistenCeldasReforzadasCerca(tropasManager.SubditoActual);
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeDestruir, "DestruirButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 
 	private void AlternarEstadoDeInvocacion(){
@@ -613,6 +629,7 @@ public partial class GameUI : UIBase {
 	public void ActualizarUIAtaques(){
 		AlternarEstadoDeAtaque();
 		AlternarEstadoDeComandar();
+		AlternarEstadoDeDestruccion();
 	}
 
 	public void ComandarAtaque(){

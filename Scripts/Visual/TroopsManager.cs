@@ -262,6 +262,8 @@ public partial class TroopsManager : Node3D
 		SubditoActual = subditoAControlar;
 
 		SubditoActual.HabilidadDeAbeja(); 
+
+		if(SubditoActual is AbejaObrera obrera) obrera.ModoDestruccion = false;
 	}
 
 	public bool SubditoTieneAAlguienCerca(Abeja alguien){

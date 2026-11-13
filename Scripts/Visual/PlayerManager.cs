@@ -68,6 +68,12 @@ public partial class PlayerManager : Node3D
 			InvocarAbejaNueva();
 		}
 		
+		else if(EnModoDestruccion() && !jugador.AccionConsumida)
+		{
+			CeldaCliqueada = ObtenerCeldaAlClickear();
+			IntentarDestruirCelda();
+		}
+
 		else if(jugador.ModoAtaque && !jugador.AccionConsumida){
 			attackManager.Atacar();
 			gameUI.ActualizarUI();
@@ -222,6 +228,28 @@ public partial class PlayerManager : Node3D
 			GD.Print("Solo puedes moverte a una celda contigua o vecina vacía.");
 			EventosUI.MostrarMensaje("Solo podés moverte a una celda vecina vacía.");
 		}
+	}
+
+	private void IntentarDestruirCelda()
+	{
+		var obrera = (AbejaObrera)tropasManager.SubditoActual;
+    	var jugador = GameManager.Instance.jugadorEnTurno;
+
+		if(!celdasManager.DestruirCeldaReforzada(CeldaCliqueada)) return;
+
+		obrera.ModoDestruccion = false;
+    	obrera.HabilidadActiva = false;
+    	jugador.ModoAtaque = false;
+    	celdasManager.OcultarCeldasReforzadasCercanas();
+
+		jugador.AccionConsumida = true;             
+    	if(jugador.MoviendoSubdito) TerminarControlDeSubdito();
+
+    	gameUI.ActualizarUI();
+	}
+
+	private bool EnModoDestruccion(){
+    	return tropasManager.SubditoActual is AbejaObrera obrera && obrera.ModoDestruccion;
 	}
 
 	public void RotarJugadorHex(Node3D jugadorVisual, Celda celdaDestino){

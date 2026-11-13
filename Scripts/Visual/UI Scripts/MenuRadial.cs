@@ -251,6 +251,22 @@ public partial class MenuRadial : UIBase {
 				OcultarAtaques();
 				GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
 				break;
+			case "DestruirButton":	
+				if(hud.playerManager.tropasManager.SubditoActual is AbejaObrera subdito && subdito.ModoDestruccion)
+				{
+					hud.celdasManager.OcultarCeldasReforzadasCercanas();
+					GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+					subdito.ModoDestruccion = false;
+					OcultarAtaques();
+					break;
+				}
+				else
+				{
+					hud.DestruirCeldasReforzadas();
+					OcultarAtaques();
+					hud.playerManager.tropasManager.SubditoActual.HabilidadDeAbeja();
+					break;
+				}
 		}
 		
 		OcultarMenu();
