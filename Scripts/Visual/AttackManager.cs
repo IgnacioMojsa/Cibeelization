@@ -216,6 +216,7 @@ public partial class AttackManager : Node3D
 		if(jugador != null){
 			attackLogic.DaniarJugador(abejaAtacante, jugador);
 			GD.Print("¡Ataque exitoso! Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
+			GameManager.Instance.NotificarCambioDeEstado();
 		}
 
 		Node3D visualRival = playerManager.VisualesJugadores[jugador];
@@ -430,6 +431,7 @@ public partial class AttackManager : Node3D
 			playerManager.animationManager.CambiarAnimacion(visualAbeja, "RecibirDanio");
 		}
 		attackLogic.DaniarAbeja(abejaObjetivo, subdito);
+		GameManager.Instance.NotificarCambioDeEstado();
 
 		if(abejaObjetivo.FueraDeJuego && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual)){
 			playerManager.celdasManager.DespintarCeldaDeAbeja(abejaObjetivo.CeldaActual);
