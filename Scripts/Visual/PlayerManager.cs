@@ -449,6 +449,8 @@ public partial class PlayerManager : Node3D
 		jugadorNuevo.AccionConsumida = false;
 		jugadorNuevo.TiroLosDados = false;
 		jugadorNuevo.ModoAtaque = false;
+		jugadorNuevo.AtaqueConsumido = false;
+		jugadorNuevo.AtaqueAObjetivo = false;
 		jugadorNuevo.ModoInvocacion = false;
 		jugadorNuevo.ModoAbsorcion = false;
 		jugadorNuevo.ModoTransformacion = false;
