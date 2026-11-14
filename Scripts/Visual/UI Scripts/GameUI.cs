@@ -1,7 +1,6 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
 
 public partial class GameUI : UIBase {
 	
@@ -30,6 +29,8 @@ public partial class GameUI : UIBase {
 	public HBoxContainer MenuVictoria;
 	public Button botonSalirVictoria;
 	public Button botonReiniciarPartidaVictoria;
+	[Export] public PanelContainer panelFueraDeJuego;
+	private bool panelFueraDeJuegoMostrado = false;
 
 	[Export] public PlayerManager playerManager;
 	public Control recursos;
@@ -102,6 +103,7 @@ public partial class GameUI : UIBase {
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
+		panelFueraDeJuego = GetNode<PanelContainer>("PanelFueraDeJuego");
 
 		resultadoDados = GetNode<Label>("Dado/NumeroDado");
 		recursos = GetNode<Control>("CantRecursos");
@@ -159,6 +161,7 @@ public partial class GameUI : UIBase {
 		ValidarTurnoLocalUI();
 		ActualizarUIAtaques();
 		AlternarComandoDeAtaque();
+		VerificarJugadorFueraDeJuego();
 
 		if (instanciaMenuRadial != null && instanciaMenuRadial.ContenedorDeTransformaciones != null){
 			if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible){
@@ -642,6 +645,27 @@ public partial class GameUI : UIBase {
 		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
 		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton");
+	}
+
+	private void VerificarJugadorFueraDeJuego(){
+		if (!GameManager.Instance.modoMultiplayer) return;
+		long idLocal = Multiplayer.GetUniqueId();
+		var jugadorLocal = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idLocal);
+
+		if (jugadorLocal != null && jugadorLocal.FueraDeJuego && !panelFueraDeJuegoMostrado){
+			panelFueraDeJuegoMostrado = true;
+			MostrarPanelFueraDeJuego();
+		}
+	}
+
+	private void MostrarPanelFueraDeJuego(){
+		MostrarUIPanel(panelFueraDeJuego, true);
+		//AudioManager.Instance.PlaySound();
+	}
+
+	private void OcultarPanelFueraDeJuego(){
+		MostrarUIPanel(panelFueraDeJuego, false);
+		//AudioManager.Instance.PlaySound();
 	}
 
 	public override void _ExitTree(){

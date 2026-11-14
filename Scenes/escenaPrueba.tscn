@@ -1105,6 +1105,84 @@ text = "00:00"
 wait_time = 3000.0
 one_shot = true
 
+[node name="PanelFueraDeJuego" type="PanelContainer" parent="HUD" unique_id=2046431668]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -5.5000005
+anchor_top = -13.725
+anchor_right = 6.5000005
+anchor_bottom = -10.475
+offset_left = 1.5258789e-05
+offset_right = -3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/PanelFueraDeJuego" unique_id=1193871972]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PanelFueraDeJuego/MarginContainer" unique_id=1546625569]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer" unique_id=872555629]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 35
+text = "¡Se acabó el juego!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer" unique_id=2134789612]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 19
+text = "Tu Abeja Reina murió.
+¿Deseas seguir observando la partida o volver al menú principal?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer" unique_id=1555415495]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Si" type="PanelContainer" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1880440408]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="SiButton" type="Button" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/Si" unique_id=1250787757]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_constants/h_separation = 4
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "Si"
+
+[node name="No" type="PanelContainer" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer" unique_id=68003215]
+layout_mode = 2
+
+[node name="NoButton" type="Button" parent="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/No" unique_id=2068864505]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+action_mode = 0
+text = "No"
+
 [node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
 script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
@@ -1181,3 +1259,5 @@ replication_config = SubResource("SceneReplicationConfig_2gfcn")
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
 [connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]
+[connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton" to="HUD" method="OcultarPanelFueraDeJuego"]
+[connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton" to="HUD" method="IrAlMenuPrincipal"]

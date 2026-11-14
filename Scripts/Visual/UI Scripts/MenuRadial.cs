@@ -178,7 +178,9 @@ public partial class MenuRadial : UIBase {
 
 		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>{
         	if (!contenedoresCerrandose.Remove(contenedor)) return;
-        	contenedor.Hide();
+        	if (contenedor != null && IsInstanceValid(contenedor)) {
+				contenedor.Hide();
+			}
         	Activo = ContenedorDeBotones.Visible
         	      || ContenedorDeTransformaciones.Visible
         	      || ContenedorDeAtaque.Visible;
