@@ -207,6 +207,14 @@ public partial class AttackManager : Node3D
 		ProcesarDanioJugador(indiceRival, atacante);
 		playerManager.animationManager.CambiarAnimacionDeJugador(reinaRival, "RecibirDanio");
 		playerManager.tropasManager.OcultarAbejasCercanas();
+
+		//hay que crear método para actualizar el hp de las labels o reemplazar el anterior de gameUI.MostrarHPDeJugadores() a rpc
+		if(playerManager.VidaDeReina.TryGetValue(reinaRival, out Label3D labelVida) && labelVida != null){
+			labelVida.Text = reinaRival.HP.ToString();
+		}
+		if(playerManager.gameUI != null){
+			playerManager.gameUI.ActualizarUI();
+		}
 	}
 
 	private void ProcesarDanioJugador(int indiceJugador, Abeja abejaAtacante){
