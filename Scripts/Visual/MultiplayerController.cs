@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class MultiplayerController : Node
@@ -8,6 +9,7 @@ public partial class MultiplayerController : Node
 	public Button botonHost;
 	public Button botonCliente;
 	public Button botonJugar;
+	public List<Node3D> abejasEnEspera;
 	private bool estaConectadoAlServidor = false;
 
 	public override void _Ready(){
@@ -17,7 +19,32 @@ public partial class MultiplayerController : Node
 		Multiplayer.ConnectionFailed += ConnectionFailed;
 		Multiplayer.ServerDisconnected += ServerDisconnected;
 
+		abejasEnEspera = new List<Node3D>(){
+			GetNode<Node3D>("SalaDeEspera/AbejaReina"), 
+			GetNode<Node3D>("SalaDeEspera/AbejaReina2"), 
+			GetNode<Node3D>("SalaDeEspera/AbejaReina3"), 
+			GetNode<Node3D>("SalaDeEspera/AbejaReina4")
+		};
+
 		ConfigurarBotones();
+		ActualizarAbejasEnEspera();
+	}
+
+	private void ActualizarAbejasEnEspera()
+	{
+		int cantidad = GameManager.Instance.JugadoresEnPartida.Count;
+
+		for (int i = 0; i < abejasEnEspera.Count; i++)
+		{
+			bool hayJugador = i < cantidad;
+			abejasEnEspera[i].Visible = hayJugador;
+		
+			var label = abejasEnEspera[i].GetNodeOrNull<Label3D>("Nombre");
+			if (label != null && hayJugador){
+				label.Visible = true;
+				label.Text = GameManager.Instance.JugadoresEnPartida[i].Name;
+			}
+		}
 	}
 
 	private void ConfigurarBotones(){
@@ -163,11 +190,13 @@ public partial class MultiplayerController : Node
 		}
 
 		if(Multiplayer.IsServer()){
-			foreach (var item in GameManager.Instance.JugadoresEnPartida){
-				Rpc(nameof(SendPlayerInformation), item.Name, item.Id);
+			foreach (var jugador in GameManager.Instance.JugadoresEnPartida){
+				Rpc(nameof(SendPlayerInformation), jugador.Name, jugador.Id);
 			}
 		}
+
 		ActualizarEstadoBotonJugar();
+		ActualizarAbejasEnEspera();
 	}
 
 	private void DesconectarYLimpiarDatos(){

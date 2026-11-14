@@ -54,7 +54,7 @@ properties/1/replication_mode = 1
 [node name="AbejaReina4" unique_id=1816187034 instance=ExtResource("1_4qnwh")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(776323381) index="0" unique_id=1422788060]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1444220667) index="0" unique_id=1261622037]
 bones/0/position = Vector3(-0.0005728332, 2.7866228, 0.11429813)
 bones/0/rotation = Quaternion(0.055805314, -0.002982406, -0.053283382, 0.9970144)
 bones/1/rotation = Quaternion(0.006673011, 0.00071101094, -7.9848825e-05, 0.99997747)
@@ -85,23 +85,23 @@ bones/38/rotation = Quaternion(-0.07553636, -0.13265389, -0.68835896, 0.70912564
 bones/40/rotation = Quaternion(0.108813845, -3.7431335e-15, 2.5943237e-08, 0.9940621)
 bones/41/rotation = Quaternion(0.09715916, -2.866637e-15, 2.3164548e-08, 0.9952689)
 
-[node name="Cubo_001" parent="Esqueleto/Skeleton3D" index="0" unique_id=280142528]
+[node name="Cubo_001" parent="Esqueleto/Skeleton3D" index="0" unique_id=1074436284]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_haw62")
 surface_material_override/1 = SubResource("StandardMaterial3D_832nf")
 surface_material_override/2 = SubResource("StandardMaterial3D_lcquy")
 
-[node name="Cubo_002" parent="Esqueleto/Skeleton3D" index="1" unique_id=503435297]
+[node name="Cubo_002" parent="Esqueleto/Skeleton3D" index="1" unique_id=1781683066]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_5oujs")
 surface_material_override/1 = SubResource("StandardMaterial3D_hyevi")
 surface_material_override/2 = SubResource("StandardMaterial3D_ucu5f")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=2120219455]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=947912845]
 lod_bias = 0.1
 surface_material_override/0 = SubResource("StandardMaterial3D_4xd4p")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1180036984]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1118627717]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 blend_times = [&"RecibirDanio", &"RecibirDanio", 0.5]
@@ -122,3 +122,10 @@ visible = false
 text = "15"
 font = ExtResource("3_haw62")
 font_size = 786
+
+[node name="Nombre" type="Label3D" parent="." index="5" unique_id=1625795680]
+transform = Transform3D(-0.99999815, -8.742258e-08, 1.7484518e-07, -8.7422734e-08, 0.99999917, -1.7763568e-14, -1.7484535e-07, 3.4452523e-14, -0.99999875, 1.6699003e-07, 7.5879717, 0.13524836)
+visible = false
+text = "Nombre"
+font = ExtResource("3_haw62")
+font_size = 118
