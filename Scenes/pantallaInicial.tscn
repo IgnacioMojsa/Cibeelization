@@ -78,7 +78,6 @@ grow_horizontal = 2
 pivot_offset = Vector2(0.5, 0)
 pivot_offset_ratio = Vector2(0.5, 0)
 texture = ExtResource("3_plf46")
-metadata/_edit_use_anchors_ = true
 
 [node name="BotonesMenuDeInicio" type="HBoxContainer" parent="." unique_id=1833663844]
 layout_mode = 1

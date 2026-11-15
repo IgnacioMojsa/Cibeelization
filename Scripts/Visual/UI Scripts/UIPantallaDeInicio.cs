@@ -66,7 +66,7 @@ public partial class UIPantallaDeInicio : UIBase {
 	}
 
 	private void OcultarConfiguracionDePartida(){
-		MostrarUIPanel(uiOpcionesOnline, true);
+		//MostrarUIPanel(uiOpcionesOnline, true);
 		MostrarUIPanel(uiModos, true);
 		MostrarUIPanel(uiComienzo, false);
 	}
