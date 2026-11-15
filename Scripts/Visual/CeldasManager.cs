@@ -31,7 +31,8 @@ public partial class CeldasManager : Node3D
 
     public void PintarCeldaDeAbejaBuffeada()
 	{
-		var celdaAPintar = GameManager.Instance.jugadorEnTurno.CeldaActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		var celdaAPintar = jugador.CeldaActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
 		if (celdaAPintar is MeshInstance3D meshInstance)
 		{
@@ -62,13 +63,13 @@ public partial class CeldasManager : Node3D
 
     public void DespintarCeldaDeAbejaBuffeada()
 	{
-
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
 		{
 			TweenBuffArcoiris.Kill();
 		}
 
-		var celda = GameManager.Instance.jugadorEnTurno.CeldaActual;
+		var celda = jugador.CeldaActual;
 
 		if (celda.Tile == null) return;
 
@@ -88,7 +89,7 @@ public partial class CeldasManager : Node3D
 				nuevoMaterial = new StandardMaterial3D();
 			}
 
-			if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado)
+			if(jugador.AtaquePotenciado)
 			{
 				nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
 				meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
@@ -97,9 +98,10 @@ public partial class CeldasManager : Node3D
 	}
 
     public void MostrarCeldasDisponiblesParaInvocar(){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
-		CeldasDisponibles = tablero.ObtenerVecinos(GameManager.Instance.jugadorEnTurno.CeldaActual);
+		CeldasDisponibles = tablero.ObtenerVecinos(jugadorEnTurno.CeldaActual);
 		
 		foreach (var jugador in playerManager.VisualesJugadores.Values)
 		{
@@ -148,6 +150,7 @@ public partial class CeldasManager : Node3D
 
 	public void PintarCeldaDeAbeja(Celda unaCelda, Abeja unaAbeja)
 	{
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		var jugadorActual = unaAbeja.ColmenaHogar.ReinaDeColmena;
 		int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorActual);
 
@@ -171,7 +174,7 @@ public partial class CeldasManager : Node3D
 			}
 		}
 
-		GameManager.Instance.jugadorEnTurno.ColmenaDeReina.CeldasEnPropiedad.Add(unaCelda);
+		jugadorEnTurno.ColmenaDeReina.CeldasEnPropiedad.Add(unaCelda);
 		
 		GD.Print(jugadorActual.GetType() + " " + jugadorActual.Id + " tiene un " + tablero.PorcentajeDelTableroOcupadoPorUnaReina(jugadorActual) + "% del tablero pintado");
 	}

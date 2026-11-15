@@ -98,12 +98,13 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void MostrarTransformaciones(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		Activo = true;
 		ContenedorDeTransformaciones.Show();
 		Show();
 		MoveToFront();
 		AnimarAperturaContenedor(ContenedorDeTransformaciones, deshabilitarBotones: true);
-		GameManager.Instance.jugadorEnTurno.ModoTransformacion = true;
+		jugador.ModoTransformacion = true;
 	}
 
 	public void MostrarAtaques(){
@@ -120,8 +121,9 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void OcultarTransformaciones(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		OcultarContenedor(ContenedorDeTransformaciones);
-		GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
+		jugador.ModoTransformacion = false;
 	}
 
 	public void OcultarAtaques(){
