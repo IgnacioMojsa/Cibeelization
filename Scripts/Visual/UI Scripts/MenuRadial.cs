@@ -67,7 +67,7 @@ public partial class MenuRadial : UIBase {
 				hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 				hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 			}
-		} else if (GameManager.Instance.jugadorEnTurno.ModoAtaque){
+		} else if (hud.tocoBotonAtacarYDebeDesplegarseElMenu){
 			MostrarAtaques();
 		}
 		else
@@ -111,7 +111,8 @@ public partial class MenuRadial : UIBase {
 		Show();
 		MoveToFront();
 		AnimarAperturaContenedor(ContenedorDeAtaque, deshabilitarBotones: true);
-		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		
+		//GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		if (hud != null) hud.ActualizarUIAtaques();
 	}
 
@@ -124,6 +125,7 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void OcultarAtaques(){
+		hud.tocoBotonAtacarYDebeDesplegarseElMenu = false;
 		OcultarContenedor(ContenedorDeAtaque);
 	}
 
@@ -233,6 +235,8 @@ public partial class MenuRadial : UIBase {
 			case "AtacarButton":
 				if (GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo)
 				{
+					GD.Print("Deshabilitando boton de ataque objetivo");
+					hud.tocoBotonAtacarYDebeDesplegarseElMenu = false;
 					GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
 					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = false;
 					hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
@@ -243,6 +247,7 @@ public partial class MenuRadial : UIBase {
 				}
 				else
 				{
+					GD.Print("Habilitando ataque objetivo");
 					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = true;
 					hud.AtaqueAObjetivo();
 					OcultarAtaques();

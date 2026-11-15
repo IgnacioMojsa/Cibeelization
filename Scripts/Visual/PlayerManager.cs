@@ -508,7 +508,7 @@ public partial class PlayerManager : Node3D
 			gameUI.MostrarMovimientosDisponibles();
 
 			if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && GameManager.Instance.modoMultiplayer) Rpc(nameof(SiguienteTurnoRpc));
-			else if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) GameManager.Instance.TurnManager.TerminarTurno();
+			else if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) _ = GameManager.Instance.TurnManager.TerminarTurno();
 		}
 	}
 

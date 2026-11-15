@@ -31,6 +31,7 @@ public partial class GameUI : UIBase {
 	public Button botonReiniciarPartidaVictoria;
 	[Export] public PanelContainer panelFueraDeJuego;
 	private bool panelFueraDeJuegoMostrado = false;
+	public bool tocoBotonAtacarYDebeDesplegarseElMenu = false;
 
 	[Export] public PlayerManager playerManager;
 	public Control recursos;
@@ -467,12 +468,15 @@ public partial class GameUI : UIBase {
 	private void OnAtacarPressed(){
 		if(playerManager == null || !EsTurnoLocal()) return;
 
-		if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)GameManager.Instance.jugadorEnTurno.ModoAtaque = true; 
+		//if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		//GameManager.Instance.jugadorEnTurno.ModoAtaque = true; 
+		tocoBotonAtacarYDebeDesplegarseElMenu = true;
 
 		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
 		AlternarEstadoDeAtaque();
 
 		AudioManager.Instance.PlaySound(UiSound1);
+		GD.Print("Se desplegó el menu de ataque. Modo ataque:" + GameManager.Instance.jugadorEnTurno.ModoAtaque.ToString());
 	}
 
 	public void AtaqueAObjetivo()
