@@ -432,136 +432,143 @@ public partial class GameUI : UIBase {
 	}
 
 	public void OnControlarPressed(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null) return;
 
-		if(!GameManager.Instance.jugadorEnTurno.MenteColmena){		
-			GameManager.Instance.jugadorEnTurno.MenteColmena = true;
+		if(!jugador.MenteColmena){		
+			jugador.MenteColmena = true;
 			tropasManager.MostrarAbejasCercanas();
 		}
-		else if(GameManager.Instance.jugadorEnTurno.MenteColmena){
-			if(tropasManager.SubditoActual is AbejaPolinizadora) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles /= 2;
-			if(tropasManager.SubditoActual is AbejaGuardiana) GameManager.Instance.jugadorEnTurno.MovimientosDisponibles *= 2;
-			
+		else{
+			if(jugador.MoviendoSubdito && tropasManager.SubditoActual != null){
+				if(tropasManager.SubditoActual is AbejaPolinizadora) jugador.MovimientosDisponibles /= 2;
+				if(tropasManager.SubditoActual is AbejaGuardiana) jugador.MovimientosDisponibles *= 2;
+				playerManager.TerminarControlDeSubdito();
+			}
+			jugador.MenteColmena = false;
 			tropasManager.OcultarAbejasCercanas();
-			playerManager.TerminarControlDeSubdito();
+			
 		}
 	}
+
 	public void OnCurarPressed(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null) return;
 
-		if(!GameManager.Instance.jugadorEnTurno.ModoAbsorcion){		
-			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = true;
+		if(!jugador.ModoAbsorcion){		
+			jugador.ModoAbsorcion = true;
 
 			if(tropasManager.PuedeAbsorberSubdito())
 			{
 				tropasManager.MostrarAbejasCercanas();
-				GD.Print("Modo de absorcion = " + GameManager.Instance.jugadorEnTurno.ModoAbsorcion);
+				GD.Print("Modo de absorcion = " + jugador.ModoAbsorcion);
 			}
 		}
-		else if(GameManager.Instance.jugadorEnTurno.ModoAbsorcion){
-			GameManager.Instance.jugadorEnTurno.ModoAbsorcion = false;
+		else if(jugador.ModoAbsorcion){
+			jugador.ModoAbsorcion = false;
 			tropasManager.OcultarAbejasCercanas();
-			GD.Print("Modo de absorcion = " + GameManager.Instance.jugadorEnTurno.ModoAbsorcion);
+			GD.Print("Modo de absorcion = " + jugador.ModoAbsorcion);
 		}
 	}
 
 	private void OnAtacarPressed(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null || !EsTurnoLocal()) return;
-
-		//if(!GameManager.Instance.jugadorEnTurno.ModoAtaque)
-		//GameManager.Instance.jugadorEnTurno.ModoAtaque = true; 
 		tocoBotonAtacarYDebeDesplegarseElMenu = true;
-
 		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
 		AlternarEstadoDeAtaque();
-
 		AudioManager.Instance.PlaySound(UiSound1);
-		GD.Print("Se desplegó el menu de ataque. Modo ataque:" + GameManager.Instance.jugadorEnTurno.ModoAtaque.ToString());
+		GD.Print("Se desplegó el menu de ataque. Modo ataque:" + jugador.ModoAtaque.ToString());
 	}
 
-	public void AtaqueAObjetivo()
-	{
+	public void AtaqueAObjetivo(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		bool subditoAdyacenteAJugador = GameManager.Instance.JugadoresEnPartida.Any(j => tropasManager.SubditoTieneAAlguienCerca(j));
 
 		if(GameManager.Instance.PuedeAtacar() && (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador)){
-			GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+			jugador.ModoAtaque = true;
 			playerManager.vfxManager.MostrarJugadoresObjetivo();
 			playerManager.vfxManager.MostrarAbejasObjetivo();
 			GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
-			if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+			if(jugador.AtaquePotenciado){
 				playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
 			}
 		}
 
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito && tropasManager.SubditoActual is AbejaGuardiana)
+		if(jugador.MoviendoSubdito && tropasManager.SubditoActual is AbejaGuardiana)
 		{
 			attackManager.AtacarConGuardiana();
 			playerManager.TerminarControlDeSubdito();
 		}
 	}
 
-	public void DestruirCeldasReforzadas()
-	{
+	public void DestruirCeldasReforzadas(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		var subdito = playerManager.tropasManager.SubditoActual;
-		
 		if(subdito is AbejaObrera obrera) obrera.ModoDestruccion = true;
-		GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
+		jugador.ModoAtaque = true;
 		celdasManager.MostrarCeldasReforzadasCercanas(tropasManager.SubditoActual);
 	}
 
 	private void AlternarEstadoDeAtaque(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (playerManager == null || instanciaMenuRadial == null) return;
-		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
 		bool puedeAtacar = GameManager.Instance.PuedeAtacar() && attackManager.TieneObjetivosCerca() && modoAtaqueDisponible;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeAtacar, "AtacarButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 
 	private void AlternarEstadoDeComandar(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
-		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible && GameManager.Instance.jugadorEnTurno.MovimientosDisponibles >= 3;
+		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
+		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible && jugador.MovimientosDisponibles >= 3;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 
 	private void AlternarEstadoDeDestruccion(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
 		bool puedeDestruir = GameManager.Instance.PuedeAtacar() && modoAtaqueDisponible && tropasManager.SubditoActual is AbejaObrera && celdasManager.ExistenCeldasReforzadasCerca(tropasManager.SubditoActual);
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeDestruir, "DestruirButton", instanciaMenuRadial.ContenedorDeAtaque);
 	}
 
 	private void AlternarEstadoDeInvocacion(){
-		bool puedeInvocar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;;
-		
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		bool puedeInvocar = !jugador.AccionConsumida && !jugador.ModoAtaque && !jugador.ModoAbsorcion;;
 		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
 		}
 	}
 
 	private void AlternarEstadoDeControl(){
-		bool puedeControlar = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion && !GameManager.Instance.jugadorEnTurno.ModoInvocacion;
-		
-		if (instanciaMenuRadial != null){
-			instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
-		}
+		if (playerManager == null || tropasManager == null || instanciaMenuRadial == null) return;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		bool tieneSubditosCerca = tropasManager.TieneSubditosCerca() || jugador.MenteColmena;
+		bool puedeControlar = tieneSubditosCerca
+			&& !jugador.AccionConsumida
+			&& !jugador.ModoAtaque
+			&& !jugador.ModoAbsorcion
+			&& !jugador.ModoInvocacion;
+
+		instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
 	}
 
 	private void AlternarEstadoDeAbsorcion(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (playerManager == null) return;
-		
-		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque;
-
+		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAtaque;
 		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
 		}
 	}
 
 	private void AlternarEstadoDeTransformacion(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (playerManager == null) return;
-
-		bool noEstaEnOtroModo = !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
-		bool puedeTransformar = tropasManager.ExistenSubditosTransformables() && !GameManager.Instance.jugadorEnTurno.AccionConsumida && noEstaEnOtroModo;
-
+		bool noEstaEnOtroModo = !jugador.ModoInvocacion && !jugador.ModoAtaque && !jugador.ModoAbsorcion;
+		bool puedeTransformar = tropasManager.ExistenSubditosTransformables() && !jugador.AccionConsumida && noEstaEnOtroModo;
 		if (instanciaMenuRadial != null){
 			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
 		}
@@ -590,13 +597,14 @@ public partial class GameUI : UIBase {
 	public void MostrarMovimientosDisponibles(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(jugador != null){
-			resultadoDados.Text = GameManager.Instance.jugadorEnTurno.MovimientosDisponibles.ToString();
+			resultadoDados.Text = jugador.MovimientosDisponibles.ToString();
 			}
 	}
 
 	private void MostrarResultadoDado(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (botonDado.Disabled) return;
-		bool esTurnoLocal = !GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id;
+		bool esTurnoLocal = !GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == jugador.Id;
 		if (!esTurnoLocal) return;
 		int resultado = GameManager.Instance.TirarDado();
 
@@ -615,15 +623,16 @@ public partial class GameUI : UIBase {
 	}
 
 	public void InvocarSubdito(){
-		if(GameManager.Instance.jugadorEnTurno.TiroLosDados && !GameManager.Instance.jugadorEnTurno.AccionConsumida 
-		&& !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAtaque){	
-			GameManager.Instance.jugadorEnTurno.ModoInvocacion = true;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if(jugador.TiroLosDados && !jugador.AccionConsumida 
+		&& !jugador.ModoInvocacion && !jugador.ModoAtaque){	
+			jugador.ModoInvocacion = true;
 
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
 			celdasManager.MostrarCeldasDisponiblesParaInvocar();
-		}else if(GameManager.Instance.jugadorEnTurno.TiroLosDados && GameManager.Instance.jugadorEnTurno.ModoInvocacion){
-			GameManager.Instance.jugadorEnTurno.ModoInvocacion = false;
+		}else if(jugador.TiroLosDados && jugador.ModoInvocacion){
+			jugador.ModoInvocacion = false;
 
 			AlternarEstadoDeAtaque();
 			AlternarEstadoDeAbsorcion();
@@ -645,8 +654,9 @@ public partial class GameUI : UIBase {
 	}
 
 	private void AlternarComandoDeAtaque(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-		bool modoAtaqueDisponible = !GameManager.Instance.jugadorEnTurno.AccionConsumida && !GameManager.Instance.jugadorEnTurno.ModoInvocacion && !GameManager.Instance.jugadorEnTurno.ModoAbsorcion;
+		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
 		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
 		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton");
 	}

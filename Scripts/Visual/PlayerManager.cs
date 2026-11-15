@@ -138,6 +138,7 @@ public partial class PlayerManager : Node3D
 
 	public bool PuedeMoverseEntre(Celda origen, Celda destino, Dictionary<Node3D, Celda> celdasOcupadas,
 	Node3D jugadorActual, List<Node3D> visualesJugadores){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(origen == null || destino == null)
 		return false;
 
@@ -150,13 +151,13 @@ public partial class PlayerManager : Node3D
 		if(movimientoManager.CeldaTieneOtraAbeja(destino))
 		return false;
 
-		if(GameManager.Instance.jugadorEnTurno.ModoInvocacion)
+		if(jugador.ModoInvocacion)
 		return false; 
 
-		if(GameManager.Instance.jugadorEnTurno.ModoAtaque)
+		if(jugador.ModoAtaque)
 		return false;
 
-		if(GameManager.Instance.jugadorEnTurno.ModoTransformacion)
+		if(jugador.ModoTransformacion)
 		return false;
 
 		if(destino.EstaReforzada) 
@@ -203,8 +204,9 @@ public partial class PlayerManager : Node3D
 		return celdaMasCercana;
 	}
 
-	private void IntentarMoverJugador(){      
-		if (GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0) return;
+	private void IntentarMoverJugador(){ 
+		var jugador = GameManager.Instance.jugadorEnTurno;     
+		if (jugador.MovimientosDisponibles <= 0) return;
 
 		VisualJugadorActual = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 		CeldaCliqueada = ObtenerCeldaAlClickear();
@@ -302,7 +304,8 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void MoverAbejaACelda(Node3D jugador, Celda celdaDestino){
-		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		if(jugadorEnTurno.AtaquePotenciado){
 			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
@@ -444,6 +447,7 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (jugadorNuevo == null) return;
 
 		jugadorNuevo.AccionConsumida = false;
@@ -461,7 +465,7 @@ public partial class PlayerManager : Node3D
 		jugadorNuevo.MovimientosDisponibles = 0;
 		jugadorNuevo.Estado = AbejaReina.EstadoTurno.EsperandoDado;
 
-		if(GameManager.Instance.jugadorEnTurno.AtaquePotenciado){
+		if(jugador.AtaquePotenciado){
 			celdasManager.DespintarCeldaDeAbejaBuffeada();
 		}
 
@@ -479,7 +483,8 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void ManejarTurnoTerminadoPorMovimientos(){
-		if (Multiplayer.GetUniqueId() == GameManager.Instance.jugadorEnTurno.Id){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (Multiplayer.GetUniqueId() == jugador.Id){
 			Rpc(nameof(SiguienteTurnoRpc));
 		}
 	}
@@ -496,9 +501,10 @@ public partial class PlayerManager : Node3D
 	}
 
 	public void TerminarControlDeSubdito(){
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
-			GameManager.Instance.jugadorEnTurno.MenteColmena = false;
-			GameManager.Instance.jugadorEnTurno.MoviendoSubdito = false;
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if(jugador.MoviendoSubdito){
+			jugador.MenteColmena = false;
+			jugador.MoviendoSubdito = false;
 			
 			vfxManager.EstablecerUnOutlineAAbeja("res://Assets/Resources/outlineBase.tres", tropasManager.VisualAbejas[tropasManager.SubditoActual]);
 			if(EsTurnoLocal()){
@@ -507,8 +513,8 @@ public partial class PlayerManager : Node3D
 
 			gameUI.MostrarMovimientosDisponibles();
 
-			if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && GameManager.Instance.modoMultiplayer) Rpc(nameof(SiguienteTurnoRpc));
-			else if(GameManager.Instance.jugadorEnTurno.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) _ = GameManager.Instance.TurnManager.TerminarTurno();
+			if(jugador.MovimientosDisponibles <= 0 && GameManager.Instance.modoMultiplayer) Rpc(nameof(SiguienteTurnoRpc));
+			else if(jugador.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) _ = GameManager.Instance.TurnManager.TerminarTurno();
 		}
 	}
 

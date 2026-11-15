@@ -51,18 +51,19 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void DesplegarEnPosicion(Vector2 posicionGlobal){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		GlobalPosition = posicionGlobal;
 		if (Activo){
 			OcultarMenu();
 
 			if (ContenedorDeTransformaciones.Visible){
 				OcultarTransformaciones();
-				GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
+				jugador.ModoTransformacion = false;
 			}
 
 			if (ContenedorDeAtaque.Visible){
 				OcultarAtaques();
-				GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+				jugador.ModoAtaque = false;
 				hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
 				hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 				hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
@@ -111,8 +112,6 @@ public partial class MenuRadial : UIBase {
 		Show();
 		MoveToFront();
 		AnimarAperturaContenedor(ContenedorDeAtaque, deshabilitarBotones: true);
-		
-		//GameManager.Instance.jugadorEnTurno.ModoAtaque = true;
 		if (hud != null) hud.ActualizarUIAtaques();
 	}
 
@@ -122,6 +121,7 @@ public partial class MenuRadial : UIBase {
 
 	public void OcultarTransformaciones(){
 		OcultarContenedor(ContenedorDeTransformaciones);
+		GameManager.Instance.jugadorEnTurno.ModoTransformacion = false;
 	}
 
 	public void OcultarAtaques(){
@@ -190,9 +190,9 @@ public partial class MenuRadial : UIBase {
 	}
 	
 	private void SeleccionarOpcion(string nombreBoton){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		if (GameManager.Instance.modoMultiplayer){
 			long idLocal = Multiplayer.GetUniqueId();
-			var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 			bool esTurnoLocal = (idLocal == jugadorEnTurno.Id) || (GameManager.Instance.jugadorEsHost && idLocal == 1);
 			if (!esTurnoLocal){
 				OcultarMenu();
@@ -233,12 +233,12 @@ public partial class MenuRadial : UIBase {
 				hud.tropasManager.MostrarTransformablesEn(typeof(AbejaGuardiana));
 				break;
 			case "AtacarButton":
-				if (GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo)
+				if (jugadorEnTurno.AtaqueAObjetivo)
 				{
 					GD.Print("Deshabilitando boton de ataque objetivo");
 					hud.tocoBotonAtacarYDebeDesplegarseElMenu = false;
-					GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
-					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = false;
+					jugadorEnTurno.ModoAtaque = false;
+					jugadorEnTurno.AtaqueAObjetivo = false;
 					hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
 					hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 					hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
@@ -248,7 +248,7 @@ public partial class MenuRadial : UIBase {
 				else
 				{
 					GD.Print("Habilitando ataque objetivo");
-					GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = true;
+					jugadorEnTurno.AtaqueAObjetivo = true;
 					hud.AtaqueAObjetivo();
 					OcultarAtaques();
 					break;
@@ -256,13 +256,13 @@ public partial class MenuRadial : UIBase {
 			case "ComandarButton":
 				hud.ComandarAtaque();
 				OcultarAtaques();
-				GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+				jugadorEnTurno.ModoAtaque = false;
 				break;
 			case "DestruirButton":	
 				if(hud.playerManager.tropasManager.SubditoActual is AbejaObrera subdito && subdito.ModoDestruccion)
 				{
 					hud.celdasManager.OcultarCeldasReforzadasCercanas();
-					GameManager.Instance.jugadorEnTurno.ModoAtaque = false;
+					jugadorEnTurno.ModoAtaque = false;
 					subdito.ModoDestruccion = false;
 					OcultarAtaques();
 					break;
@@ -295,6 +295,7 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void VerificarTransformacionesDisponibles(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		TransformacionesDisponiblesActualmente.Clear();
 		
 		foreach (var abeja in hud.tropasManager.AbejasTransformables){
@@ -303,7 +304,7 @@ public partial class MenuRadial : UIBase {
 			List<Abeja> transformacionesObtenidas = new List<Abeja>();
 			
 			foreach (var t in GameManager.Instance.ObtenerTransformacionesDisponibles(abeja)){
-				if (GameManager.Instance.jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion) >= t.RecursosNecesarios)
+				if (jugador.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion) >= t.RecursosNecesarios)
 					TransformacionesDisponiblesActualmente.Add(t); 
 			}
 		}

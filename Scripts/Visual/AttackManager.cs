@@ -130,13 +130,14 @@ public partial class AttackManager : Node3D
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void AtacarAbejaRpc(int indexJugadorRival, int indexAbejaRival){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (indexJugadorRival < 0 || indexJugadorRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 		var jugadorRival = GameManager.Instance.JugadoresEnPartida[indexJugadorRival];
 
 		if (indexAbejaRival < 0 || indexAbejaRival >= jugadorRival.ColmenaDeReina.AbejasDeColmena.Count) return;
 		var abejaObjetivo = jugadorRival.ColmenaDeReina.AbejasDeColmena[indexAbejaRival];
 
-		Abeja abejaControlada = GameManager.Instance.jugadorEnTurno.MoviendoSubdito ?
+		Abeja abejaControlada = jugador.MoviendoSubdito ?
 		playerManager.tropasManager.SubditoActual : GameManager.Instance.jugadorEnTurno;
 		playerManager.animationManager.CambiarAnimacion(playerManager.tropasManager.VisualAbejas[abejaObjetivo], "RecibirDanio");
 		attackLogic.DaniarAbeja(abejaObjetivo, abejaControlada);
@@ -149,7 +150,7 @@ public partial class AttackManager : Node3D
 		}
 		LimpiarAbejasEliminadas();
 		
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+		if(jugador.MoviendoSubdito){
 			if(playerManager.EsTurnoLocal()){
 				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(playerManager.VisualJugadorActual);
 				}
@@ -158,11 +159,12 @@ public partial class AttackManager : Node3D
 	}
 
 	private void AtacarJugador(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 		Abeja atacante;
 		Celda celdaAtacante;
 
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+		if (jugador.MoviendoSubdito){
 			atacante = playerManager.tropasManager.SubditoActual;
 			celdaAtacante = atacante.CeldaActual;
 			if(playerManager.EsTurnoLocal()){
@@ -198,10 +200,11 @@ public partial class AttackManager : Node3D
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void AtacarJugadorRpc(int indiceRival){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (indiceRival < 0 || indiceRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 		AbejaReina reinaRival = GameManager.Instance.JugadoresEnPartida[indiceRival];
 		//Node3D visualRival = playerManager.VisualesJugadores[reinaRival];
-		Abeja atacante = GameManager.Instance.jugadorEnTurno.MoviendoSubdito ? 
+		Abeja atacante = jugador.MoviendoSubdito ? 
 		playerManager.tropasManager.SubditoActual : GameManager.Instance.jugadorEnTurno;
 
 		ProcesarDanioJugador(indiceRival, atacante);
@@ -246,9 +249,10 @@ public partial class AttackManager : Node3D
 	}
 
 	public void BuscarAbejasObjetivo(AbejaReina jugadorRival, List<Abeja> listaDeAbejas){
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		Abeja jugadorActual;
 
-		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito){
+		if (jugadorEnTurno.MoviendoSubdito){
 			jugadorActual = playerManager.tropasManager.SubditoActual;
 		} else {
 			jugadorActual = GameManager.Instance.jugadorEnTurno;

@@ -5,7 +5,6 @@ public partial class AbejaReina : Abeja
 	public bool SeMovio {get; set;} = false;
 	public bool EstaViva {get; set;} = true;
 	public bool AtaquePotenciado {get; set;} = false;
-
 	public bool AccionConsumida {get; set;} = false;
 	public bool AtacoRecien {get; set;} = false;
 	public bool AtaqueConsumido {get; set;} = false;
@@ -15,7 +14,7 @@ public partial class AbejaReina : Abeja
 	public bool AtaqueAObjetivo {get; set;} = false;
 	public bool ModoInvocacion {get; set;} = false;
 	public bool InvocoRecien {get; set;} = false;
-	public bool MenteColmena {get; set;} = false;
+	public bool MenteColmena {get; set;} = false; //modo control
 	public bool MoviendoSubdito {get; set;} = false;
 	public int MovimientosDisponibles {get; set;}
 	public int Id {get; set;}
