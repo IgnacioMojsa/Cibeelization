@@ -46,9 +46,11 @@ public partial class GameUI : UIBase {
 		}
 		else if(currentScene == "res://Scenes/pantallaVictoria.tscn"){
 			MostrarPantallaDeVictoria();
+			AudioManager.Instance.PlaySound(UiSound7);
 		}
 		else if(currentScene == "res://Scenes/pantallaEmpate.tscn"){
 			MostrarPantallaDeEmpate();
+			AudioManager.Instance.PlaySound(UiSound10);
 		}
 
 		GameManager.Instance.OnJugadorEliminadoPorDesconexion += EliminarVisualJugadorDesconectado;
