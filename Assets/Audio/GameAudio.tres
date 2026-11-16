@@ -4,13 +4,23 @@
 [ext_resource type="AudioStream" uid="uid://4qdq7ch7ojhy" path="res://Assets/Audio/SFX/click_sound.mp3" id="1_xabau"]
 [ext_resource type="Script" uid="uid://eat4rg48x2ck" path="res://Scripts/Visual/Audio Scripts/AudioSetting.cs" id="2_lbn20"]
 [ext_resource type="AudioStream" uid="uid://cdvm6br1efhuk" path="res://Assets/Audio/SFX/pop_sound.mp3" id="3_guub6"]
+[ext_resource type="AudioStream" uid="uid://cd5dcyy4ke4ec" path="res://Assets/Audio/SFX/Recompensa3.mp3" id="3_p05gj"]
 [ext_resource type="AudioStream" uid="uid://byu73pyxdxv4o" path="res://Assets/Audio/SFX/punch_sound.mp3" id="4_hbx5o"]
 [ext_resource type="AudioStream" uid="uid://pjfi2mwg50nn" path="res://Assets/Audio/SFX/dice_sound.mp3" id="5_guub6"]
 [ext_resource type="AudioStream" uid="uid://coqiaapacn5g2" path="res://Assets/Audio/SFX/bee_sound1.mp3" id="6_guub6"]
+[ext_resource type="AudioStream" uid="uid://buq2p7oj5x5j4" path="res://Assets/Audio/SFX/BeeSound2.mp3" id="8_wy442"]
+[ext_resource type="AudioStream" uid="uid://crm1odj8w8f8d" path="res://Assets/Audio/SFX/Victory.mp3" id="9_b7mmg"]
+[ext_resource type="AudioStream" uid="uid://4k5yj8ixhwyi" path="res://Assets/Audio/SFX/Recompensa1.mp3" id="10_xe7eq"]
+[ext_resource type="AudioStream" uid="uid://ctlivdg8bjti" path="res://Assets/Audio/SFX/Recompensa2.mp3" id="11_knmpo"]
 
 [sub_resource type="Resource" id="Resource_s3c6i"]
 script = ExtResource("2_lbn20")
 Source = ExtResource("1_xabau")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_ol6nw"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("3_p05gj")
 metadata/_custom_type_script = "uid://eat4rg48x2ck"
 
 [sub_resource type="Resource" id="Resource_dx6wn"]
@@ -33,6 +43,26 @@ script = ExtResource("2_lbn20")
 Source = ExtResource("6_guub6")
 metadata/_custom_type_script = "uid://eat4rg48x2ck"
 
+[sub_resource type="Resource" id="Resource_ui37q"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("8_wy442")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_pe2yf"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("9_b7mmg")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_mnnjn"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("10_xe7eq")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
+[sub_resource type="Resource" id="Resource_etbva"]
+script = ExtResource("2_lbn20")
+Source = ExtResource("11_knmpo")
+metadata/_custom_type_script = "uid://eat4rg48x2ck"
+
 [resource]
 script = ExtResource("1_iu2c2")
 Sound1 = SubResource("Resource_s3c6i")
@@ -40,4 +70,9 @@ Sound2 = SubResource("Resource_dx6wn")
 Sound3 = SubResource("Resource_t607e")
 Sound4 = SubResource("Resource_f40p2")
 Sound5 = SubResource("Resource_ysso3")
+Sound6 = SubResource("Resource_ui37q")
+Sound7 = SubResource("Resource_pe2yf")
+Sound8 = SubResource("Resource_mnnjn")
+Sound9 = SubResource("Resource_etbva")
+Sound10 = SubResource("Resource_ol6nw")
 metadata/_custom_type_script = "uid://dfkdnyfl5ssgp"
