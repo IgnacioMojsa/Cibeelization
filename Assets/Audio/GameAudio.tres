@@ -51,7 +51,7 @@ metadata/_custom_type_script = "uid://eat4rg48x2ck"
 [sub_resource type="Resource" id="Resource_pe2yf"]
 script = ExtResource("2_lbn20")
 Source = ExtResource("9_b7mmg")
-Volume_db = -0.2
+Volume_db = -0.5
 metadata/_custom_type_script = "uid://eat4rg48x2ck"
 
 [sub_resource type="Resource" id="Resource_mnnjn"]
