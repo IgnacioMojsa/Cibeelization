@@ -64,8 +64,9 @@ public partial class MultiplayerController : Node
 		if (botonJugar == null) return;
 
 		if (GameManager.Instance.jugadorEsHost){
-			bool hayClientesConectados = GameManager.Instance.JugadoresEnPartida.Count > 1;
-			botonJugar.Disabled = !hayClientesConectados;
+			bool hayClientesConectados = Multiplayer.MultiplayerPeer != null && Multiplayer.GetPeers().Length > 0;
+			bool hayClientesRegistrados = GameManager.Instance.JugadoresEnPartida.Count > 1;
+			botonJugar.Disabled = !(hayClientesConectados && hayClientesRegistrados);
 		} else {
 			botonJugar.Disabled = !estaConectadoAlServidor;
 			botonJugar.Visible = false;
@@ -90,6 +91,9 @@ public partial class MultiplayerController : Node
 					GameManager.Instance.EstablecerJugadorGanador();
 					GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn");
 				}
+			} else {
+				GameManager.Instance.JugadoresEnPartida.Remove(jugador);
+				ActualizarAbejasEnEspera();
 			}
 		}
 		ActualizarEstadoBotonJugar();

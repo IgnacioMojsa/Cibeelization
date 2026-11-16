@@ -40,7 +40,19 @@ public partial class LobbyUI : UIBase {
 	private void OcultarConfirmacionSalir() => CambiarMenu(confirmacionSalir, opcionesContainer);
 
 	private void VolverAPantallaDeInicio(){
-		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
 		Hide();
+
+		if (multiplayerController != null){
+			multiplayerController.LimpiarYVolverAlMenu();
+			return;
+		}
+
+		if (Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
+
+		GameManager.Instance.ResetearEstadoPartida();
+		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
 	}
 }
