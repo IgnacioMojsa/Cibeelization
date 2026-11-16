@@ -51,7 +51,7 @@ public partial class GameUI : UIBase {
 			MostrarPantallaDeEmpate();
 		}
 
-		Multiplayer.PeerDisconnected += OnPeerDisconnectedInGame;
+		GameManager.Instance.OnJugadorEliminadoPorDesconexion += EliminarVisualJugadorDesconectado;
 	}
 
 	private MenuRadial ObtenerMenuRadial(){
@@ -682,21 +682,32 @@ public partial class GameUI : UIBase {
 		//AudioManager.Instance.PlaySound();
 	}
 
-	public override void _ExitTree(){
-	Multiplayer.PeerDisconnected -= OnPeerDisconnectedInGame;
-	EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
-
-	if(GameManager.Instance != null){
-		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
-		GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAbsorcion;
-		GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
-
-		if(GameManager.Instance.TurnManager != null){
-			var turnManager = GameManager.Instance.TurnManager;
-			turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
-			turnManager.OnTurnoCambiado -= ActualizarUI;
+	private void EliminarVisualJugadorDesconectado(AbejaReina jugador){
+		GD.Print("Se elinimó el visual del jugador porque ya pasó el tiempo de reconexión");
+		if(playerManager != null && playerManager.VisualesJugadores.TryGetValue(jugador, out Node3D visualJugador)){
+			int indiceJugador = GameManager.Instance.JugadoresEnPartida.IndexOf(jugador);
+			if(attackManager != null){
+				attackManager.EliminarInstanciaDeJugador(visualJugador, indiceJugador);
+			}
 		}
+		ActualizarUI();
 	}
-	base._ExitTree();
-}
+
+	public override void _ExitTree(){
+		GameManager.Instance.OnJugadorEliminadoPorDesconexion -= EliminarVisualJugadorDesconectado;
+		EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
+
+		if(GameManager.Instance != null){
+			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
+			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAbsorcion;
+			GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
+
+			if(GameManager.Instance.TurnManager != null){
+				var turnManager = GameManager.Instance.TurnManager;
+				turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
+				turnManager.OnTurnoCambiado -= ActualizarUI;
+			}
+		}
+		base._ExitTree();
+	}
 };

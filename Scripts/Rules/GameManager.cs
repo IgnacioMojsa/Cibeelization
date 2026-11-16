@@ -14,16 +14,16 @@ public partial class GameManager
 	public AbejaReina JugadorGanador {get; private set;}
 	public Tablero TableroActual { get; set; }
 	public CamaraController CamaraActual { get; set; }
-
 	private GameManager(){}
-
 	public int cantidadJugadores { get; set; }
 	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
 	public int DimensionActual { get; private set; } = 15;
 	public Partida PartidaActual { get; private set; }
 	public bool jugadorEsHost = true;
-
 	public bool modoMultiplayer = false;
+	public bool modoEspectador = false;
+	public double DuracionTimerTurno { get; set; } = 30.0;
+	public event Action<AbejaReina> OnJugadorEliminadoPorDesconexion;
 
 	// Método para iniciar la partida con datos
 	public void IniciarPartida(int cantidadJugadores, int sizeTablero)
@@ -314,5 +314,22 @@ public partial class GameManager
 			JugadorGanador = null;
 		}
 	}
-	
+
+	public bool HayJugadoresEsperandoReconexion(){
+		return JugadoresEnPartida.Any(j => j.DesconectadoTemporalmente && !j.FueraDeJuego);
+	}
+
+	public void IniciarDesconexionTemporal(long peerId){
+		var jugador = JugadoresEnPartida.Find(j => j.Id == peerId);
+		if(jugador != null && !jugador.FueraDeJuego){
+			jugador.DesconectadoTemporalmente = true;
+		}
+	}
+	public void ConfirmarEliminacionPorDesconexion(AbejaReina jugador){
+		if (jugador == null || !jugador.DesconectadoTemporalmente) return;
+		jugador.DesconectadoTemporalmente = false;
+		jugador.HP = 0;
+		jugador.FueraDeJuego = true;
+		OnJugadorEliminadoPorDesconexion?.Invoke(jugador);
+	}
 }

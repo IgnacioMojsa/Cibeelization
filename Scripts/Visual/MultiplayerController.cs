@@ -9,6 +9,7 @@ public partial class MultiplayerController : Node
 	public Button botonHost;
 	public Button botonCliente;
 	public Button botonJugar;
+	public Button botonEspectar;
 	public List<Node3D> abejasEnEspera;
 	private bool estaConectadoAlServidor = false;
 	int maxJugadores = 4;
@@ -56,11 +57,13 @@ public partial class MultiplayerController : Node
 		botonHost =	GetNode<Button>("Host");
 		botonCliente = GetNode<Button>("Cliente");		
 		botonJugar = GetNode<Button>("Jugar");
+		botonEspectar = GetNode<Button>("Espectar");
 
 		if(!GameManager.Instance.jugadorEsHost){
 			botonHost.Visible = false;
 		} else {
 			botonCliente.Visible = false;
+			botonEspectar.Visible = false;
 		}
 		ActualizarEstadoBotonJugar();
 	}
@@ -85,7 +88,9 @@ public partial class MultiplayerController : Node
 		GD.Print("PLAYER CONNECTED: " + id.ToString());
 		if (Multiplayer.IsServer()){
 			int maxClientes = maxJugadores - 1;
-			if (Multiplayer.GetPeers().Length > maxClientes || GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
+			bool salaLlena = Multiplayer.GetPeers().Length > maxClientes || GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores;
+			
+			if (salaLlena && !GameManager.Instance.HayJugadoresEsperandoReconexion()){
 				GD.Print($"Sala llena, ({maxJugadores} jugadores máximo). Rechazando a peer {id}");
 				Multiplayer.MultiplayerPeer.DisconnectPeer((int)id);
 			}
@@ -97,15 +102,8 @@ public partial class MultiplayerController : Node
 		
 		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
 		if (jugador != null){
-			jugador.HP = 0;
-			jugador.FueraDeJuego = true;
-			GD.Print($"Jugador {jugador.Id} se desconectó. HP establecido en 0 y marcado fuera de juego.");
-
 			if (GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn"){
-				if (GameManager.Instance.CondicionVictoria()){
-					GameManager.Instance.EstablecerJugadorGanador();
-					GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn");
-				}
+				GD.Print($"Jugador {jugador.Name} ({jugador.Id}) desconectado temporalmente.");
 			} else {
 				GameManager.Instance.JugadoresEnPartida.Remove(jugador);
 				ActualizarAbejasEnEspera();
@@ -180,6 +178,7 @@ public partial class MultiplayerController : Node
 	}
 
 	private void _on_cliente_button_down(){
+		botonEspectar.Disabled = true;
 		botonCliente.Disabled = true;
 		peer = new ENetMultiplayerPeer();
 		peer.CreateClient(adress, port);
@@ -191,6 +190,13 @@ public partial class MultiplayerController : Node
 	private void _on_jugar_button_down(){
 		if (!Multiplayer.IsServer()) return;
 		Rpc(nameof(startGame), GameManager.Instance.sizeTablero);
+	}
+
+	private void _on_espectar_button_down(){
+		GameManager.Instance.modoEspectador = true;
+		GD.Print($"Modo espectador: {GameManager.Instance.modoEspectador}");
+		if (!Multiplayer.IsServer()) return;
+
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -207,15 +213,38 @@ public partial class MultiplayerController : Node
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	private void SendPlayerInformation(string name, int id){
+		bool enPartida = GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn";
+		if(Multiplayer.IsServer() && enPartida){
+			var jugadorReconnecting = GameManager.Instance.JugadoresEnPartida.Find(j => j.Name == name && j.DesconectadoTemporalmente && !j.FueraDeJuego);
+
+			if(jugadorReconnecting != null){
+				int idAnterior = jugadorReconnecting.Id;
+				jugadorReconnecting.Id = id;
+				jugadorReconnecting.DesconectadoTemporalmente = false;
+
+				var nodoTimers = GetTree().CurrentScene.GetNodeOrNull<Timers>("Timers"); // Ajusta la ruta si Timers está dentro de UI
+				nodoTimers?.CancelarTimerReconexion(name);
+				
+				Rpc(nameof(ActualizarIdJugadorReconnecting), idAnterior, id);
+
+				RpcId(id, nameof(ReconectarClienteAPartida), GameManager.Instance.sizeTablero, GameManager.Instance.jugadorEnTurno?.Id ?? -1);
+				GD.Print($"Jugador {name} reconectado exitosamente con nuevo ID {id}.");
+				return;
+			} else {
+				Multiplayer.MultiplayerPeer.DisconnectPeer(id);
+				return;
+			}
+		}
+
 		var jugadorExistente = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
-		if (Multiplayer.IsServer() && jugadorExistente == null && GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
+		if(Multiplayer.IsServer() && jugadorExistente == null && GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
 			GD.Print($"Limite de {maxJugadores} jugadores alcanzado. Desconectando a {id}");
 			Multiplayer.MultiplayerPeer.DisconnectPeer(id);
 			return;
 		}
-		
+
 		if(jugadorExistente == null){
-			AbejaReina infoJugadores = new AbejaReina(id){Name = name, Id = id};
+			AbejaReina infoJugadores = new AbejaReina(id) { Name = name, Id = id };
 			GameManager.Instance.JugadoresEnPartida.Add(infoJugadores);
 		} else {
 			jugadorExistente.Name = name;
@@ -226,7 +255,6 @@ public partial class MultiplayerController : Node
 				Rpc(nameof(SendPlayerInformation), jugador.Name, jugador.Id);
 			}
 		}
-
 		ActualizarEstadoBotonJugar();
 		ActualizarAbejasEnEspera();
 	}
@@ -239,6 +267,34 @@ public partial class MultiplayerController : Node
 	
 		GameManager.Instance.JugadoresEnPartida.Clear();
 		estaConectadoAlServidor = false;
+		GameManager.Instance.modoEspectador = false;
+		GD.Print($"Modo espectador: {GameManager.Instance.modoEspectador}");
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void ActualizarIdJugadorReconnecting(int idAnterior, int nuevoId){
+		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idAnterior);
+		if(jugador != null){
+			jugador.Id = nuevoId;
+			jugador.DesconectadoTemporalmente = false;
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void ReconectarClienteAPartida(int sizeTablero, int idJugadorEnTurno){
+		GameManager.Instance.modoMultiplayer = true;
+		GameManager.Instance.sizeTablero = sizeTablero;
+		GameManager.Instance.cantidadJugadores = GameManager.Instance.JugadoresEnPartida.Count;
+
+		if(GameManager.Instance.TurnManager == null && GameManager.Instance.JugadoresEnPartida.Count > 0){
+			GameManager.Instance.TurnManager = new TurnManager(GameManager.Instance.JugadoresEnPartida);
+		}
+
+		var turnoActual = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idJugadorEnTurno);
+		if(turnoActual != null){
+			GameManager.Instance.jugadorEnTurno = turnoActual;
+		}
+		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
 
 	public override void _ExitTree(){

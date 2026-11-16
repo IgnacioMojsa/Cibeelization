@@ -53,6 +53,8 @@ public partial class LobbyUI : UIBase {
 		}
 
 		GameManager.Instance.ResetearEstadoPartida();
+		GameManager.Instance.modoEspectador = false;
+		GD.Print($"Modo espectador: {GameManager.Instance.modoEspectador}");
 		GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
 	}
 }
