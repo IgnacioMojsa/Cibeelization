@@ -148,6 +148,7 @@ public partial class GameUI : UIBase {
 
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeTransformacion;
 		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 
@@ -158,6 +159,7 @@ public partial class GameUI : UIBase {
 		DeshabilitarDado();
 		AlternarEstadoDeAtaque();
 		AlternarEstadoDeAbsorcion();
+		AlternarEstadoDeTransformacion();
 		MostrarMovimientosDisponibles();
 		ValidarTurnoLocalUI();
 		ActualizarUIAtaques();
@@ -700,6 +702,7 @@ public partial class GameUI : UIBase {
 		if(GameManager.Instance != null){
 			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
 			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAbsorcion;
+			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeTransformacion;
 			GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
 
 			if(GameManager.Instance.TurnManager != null){

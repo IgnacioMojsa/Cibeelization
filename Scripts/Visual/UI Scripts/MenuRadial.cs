@@ -68,11 +68,19 @@ public partial class MenuRadial : UIBase {
 				hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 				hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 			}
+
+			if (jugador.ModoInvocacion){
+				jugador.ModoInvocacion = false;
+				hud.celdasManager.OcultarCeldasDisponiblesParaInvocar();
+			}
+
+			if (jugador.ModoAbsorcion){
+				jugador.ModoAbsorcion = false;
+				hud.tropasManager.OcultarAbejasCercanas();
+			}
 		} else if (hud.tocoBotonAtacarYDebeDesplegarseElMenu){
 			MostrarAtaques();
-		}
-		else
-		{
+		} else {
 			MostrarMenu();
 		}
 	}
@@ -98,13 +106,19 @@ public partial class MenuRadial : UIBase {
 	}
 
 	public void MostrarTransformaciones(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
 		Activo = true;
 		ContenedorDeTransformaciones.Show();
 		Show();
 		MoveToFront();
 		AnimarAperturaContenedor(ContenedorDeTransformaciones, deshabilitarBotones: true);
-		jugador.ModoTransformacion = true;
+
+		if(hud?.playerManager != null){
+			hud.playerManager.TransformacionSeleccionada = null;
+		}
+		if(hud?.tropasManager != null){
+			hud.tropasManager.ObtenerSubditosTransformables();
+			MostrarTransformacionesDisponibles();
+		}
 	}
 
 	public void MostrarAtaques(){
@@ -124,6 +138,9 @@ public partial class MenuRadial : UIBase {
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		OcultarContenedor(ContenedorDeTransformaciones);
 		jugador.ModoTransformacion = false;
+		if (hud?.playerManager != null){
+			hud.playerManager.TransformacionSeleccionada = null;
+		}
 	}
 
 	public void OcultarAtaques(){
@@ -215,8 +232,8 @@ public partial class MenuRadial : UIBase {
 				break;
 			case "TransformarButton":
 				MostrarTransformaciones();
-				hud.tropasManager.ObtenerSubditosTransformables();
-				MostrarTransformacionesDisponibles();
+				//hud.tropasManager.ObtenerSubditosTransformables();
+				//MostrarTransformacionesDisponibles();
 				break;
 			case "AbejaObrera":
 				OcultarTransformaciones();
@@ -299,25 +316,33 @@ public partial class MenuRadial : UIBase {
 	public void VerificarTransformacionesDisponibles(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		TransformacionesDisponiblesActualmente.Clear();
-		
+		if (jugador == null || jugador.ColmenaDeReina == null) return;
+
 		foreach (var abeja in hud.tropasManager.AbejasTransformables){
 			if(abeja == null) continue;
-			
-			List<Abeja> transformacionesObtenidas = new List<Abeja>();
-			
-			foreach (var t in GameManager.Instance.ObtenerTransformacionesDisponibles(abeja)){
-				if (jugador.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion) >= t.RecursosNecesarios)
+			var opciones = GameManager.Instance.ObtenerTransformacionesDisponibles(abeja);
+			foreach (var t in opciones){
+				if(t == null) continue;
+				int cantActual = jugador.ColmenaDeReina.CantidadTotalDeUnRecurso(t.RecursoDeTransformacion);
+				if(cantActual >= t.RecursosNecesarios && abeja.AptaParaTransformarEn(t)){
 					TransformacionesDisponiblesActualmente.Add(t); 
+				}
 			}
 		}
 	}
 
 	public void MostrarTransformacionesDisponibles(){
 		VerificarTransformacionesDisponibles();
-		
 		foreach (var transformacion in TransformacionesDisponiblesActualmente){
-			var boton = ContenedorDeTransformaciones.GetNodeOrNull<Button>(transformacion.GetType().Name);
-			if (boton != null) boton.Disabled = false;
+			string nombreClase = transformacion.GetType().Name;
+			var boton = ContenedorDeTransformaciones.GetNodeOrNull<BaseButton>(nombreClase)
+			?? ContenedorDeTransformaciones.GetNodeOrNull<BaseButton>(nombreClase + "Button");
+
+			//ver qué transformaciones hay disponibles
+			if(boton != null){
+				boton.Disabled = false;
+				GD.Print($"[Transformar] Boton {boton.Name} habilitado.");
+				}
 		}
 	}
 
