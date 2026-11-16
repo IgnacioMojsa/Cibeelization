@@ -225,7 +225,7 @@ public partial class MultiplayerController : Node
 				var nodoTimers = GetTree().CurrentScene.GetNodeOrNull<Timers>("Timers"); // Ajusta la ruta si Timers está dentro de UI
 				nodoTimers?.CancelarTimerReconexion(name);
 				
-				Rpc(nameof(ActualizarIdJugadorReconnecting), idAnterior, id);
+				Rpc(nameof(ActualizarIDDeJugadorEnReconexion), idAnterior, id);
 
 				RpcId(id, nameof(ReconectarClienteAPartida), GameManager.Instance.sizeTablero, GameManager.Instance.jugadorEnTurno?.Id ?? -1);
 				GD.Print($"Jugador {name} reconectado exitosamente con nuevo ID {id}.");
@@ -272,7 +272,7 @@ public partial class MultiplayerController : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void ActualizarIdJugadorReconnecting(int idAnterior, int nuevoId){
+	private void ActualizarIDDeJugadorEnReconexion(int idAnterior, int nuevoId){
 		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idAnterior);
 		if(jugador != null){
 			jugador.Id = nuevoId;
