@@ -94,6 +94,7 @@ public partial class UIPantallaDeInicio : UIBase {
 	}
 
 	private void ComenzarPartidaMultijugador(int jugadores, int size){
+		GameManager.Instance.jugadorEsHost = true;
 		GameManager.Instance.cantidadJugadores = jugadores;
 		GameManager.Instance.sizeTablero = size;
 		GD.Print("Se creó una partida MULTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");

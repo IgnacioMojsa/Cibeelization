@@ -11,6 +11,7 @@ public partial class MultiplayerController : Node
 	public Button botonJugar;
 	public List<Node3D> abejasEnEspera;
 	private bool estaConectadoAlServidor = false;
+	int maxJugadores = 4;
 
 	public override void _Ready(){
 		Multiplayer.PeerConnected += PeerConnected;
@@ -18,6 +19,10 @@ public partial class MultiplayerController : Node
 		Multiplayer.ConnectedToServer += ConnectedToServer;
 		Multiplayer.ConnectionFailed += ConnectionFailed;
 		Multiplayer.ServerDisconnected += ServerDisconnected;
+
+		if(GameManager.Instance.jugadorEsHost){
+			maxJugadores = Mathf.Clamp(GameManager.Instance.cantidadJugadores, 2, 4);
+		}
 
 		abejasEnEspera = new List<Node3D>(){
 			GetNode<Node3D>("SalaDeEspera/AbejaReina"), 
@@ -64,9 +69,12 @@ public partial class MultiplayerController : Node
 		if (botonJugar == null) return;
 
 		if (GameManager.Instance.jugadorEsHost){
+			int conectados = GameManager.Instance.JugadoresEnPartida.Count;
 			bool hayClientesConectados = Multiplayer.MultiplayerPeer != null && Multiplayer.GetPeers().Length > 0;
 			bool hayClientesRegistrados = GameManager.Instance.JugadoresEnPartida.Count > 1;
-			botonJugar.Disabled = !(hayClientesConectados && hayClientesRegistrados);
+			bool cantidadValida = conectados >= 2 && conectados <= maxJugadores;
+			//botonJugar.Disabled = !(hayClientesConectados && hayClientesRegistrados);
+			botonJugar.Disabled = !(hayClientesConectados && cantidadValida);
 		} else {
 			botonJugar.Disabled = !estaConectadoAlServidor;
 			botonJugar.Visible = false;
@@ -75,6 +83,13 @@ public partial class MultiplayerController : Node
 
 	private void PeerConnected(long id){
 		GD.Print("PLAYER CONNECTED: " + id.ToString());
+		if (Multiplayer.IsServer()){
+			int maxClientes = maxJugadores - 1;
+			if (Multiplayer.GetPeers().Length > maxClientes || GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
+				GD.Print($"Sala llena, ({maxJugadores} jugadores máximo). Rechazando a peer {id}");
+				Multiplayer.MultiplayerPeer.DisconnectPeer((int)id);
+			}
+		}
 	}
 
 	private void PeerDisconnected(long id){
@@ -107,7 +122,13 @@ public partial class MultiplayerController : Node
 	}
 
 	private void ConnectionFailed(){
-		GD.Print("CONNECTION FAILED");
+		GD.Print("CONNECTION FAILED.");
+		estaConectadoAlServidor = false;
+		if (botonCliente != null) botonCliente.Disabled = false;
+		if (Multiplayer.MultiplayerPeer != null){
+			Multiplayer.MultiplayerPeer.Close();
+			Multiplayer.MultiplayerPeer = null;
+		}
 		ActualizarEstadoBotonJugar();
 	}
 
@@ -137,8 +158,12 @@ public partial class MultiplayerController : Node
 		}
 
 		botonHost.Disabled = true;
+
+		maxJugadores = Mathf.Clamp(GameManager.Instance.cantidadJugadores, 2, 4);
+		int maxClientes = maxJugadores - 1;
+
 		peer = new ENetMultiplayerPeer();
-		var error = peer.CreateServer(port, 4);
+		var error = peer.CreateServer(port, maxClientes);
 
 		if(error != Error.Ok){
 			GD.Print("Error cannot host: " + error.ToString());
@@ -148,7 +173,8 @@ public partial class MultiplayerController : Node
 
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
-		GD.Print("Waiting for players");
+		GD.Print("Esperando jugadores...");
+		GD.Print($"Sala para {maxJugadores} jugadores. Tablero: {GameManager.Instance.sizeTablero})");
 		SendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
 		ActualizarEstadoBotonJugar();
 	}
@@ -163,29 +189,31 @@ public partial class MultiplayerController : Node
 	}
 
 	private void _on_jugar_button_down(){
-		Rpc(nameof(startGame));
+		if (!Multiplayer.IsServer()) return;
+		Rpc(nameof(startGame), GameManager.Instance.sizeTablero);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	private void startGame(){
+	private void startGame(int sizeTablero){
 		GameManager.Instance.cantidadJugadores = GameManager.Instance.JugadoresEnPartida.Count;
+		GameManager.Instance.sizeTablero = sizeTablero;
 		if(GameManager.Instance.TurnManager == null && GameManager.Instance.JugadoresEnPartida.Count > 0){
 			GameManager.Instance.TurnManager = new TurnManager(GameManager.Instance.JugadoresEnPartida);
 			GameManager.Instance.TurnManager.EstablecerPrimerTurno();
 			GameManager.Instance.jugadorEnTurno = GameManager.Instance.TurnManager.jugadorEnTurno;
 		}
-
-		// foreach (var item in GameManager.Instance.JugadoresEnPartida)
-		// {
-		// 	GD.Print(item.Id + "is playing");
-		// }
-
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 	private void SendPlayerInformation(string name, int id){
 		var jugadorExistente = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
+		if (Multiplayer.IsServer() && jugadorExistente == null && GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
+			GD.Print($"Limite de {maxJugadores} jugadores alcanzado. Desconectando a {id}");
+			Multiplayer.MultiplayerPeer.DisconnectPeer(id);
+			return;
+		}
+		
 		if(jugadorExistente == null){
 			AbejaReina infoJugadores = new AbejaReina(id){Name = name, Id = id};
 			GameManager.Instance.JugadoresEnPartida.Add(infoJugadores);
