@@ -12,7 +12,7 @@ public partial class AbejaGuardiana : Abeja{
 
 	override public void HabilidadDeAbeja()
 	{
-		var movimientos = ColmenaHogar.ReinaDeColmena.MovimientosDisponibles / 2;
+		var movimientos = System.Math.Max(1, ColmenaHogar.ReinaDeColmena.MovimientosDisponibles / 2);
 
 		ColmenaHogar.ReinaDeColmena.MovimientosDisponibles = movimientos;
 

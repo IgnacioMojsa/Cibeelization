@@ -4,6 +4,8 @@ using System.Linq;
 public partial class Colmena
 {
 	public List<string> RecursosDeColmena = new List<string>();
+	//Debug modo online, las abejas empiezan con 8 unidades de cada recurso
+	//public List<string> RecursosDeColmena = ["Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen", "Agua", "Propoleo", "Nectar", "Polen"];
 	public List<Abeja> AbejasDeColmena = new List<Abeja>();
 	public AbejaReina ReinaDeColmena {get; set;}
 

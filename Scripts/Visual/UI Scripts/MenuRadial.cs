@@ -64,6 +64,7 @@ public partial class MenuRadial : UIBase {
 			if (ContenedorDeAtaque.Visible){
 				OcultarAtaques();
 				jugador.ModoAtaque = false;
+				jugador.AtaqueAObjetivo = false;
 				hud.playerManager.vfxManager.EsconderOutlineDeJugadores();
 				hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 				hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
@@ -273,9 +274,12 @@ public partial class MenuRadial : UIBase {
 					break;
 				}
 			case "ComandarButton":
+				jugadorEnTurno.ModoAtaque = true;
 				hud.ComandarAtaque();
-				OcultarAtaques();
 				jugadorEnTurno.ModoAtaque = false;
+				jugadorEnTurno.AtaqueAObjetivo = false;
+				OcultarAtaques();
+				hud.ActualizarUI();
 				break;
 			case "DestruirButton":	
 				if(hud.playerManager.tropasManager.SubditoActual is AbejaObrera subdito && subdito.ModoDestruccion)

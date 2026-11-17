@@ -122,17 +122,16 @@ public partial class GameManager
 		}
 	}
 
-	public bool PuedeAtacar()
-	{
+	public bool PuedeAtacar(){
 		return jugadorEnTurno != null &&
-			   jugadorEnTurno.EsSuTurno &&
-			   jugadorEnTurno.TiroLosDados &&
-			   !jugadorEnTurno.AccionConsumida &&
-			   jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
+			jugadorEnTurno.EsSuTurno &&
+			jugadorEnTurno.TiroLosDados &&
+			!jugadorEnTurno.AccionConsumida &&
+			!jugadorEnTurno.AtaqueConsumido &&
+			jugadorEnTurno.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 	}
 
-	public void ConsumirAtaque()
-	{
+	public void ConsumirAtaque(){
 		if (jugadorEnTurno == null || jugadorEnTurno.AccionConsumida) return;
 		
 		if (jugadorEnTurno.MoviendoSubdito)
