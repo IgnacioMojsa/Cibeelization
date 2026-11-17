@@ -833,9 +833,9 @@ alignment = 2
 selected = 1
 item_count = 3
 popup/item_0/text = "1280 x 720"
-popup/item_0/id = 1
+popup/item_0/id = 0
 popup/item_1/text = "1920 x 1080"
-popup/item_1/id = 0
+popup/item_1/id = 1
 popup/item_2/text = "2560 x 1440"
 popup/item_2/id = 2
 
@@ -1353,6 +1353,7 @@ replication_config = SubResource("SceneReplicationConfig_2gfcn")
 [connection signal="pressed" from="HUD/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="item_selected" from="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles" to="HUD" method="CambiarModoDePantalla"]
+[connection signal="item_selected" from="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5/ResolucionesDisponibles" to="HUD" method="CambiarResolucionDePantalla"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
 [connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]
 [connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton" to="HUD" method="OcultarPanelFueraDeJuego"]

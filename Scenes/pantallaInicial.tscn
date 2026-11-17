@@ -949,6 +949,7 @@ texture = ExtResource("7_3b2ad")
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Volver/VolverButton" to="." method="OcultarConfiguracionDePartida"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/Start2/PlayButton" to="." method="ComenzarPartida"]
 [connection signal="item_selected" from="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles" to="." method="CambiarModoDePantalla"]
+[connection signal="item_selected" from="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5/ResolucionesDisponibles" to="." method="CambiarResolucionDePantalla"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
 [connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]
 [connection signal="pressed" from="Tutorial/VBoxContainer/MarginContainer2/Volver/VolverButton2" to="." method="OcultarTutorial"]
