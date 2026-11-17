@@ -46,7 +46,7 @@ height = 6.391567
 [node name="AbejaObrera" unique_id=1932119757 instance=ExtResource("1_falgf")]
 transform = Transform3D(-0.72499996, 0, 6.338151e-08, 0, 0.72499996, 0, -6.338151e-08, 0, -0.72499996, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1400893044) index="0" unique_id=2126902952]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(147492926) index="0" unique_id=18424232]
 bones/0/position = Vector3(0, 0.44694722, -0.16194464)
 bones/0/scale = Vector3(1, 0.99493945, 1)
 bones/8/rotation = Quaternion(0.67577547, -0.040204152, 0.7103459, -0.19266513)
@@ -84,20 +84,20 @@ bones/38/position = Vector3(1.28078, 1.5103128, 0.14244626)
 bones/38/rotation = Quaternion(0.016610086, 0.0012644615, -0.07112371, 0.99732846)
 bones/39/rotation = Quaternion(-0.0013969336, 0.00035049216, 0.25211176, 0.9676971)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=2106967315]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=254017296]
 surface_material_override/0 = SubResource("StandardMaterial3D_bmhr3")
 surface_material_override/1 = SubResource("StandardMaterial3D_ff508")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=956559648]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1334063761]
 surface_material_override/0 = SubResource("StandardMaterial3D_n6tta")
 surface_material_override/1 = SubResource("StandardMaterial3D_tgsfd")
 surface_material_override/2 = SubResource("StandardMaterial3D_1fwg5")
 surface_material_override/3 = SubResource("StandardMaterial3D_iarjc")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1270551638]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=195883159]
 surface_material_override/0 = SubResource("StandardMaterial3D_vy8hr")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=831986814]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1085223967]
 autoplay = &"Idle"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="2" unique_id=1235929926]
@@ -112,3 +112,6 @@ modulate = Color(1, 1, 1, 0.49803922)
 text = "Obrera"
 font = ExtResource("3_bmhr3")
 font_size = 150
+
+[node name="Pivote" type="Node3D" parent="." index="4" unique_id=1535394531]
+transform = Transform3D(0.9999999, 0, 1.4210855e-14, 0, 0.9999999, 0, -1.4210855e-14, 0, 0.9999999, 0, 3.0515862, 0)

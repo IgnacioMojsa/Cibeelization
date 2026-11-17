@@ -1239,13 +1239,14 @@ WidthRows = 15
 HeightRows = 15
 
 [node name="Camara" type="Node3D" parent="." unique_id=132948044 node_paths=PackedStringArray("camera3D")]
-transform = Transform3D(-0.9999615, 0.0011679508, -0.008699837, -0.006959975, 0.49843937, 0.86689687, 0.0053488323, 0.86692435, -0.49841186, 15.563, 19.085, -26.227)
+transform = Transform3D(0.9999208, -0.0069808797, 0.01047187, 0.0069812597, 0.9999761, 2.3992561e-12, -0.010471613, 7.310686e-05, 0.9999453, 15.563, 21.085, -26.227)
 script = ExtResource("3_cvlkt")
 camera3D = NodePath("Camera3D")
 paddingFactor = 1.5
 
 [node name="Camera3D" type="Camera3D" parent="Camara" unique_id=2033881768]
-transform = Transform3D(1, -2.3283064e-09, -2.3283064e-10, 0, 0.9999996, -2.9802322e-08, -2.3283064e-10, 0, 0.9999999, -0.03760624, -6.095132, 3.5042114)
+transform = Transform3D(1, -9.313226e-10, 4.656613e-10, -4.656613e-10, 0.9999996, -2.9802322e-08, -9.313226e-10, 0, 0.9999999, -0.00016498566, -0.02666378, 0.015335083)
+fov = 60.0
 
 [node name="FondoCibeelization" parent="." unique_id=1028333430 node_paths=PackedStringArray("tablero") instance=ExtResource("6_3642x")]
 transform = Transform3D(0.285, 0, 0, 0, 0.285, 0, 0, 0, 0.285, 31.607468, -1.8604431, 14.094564)

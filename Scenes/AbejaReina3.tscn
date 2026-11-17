@@ -140,3 +140,6 @@ visible = false
 text = "Nombre"
 font = ExtResource("3_eoaf3")
 font_size = 118
+
+[node name="Pivote" type="Node3D" parent="." index="6" unique_id=419321363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9712496, 0)

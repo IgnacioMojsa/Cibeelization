@@ -5,11 +5,18 @@ public partial class CamaraController : Node3D
 {
 	[Export] private Camera3D camera3D;
 	[Export] private float paddingFactor = 1.25f; // Margen de seguridad alrededor del tablero
-	[Export] private float anguloInclinacionDeg = -85.0f; // Grados de inclinación de la cámara
-	[Export] private float alturaZoomTurno = 12.5f;  
-	[Export] private float offsetZTurno = 4.5f;     
+	[Export] private float anguloInclinacionDeg = -60.0f; 
+	[Export] private float alturaZoomTurno = 4.5f;  
+	[Export] private float offsetZTurno = 1.0f;     
 	[Export] private float duracionAnimacion = 0.8f;
 	[Export] private float velocidadRotacion = 0.07f;
+	[Export] private float velocidadManualVertical = 0.2f;
+	[Export] private float inclinacionMinDeg = 15.0f; // Más bajo = más cercano al tablero
+	[Export] private float inclinacionMaxDeg = 75.0f;  
+	[Export] private float inclinacionTurnoDeg = 30.0f; // Grados de elevación al enfocar un jugador
+	[Export] private float distanciaTurno = 17.0f; // Distancia cámara-pivote al enfocar
+	private float pitchActual = 66.0f;   
+	private float distanciaActual = 15.0f;  
 	private bool controlJugador = false;
 	private Vector2 ultimaPosMouse;
 	[Export] private float velocidadManual = 0.04f;
@@ -40,14 +47,13 @@ public partial class CamaraController : Node3D
 
 	public override void _Process(double delta){
         if (estaSiguiendo && objetivoSeguimiento != null && IsInstanceValid(objetivoSeguimiento)){
-            Vector3 posicionDeseada = objetivoSeguimiento.GlobalPosition;
-            posicionDeseada.Y = 0;
-
-            GlobalPosition = GlobalPosition.Lerp(posicionDeseada, (float)(delta * velocidadSeguimiento));
-        }
-        if (!controlJugador && enModoOrbita){
-            RotateY((float)delta * velocidadRotacion);
-        }
+    	    GlobalPosition = GlobalPosition.Lerp(
+    	        objetivoSeguimiento.GlobalPosition,
+    	        (float)(delta * velocidadSeguimiento));
+    	}
+    	if (!controlJugador && enModoOrbita){
+    	    RotateY((float)delta * velocidadRotacion);
+    	}
     }
 
 	public override void _Input(InputEvent @event){
@@ -69,8 +75,12 @@ public partial class CamaraController : Node3D
 	    }
 		else if (@event is InputEventMouseMotion motionEvent && controlJugador){
 	        float deltaX = motionEvent.Position.X - ultimaPosMouse.X;
+			float deltaY = motionEvent.Position.Y - ultimaPosMouse.Y;
 	        ultimaPosMouse = motionEvent.Position;
-	        RotateY(deltaX * velocidadManual * -1f);
+
+	        RotateY(deltaX * velocidadManual * - 1f);
+			RotarVertical(deltaY);
+
 		} 
 		else if (GameManager.Instance.modoMultiplayer && !EsTurnoLocal()){
 	        //hay que agregar botones también, así no depende del input del teclado solamente 
@@ -196,16 +206,9 @@ public partial class CamaraController : Node3D
 		// 5. Posicionar el pivote en el centro exacto del tablero
 		Position = centroTablero;
 	
-		// 6. Colocar la cámara desplazada en Y (altura) y retraída en Z (distancia e inclinación)
-		float anguloRad = Mathf.DegToRad(Mathf.Abs(anguloInclinacionDeg));
-		float alturaY = distanciaRequerida * Mathf.Sin(anguloRad);
-		float offsetZ = distanciaRequerida * Mathf.Cos(anguloRad);
-	
-		// Posicionamos la cámara desplazada desde el centro
-		camera3D.Position = new Vector3(0f, alturaY, offsetZ);
-	
-		// 7. Forzar a la cámara a mirar directamente al centro del tablero
-		camera3D.LookAt(centroTablero, Vector3.Up);
+		pitchActual = Mathf.Abs(anguloInclinacionDeg);
+		distanciaActual = distanciaRequerida;
+		AplicarCamara();
 	}
 
 	public void EnfocarNodo(Node3D objetivo, float multiplicadorPivote, float multiplicadorCamara){
@@ -220,17 +223,20 @@ public partial class CamaraController : Node3D
 
 		tweenCamara = CreateTween().SetParallel(true).SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
 
-		Vector3 posicionObjetivoPivote = objetivo.GlobalPosition;
-		posicionObjetivoPivote.Y = 0;
+		Node3D pivoteObjetivo = objetivo.GetNodeOrNull<Node3D>("Pivote") ?? objetivo;
+		Vector3 posicionObjetivoPivote = pivoteObjetivo.GlobalPosition;
+
+		tweenCamara.TweenMethod(Callable.From<float>(v => { pitchActual = v; AplicarCamara(); }),
+    	pitchActual, inclinacionTurnoDeg, duracionAnimacion * multiplicadorCamara);
+
+		tweenCamara.TweenMethod(Callable.From<float>(v => { distanciaActual = v; AplicarCamara(); }),
+    	distanciaActual, distanciaTurno, duracionAnimacion * multiplicadorCamara);
 
 		tweenCamara.TweenProperty(this, "global_position", posicionObjetivoPivote, duracionAnimacion*multiplicadorPivote);
 
-		Vector3 posicionObjetivoCamara = new Vector3(0f, alturaZoomTurno, offsetZTurno);
-		tweenCamara.TweenProperty(camera3D, "position", posicionObjetivoCamara, duracionAnimacion*multiplicadorCamara);
-
 		tweenCamara.Chain().TweenCallback(Callable.From(() => 
 		{
-			objetivoSeguimiento = objetivo;
+			objetivoSeguimiento = pivoteObjetivo;
             estaSiguiendo = true;
             enModoOrbita = true;
 		}));
@@ -246,4 +252,18 @@ public partial class CamaraController : Node3D
 	    EnfocarNodo(jugadorActual, 1.0f, 1.0f); // vuelve a la lógica automática
 	}
 
+	private void AplicarCamara(){
+		if (camera3D == null) return;
+		float rad = Mathf.DegToRad(pitchActual);
+		camera3D.Position = new Vector3(0f, distanciaActual * Mathf.Sin(rad), distanciaActual * Mathf.Cos(rad));
+		camera3D.RotationDegrees = new Vector3(-pitchActual, 0f, 0f);
+	}
+
+	private void RotarVertical(float deltaY){
+    	if (camera3D == null) return;
+    	if (tweenCamara != null && tweenCamara.IsRunning()) return;
+
+    	pitchActual = Mathf.Clamp(pitchActual + deltaY * velocidadManualVertical, inclinacionMinDeg, inclinacionMaxDeg);
+    	AplicarCamara();
+	}
 }

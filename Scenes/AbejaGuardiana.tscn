@@ -49,7 +49,7 @@ properties/1/replication_mode = 1
 [node name="AbejaGuardiana" unique_id=1162566400 instance=ExtResource("1_4vs4c")]
 transform = Transform3D(-1.095, 0, -1.6534041e-07, 0, 1.095, 0, 1.6534041e-07, 0, -1.095, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1713603543) index="0" unique_id=1707502476]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1763763374) index="0" unique_id=453470645]
 bones/0/position = Vector3(0, 0.35553285, -0.16194464)
 bones/0/rotation = Quaternion(-0.0015059564, 1.1920916e-07, -1.7952399e-10, 0.99999887)
 bones/1/rotation = Quaternion(0.123564705, 3.8039093e-15, 2.946012e-08, 0.9923365)
@@ -97,20 +97,20 @@ bones/38/position = Vector3(1.6064721, 1.428161, 0.47372028)
 bones/38/rotation = Quaternion(0.14748757, -3.232718e-05, 0.0019555807, 0.989062)
 bones/39/rotation = Quaternion(-0.14172357, 0.010352182, 0.09738332, 0.98505014)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1619008702]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=976520911]
 surface_material_override/0 = SubResource("StandardMaterial3D_w8ehf")
 surface_material_override/1 = SubResource("StandardMaterial3D_1ysuu")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1892545829]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=1362510692]
 surface_material_override/0 = SubResource("StandardMaterial3D_a3ec6")
 surface_material_override/1 = SubResource("StandardMaterial3D_38ho0")
 surface_material_override/2 = SubResource("StandardMaterial3D_w8ehf")
 surface_material_override/3 = SubResource("StandardMaterial3D_kq175")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=2038590762]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=791788738]
 surface_material_override/0 = SubResource("StandardMaterial3D_jja46")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=104103494]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1549160137]
 autoplay = &"Idle"
 next/Atacar = &"Idle"
 next/RecibirDanio = &"Idle"
@@ -130,3 +130,6 @@ modulate = Color(1, 1, 1, 0.49803922)
 text = "Guardiana"
 font = ExtResource("3_waouq")
 font_size = 120
+
+[node name="Pivote" type="Node3D" parent="." index="5" unique_id=1989872006]
+transform = Transform3D(0.9999995, 0, -2.842171e-14, 0, 0.9999995, 0, 2.842171e-14, 0, 0.9999995, 0, 2.5383728, 0)

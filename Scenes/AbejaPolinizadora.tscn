@@ -44,7 +44,7 @@ properties/1/replication_mode = 1
 [node name="AbejaPolinizadora" unique_id=1346075897 instance=ExtResource("1_w8ffe")]
 transform = Transform3D(-0.715, 0, -1.07961995e-07, 0, 0.715, 0, 1.07961995e-07, 0, -0.715, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1002306083) index="0" unique_id=1870331676]
+[node name="Skeleton3D" parent="Esqueleto" parent_id_path=PackedInt32Array(1495351227) index="0" unique_id=557170708]
 bones/0/rotation = Quaternion(-0.0695871, 1.1903269e-07, 6.7440054e-09, 0.9975759)
 bones/1/rotation = Quaternion(-0.200138, 1.085497e-09, -5.981497e-08, 0.97976774)
 bones/2/rotation = Quaternion(0.2163495, -8.2441405e-09, 6.0887814e-08, 0.976316)
@@ -93,20 +93,20 @@ bones/42/position = Vector3(0.93076324, 1.4349207, 0.5516149)
 bones/42/rotation = Quaternion(0.093938, -0.12011338, -0.20362057, 0.9671025)
 bones/43/rotation = Quaternion(-0.038346175, -0.00041810086, 0.21792698, 0.9752115)
 
-[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=2082865909]
+[node name="Cube" parent="Esqueleto/Skeleton3D" index="0" unique_id=1345646194]
 surface_material_override/0 = SubResource("StandardMaterial3D_uohl5")
 surface_material_override/1 = SubResource("StandardMaterial3D_pjga7")
 
-[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=400998800]
+[node name="Cube_001" parent="Esqueleto/Skeleton3D" index="1" unique_id=503552888]
 surface_material_override/0 = SubResource("StandardMaterial3D_uohl5")
 surface_material_override/1 = SubResource("StandardMaterial3D_pjga7")
 surface_material_override/2 = SubResource("StandardMaterial3D_n8ilj")
 surface_material_override/3 = SubResource("StandardMaterial3D_ugkxj")
 
-[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=252913368]
+[node name="Plano" parent="Esqueleto/Skeleton3D" index="2" unique_id=1389654711]
 surface_material_override/0 = SubResource("StandardMaterial3D_twym1")
 
-[node name="AnimationPlayer" parent="." index="1" unique_id=1025701736]
+[node name="AnimationPlayer" parent="." index="1" unique_id=1480304928]
 autoplay = &"Idle"
 next/RecibirDanio = &"Idle"
 
@@ -125,3 +125,6 @@ modulate = Color(1, 1, 1, 0.49803922)
 text = "Polinizadora"
 font = ExtResource("3_uohl5")
 font_size = 135
+
+[node name="Pivote" type="Node3D" parent="." index="5" unique_id=661163996]
+transform = Transform3D(1, 0, 1.4210855e-14, 0, 1, 0, -1.4210855e-14, 0, 1, 0, 3.0819101, 0)
