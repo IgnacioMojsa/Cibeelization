@@ -339,6 +339,7 @@ public partial class PlayerManager : Node3D
 		reinaVisual.GlobalPosition = nuevaPosicion;
 		CeldaActualPorJugador[reinaVisual] = celdaDestino;
 		reinaJugador.CeldaActual = celdaDestino;
+		celdasManager.ActualizarVisualCeldaBuffeada();
 
 		if(EsTurnoLocal()){
 			GameManager.Instance.CamaraActual?.EnfocarNodo(reinaVisual, 2, 1);
@@ -447,8 +448,12 @@ public partial class PlayerManager : Node3D
 	}
 
 	private void OnCambioDeTurnoJugador(AbejaReina jugadorNuevo){
-		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (jugadorNuevo == null) return;
+		celdasManager.DespintarCeldaDeAbejaBuffeada();
+
+		foreach (var j in GameManager.Instance.JugadoresEnPartida){
+			if (j != null) j.AtaquePotenciado = false;
+		}
 
 		jugadorNuevo.AccionConsumida = false;
 		jugadorNuevo.TiroLosDados = false;
@@ -465,10 +470,6 @@ public partial class PlayerManager : Node3D
 		jugadorNuevo.MovimientosDisponibles = 0;
 		jugadorNuevo.Estado = AbejaReina.EstadoTurno.EsperandoDado;
 
-		if(jugador.AtaquePotenciado){
-			celdasManager.DespintarCeldaDeAbejaBuffeada();
-		}
-
 		if(VisualesJugadores.TryGetValue(jugadorNuevo, out Node3D visualJugador)){
 			VisualJugadorActual = visualJugador;
 			if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador)){
@@ -476,6 +477,7 @@ public partial class PlayerManager : Node3D
 			}
 		}
 
+		celdasManager.ActualizarVisualCeldaBuffeada();
 		// OcultarAbejasObjetivo
 		tropasManager.OcultarAbejasCercanas();
 		animationManager.ReestablecerVelocidadAnimacion();
@@ -534,6 +536,13 @@ public partial class PlayerManager : Node3D
 			}
 		}
 	} 
+
+	public void ActualizarLabelVida(AbejaReina jugador){
+		if (jugador == null) return;
+		if (VidaDeReina.TryGetValue(jugador, out Label3D labelVida) && labelVida != null && IsInstanceValid(labelVida)){
+			labelVida.Text = jugador.HP.ToString();
+		}
+	}
 
 	public override void _ExitTree(){
 		if (GameManager.Instance.TurnManager != null){

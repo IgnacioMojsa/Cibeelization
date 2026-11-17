@@ -46,6 +46,7 @@ public partial class TroopsManager : Node3D
 		if(indiceCelda < 0 || indiceCelda >= tableroActual.Celdas.Count) return;
 		Celda celdaCliqueada = tableroActual.Celdas[indiceCelda];
 		InstanciarAbejaLocal(celdaCliqueada);
+		celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
 	private void InstanciarAbejaLocal(Celda celdaCliqueada){
@@ -145,8 +146,8 @@ public partial class TroopsManager : Node3D
 		if(VisualAbejas.TryGetValue(abejaSacrificio, out var visual) && IsInstanceValid(visual)){
 			visual.QueueFree();
 		}
-
 		VisualAbejas.Remove(abejaSacrificio);
+		playerManager.ActualizarLabelVida(jugador);
 		GD.Print("El jugador " + jugador.Id + " tiene " + jugador.HP + " puntos de vida");
 	}
 
@@ -224,6 +225,7 @@ public partial class TroopsManager : Node3D
 
 		Celda unaCelda = tableroActual.Celdas[indexCelda];
 		MoverSubdito(unaCelda);
+		celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
 	private void MoverSubdito(Celda unaCelda){

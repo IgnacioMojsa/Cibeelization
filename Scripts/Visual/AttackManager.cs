@@ -187,6 +187,8 @@ public partial class AttackManager : Node3D
 				}
 			GD.Print("Cámara restablecida en reina");
 		}
+
+		playerManager.celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
 	private void AtacarJugador(int indexSubditoAtacante = -1){
@@ -229,14 +231,7 @@ public partial class AttackManager : Node3D
 		ProcesarDanioJugador(indiceRival, atacante);
 		playerManager.animationManager.CambiarAnimacionDeJugador(reinaRival, "RecibirDanio");
 		playerManager.tropasManager.OcultarAbejasCercanas();
-
-		//hay que crear método para actualizar el hp de las labels o reemplazar el anterior de gameUI.MostrarHPDeJugadores() a rpc
-		if(playerManager.VidaDeReina.TryGetValue(reinaRival, out Label3D labelVida) && labelVida != null){
-			labelVida.Text = reinaRival.HP.ToString();
-		}
-		if(playerManager.gameUI != null){
-			playerManager.gameUI.ActualizarUI();
-		}
+		playerManager.celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
 	private void ProcesarDanioJugador(int indiceJugador, Abeja abejaAtacante){
@@ -471,10 +466,12 @@ public partial class AttackManager : Node3D
 			GD.Print("No se puede comandar el ataque: no hay súbditos cercas");
 			EventosUI.MostrarMensaje("Tus súbditos no tienen enemigos cerca para atacar.");
 		}
+		playerManager.celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void ComandarAtaqueAJugadorRpc(int indexJugador, int indexSubdito, int indiceRival){
+		var jugador = GameManager.Instance.jugadorEnTurno;
 		if(indexJugador < 0 || indexJugador >= GameManager.Instance.JugadoresEnPartida.Count) return;
 		if(indiceRival < 0 || indiceRival >= GameManager.Instance.JugadoresEnPartida.Count) return;
 		var jugadorAtacante = GameManager.Instance.JugadoresEnPartida[indexJugador];
@@ -485,10 +482,8 @@ public partial class AttackManager : Node3D
 
 		attackLogic.DaniarJugador(subdito, reinaRival);
 		playerManager.animationManager.CambiarAnimacionDeJugador(reinaRival, "RecibirDanio");
-		
-		if(playerManager.VidaDeReina.TryGetValue(reinaRival, out Label3D labelVida) && labelVida != null){
-			labelVida.Text = reinaRival.HP.ToString();
-		}
+		playerManager.ActualizarLabelVida(reinaRival);
+		playerManager.gameUI?.ActualizarUI();
 
 		Node3D visualRival = playerManager.VisualesJugadores[reinaRival];
 		if(attackLogic.JugadorEstaEliminado(reinaRival)){

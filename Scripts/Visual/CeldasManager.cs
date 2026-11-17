@@ -8,6 +8,7 @@ public partial class CeldasManager : Node3D
     [Export] public PlayerManager playerManager;
     [Export] public Tablero tablero; 
     private Tween TweenBuffArcoiris;
+	private Celda celdaBuffeadaActual;
 	private readonly List<Celda> celdasReforzadasResaltadas = new();
     public List<Celda> CeldasDisponibles = new();
 	public List<Color> ColoresDeJugadores = new List<Color>{Color.FromHtml("#6a268f"), Color.FromHtml("#4c1dae"), Color.FromHtml("#b33671"), Color.FromHtml("#8260e5")};
@@ -29,27 +30,26 @@ public partial class CeldasManager : Node3D
 		}
 	}
 
-    public void PintarCeldaDeAbejaBuffeada()
-	{
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		var celdaAPintar = jugador.CeldaActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
+    public void PintarCeldaDeAbejaBuffeada(Celda celdaObjetivo = null){
+		var celda = celdaObjetivo ?? GameManager.Instance.jugadorEnTurno?.CeldaActual;
+		if(celda == null || celda.Tile == null) return;
+		if(celdaBuffeadaActual != null && celdaBuffeadaActual != celda){
+			DespintarCeldaDeAbejaBuffeada();
+		}
+		
+		var celdaAPintar = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
-		if (celdaAPintar is MeshInstance3D meshInstance)
-		{
-			if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-			{
+		if(celdaAPintar is MeshInstance3D meshInstance){
+			if(TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid()){
 				TweenBuffArcoiris.Kill();
 			}
 
-			StandardMaterial3D material = meshInstance.GetSurfaceOverrideMaterial(0) as StandardMaterial3D;
-			if (material == null)
-			{
-				material = new StandardMaterial3D();
-			}
-			else
-			{
-				material = (StandardMaterial3D)material.Duplicate();
-			}
+			celdaBuffeadaActual = celda;
+
+			StandardMaterial3D material = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
+			material = material != null
+			? (StandardMaterial3D)material.Duplicate()
+			: new StandardMaterial3D();
 
 			meshInstance.SetSurfaceOverrideMaterial(0, material);
 
@@ -61,39 +61,48 @@ public partial class CeldasManager : Node3D
 		}
 	}
 
-    public void DespintarCeldaDeAbejaBuffeada()
-	{
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid())
-		{
+    public void DespintarCeldaDeAbejaBuffeada(){
+		if(TweenBuffArcoiris != null && TweenBuffArcoiris.IsValid()){
 			TweenBuffArcoiris.Kill();
 		}
 
-		var celda = jugador.CeldaActual;
+		if(celdaBuffeadaActual == null || celdaBuffeadaActual.Tile == null){
+			celdaBuffeadaActual = null;
+			return;
+		}
 
-		if (celda.Tile == null) return;
+		var nodoHexagon = celdaBuffeadaActual.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
 
-		var nodoHexagon = celda.Tile.GetNode<Node3D>("hexagon_tile").GetChild(0);
-
-		if (nodoHexagon is MeshInstance3D meshInstance)
-		{
+		if(nodoHexagon is MeshInstance3D meshInstance){
 			StandardMaterial3D materialDeMesh = meshInstance.GetActiveMaterial(0) as StandardMaterial3D;
-	
-			StandardMaterial3D nuevoMaterial;
-			if (materialDeMesh != null)
-			{
-				nuevoMaterial = (StandardMaterial3D)materialDeMesh.Duplicate();
-			}
-			else
-			{
-				nuevoMaterial = new StandardMaterial3D();
-			}
+			StandardMaterial3D nuevoMaterial = materialDeMesh != null
+			? (StandardMaterial3D)materialDeMesh.Duplicate() 
+			: new StandardMaterial3D();
 
-			if(jugador.AtaquePotenciado)
-			{
-				nuevoMaterial.AlbedoColor = Color.Color8(201, 113, 0, 255);
-				meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
-			}
+			bool tieneColorJugador = celdaBuffeadaActual.EstaPintada && ColoresDeJugadores.Contains(celdaBuffeadaActual.ColorActual);
+			nuevoMaterial.AlbedoColor = tieneColorJugador
+			? celdaBuffeadaActual.ColorActual
+			: Color.FromHtml("#f9b600");
+
+			meshInstance.SetSurfaceOverrideMaterial(0, nuevoMaterial);
+		}
+
+		celdaBuffeadaActual = null;
+	}
+
+	public void ActualizarVisualCeldaBuffeada(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if(jugador == null){
+			DespintarCeldaDeAbejaBuffeada();
+			return;
+		}
+
+		GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
+
+		if(jugador.AtaquePotenciado && !jugador.AtaqueConsumido){
+			PintarCeldaDeAbejaBuffeada(jugador.CeldaActual);
+		} else {
+			DespintarCeldaDeAbejaBuffeada();
 		}
 	}
 

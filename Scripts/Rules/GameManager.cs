@@ -200,20 +200,23 @@ public partial class GameManager
 		jugadorEnTurno = TurnManager.jugadorEnTurno;
 	}
 
-	public List<Abeja> SubditosAdyacentes()
-	{
+	public List<Abeja> SubditosAdyacentes(){
+		if (jugadorEnTurno == null || jugadorEnTurno.CeldaActual == null || TableroActual == null)
+		return new List<Abeja>();
+
 		var celdasAdyacentes = TableroActual.ObtenerVecinos(jugadorEnTurno.CeldaActual);
-		
-		return jugadorEnTurno.ColmenaDeReina.AbejasDeColmena.Where(a => celdasAdyacentes.Any(c => c == a.CeldaActual)).ToList();
+		if (celdasAdyacentes == null)
+			return new List<Abeja>();
+
+		return jugadorEnTurno.ColmenaDeReina.AbejasDeColmena
+			.Where(a => a != null && !a.FueraDeJuego && a.CeldaActual != null && celdasAdyacentes.Contains(a.CeldaActual))
+			.ToList();
 	}
 
 	public void PotenciarAtaqueDeJugadorEnTurno(){
+		if (jugadorEnTurno == null) return;
 		var subditosAdyacentes = SubditosAdyacentes();
-
-		if(subditosAdyacentes.Count() > 2){
-			//GD.Print("Ataque de jugador " + jugadorEnTurno.Id + " potenciado"); 
-			jugadorEnTurno.AtaquePotenciado = true;
-		}
+		jugadorEnTurno.AtaquePotenciado = subditosAdyacentes.Count >= 3;
 	}
 
 	public void ConsumirAbsorcion(Abeja unaAbeja)
