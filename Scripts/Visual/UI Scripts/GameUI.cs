@@ -32,12 +32,13 @@ public partial class GameUI : UIBase {
 	[Export] public PanelContainer panelFueraDeJuego;
 	private bool panelFueraDeJuegoMostrado = false;
 	public bool tocoBotonAtacarYDebeDesplegarseElMenu = false;
-
 	[Export] public PlayerManager playerManager;
 	public Control recursos;
 
 	public override void _Ready(){
 		ProcessMode = ProcessModeEnum.Always;
+		
+		ActualizarConfiguracionesGraficas();
 		
 		string currentScene = GetTree().CurrentScene.SceneFilePath;
 

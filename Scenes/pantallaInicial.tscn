@@ -39,6 +39,14 @@ border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
 [sub_resource type="ButtonGroup" id="ButtonGroup_8of7i"]
 resource_name = "Size"
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hrbw"]
+bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.14044741, 0.14044747, 0.14044735, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awl3a"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -577,7 +585,7 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Comenzar"
 
-[node name="Ajustes" type="PanelContainer" parent="." unique_id=519198103]
+[node name="Ajustes" type="PanelContainer" parent="." unique_id=6772552]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -585,23 +593,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -261.5
-offset_top = -181.5
-offset_right = 261.5
-offset_bottom = 181.5
+offset_left = -260.5
+offset_top = -220.0
+offset_right = 262.5
+offset_bottom = 212.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_6mnlh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6hrbw")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Ajustes" unique_id=1014494023]
+[node name="VBoxContainer" type="VBoxContainer" parent="Ajustes" unique_id=526156409]
 layout_mode = 2
 
-[node name="Margin0" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1951913037]
+[node name="Margin0" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=2137783996]
 layout_mode = 2
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Ajustes" type="Label" parent="Ajustes/VBoxContainer/Margin0" unique_id=962221034]
+[node name="Ajustes" type="Label" parent="Ajustes/VBoxContainer/Margin0" unique_id=2142825832]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
@@ -610,63 +618,177 @@ theme_override_font_sizes/font_size = 40
 text = "Ajustes"
 horizontal_alignment = 1
 
-[node name="Margin1" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=513525099]
+[node name="MarginContainer" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=2077001991]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Ajustes/VBoxContainer/MarginContainer" unique_id=85735874]
+layout_mode = 2
+theme_override_constants/separation = 85
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer" unique_id=882351031]
+layout_mode = 2
+
+[node name="Margin4" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=390902157]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="General" type="Label" parent="Ajustes/VBoxContainer/Margin1" unique_id=1440001933]
+[node name="Audio" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin4" unique_id=1917365748]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=777080215]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin1" unique_id=14838238]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 25
 text = "General"
 horizontal_alignment = 1
 
-[node name="Master" parent="Ajustes/VBoxContainer" unique_id=1666788886 instance=ExtResource("6_e1fak")]
+[node name="MarginMaster" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=650439289]
 layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="Master" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginMaster" unique_id=1666788886 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "Master"
 
-[node name="Margin2" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=353060220]
+[node name="Margin2" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=455783437]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Musica" type="Label" parent="Ajustes/VBoxContainer/Margin2" unique_id=109880240]
+[node name="Musica" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin2" unique_id=847311828]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 25
 text = "Música"
 horizontal_alignment = 1
 
-[node name="Music" parent="Ajustes/VBoxContainer" unique_id=1579628621 instance=ExtResource("6_e1fak")]
+[node name="MarginMusic" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=791660760]
 layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="Music" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginMusic" unique_id=780242243 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "Music"
 
-[node name="Margin3" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1527308630]
+[node name="Margin3" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=80526085]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="SFX" type="Label" parent="Ajustes/VBoxContainer/Margin3" unique_id=1390652517]
+[node name="SFX" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin3" unique_id=60020017]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 25
 text = "Efectos de sonido"
 horizontal_alignment = 1
 
-[node name="SFX" parent="Ajustes/VBoxContainer" unique_id=543925765 instance=ExtResource("6_e1fak")]
+[node name="MarginSFX" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1895094371]
 layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="SFX" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginSFX" unique_id=1778749101 instance=ExtResource("6_e1fak")]
+layout_mode = 2
+mouse_default_cursor_shape = 2
 BusName = "SFX"
 
-[node name="Margin4" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1691293215]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1147046110]
+layout_mode = 2
+
+[node name="Margin1" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=259956068]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin1" unique_id=638258367]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Gráficos"
+horizontal_alignment = 1
+
+[node name="Margin2" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=918811280]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Label" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin2" unique_id=534896092]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Modo de pantalla"
+horizontal_alignment = 1
+
+[node name="Margin3" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=527296308]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="ModosDisponibles" type="OptionButton" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3" unique_id=802050117]
+layout_mode = 2
+alignment = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Ventana"
+popup/item_0/id = 0
+popup/item_1/text = "Ventana sin bordes"
+popup/item_1/id = 1
+popup/item_2/text = "Pantalla completa"
+popup/item_2/id = 2
+
+[node name="Margin4" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1240277720]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Label" type="Label" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin4" unique_id=1062156377]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_cluwn")
+theme_override_font_sizes/font_size = 25
+text = "Resolucion"
+horizontal_alignment = 1
+
+[node name="Margin5" type="MarginContainer" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1002786742]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="ResolucionesDisponibles" type="OptionButton" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5" unique_id=586094894]
+layout_mode = 2
+alignment = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "1280 x 720"
+popup/item_0/id = 1
+popup/item_1/text = "1920 x 1080"
+popup/item_1/id = 0
+popup/item_2/text = "2560 x 1440"
+popup/item_2/id = 2
+
+[node name="Margin4" type="MarginContainer" parent="Ajustes/VBoxContainer" unique_id=1422940081]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
-[node name="Aceptar" type="PanelContainer" parent="Ajustes/VBoxContainer/Margin4" unique_id=89151631]
+[node name="Aceptar" type="PanelContainer" parent="Ajustes/VBoxContainer/Margin4" unique_id=285127862]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AceptarButton" type="Button" parent="Ajustes/VBoxContainer/Margin4/Aceptar" unique_id=27290165]
+[node name="AceptarButton" type="Button" parent="Ajustes/VBoxContainer/Margin4/Aceptar" unique_id=258184276]
 process_mode = 3
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("3_cluwn")
 theme_override_font_sizes/font_size = 37
@@ -826,6 +948,7 @@ texture = ExtResource("7_3b2ad")
 [connection signal="toggled" from="MenuComienzo/MarginContainer/VBoxContainer/Sizes/Big/CheckBox" to="." method="SeleccionarSizeTablero"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/Volver/VolverButton" to="." method="OcultarConfiguracionDePartida"]
 [connection signal="pressed" from="MenuComienzo/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/Start2/PlayButton" to="." method="ComenzarPartida"]
+[connection signal="item_selected" from="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles" to="." method="CambiarModoDePantalla"]
 [connection signal="pressed" from="Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="." method="AceptarConfigAudio"]
 [connection signal="pressed" from="PantallaCreditos/VBoxContainer/MarginContainer/Volver/VolverButton" to="." method="CerrarCreditos"]
 [connection signal="pressed" from="Tutorial/VBoxContainer/MarginContainer2/Volver/VolverButton2" to="." method="OcultarTutorial"]

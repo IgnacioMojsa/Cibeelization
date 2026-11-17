@@ -16,6 +16,8 @@ public partial class GameManager
 	public CamaraController CamaraActual { get; set; }
 	private GameManager(){}
 	public int cantidadJugadores { get; set; }
+	public int modoPantallaSeleccionado { get; set; }
+
 	public int sizeTablero { get; set; } // Representa la opción elegida (2 = Small, 3 = Medium, 4 = Large)
 	public int DimensionActual { get; private set; } = 15;
 	public Partida PartidaActual { get; private set; }

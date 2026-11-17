@@ -658,9 +658,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -261.5
-offset_top = -741.5
+offset_top = -772.0
 offset_right = 261.5
-offset_bottom = -378.5
+offset_bottom = -340.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ap8h6")
@@ -682,68 +682,162 @@ theme_override_font_sizes/font_size = 40
 text = "Ajustes"
 horizontal_alignment = 1
 
-[node name="Margin1" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=2035642877]
+[node name="MarginContainer" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=598488360]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer" unique_id=1684069481]
+layout_mode = 2
+theme_override_constants/separation = 85
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer" unique_id=2135208113]
+layout_mode = 2
+
+[node name="Margin4" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2054349639]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="General" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin1" unique_id=975765891]
+[node name="Audio" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin4" unique_id=686896695]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Margin1" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2035642877]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin1" unique_id=975765891]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 text = "General"
 horizontal_alignment = 1
 
-[node name="MarginMaster" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1723171536]
+[node name="MarginMaster" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1723171536]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 
-[node name="Master" parent="HUD/Ajustes/VBoxContainer/MarginMaster" unique_id=1666788886 instance=ExtResource("9_y8nye")]
+[node name="Master" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginMaster" unique_id=1666788886 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 BusName = "Master"
 
-[node name="Margin2" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1465954372]
+[node name="Margin2" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1465954372]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Musica" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin2" unique_id=224127065]
+[node name="Musica" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin2" unique_id=224127065]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 text = "Música"
 horizontal_alignment = 1
 
-[node name="MarginMusic" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1526370745]
+[node name="MarginMusic" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1526370745]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 
-[node name="Music" parent="HUD/Ajustes/VBoxContainer/MarginMusic" unique_id=823332244 instance=ExtResource("9_y8nye")]
+[node name="Music" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginMusic" unique_id=823332244 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 BusName = "Music"
 
-[node name="Margin3" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1472759120]
+[node name="Margin3" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1472759120]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="SFX" type="Label" parent="HUD/Ajustes/VBoxContainer/Margin3" unique_id=122344324]
+[node name="SFX" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Margin3" unique_id=122344324]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 25
 text = "Efectos de sonido"
 horizontal_alignment = 1
 
-[node name="MarginSFX" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=1311659591]
+[node name="MarginSFX" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1311659591]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 
-[node name="SFX" parent="HUD/Ajustes/VBoxContainer/MarginSFX" unique_id=1898905141 instance=ExtResource("9_y8nye")]
+[node name="SFX" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginSFX" unique_id=1898905141 instance=ExtResource("9_y8nye")]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 BusName = "SFX"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer" unique_id=968861813]
+layout_mode = 2
+
+[node name="Margin1" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=442785322]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="General" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin1" unique_id=531647643]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Gráficos"
+horizontal_alignment = 1
+
+[node name="Margin2" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1340038909]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Label" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin2" unique_id=1205079308]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Modo de pantalla"
+horizontal_alignment = 1
+
+[node name="Margin3" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=2092604421]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="ModosDisponibles" type="OptionButton" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3" unique_id=2009724101]
+layout_mode = 2
+alignment = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Ventana"
+popup/item_0/id = 0
+popup/item_1/text = "Ventana sin bordes"
+popup/item_1/id = 1
+popup/item_2/text = "Pantalla completa"
+popup/item_2/id = 2
+
+[node name="Margin4" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1578965686]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Label" type="Label" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin4" unique_id=1641678472]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 25
+text = "Resolucion"
+horizontal_alignment = 1
+
+[node name="Margin5" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1648048756]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="ResolucionesDisponibles" type="OptionButton" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5" unique_id=1628302412]
+layout_mode = 2
+alignment = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "1280 x 720"
+popup/item_0/id = 1
+popup/item_1/text = "1920 x 1080"
+popup/item_1/id = 0
+popup/item_2/text = "2560 x 1440"
+popup/item_2/id = 2
 
 [node name="Margin4" type="MarginContainer" parent="HUD/Ajustes/VBoxContainer" unique_id=2089517757]
 layout_mode = 2
@@ -1258,6 +1352,7 @@ replication_config = SubResource("SceneReplicationConfig_2gfcn")
 [connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
 [connection signal="pressed" from="HUD/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
+[connection signal="item_selected" from="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles" to="HUD" method="CambiarModoDePantalla"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
 [connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]
 [connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton" to="HUD" method="OcultarPanelFueraDeJuego"]

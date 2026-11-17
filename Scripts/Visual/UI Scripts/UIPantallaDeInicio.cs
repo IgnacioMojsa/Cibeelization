@@ -28,6 +28,8 @@ public partial class UIPantallaDeInicio : UIBase {
 				GetNode<TextureButton>("BotonesMenuDeInicio/Credits"),
 				GetNode<TextureButton>("BotonesMenuDeInicio/Exit"),
 			};
+
+		ActualizarConfiguracionesGraficas();
 	}
 	
 	private void ConfigurarBoton(string nombre, bool? Estado = null){
