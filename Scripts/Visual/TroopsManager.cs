@@ -15,6 +15,8 @@ public partial class TroopsManager : Node3D
 	public List<Abeja> AbejasTransformables = new List<Abeja>();
 	public Node3D VisualSubditoActual;
 	public Abeja SubditoActual;
+	protected AudioSetting abejaSound2 => AudioManager.Instance?.GameAudio?.Sound6; //Empate
+
 	public override void _Ready(){
 		AlmacenJugadores.Clear();
 		CargarAssets();
@@ -149,6 +151,7 @@ public partial class TroopsManager : Node3D
 		VisualAbejas.Remove(abejaSacrificio);
 		playerManager.ActualizarLabelVida(jugador);
 		GD.Print("El jugador " + jugador.Id + " tiene " + jugador.HP + " puntos de vida");
+		AudioManager.Instance.PlaySound(abejaSound2);
 	}
 
 	public void MostrarAbejasCercanas(){
