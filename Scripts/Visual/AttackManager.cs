@@ -40,13 +40,15 @@ public partial class AttackManager : Node3D
 		Vector2 mousePosition = GetViewport().GetMousePosition();
 		Vector3 rayOrigin = camaraActiva.ProjectRayOrigin(mousePosition);
 		Vector3 rayEnd = rayOrigin + camaraActiva.ProjectRayNormal(mousePosition) * 1000.0f;
-
+	
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
 		var result = spaceState.IntersectRay(query);
 
-		if(result.Count == 0)
+		if(result.Count == 0){
+			CancelarModoAtaque();
 			return;
+		}
 
 		playerManager.PosicionEnMundo3D = result["position"].AsVector3();
 		
@@ -67,24 +69,42 @@ public partial class AttackManager : Node3D
 		}
 
 		playerManager.CeldaCliqueada = playerManager.ObtenerCeldaDesdePosicion(playerManager.tablero.Celdas, playerManager.PosicionEnMundo3D);
-		if(playerManager.CeldaCliqueada == null) return;
+		if(playerManager.CeldaCliqueada == null){
+			CancelarModoAtaque();
+			return;
+		}
 
-		playerManager.RotarJugadorHex(playerManager.VisualJugadorActual, playerManager.CeldaCliqueada);
+		playerManager.RotarJugadorHex(visualAtacante, playerManager.CeldaCliqueada);
 
 		bool subditoAdyacenteAJugador = controlandoSubdito && GameManager.Instance.JugadoresEnPartida.Any(
 			j => !j.FueraDeJuego && j != jugador && playerManager.tropasManager.SubditoTieneAAlguienCerca(j)
 		);
 
-		if ((!controlandoSubdito && OtroJugadorCerca()) || subditoAdyacenteAJugador){
-			AtacarJugador(indexSubditoAtacante);
+		if (((!controlandoSubdito && OtroJugadorCerca()) || subditoAdyacenteAJugador) && AtacarJugador(indexSubditoAtacante)){
 			if (controlandoSubdito) playerManager.TerminarControlDeSubdito();
 			GameManager.Instance.ConsumirAtaque();
 			jugador.AtaqueAObjetivo = false;
 			playerManager.vfxManager.OcultarAbejasObjetivo();
+			return;
 		}
-		else if (AbejasObjetivo.Count > 0){
-			AtacarAbeja(indexSubditoAtacante);
+
+		if (AbejasObjetivo.Count > 0 && AtacarAbeja(indexSubditoAtacante)){
+			return;
 		}
+
+		CancelarModoAtaque();
+	}
+
+	private void CancelarModoAtaque(){
+		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador != null){
+			jugador.ModoAtaque = false;
+			jugador.AtaqueAObjetivo = false;
+		}
+		playerManager.vfxManager.EsconderOutlineDeJugadores();
+		playerManager.vfxManager.OcultarAbejasObjetivo();
+		playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
+		EventosUI.MostrarMensaje("No seleccionaste a ninguna abeja para atacar.");
 	}
 
 	private Abeja ObtenerAbejaDesdeCollider(Node collider){
@@ -134,18 +154,17 @@ public partial class AttackManager : Node3D
 		ProcesarAtaqueDeAbeja(abejaObjetivo, indexSubditoAtacante);
 	}
 
-	private void AtacarAbeja(int indexSubditoAtacante = -1){
+	private bool AtacarAbeja(int indexSubditoAtacante = -1){
 		var abejaObjetivo = AbejasObjetivo.Find(a => a.CeldaActual == playerManager.CeldaCliqueada);
 		if (abejaObjetivo == null){
-			GD.Print("No hay ninguna abeja objetivo en la celda seleccionada.");
-			EventosUI.MostrarMensaje("No hay ninguna abeja enemiga para atacar ahí.");
-			return;
+			return false;
 		}
 		ProcesarAtaqueDeAbeja(abejaObjetivo, indexSubditoAtacante);
 		playerManager.TerminarControlDeSubdito();
 		GameManager.Instance.ConsumirAtaque();
 		GameManager.Instance.jugadorEnTurno.AtaqueAObjetivo = false;
 		playerManager.vfxManager.OcultarAbejasObjetivo();
+		return true;
 	}
 
 	private void ProcesarAtaqueDeAbeja(Abeja abejaObjetivo, int indexSubditoAtacante = -1){
@@ -199,7 +218,7 @@ public partial class AttackManager : Node3D
 		playerManager.celdasManager.ActualizarVisualCeldaBuffeada();
 	}
 
-	private void AtacarJugador(int indexSubditoAtacante = -1){
+	private bool AtacarJugador(int indexSubditoAtacante = -1){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugador];
 		Abeja atacante = ObtenerAtacante(jugador, indexSubditoAtacante);
@@ -211,22 +230,20 @@ public partial class AttackManager : Node3D
 		AbejaReina reinaObjetivo = GameManager.Instance.JugadoresEnPartida.Find(
 			j => !j.FueraDeJuego && j != jugador && j.CeldaActual == playerManager.CeldaCliqueada);
 
-		if (reinaObjetivo != null){
-			if (celdasAdyacentes.Any(c => c == reinaObjetivo.CeldaActual)){
-				int indiceRival = GameManager.Instance.JugadoresEnPartida.IndexOf(reinaObjetivo);
+		if (reinaObjetivo != null && celdasAdyacentes.Any(c => c == reinaObjetivo.CeldaActual)){
+			int indiceRival = GameManager.Instance.JugadoresEnPartida.IndexOf(reinaObjetivo);
 
-				if (GameManager.Instance.modoMultiplayer){
-					Rpc(nameof(AtacarJugadorRpc), indiceRival, indexSubditoAtacante);
-				} else {
-					AtacarJugadorRpc(indiceRival, indexSubditoAtacante);
-				}
-
-				playerManager.VidaDeReina[reinaObjetivo].Text = reinaObjetivo.HP.ToString();
+			if (GameManager.Instance.modoMultiplayer){
+				Rpc(nameof(AtacarJugadorRpc), indiceRival, indexSubditoAtacante);
 			} else {
-				GD.Print("La Abeja Reina rival está demasiado lejos para ser atacada.");
-				EventosUI.MostrarMensaje("Esa abeja enemiga está muy lejos.");
+				AtacarJugadorRpc(indiceRival, indexSubditoAtacante);
 			}
+
+			playerManager.VidaDeReina[reinaObjetivo].Text = reinaObjetivo.HP.ToString();
+			return true;
 		}
+
+		return false;
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -424,6 +441,8 @@ public partial class AttackManager : Node3D
 			List<Celda> celdasVecinas = playerManager.tablero.ObtenerVecinos(subdito.CeldaActual);
 			if(celdasVecinas == null) continue;
 
+			bool subditoAtaco = false;
+
 			//para atacar a las reinas
 			foreach (var rival in GameManager.Instance.JugadoresEnPartida){
 				if(rival == jugadorEnTurno || rival.FueraDeJuego) continue;
@@ -436,6 +455,7 @@ public partial class AttackManager : Node3D
 							ComandarAtaqueAJugadorRpc(indexJugador, indexSubdito, indiceRival);
 						}
 						atacoRecien = true;
+						subditoAtaco = true;
 					}
 				}
 			}
@@ -455,8 +475,18 @@ public partial class AttackManager : Node3D
 								ComandarAtaqueASubditosRpc(indexJugador, indexSubdito, indexJugadorRival, indexAbejaRival);
 							}
 							atacoRecien = true;
+							subditoAtaco = true;
 						}
 					}
+				}
+			}
+
+			//animacion de la guardiana
+			if (subditoAtaco && subdito is AbejaGuardiana){
+				if (GameManager.Instance.modoMultiplayer){
+					Rpc(nameof(ReproducirAnimacionAtaqueSubditoRpc), indexJugador, indexSubdito);
+				} else {
+					ReproducirAnimacionAtaqueSubditoRpc(indexJugador, indexSubdito);
 				}
 			}
 		}
@@ -523,6 +553,22 @@ public partial class AttackManager : Node3D
 			visual.QueueFree();
 			playerManager.tropasManager.AbejasCercanas.Remove(abejaObjetivo);
 			playerManager.tropasManager.VisualAbejas.Remove(abejaObjetivo);
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void ReproducirAnimacionAtaqueSubditoRpc(int indexJugador, int indexSubdito){
+		if (indexJugador < 0 || indexJugador >= GameManager.Instance.JugadoresEnPartida.Count) return;
+		var jugadorAtacante = GameManager.Instance.JugadoresEnPartida[indexJugador];
+		if (indexSubdito < 0 || indexSubdito >= jugadorAtacante.ColmenaDeReina.AbejasDeColmena.Count) return;
+
+		Abeja subdito = jugadorAtacante.ColmenaDeReina.AbejasDeColmena[indexSubdito];
+		if (subdito != null
+			&& !subdito.FueraDeJuego
+			&& playerManager.tropasManager.VisualAbejas.TryGetValue(subdito, out Node3D visualSubdito)
+			&& visualSubdito != null
+			&& IsInstanceValid(visualSubdito)){
+			playerManager.animationManager.ReproducirConCallback(visualSubdito, "Atacar", () => { });
 		}
 	}
 }
