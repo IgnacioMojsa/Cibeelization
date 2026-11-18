@@ -1105,6 +1105,8 @@ theme_override_constants/margin_top = 10
 
 [node name="ModosDisponibles" type="OptionButton" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3" unique_id=2009724101]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 25
 alignment = 2
 selected = 0
 item_count = 3
@@ -1132,6 +1134,8 @@ theme_override_constants/margin_top = 10
 
 [node name="ResolucionesDisponibles" type="OptionButton" parent="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5" unique_id=1628302412]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 25
 alignment = 2
 selected = 1
 item_count = 3

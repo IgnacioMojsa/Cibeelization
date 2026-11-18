@@ -231,8 +231,8 @@ public partial class GameUI : UIBase {
 			Multiplayer.MultiplayerPeer = null;
 		}
 		GameManager.Instance.ResetearEstadoPartida();
-		if (GetTree().CurrentScene.SceneFilePath != "res://Scenes/pantallaInicial.tscn"){
-			GetTree().ChangeSceneToFile("res://Scenes/pantallaInicial.tscn");
+		if (GetTree().CurrentScene.SceneFilePath != "res://Scenes/SplashScreen.tscn"){
+			GetTree().ChangeSceneToFile("res://Scenes/SplashScreen.tscn");
 		}
 	}
 

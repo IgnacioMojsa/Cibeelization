@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://p0v655ci2l7g" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirPresionado.svg" id="20_d2nxm"]
 [ext_resource type="Texture2D" uid="uid://p3sa8rmyggbe" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirSeleccionado.svg" id="21_jhu0f"]
 [ext_resource type="Texture2D" uid="uid://boy8k0je3kgbo" path="res://Assets/UI/UIPantallaInicial/BotonSalir/BotonSalirDeshabilitado.svg" id="22_d4bk0"]
+[ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="27_plf46"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mnlh"]
 bg_color = Color(0.39308554, 0.39308554, 0.39308533, 1)
@@ -738,6 +739,8 @@ theme_override_constants/margin_top = 10
 
 [node name="ModosDisponibles" type="OptionButton" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3" unique_id=802050117]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("27_plf46")
+theme_override_font_sizes/font_size = 25
 alignment = 2
 selected = 0
 item_count = 3
@@ -765,6 +768,8 @@ theme_override_constants/margin_top = 10
 
 [node name="ResolucionesDisponibles" type="OptionButton" parent="Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5" unique_id=586094894]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("27_plf46")
+theme_override_font_sizes/font_size = 25
 alignment = 2
 selected = 1
 item_count = 3
