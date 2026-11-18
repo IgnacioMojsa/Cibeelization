@@ -24,6 +24,9 @@ public partial class GameManager
 	public bool jugadorEsHost = true;
 	public bool modoMultiplayer = false;
 	public bool modoEspectador = false;
+	public bool permitirEspectadores = false;
+	public int maxEspectadores = 0;
+	public List<long> EspectadoresEnPartida = new();
 	public double DuracionTimerTurno { get; set; } = 30.0;
 	public event Action<AbejaReina> OnJugadorEliminadoPorDesconexion;
 	public AudioSetting transformaSound => AudioManager.Instance?.GameAudio?.Sound9; //Transformación de abeja
@@ -243,6 +246,12 @@ public partial class GameManager
 		jugadorEnTurno = null;
 		JugadorGanador = null;
 		OnEstadoAccionesCambiado = null;
+
+		//limpiar espectadores para la creacion de una nueva partida en multijugador
+		permitirEspectadores = false;
+		maxEspectadores = 0;
+		modoEspectador = false;
+		EspectadoresEnPartida.Clear();
 
 		if (TurnManager != null){
 			TurnManager.ReiniciarTurnos();

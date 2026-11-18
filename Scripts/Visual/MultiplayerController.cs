@@ -54,7 +54,7 @@ public partial class MultiplayerController : Node
 	}
 
 	private void ConfigurarBotones(){
-		botonHost =	GetNode<Button>("Host");
+		botonHost = GetNode<Button>("Host");
 		botonCliente = GetNode<Button>("Cliente");		
 		botonJugar = GetNode<Button>("Jugar");
 		botonEspectar = GetNode<Button>("Espectar");
@@ -85,20 +85,26 @@ public partial class MultiplayerController : Node
 	}
 
 	private void PeerConnected(long id){
-		GD.Print("PLAYER CONNECTED: " + id.ToString());
+		GD.Print("PEER CONNECTED: " + id.ToString());
 		if (Multiplayer.IsServer()){
 			int maxClientes = maxJugadores - 1;
-			bool salaLlena = Multiplayer.GetPeers().Length > maxClientes || GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores;
-			
-			if (salaLlena && !GameManager.Instance.HayJugadoresEsperandoReconexion()){
-				GD.Print($"Sala llena, ({maxJugadores} jugadores máximo). Rechazando a peer {id}");
+			int cupoDeEspectadores = GameManager.Instance.permitirEspectadores ? GameManager.Instance.maxEspectadores : 0;
+			int limiteTotalConexiones = maxClientes + cupoDeEspectadores;
+
+			if (Multiplayer.GetPeers().Length > limiteTotalConexiones && !GameManager.Instance.HayJugadoresEsperandoReconexion()){
+				GD.Print($"Servidor lleno ({limiteTotalConexiones} conexiones máx.). Rechazando a peer {id}");
 				Multiplayer.MultiplayerPeer.DisconnectPeer((int)id);
 			}
 		}
 	}
 
 	private void PeerDisconnected(long id){
-		GD.Print("PLAYER DISCONNECTED: " + id.ToString());
+		GD.Print("PEER/PLAYER DISCONNECTED: " + id.ToString());
+
+		if (GameManager.Instance.EspectadoresEnPartida.Remove(id)){
+			GD.Print($"Espectador {id} desconectado. Espectadores actuales: {GameManager.Instance.EspectadoresEnPartida.Count}");
+			return;
+		}
 		
 		var jugador = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
 		if (jugador != null){
@@ -116,13 +122,16 @@ public partial class MultiplayerController : Node
 		GD.Print("CONNECTED TO SERVER");
 		estaConectadoAlServidor = true;
 		ActualizarEstadoBotonJugar();
-		RpcId(1, nameof(SendPlayerInformation), GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId());
+		RpcId(1, nameof(SendPlayerInformation), GetNode<LineEdit>("LineEdit").Text, Multiplayer.GetUniqueId(), GameManager.Instance.modoEspectador);
 	}
 
 	private void ConnectionFailed(){
 		GD.Print("CONNECTION FAILED.");
 		estaConectadoAlServidor = false;
-		if (botonCliente != null) botonCliente.Disabled = false;
+		if (botonCliente != null){
+			botonCliente.Disabled = false;
+			botonEspectar.Disabled = false;
+		}
 		if (Multiplayer.MultiplayerPeer != null){
 			Multiplayer.MultiplayerPeer.Close();
 			Multiplayer.MultiplayerPeer = null;
@@ -156,12 +165,16 @@ public partial class MultiplayerController : Node
 		}
 
 		botonHost.Disabled = true;
+		GameManager.Instance.modoMultiplayer = true;
+		GameManager.Instance.modoEspectador = false;
+		GameManager.Instance.EspectadoresEnPartida.Clear();
 
 		maxJugadores = Mathf.Clamp(GameManager.Instance.cantidadJugadores, 2, 4);
 		int maxClientes = maxJugadores - 1;
+		int cupoDeEspectadores = GameManager.Instance.permitirEspectadores ? Mathf.Clamp(GameManager.Instance.maxEspectadores, 0, 10) : 0;
 
 		peer = new ENetMultiplayerPeer();
-		var error = peer.CreateServer(port, maxClientes);
+		var error = peer.CreateServer(port, maxClientes + cupoDeEspectadores);
 
 		if(error != Error.Ok){
 			GD.Print("Error cannot host: " + error.ToString());
@@ -171,20 +184,14 @@ public partial class MultiplayerController : Node
 
 		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = peer;
-		GD.Print("Esperando jugadores...");
-		GD.Print($"Sala para {maxJugadores} jugadores. Tablero: {GameManager.Instance.sizeTablero})");
-		SendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1);
+		GD.Print($"Sala creada: {maxJugadores} jugadores + {cupoDeEspectadores} espectadores máx.");
+		SendPlayerInformation(GetNode<LineEdit>("LineEdit").Text, 1, false);
 		ActualizarEstadoBotonJugar();
 	}
 
 	private void _on_cliente_button_down(){
-		botonEspectar.Disabled = true;
-		botonCliente.Disabled = true;
-		peer = new ENetMultiplayerPeer();
-		peer.CreateClient(adress, port);
-		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-		Multiplayer.MultiplayerPeer = peer;
-		GD.Print("Joining game");
+		GameManager.Instance.modoEspectador = false;
+		ConectarComoCliente();
 	}
 
 	private void _on_jugar_button_down(){
@@ -195,8 +202,18 @@ public partial class MultiplayerController : Node
 	private void _on_espectar_button_down(){
 		GameManager.Instance.modoEspectador = true;
 		GD.Print($"Modo espectador: {GameManager.Instance.modoEspectador}");
-		if (!Multiplayer.IsServer()) return;
+		ConectarComoCliente();
+	}
 
+	private void ConectarComoCliente(){
+		GameManager.Instance.modoMultiplayer = true;
+		botonEspectar.Disabled = true;
+		botonCliente.Disabled = true;
+		peer = new ENetMultiplayerPeer();
+		peer.CreateClient(adress, port);
+		peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+		Multiplayer.MultiplayerPeer = peer;
+		GD.Print(GameManager.Instance.modoEspectador ? "Joining game as spectator..." : "Joining game as player...");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
@@ -212,21 +229,20 @@ public partial class MultiplayerController : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-	private void SendPlayerInformation(string name, int id){
+	private void SendPlayerInformation(string name, int id, bool esEspectador = false){
 		bool enPartida = GetTree().CurrentScene.SceneFilePath == "res://Scenes/escenaPrueba.tscn";
 		if(Multiplayer.IsServer() && enPartida){
 			var jugadorReconnecting = GameManager.Instance.JugadoresEnPartida.Find(j => j.Name == name && j.DesconectadoTemporalmente && !j.FueraDeJuego);
 
-			if(jugadorReconnecting != null){
+			if(!esEspectador && jugadorReconnecting != null){
 				int idAnterior = jugadorReconnecting.Id;
 				jugadorReconnecting.Id = id;
 				jugadorReconnecting.DesconectadoTemporalmente = false;
 
-				var nodoTimers = GetTree().CurrentScene.GetNodeOrNull<Timers>("Timers"); // Ajusta la ruta si Timers está dentro de UI
+				var nodoTimers = GetTree().CurrentScene.GetNodeOrNull<Timers>("Timers");
 				nodoTimers?.CancelarTimerReconexion(name);
 				
 				Rpc(nameof(ActualizarIDDeJugadorEnReconexion), idAnterior, id);
-
 				RpcId(id, nameof(ReconectarClienteAPartida), GameManager.Instance.sizeTablero, GameManager.Instance.jugadorEnTurno?.Id ?? -1);
 				GD.Print($"Jugador {name} reconectado exitosamente con nuevo ID {id}.");
 				return;
@@ -236,9 +252,30 @@ public partial class MultiplayerController : Node
 			}
 		}
 
+		if (esEspectador){
+			if(Multiplayer.IsServer()){
+				int cupoDeEspectadores = GameManager.Instance.permitirEspectadores ? GameManager.Instance.maxEspectadores : 0;
+				if(cupoDeEspectadores <= 0 || GameManager.Instance.EspectadoresEnPartida.Count >= cupoDeEspectadores){
+					GD.Print($"Ya no hay espacio para espectadores, {id} fue pateado afuera");
+					Multiplayer.MultiplayerPeer.DisconnectPeer(id);
+					return;
+				}
+
+				if(!GameManager.Instance.EspectadoresEnPartida.Contains(id)){
+					GameManager.Instance.EspectadoresEnPartida.Add(id);
+					GD.Print($"Espectador {name} ({id}) unido. Total espectadores: {GameManager.Instance.EspectadoresEnPartida.Count}/{cupoDeEspectadores}");
+				}
+
+				foreach(var jugador in GameManager.Instance.JugadoresEnPartida){
+					RpcId(id, nameof(SendPlayerInformation), jugador.Name, jugador.Id, false);
+				}
+			}
+			return;
+		}
+
 		var jugadorExistente = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == id);
 		if(Multiplayer.IsServer() && jugadorExistente == null && GameManager.Instance.JugadoresEnPartida.Count >= maxJugadores){
-			GD.Print($"Limite de {maxJugadores} jugadores alcanzado. Desconectando a {id}");
+			GD.Print($"Límite de {maxJugadores} jugadores alcanzado. Desconectando a {id}");
 			Multiplayer.MultiplayerPeer.DisconnectPeer(id);
 			return;
 		}
@@ -252,7 +289,7 @@ public partial class MultiplayerController : Node
 
 		if(Multiplayer.IsServer()){
 			foreach (var jugador in GameManager.Instance.JugadoresEnPartida){
-				Rpc(nameof(SendPlayerInformation), jugador.Name, jugador.Id);
+				Rpc(nameof(SendPlayerInformation), jugador.Name, jugador.Id, false);
 			}
 		}
 		ActualizarEstadoBotonJugar();

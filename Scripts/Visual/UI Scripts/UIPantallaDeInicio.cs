@@ -65,6 +65,11 @@ public partial class UIPantallaDeInicio : UIBase {
 		MostrarUIPanel(uiOpcionesOnline, false);
 		MostrarUIPanel(uiModos, false);
 		MostrarUIPanel(uiComienzo, true);
+
+		var contenedorEspectadores = GetNodeOrNull<Control>("MenuComienzo/MarginContainer/VBoxContainer/ContenedorEspectadores");
+		if(contenedorEspectadores != null){
+			contenedorEspectadores.Visible = GameManager.Instance.modoMultiplayer;
+		}
 	}
 
 	private void OcultarConfiguracionDePartida(){
@@ -97,10 +102,23 @@ public partial class UIPantallaDeInicio : UIBase {
 
 	private void ComenzarPartidaMultijugador(int jugadores, int size){
 		GameManager.Instance.jugadorEsHost = true;
+		GameManager.Instance.modoEspectador = false;
 		GameManager.Instance.cantidadJugadores = jugadores;
 		GameManager.Instance.sizeTablero = size;
-		GD.Print("Se creó una partida MULTIJUGADOR para " + GameManager.Instance.cantidadJugadores + " jugadores");
-		GD.Print("Tamaño del tablero elegido: " + GameManager.Instance.sizeTablero);
+
+		var checkEspectadores = GetNodeOrNull<CheckBox>("MenuComienzo/MarginContainer/VBoxContainer/ContenedorEspectadores/CheckBox");
+		var spinEspectadores = GetNodeOrNull<SpinBox>("MenuComienzo/MarginContainer/VBoxContainer/ContenedorEspectadores/SpinBox");
+
+		bool permitir = checkEspectadores != null && checkEspectadores.ButtonPressed;
+		int cantEspectadores = (permitir && spinEspectadores != null)
+			? Mathf.Clamp((int)spinEspectadores.Value, 1, 10)
+			: 0;
+
+		GameManager.Instance.permitirEspectadores = permitir;
+		GameManager.Instance.maxEspectadores = cantEspectadores;
+
+		GD.Print($"Se creó una partida MULTIJUGADOR para {jugadores} jugadores y hasta {cantEspectadores} espectadores.");
+		GD.Print("Tamaño del tablero MULTIJUGADOR: " + GameManager.Instance.sizeTablero);
 		AudioManager.Instance.PlaySound(UiSound1);
 		GetTree().ChangeSceneToFile("res://Scenes/lobby.tscn");
 	}
