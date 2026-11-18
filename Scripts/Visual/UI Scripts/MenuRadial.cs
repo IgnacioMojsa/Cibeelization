@@ -199,6 +199,10 @@ public partial class MenuRadial : UIBase {
 			}
 		}
 
+		Activo = (ContenedorDeBotones.Visible && !contenedoresCerrandose.Contains(ContenedorDeBotones))
+		      || (ContenedorDeTransformaciones.Visible && !contenedoresCerrandose.Contains(ContenedorDeTransformaciones))
+		      || (ContenedorDeAtaque.Visible && !contenedoresCerrandose.Contains(ContenedorDeAtaque));
+
 		GetTree().CreateTimer(VelocidadAnimacion).Timeout += () =>{
         	if (!contenedoresCerrandose.Remove(contenedor)) return;
         	if (contenedor != null && IsInstanceValid(contenedor)) {
