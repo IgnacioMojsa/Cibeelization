@@ -18,6 +18,12 @@ public partial class AttackManager : Node3D
 			return;
 
 		var jugador = GameManager.Instance.jugadorEnTurno;
+		if (jugador == null) return;
+
+		if (playerManager.VisualJugadorActual == null && playerManager.VisualesJugadores.TryGetValue(jugador, out var visualActual)){
+			playerManager.VisualJugadorActual = visualActual;
+		}
+
 		bool controlandoSubdito = jugador.MoviendoSubdito && playerManager.tropasManager.SubditoActual != null;
 		int indexSubditoAtacante = controlandoSubdito
 			? jugador.ColmenaDeReina.AbejasDeColmena.IndexOf(playerManager.tropasManager.SubditoActual)
@@ -28,17 +34,19 @@ public partial class AttackManager : Node3D
 			? visSubdito
 			: playerManager.VisualJugadorActual;
 
-		//Camera3D camera = playerManager.camera ?? GetViewport().GetCamera3D();
+		Camera3D camaraActiva = camera ?? playerManager.camera ?? GetViewport().GetCamera3D();
+		if (camaraActiva == null) return;
+
 		Vector2 mousePosition = GetViewport().GetMousePosition();
-		Vector3 rayOrigin = camera.ProjectRayOrigin(mousePosition);
-		Vector3 rayEnd = rayOrigin + camera.ProjectRayNormal(mousePosition) * 1000.0f;
-	
+		Vector3 rayOrigin = camaraActiva.ProjectRayOrigin(mousePosition);
+		Vector3 rayEnd = rayOrigin + camaraActiva.ProjectRayNormal(mousePosition) * 1000.0f;
+
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var query = PhysicsRayQueryParameters3D.Create(rayOrigin, rayEnd);
 		var result = spaceState.IntersectRay(query);
 
 		if(result.Count == 0)
-		return;
+			return;
 
 		playerManager.PosicionEnMundo3D = result["position"].AsVector3();
 		

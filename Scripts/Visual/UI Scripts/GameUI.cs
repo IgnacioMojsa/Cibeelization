@@ -13,15 +13,8 @@ public partial class GameUI : UIBase {
 	[Export] public HudInferior hudInferior;
 	[Export] public PanelContainer panelFueraDeJuego;
 	[Export] public PlayerManager playerManager;
-
-	//public MenuRadial instanciaMenuRadial;
-	//public Button botonPausa;
-	//public TextureButton botonColmena;
 	public PanelContainer containerPausa;
 	public HBoxContainer uiPausa;
-	//public Label resultadoDados;
-	//public TextureButton botonDado;
-	//public TextureButton botonAtacar;
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 	public Button botonContinuar;
@@ -35,9 +28,6 @@ public partial class GameUI : UIBase {
 	public Button botonSalirVictoria;
 	public Button botonReiniciarPartidaVictoria;
 	private bool panelFueraDeJuegoMostrado = false;
-	//public bool tocoBotonAtacarYDebeDesplegarseElMenu = false;
-	
-	//public Control recursos;
 
 	public override void _Ready(){
 		ProcessMode = ProcessModeEnum.Always;
@@ -84,35 +74,67 @@ public partial class GameUI : UIBase {
 		if (GameManager.Instance.TableroActual == null)
 			GD.PrintErr("No se encontró Tablero en la escena");
 
-		GameManager.Instance.CamaraActual = root.GetNode<CamaraController>("Camara");
-		playerManager = root.GetNode<PlayerManager>("PlayerManager");
+		GameManager.Instance.CamaraActual = root.GetNodeOrNull<CamaraController>("Camara");
+		playerManager ??= root.GetNodeOrNull<PlayerManager>("PlayerManager");
+		tropasManager ??= root.GetNodeOrNull<TroopsManager>("TroopsManager");
+		celdasManager ??= root.GetNodeOrNull<CeldasManager>("CeldasManager");
+		attackManager ??= root.GetNodeOrNull<AttackManager>("AttackManager");
+		hudSuperior ??= GetNodeOrNull<HudSuperior>("HudSuperior");
+		hudInferior ??= GetNodeOrNull<HudInferior>("HudInferior");
+
 		GameManager.Instance.SetTiles(GameManager.Instance.sizeTablero);
 
 		InicializarGameUI();
-		hudSuperior.Inicializar(playerManager);
-		hudInferior.Inicializar(this, playerManager, tropasManager, celdasManager, attackManager);
+		hudSuperior?.Inicializar(playerManager);
+		hudInferior?.Inicializar(this, playerManager, tropasManager, celdasManager, attackManager);
 		
 		SuscribirAEventos();
-		hudSuperior.MostrarDataDeJugadores();
+		hudSuperior?.MostrarDataDeJugadores();
 		ActualizarUI();
 	}
 	
-	private void OnCambioDeTurno(object _) => ActualizarUI();
+	private void OnCambioDeTurno(AbejaReina nuevoJugador){
+		if (nuevoJugador == null) return;
+		
+		var anterior = GameManager.Instance.jugadorEnTurno;
+		GameManager.Instance.jugadorEnTurno = nuevoJugador;
+
+		foreach (var j in GameManager.Instance.JugadoresEnPartida){
+			if (j == null) continue;
+			j.EsSuTurno = (j == nuevoJugador);
+			j.AtaquePotenciado = false;
+		}
+
+		nuevoJugador.AccionConsumida = false;
+		nuevoJugador.TiroLosDados = false;
+		nuevoJugador.ModoAtaque = false;
+		nuevoJugador.AtaqueConsumido = false;
+		nuevoJugador.AtaqueAObjetivo = false;
+		nuevoJugador.ModoInvocacion = false;
+		nuevoJugador.ModoAbsorcion = false;
+		nuevoJugador.ModoTransformacion = false;
+		nuevoJugador.MenteColmena = false;
+		nuevoJugador.MoviendoSubdito = false;
+		nuevoJugador.AtacoRecien = false;
+		nuevoJugador.InvocoRecien = false;
+		nuevoJugador.MovimientosDisponibles = 0;
+		nuevoJugador.Estado = AbejaReina.EstadoTurno.EsperandoDado;
+
+		if (playerManager != null && playerManager.VisualesJugadores.TryGetValue(nuevoJugador, out Node3D visualJugador)){
+			playerManager.VisualJugadorActual = visualJugador;
+			if (GameManager.Instance.CamaraActual != null && IsInstanceValid(visualJugador)){
+				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(visualJugador);
+			}
+		}
+
+		ActualizarUI();
+	}
 	
 	private void InicializarGameUI(){
-		//botonPausa = GetNode<Button>("Pausa/PausaButton");
-		//containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 		panelFueraDeJuego = GetNode<PanelContainer>("PanelFueraDeJuego");
-
-		//resultadoDados = GetNode<Label>("Dado/NumeroDado");
-		////recursos = GetNode<Control>("CantRecursos");
-		//feedback = GetNode<Label>("Feedback");
-		//botonDado = GetNode<TextureButton>("Dado/DadoButton");
-		//botonAtacar = GetNode<TextureButton>("Atacar/AtacarButton");
-		//botonColmena = GetNode<TextureButton>("Colmena/ColmenaButton");
 
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
 		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
@@ -127,10 +149,6 @@ public partial class GameUI : UIBase {
 		botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
 		botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
 
-		//botonAtacar.Pressed += OnAtacarPressed;
-		//botonColmena.Pressed += OnBotonColmenaPressed;
-		//botonPausa.Pressed += PausarPartida;
-
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalir, uiPausa);
 		GetNode<Button>("ConfirmacionReiniciar/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += Reiniciar;
@@ -141,14 +159,28 @@ public partial class GameUI : UIBase {
 		//_ExitTree();
 
 		var turnManager = GameManager.Instance.TurnManager;
+		EventosUI.OnMensajeAMostrar -= hudInferior.ActualizarInstrucciones;
 		EventosUI.OnMensajeAMostrar += hudInferior.ActualizarInstrucciones;
+
 		if (turnManager != null){
+			turnManager.OnCambioDeTurnoJugador -= OnCambioDeTurno;
 			turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
+			turnManager.OnTurnoCambiado -= ActualizarUI;
 			turnManager.OnTurnoCambiado += ActualizarUI;
+		} else {
+			GD.PrintErr($"[Turnos][Peer {Multiplayer.GetUniqueId()}] TurnManager es null en GameUI.SuscribirAEventos().");
 		}
 
+		hudSuperior.OnPausaAlternada -= AlternarPausa;
 		hudSuperior.OnPausaAlternada += AlternarPausa;
+		hudInferior.OnUIActualizacionRequerida -= ActualizarUI;
 		hudInferior.OnUIActualizacionRequerida += ActualizarUI;
+
+		GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeAtaque;
+		GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeTransformacion;
+		GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
+
 		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeAtaque;
 		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeAbsorcion;
 		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeTransformacion;
@@ -156,22 +188,26 @@ public partial class GameUI : UIBase {
 	}
 
 	public void ActualizarUI(){
-		hudSuperior.MostrarJugadorEnTurno();
-		hudSuperior.MostrarHPDeJugaores();
-		hudSuperior.MostrarRecursosDeJugadorEnTurno();
+		if (hudSuperior != null){
+				hudSuperior.MostrarJugadorEnTurno();
+				hudSuperior.MostrarHPDeJugaores();
+				hudSuperior.MostrarRecursosDeJugadorEnTurno();
+		}
 
-		hudInferior.DeshabilitarDado();
-		hudInferior.AlternarEstadoDeAtaque();
-		hudInferior.AlternarEstadoDeAbsorcion();
-		hudInferior.AlternarEstadoDeTransformacion();
-		hudInferior.MostrarMovimientosDisponibles();
-		hudInferior.ValidarTurnoLocalUI();
-		hudInferior.ActualizarUIAtaques();
-		//AlternarComandoDeAtaque();
+		if (hudInferior != null){
+				hudInferior.DeshabilitarDado();
+				hudInferior.AlternarEstadoDeAtaque();
+				hudInferior.AlternarEstadoDeAbsorcion();
+				hudInferior.AlternarEstadoDeTransformacion();
+				hudInferior.MostrarMovimientosDisponibles();
+				hudInferior.ValidarTurnoLocalUI();
+				hudInferior.ActualizarUIAtaques();
+				//AlternarComandoDeAtaque();
+		}
 		
 		VerificarJugadorFueraDeJuego();
 
-		var instanciaMenuRadial = hudInferior.instanciaMenuRadial;
+		var instanciaMenuRadial = hudInferior?.instanciaMenuRadial;
 		if (instanciaMenuRadial != null && instanciaMenuRadial.ContenedorDeTransformaciones != null){
 			if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible){
 				instanciaMenuRadial.OcultarTransformaciones();

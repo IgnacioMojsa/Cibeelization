@@ -47,18 +47,13 @@ public partial class HudInferior : UIBase
 
 	public void DeshabilitarDado(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (jugador == null) return;
+		if (jugador == null || botonDado == null) return;
 
 		bool yaTiro = jugador.TiroLosDados || jugador.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
 		bool esSuTurnoAhora = jugador.EsSuTurno && !yaTiro;
-
-		if(GameManager.Instance.modoMultiplayer){
-			long idLocal = Multiplayer.GetUniqueId();
-			botonDado.Disabled = !esSuTurnoAhora || (idLocal != jugador.Id);
-		} else {
-			botonDado.Disabled = !esSuTurnoAhora;
+		bool esLocal = gameUI != null ? gameUI.EsTurnoLocal() : (!GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == jugador.Id);
+		botonDado.Disabled = !esSuTurnoAhora || !esLocal;
 		}
-	}
 
 	public void MostrarMovimientosDisponibles(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
@@ -328,6 +323,7 @@ public partial class HudInferior : UIBase
 	public void ValidarTurnoLocalUI(){
 		bool esNuestroTurno = gameUI.EsTurnoLocal();
 		var jugador = GameManager.Instance.jugadorEnTurno;
+		DeshabilitarDado();
 		bool turnoHabilitado = esNuestroTurno && jugador != null && jugador.TiroLosDados;
 		if (botonAtacar != null) botonAtacar.Disabled = !turnoHabilitado;
 		if (botonColmena != null) botonColmena.Disabled = !turnoHabilitado;
@@ -337,6 +333,4 @@ public partial class HudInferior : UIBase
 				instanciaMenuRadial.OcultarTransformaciones();
 		}
 	}
-
-	
 }

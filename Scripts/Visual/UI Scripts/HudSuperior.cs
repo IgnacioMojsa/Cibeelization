@@ -66,26 +66,34 @@ public partial class HudSuperior : UIBase
 
 	public void MostrarJugadorEnTurno(){ 
 		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		if (jugadorEnTurno == null) return;
 
 		for(int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++){
 			var jugador = GameManager.Instance.JugadoresEnPartida[j];
+			if (j >= uiJugadores.Length) break;
 
 			if(jugador == jugadorEnTurno && !jugador.FueraDeJuego){
-				uiJugadores[j].Modulate = colorJugadores[j];
-				iconoJugadorEnTurno.Texture = iconosJugadores[j];
+				if (uiJugadores[j] != null) uiJugadores[j].Modulate = colorJugadores[j];
+				if (iconoJugadorEnTurno != null && j < iconosJugadores.Length) iconoJugadorEnTurno.Texture = iconosJugadores[j];
 			} 
 			else if (jugador.FueraDeJuego){
-				uiJugadores[j].Visible = false;
+				if (uiJugadores[j] != null) uiJugadores[j].Visible = false;
 			}
 			else {
-				uiJugadores[j].Modulate = Color.FromHtml("#ffffff");
+				if (uiJugadores[j] != null) uiJugadores[j].Modulate = Color.FromHtml("#ffffff");
 			}
 		}
 
 		if(playerManager != null && playerManager.VisualesJugadores.TryGetValue(jugadorEnTurno, out Node3D visualActual)){
 			playerManager.VisualJugadorActual = visualActual;
-			playerManager.vfxManager.OutlineJugadorEnTurno(visualActual);
+			try{
+				playerManager.vfxManager?.OutlineJugadorEnTurno(visualActual);
+			} catch (Exception ex){
+				GD.PrintErr($"[HudSuperior] Error al aplicar outline a {visualActual?.Name}: {ex.Message}");
+			}
 		}
+
+		GD.Print($"[HudSuperior][Peer {Multiplayer.GetUniqueId()}] Jugador resaltado en HUD: {jugadorEnTurno.Id}");
 	}
 	
 	public void MostrarRecursosDeJugadorEnTurno(){
