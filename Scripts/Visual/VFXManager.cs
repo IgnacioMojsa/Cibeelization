@@ -46,7 +46,7 @@ public partial class VFXManager : Node3D
 
 				if (materialOutline != null && materialBase == materialOutline)
 				{
-					GD.PrintErr($"[PlayerManager] Conflicto de material en {mesh.Name} (Superficie {i}): El material base y el outline son la misma instancia.");
+					GD.PrintErr($"[VFXManager] Conflicto de material en {mesh.Name} (Superficie {i}): El material base y el outline son la misma instancia.");
 					continue;
 				}
 
@@ -57,16 +57,20 @@ public partial class VFXManager : Node3D
 
 	public void MostrarJugadoresObjetivo(){
 		var materialAtaque = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineAttack.tres");
-		var jugadoresObjetivo = new List<Node3D>();
+		List<Node3D> jugadoresObjetivo;
 
-		if(GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
+		if (GameManager.Instance.jugadorEnTurno.MoviendoSubdito)
 		{
-			var reinas = playerManager.tropasManager.AlmacenJugadores.Keys.ToList();
-			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.tropasManager.SubditoTieneAAlguienCerca(reinas[j.GetIndex()])).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores
+				.Where(kvp => !kvp.Key.FueraDeJuego && playerManager.tropasManager.SubditoTieneAAlguienCerca(kvp.Key))
+				.Select(kvp => kvp.Value)
+				.ToList();
 		}
 		else
 		{
-			jugadoresObjetivo = playerManager.VisualesJugadores.Values.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j)).ToList();
+			jugadoresObjetivo = playerManager.VisualesJugadores.Values
+				.Where(j => playerManager.JugadorEnTurnoAdyacenteAOtro(j))
+				.ToList();
 		}
 
 		foreach (var jugador in jugadoresObjetivo)
@@ -79,20 +83,23 @@ public partial class VFXManager : Node3D
 	}
 
 	public void OutlineJugadorEnTurno(Node3D visualActual){
-		var IndiceDeJugadorEnTurno = GameManager.Instance.jugadorEnTurno.Id - 1;
+		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
+		if (jugadorEnTurno == null) return;
+
+		int indiceDeJugadorEnTurno = GameManager.Instance.JugadoresEnPartida.IndexOf(jugadorEnTurno);
 		
 		var materialTurnoJ1 = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineJugador1.tres");
 		var materialTurnoJ2 = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineJugador2.tres");
 		var materialTurnoJ3 = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineJugador3.tres");
 		var materialTurnoJ4 = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineJugador4.tres");
 
-		List<StandardMaterial3D> OutlinesJugadores = new List<StandardMaterial3D>{ materialTurnoJ1, materialTurnoJ2, materialTurnoJ3, materialTurnoJ4 };
+		List<StandardMaterial3D> outlinesJugadores = new List<StandardMaterial3D>{ materialTurnoJ1, materialTurnoJ2, materialTurnoJ3, materialTurnoJ4 };
 
 		EsconderOutlineDeJugadores();
 
-		if (visualActual != null)
+		if (visualActual != null && indiceDeJugadorEnTurno >= 0 && indiceDeJugadorEnTurno < outlinesJugadores.Count)
 		{
-			EstablecerNextPass(visualActual, OutlinesJugadores[IndiceDeJugadorEnTurno]);
+			EstablecerNextPass(visualActual, outlinesJugadores[indiceDeJugadorEnTurno]);
 		}
 	}
 
@@ -114,11 +121,11 @@ public partial class VFXManager : Node3D
 
 		attackManager.ActualizarAbejasObjetivo();
 
-		foreach (var abejaVisual in attackManager.AbejasObjetivo)
+		foreach (var abejaObjetivo in attackManager.AbejasObjetivo)
 		{
-			if(playerManager.tropasManager.VisualAbejas[abejaVisual] != null)
+			if (abejaObjetivo != null && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual))
 			{
-				EstablecerNextPass(playerManager.tropasManager.VisualAbejas[abejaVisual], materialAtaque);
+				EstablecerNextPass(visual, materialAtaque);
 			} 
 		}
 	}
@@ -126,11 +133,11 @@ public partial class VFXManager : Node3D
 	public void OcultarAbejasObjetivo(){
 		var outlineBase = GD.Load<StandardMaterial3D>("res://Assets/Resources/outlineBase.tres");
 
-		foreach (var abejaVisual in attackManager.AbejasObjetivo)
+		foreach (var abejaObjetivo in attackManager.AbejasObjetivo)
 		{
-			if(abejaVisual != null)
+			if (abejaObjetivo != null && playerManager.tropasManager.VisualAbejas.TryGetValue(abejaObjetivo, out Node3D visual) && IsInstanceValid(visual))
 			{
-				EstablecerNextPass(playerManager.tropasManager.VisualAbejas[abejaVisual], outlineBase);
+				EstablecerNextPass(visual, outlineBase);
 			} 
 		}
 
