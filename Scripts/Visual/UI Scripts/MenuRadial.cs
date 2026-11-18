@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public partial class MenuRadial : UIBase {
-	[Export] private GameUI hud; 
+	private HudInferior hud; 
 	private Control ContenedorDeBotones;
 	public Control ContenedorDeTransformaciones;
 	public Control ContenedorDeAtaque;
@@ -79,7 +79,7 @@ public partial class MenuRadial : UIBase {
 				jugador.ModoAbsorcion = false;
 				hud.tropasManager.OcultarAbejasCercanas();
 			}
-		} else if (hud.tocoBotonAtacarYDebeDesplegarseElMenu){
+		} else if (hud != null && hud.tocoBotonAtacarYDebeDesplegarseElMenu){
 			MostrarAtaques();
 		} else {
 			MostrarMenu();
@@ -138,19 +138,20 @@ public partial class MenuRadial : UIBase {
 	public void OcultarTransformaciones(){
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		OcultarContenedor(ContenedorDeTransformaciones);
-		jugador.ModoTransformacion = false;
+		/* jugador.ModoTransformacion = false; */
+		if (jugador != null) jugador.ModoTransformacion = false;
 		if (hud?.playerManager != null){
 			hud.playerManager.TransformacionSeleccionada = null;
 		}
 	}
 
 	public void OcultarAtaques(){
-		hud.tocoBotonAtacarYDebeDesplegarseElMenu = false;
+		if(hud != null) hud.tocoBotonAtacarYDebeDesplegarseElMenu = false;
 		OcultarContenedor(ContenedorDeAtaque);
 	}
 
-	public void EstablecerHUD(GameUI gameUI){
-		hud = gameUI;
+	public void EstablecerHUD(HudInferior hudInferior){
+		hud = hudInferior;
 	}
 
 	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false){
@@ -210,6 +211,7 @@ public partial class MenuRadial : UIBase {
 	}
 	
 	private void SeleccionarOpcion(string nombreBoton){
+		if(hud == null) return;
 		var jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
 		if (GameManager.Instance.modoMultiplayer){
 			long idLocal = Multiplayer.GetUniqueId();
@@ -263,7 +265,7 @@ public partial class MenuRadial : UIBase {
 					hud.playerManager.vfxManager.OcultarAbejasObjetivo();
 					hud.playerManager.celdasManager.DespintarCeldaDeAbejaBuffeada();
 					OcultarAtaques();
-					break;
+					//break;
 				}
 				else
 				{
@@ -271,15 +273,16 @@ public partial class MenuRadial : UIBase {
 					jugadorEnTurno.AtaqueAObjetivo = true;
 					hud.AtaqueAObjetivo();
 					OcultarAtaques();
-					break;
+					//break
 				}
+				break;
 			case "ComandarButton":
 				jugadorEnTurno.ModoAtaque = true;
 				hud.ComandarAtaque();
 				jugadorEnTurno.ModoAtaque = false;
 				jugadorEnTurno.AtaqueAObjetivo = false;
 				OcultarAtaques();
-				hud.ActualizarUI();
+				hud.SolicitarActualizarUI();
 				break;
 			case "DestruirButton":	
 				if(hud.playerManager.tropasManager.SubditoActual is AbejaObrera subdito && subdito.ModoDestruccion)
@@ -288,15 +291,16 @@ public partial class MenuRadial : UIBase {
 					jugadorEnTurno.ModoAtaque = false;
 					subdito.ModoDestruccion = false;
 					OcultarAtaques();
-					break;
+					//break;
 				}
 				else
 				{
 					hud.DestruirCeldasReforzadas();
 					OcultarAtaques();
 					hud.playerManager.tropasManager.SubditoActual.HabilidadDeAbeja();
-					break;
+					//break;
 				}
+				break;
 		}
 		
 		OcultarMenu();
@@ -340,7 +344,7 @@ public partial class MenuRadial : UIBase {
 		foreach (var transformacion in TransformacionesDisponiblesActualmente){
 			string nombreClase = transformacion.GetType().Name;
 			var boton = ContenedorDeTransformaciones.GetNodeOrNull<BaseButton>(nombreClase)
-			?? ContenedorDeTransformaciones.GetNodeOrNull<BaseButton>(nombreClase + "Button");
+				?? ContenedorDeTransformaciones.GetNodeOrNull<BaseButton>(nombreClase + "Button");
 
 			//ver qué transformaciones hay disponibles
 			if(boton != null){

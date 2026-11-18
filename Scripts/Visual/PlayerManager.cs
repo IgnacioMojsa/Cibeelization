@@ -82,7 +82,7 @@ public partial class PlayerManager : Node3D
 		else if(jugador.ModoTransformacion && !jugador.AccionConsumida){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.PrepararTransformaciónDeAbeja(CeldaCliqueada);
-			gameUI.MostrarRecursosDeJugadorEnTurno();
+			gameUI.hudSuperior.MostrarRecursosDeJugadorEnTurno();
 		}
 
 		else if(jugador.ModoAbsorcion && !jugador.AccionConsumida){
@@ -93,7 +93,7 @@ public partial class PlayerManager : Node3D
 		else if(jugador.MenteColmena && !jugador.AccionConsumida && !jugador.MoviendoSubdito){
 			CeldaCliqueada = ObtenerCeldaAlClickear();
 			tropasManager.ControlarAbeja(CeldaCliqueada);
-			gameUI.MostrarMovimientosDisponibles();
+			gameUI.hudInferior.MostrarMovimientosDisponibles();
 		}
 
 		else if(jugador.MenteColmena && jugador.MoviendoSubdito){
@@ -513,7 +513,7 @@ public partial class PlayerManager : Node3D
 				GameManager.Instance.CamaraActual.ResetearCamaraAutomaticamente(VisualJugadorActual);
 			}
 
-			gameUI.MostrarMovimientosDisponibles();
+			gameUI.hudInferior.MostrarMovimientosDisponibles();
 
 			if(jugador.MovimientosDisponibles <= 0 && GameManager.Instance.modoMultiplayer) Rpc(nameof(SiguienteTurnoRpc));
 			else if(jugador.MovimientosDisponibles <= 0 && !GameManager.Instance.modoMultiplayer) _ = GameManager.Instance.TurnManager.TerminarTurno();
@@ -532,7 +532,7 @@ public partial class PlayerManager : Node3D
 		if(jugador != null && jugador.ColmenaDeReina != null){
 			jugador.ColmenaDeReina.RecursosDeColmena = new List<string>(recursos);
 			if(GameManager.Instance.modoMultiplayer && Multiplayer.GetUniqueId() == idJugador){
-				gameUI.MostrarRecursosDeJugadorEnTurno();
+				gameUI.hudSuperior.MostrarRecursosDeJugadorEnTurno();
 			}
 		}
 	} 

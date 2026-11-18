@@ -26,7 +26,7 @@ public partial class GameManager
 	public bool modoEspectador = false;
 	public double DuracionTimerTurno { get; set; } = 30.0;
 	public event Action<AbejaReina> OnJugadorEliminadoPorDesconexion;
-	protected AudioSetting transformaSound => AudioManager.Instance?.GameAudio?.Sound9; //Transformación de abeja
+	public AudioSetting transformaSound => AudioManager.Instance?.GameAudio?.Sound9; //Transformación de abeja
 
 	// Método para iniciar la partida con datos
 	public void IniciarPartida(int cantidadJugadores, int sizeTablero)

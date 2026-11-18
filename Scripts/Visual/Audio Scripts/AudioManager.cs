@@ -15,9 +15,9 @@ public partial class AudioManager : Node
 		Instance = this;
 
 		for (int i = 0; i < poolSize; i++)
-        {
-            CrearNuevoSfxPlayer();
-        }
+		{
+			CrearNuevoSfxPlayer();
+		}
 
 		sfx_stream = new AudioStreamPlayer();
 		AddChild(sfx_stream);
@@ -32,7 +32,10 @@ public partial class AudioManager : Node
 	
 	public void PlaySound(AudioSetting setting)
 	{
+		if (setting == null) return;
+		
 		var sfx_stream = sfx_pool.Find(p => !p.Playing);
+		
 		if(sfx_stream == null) sfx_stream = CrearNuevoSfxPlayer();
 
 		sfx_stream.Stream = setting.Source;
@@ -57,11 +60,11 @@ public partial class AudioManager : Node
 	}
 
 	private AudioStreamPlayer CrearNuevoSfxPlayer()
-    {
-        var player = new AudioStreamPlayer { Bus = "SFX" };
-        AddChild(player);
-        sfx_pool.Add(player);
-        return player;
-    }
+	{
+		var player = new AudioStreamPlayer { Bus = "SFX" };
+		AddChild(player);
+		sfx_pool.Add(player);
+		return player;
+	}
 
 }

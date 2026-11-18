@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b2dwpb6dsusoo" path="res://Scripts/Visual/PlayerManager.cs" id="2_2lok1"]
 [ext_resource type="Script" uid="uid://b8755brl5q04m" path="res://Scripts/Visual/Tablero.cs" id="2_cvlkt"]
 [ext_resource type="Script" uid="uid://6cd1daexkf3j" path="res://Scripts/Visual/TroopsManager.cs" id="2_qqnew"]
+[ext_resource type="Script" uid="uid://dwsj6mxh31mvu" path="res://Scripts/Visual/UI Scripts/HudSuperior.cs" id="2_xnp33"]
 [ext_resource type="Script" uid="uid://df77aeggy475y" path="res://Scripts/Visual/VFXManager.cs" id="3_auhuj"]
 [ext_resource type="Script" uid="uid://c7ncbwx7eb0qd" path="res://Scripts/Visual/CamaraController.cs" id="3_cvlkt"]
 [ext_resource type="Script" uid="uid://d2vt13cmx2gfi" path="res://Scripts/Visual/AnimationManager.cs" id="3_xolvn"]
@@ -12,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c01fhiijvlqft" path="res://Scenes/FondoCibeelization.tscn" id="6_3642x"]
 [ext_resource type="Script" uid="uid://bx17vouq24c6b" path="res://Scripts/Visual/AttackManager.cs" id="6_iks2i"]
 [ext_resource type="PackedScene" uid="uid://cdsqdaw3fv52u" path="res://Assets/Audio/volume_slider.tscn" id="9_y8nye"]
+[ext_resource type="Script" uid="uid://cey3oxydxp4pl" path="res://Scripts/Visual/UI Scripts/HudInferior.cs" id="12_7liu7"]
 [ext_resource type="Texture2D" uid="uid://dyje042vdufud" path="res://Assets/UI/JugadorEnTurno.svg" id="12_gsowx"]
 [ext_resource type="PackedScene" uid="uid://bfr7m4fc3bev5" path="res://Scenes/MenuRadial.tscn" id="13_gsowx"]
 [ext_resource type="Texture2D" uid="uid://c6sqp5a2673dg" path="res://Assets/UI/BotonColmena.svg" id="13_nqw0l"]
@@ -75,7 +77,7 @@ properties/1/replication_mode = 1
 
 [node name="Escena" type="Node3D" unique_id=104624866]
 
-[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("tropasManager", "celdasManager", "attackManager", "playerManager")]
+[node name="HUD" type="Control" parent="." unique_id=1523278888 node_paths=PackedStringArray("tropasManager", "celdasManager", "attackManager", "hudSuperior", "hudInferior", "playerManager")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 7
@@ -94,52 +96,496 @@ script = ExtResource("4_2lok1")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
 attackManager = NodePath("../AttackManager")
-menuRadialPrefab = ExtResource("13_gsowx")
+hudSuperior = NodePath("HUDSuperior")
+hudInferior = NodePath("HUDInferior")
 playerManager = NodePath("../PlayerManager")
 
-[node name="Curar" type="PanelContainer" parent="HUD" unique_id=623565682]
-visible = false
-layout_mode = 0
-offset_left = 24.0
-offset_top = -592.0
-offset_right = 143.0
-offset_bottom = -533.0
-scale = Vector2(1.0799975, 1)
+[node name="HUDSuperior" type="Control" parent="HUD" unique_id=1225802480]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_xnp33")
 
-[node name="CurarButton" type="Button" parent="HUD/Curar" unique_id=1304026619]
+[node name="Pausa" type="PanelContainer" parent="HUD/HUDSuperior" unique_id=830340097]
+layout_mode = 0
+offset_left = 836.0
+offset_top = -1016.0
+offset_right = 955.0
+offset_bottom = -957.0
+
+[node name="PausaButton" type="Button" parent="HUD/HUDSuperior/Pausa" unique_id=134833338]
+process_mode = 3
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 40
+text = "Pausa"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/HUDSuperior" unique_id=230355480]
+layout_mode = 0
+offset_left = -916.0
+offset_top = -1016.0
+offset_right = -798.0
+offset_bottom = -962.0
+
+[node name="Jugador1" type="PanelContainer" parent="HUD/HUDSuperior/VBoxContainer" unique_id=1132381933]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador1" unique_id=1297601638]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador1/HBoxContainer" unique_id=1358184118]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador1/HBoxContainer/MarginContainer" unique_id=284476018]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 19
-disabled = true
-text = "Sacrificar
-Subdito"
+text = "Jugador 1"
 
-[node name="Subdito" type="PanelContainer" parent="HUD" unique_id=885164177]
-visible = false
-layout_mode = 0
-offset_left = -112.0
-offset_top = -592.0
-offset_right = 7.0
-offset_bottom = -533.0
-scale = Vector2(1.0799975, 1)
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador1/HBoxContainer" unique_id=716443655]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
 
-[node name="SubditoButton" type="Button" parent="HUD/Subdito" unique_id=1363124327]
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador1/HBoxContainer/MarginContainer2" unique_id=561325241]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 19
-text = "Invocar 
-subdito"
+text = "HP"
 
-[node name="Dado" type="Control" parent="HUD" unique_id=1706497029]
+[node name="Jugador2" type="PanelContainer" parent="HUD/HUDSuperior/VBoxContainer" unique_id=1138254578]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador2" unique_id=1048336119]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador2/HBoxContainer" unique_id=960627956]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador2/HBoxContainer/MarginContainer" unique_id=1350464796]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "Jugador 2"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador2/HBoxContainer" unique_id=1054669045]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador2/HBoxContainer/MarginContainer2" unique_id=173504459]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
+
+[node name="Jugador3" type="PanelContainer" parent="HUD/HUDSuperior/VBoxContainer" unique_id=2103990843]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador3" unique_id=1377501152]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador3/HBoxContainer" unique_id=838734596]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador3/HBoxContainer/MarginContainer" unique_id=2093422673]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "Jugador 3"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador3/HBoxContainer" unique_id=42470020]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador3/HBoxContainer/MarginContainer2" unique_id=482819176]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
+
+[node name="Jugador4" type="PanelContainer" parent="HUD/HUDSuperior/VBoxContainer" unique_id=2018296462]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador4" unique_id=2088387667]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador4/HBoxContainer" unique_id=1677046025]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador4/HBoxContainer/MarginContainer" unique_id=1844758088]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "Jugador 4"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD/HUDSuperior/VBoxContainer/Jugador4/HBoxContainer" unique_id=1319867542]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HUD/HUDSuperior/VBoxContainer/Jugador4/HBoxContainer/MarginContainer2" unique_id=1515386668]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "HP"
+
+[node name="Elementos" type="Control" parent="HUD/HUDSuperior" unique_id=851638192]
+layout_mode = 1
+anchor_top = -10.675
+anchor_right = 1.0
+anchor_bottom = -9.675
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RecursosDer" type="Control" parent="HUD/HUDSuperior/Elementos" unique_id=1014677604]
+layout_mode = 1
+anchor_left = 4.9
+anchor_top = -14.844999
+anchor_right = 14.020001
+anchor_bottom = -11.004999
+offset_top = 12.799988
+offset_right = -60.80005
+offset_bottom = -12.800049
+scale = Vector2(1.2, 1.2)
+pivot_offset_ratio = Vector2(0, 0.5)
+
+[node name="Resplandor" type="TextureRect" parent="HUD/HUDSuperior/Elementos/RecursosDer" unique_id=1499445718]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.07626182
+anchor_top = -0.157552
+anchor_right = 1.0884229
+anchor_bottom = 1.196615
+offset_left = -826.14966
+offset_top = -202.22223
+offset_right = 6.1035156e-05
+offset_bottom = 202.22223
+scale = Vector2(0.3, 0.3)
+pivot_offset_ratio = Vector2(1, 0.5)
+texture = ExtResource("18_ohwqx")
+flip_h = true
+flip_v = true
+
+[node name="RecursosDer" type="TextureRect" parent="HUD/HUDSuperior/Elementos/RecursosDer" unique_id=156705770]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0033842388
+anchor_top = -0.0012698174
+anchor_right = 1.0
+anchor_bottom = 0.9954096
+offset_top = -148.83746
+offset_right = 711.7339
+offset_bottom = 148.83745
+scale = Vector2(0.3, 0.3)
+pivot_offset_ratio = Vector2(0, 0.5)
+texture = ExtResource("14_iks2i")
+
+[node name="RecursosIzq" type="Control" parent="HUD/HUDSuperior/Elementos" unique_id=36097867]
+layout_mode = 1
+anchor_left = -13.020001
+anchor_top = -14.844999
+anchor_right = -3.9000008
+anchor_bottom = -11.004999
+offset_left = 60.80005
+offset_top = 12.799988
+offset_right = 3.0517578e-05
+offset_bottom = -12.800049
+scale = Vector2(1.2, 1.2)
+pivot_offset_ratio = Vector2(1, 0.5)
+
+[node name="Resplandor" type="TextureRect" parent="HUD/HUDSuperior/Elementos/RecursosIzq" unique_id=79581593]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.07626182
+anchor_top = -0.157552
+anchor_right = 1.0884229
+anchor_bottom = 1.196615
+offset_left = -826.14966
+offset_top = -202.22223
+offset_right = 6.1035156e-05
+offset_bottom = 202.22223
+scale = Vector2(0.3, 0.3)
+pivot_offset_ratio = Vector2(1, 0.5)
+texture = ExtResource("18_ohwqx")
+flip_v = true
+
+[node name="RecursosIzq" type="TextureRect" parent="HUD/HUDSuperior/Elementos/RecursosIzq" unique_id=1018539452]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -9.5568204e-05
+anchor_top = -0.0012109578
+anchor_right = 1.0032886
+anchor_bottom = 0.9954685
+offset_top = -61.844997
+offset_right = 711.7339
+offset_bottom = 235.82991
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(0, 88.35)
+texture = ExtResource("15_bojjk")
+
+[node name="JugadorEnTurno" type="Control" parent="HUD/HUDSuperior/Elementos" unique_id=157153633]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -645.0
+offset_bottom = -645.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.44, 1.44)
+
+[node name="JugadorEnTurnoResplandor" type="TextureRect" parent="HUD/HUDSuperior/Elementos/JugadorEnTurno" unique_id=1488043817]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.8403438
+anchor_top = 9.630691
+anchor_right = 5.9596562
+anchor_bottom = 15.220691
+offset_left = -70.175
+offset_top = 0.3500061
+offset_right = 97.825
+offset_bottom = 120.75
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(200.5, -1)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("16_bojjk")
+
+[node name="JugadorEnTurno" type="TextureRect" parent="HUD/HUDSuperior/Elementos/JugadorEnTurno" unique_id=155409841]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.1403434
+anchor_top = 10.080687
+anchor_right = 5.229656
+anchor_bottom = 14.3706875
+offset_left = -70.175
+offset_top = 0.3500061
+offset_right = 67.024994
+offset_bottom = 92.75
+grow_horizontal = 2
+scale = Vector2(0.65, 0.65)
+pivot_offset = Vector2(200.5, -1)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("12_gsowx")
+
+[node name="IconoJugador" type="TextureRect" parent="HUD/HUDSuperior/Elementos" unique_id=1352185011]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.1451038
+anchor_top = -16.177084
+anchor_right = 2.1661365
+anchor_bottom = -10.84276
+offset_left = -73.19585
+offset_top = -117.916626
+offset_right = 73.19585
+offset_bottom = 117.91669
+scale = Vector2(0.475, 0.475)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("17_iks2i")
+stretch_mode = 3
+
+[node name="CantRecursos" type="Control" parent="HUD/HUDSuperior" unique_id=1493328901]
+layout_mode = 1
+anchor_top = -10.675
+anchor_right = 1.0
+anchor_bottom = -9.675
+offset_left = -145.0
+offset_top = 23.0
+offset_right = -145.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Agua" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=772591299]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -555.0
+offset_right = -280.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Polen" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=1409556553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -555.0
+offset_right = -198.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Propoleo" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=1806083869]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -555.0
+offset_right = -118.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Nectar" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=1271235822]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 408.0
+offset_top = -555.0
+offset_right = 416.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Miel" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=1623621231]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 490.0
+offset_top = -555.0
+offset_right = 498.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="JaleaReal" type="Label" parent="HUD/HUDSuperior/CantRecursos" unique_id=780093425]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 569.0
+offset_top = -555.0
+offset_right = 577.0
+offset_bottom = -534.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+text = "0"
+
+[node name="Timers" type="Control" parent="HUD/HUDSuperior" unique_id=1628260154]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -723.5
+offset_top = -1016.0
+offset_right = 723.5
+offset_bottom = -961.0
+grow_horizontal = 2
+script = ExtResource("33_ohwqx")
+
+[node name="LabelTimerTurno" type="Label" parent="HUD/HUDSuperior/Timers" unique_id=1002019096]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.067
+anchor_bottom = 0.836
+offset_right = 0.050994873
+offset_bottom = 0.020000458
+theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 45
+text = "00:00"
+
+[node name="TimerTurno" type="Timer" parent="HUD/HUDSuperior/Timers" unique_id=1558110202]
+wait_time = 120.0
+
+[node name="LabelTimerPartida" type="Label" parent="HUD/HUDSuperior/Timers" unique_id=463321455]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.933
+anchor_right = 1.0
+anchor_bottom = 0.836
+offset_left = -0.05102539
+offset_bottom = 0.020000458
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("33_vu10v")
+theme_override_font_sizes/font_size = 45
+text = "00:00"
+
+[node name="TimerPartida" type="Timer" parent="HUD/HUDSuperior/Timers" unique_id=2012866865]
+wait_time = 3000.0
+one_shot = true
+
+[node name="HUDInferior" type="Control" parent="HUD" unique_id=1757545072]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_7liu7")
+menuRadialPrefab = ExtResource("13_gsowx")
+
+[node name="Dado" type="Control" parent="HUD/HUDInferior" unique_id=1706497029]
 layout_mode = 1
 anchor_left = -5.15
 anchor_top = -6.6
 anchor_right = 6.45
 anchor_bottom = 1.6
 pivot_offset_ratio = Vector2(0.5, 1)
-metadata/_edit_use_anchors_ = true
 
-[node name="DadoResplandor" type="TextureRect" parent="HUD/Dado" unique_id=1538380290]
+[node name="DadoResplandor" type="TextureRect" parent="HUD/HUDInferior/Dado" unique_id=1538380290]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.01724138
@@ -153,7 +599,7 @@ pivot_offset_ratio = Vector2(0.5, 1)
 texture = ExtResource("13_vu10v")
 metadata/_edit_use_anchors_ = true
 
-[node name="DadoButton" type="TextureButton" parent="HUD/Dado" unique_id=125544432]
+[node name="DadoButton" type="TextureButton" parent="HUD/HUDInferior/Dado" unique_id=125544432]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.06896552
@@ -169,7 +615,7 @@ texture_pressed = ExtResource("14_3m86p")
 texture_hover = ExtResource("15_vu10v")
 texture_disabled = ExtResource("16_ohwqx")
 
-[node name="NumeroDado" type="Label" parent="HUD/Dado" unique_id=933910515]
+[node name="NumeroDado" type="Label" parent="HUD/HUDInferior/Dado" unique_id=933910515]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4224138
@@ -195,20 +641,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Colmena" type="Control" parent="HUD" unique_id=340200140]
+[node name="Colmena" type="Control" parent="HUD/HUDInferior" unique_id=340200140]
 layout_mode = 1
 anchor_left = 4.5
 anchor_top = -3.795
 anchor_right = 14.020001
 anchor_bottom = 0.7950001
-offset_top = -16.199997
+offset_top = -16.199982
 offset_right = 67.19995
-offset_bottom = 16.199997
+offset_bottom = 16.200012
 scale = Vector2(0.85, 0.85)
 pivot_offset_ratio = Vector2(0, 0.5)
-metadata/_edit_use_anchors_ = true
 
-[node name="ColmenaResplandor" type="TextureRect" parent="HUD/Colmena" unique_id=1381282156]
+[node name="ColmenaResplandor" type="TextureRect" parent="HUD/HUDInferior/Colmena" unique_id=1381282156]
 layout_mode = 0
 anchor_left = -0.02232143
 anchor_top = -0.018518519
@@ -220,7 +665,7 @@ texture = ExtResource("18_ohwqx")
 flip_h = true
 metadata/_edit_use_anchors_ = true
 
-[node name="ColmenaButton" type="TextureButton" parent="HUD/Colmena" unique_id=1804188807]
+[node name="ColmenaButton" type="TextureButton" parent="HUD/HUDInferior/Colmena" unique_id=1804188807]
 layout_mode = 0
 anchor_left = 0.035714287
 anchor_top = 0.11111111
@@ -233,20 +678,19 @@ texture_pressed = ExtResource("14_j1m1u")
 texture_hover = ExtResource("15_qwcee")
 texture_disabled = ExtResource("16_8d1v5")
 
-[node name="Atacar" type="Control" parent="HUD" unique_id=123719189]
+[node name="Atacar" type="Control" parent="HUD/HUDInferior" unique_id=123719189]
 layout_mode = 1
 anchor_left = -12.34
 anchor_top = -3.795
 anchor_right = -3.5
 anchor_bottom = 0.7950001
 offset_left = -62.399994
-offset_top = -16.199997
-offset_bottom = 16.199997
+offset_top = -16.199982
+offset_bottom = 16.200012
 scale = Vector2(0.85, 0.85)
 pivot_offset_ratio = Vector2(1, 0.5)
-metadata/_edit_use_anchors_ = true
 
-[node name="AtacarResplandor" type="TextureRect" parent="HUD/Atacar" unique_id=561995293]
+[node name="AtacarResplandor" type="TextureRect" parent="HUD/HUDInferior/Atacar" unique_id=561995293]
 layout_mode = 0
 anchor_left = -0.04910714
 anchor_top = -0.018518519
@@ -257,7 +701,7 @@ pivot_offset_ratio = Vector2(1, 0.5)
 texture = ExtResource("18_ohwqx")
 metadata/_edit_use_anchors_ = true
 
-[node name="AtacarButton" type="TextureButton" parent="HUD/Atacar" unique_id=1072471944]
+[node name="AtacarButton" type="TextureButton" parent="HUD/HUDInferior/Atacar" unique_id=1072471944]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.11111111
@@ -270,149 +714,27 @@ texture_pressed = ExtResource("15_j3cmi")
 texture_hover = ExtResource("16_0y31t")
 texture_disabled = ExtResource("19_qwcee")
 
-[node name="Pausa" type="PanelContainer" parent="HUD" unique_id=830340097]
-layout_mode = 0
-offset_left = 836.0
-offset_top = -1016.0
-offset_right = 955.0
-offset_bottom = -957.0
-
-[node name="PausaButton" type="Button" parent="HUD/Pausa" unique_id=134833338]
-process_mode = 3
-layout_mode = 2
-mouse_default_cursor_shape = 2
+[node name="Feedback" type="Label" parent="HUD/HUDInferior" unique_id=2069663858]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -276.0
+offset_right = 139.0
+offset_bottom = -244.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 40
-text = "Pausa"
+theme_override_font_sizes/font_size = 25
+text = "Tirá el dado para comenzar."
+horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=230355480]
-layout_mode = 0
-offset_left = -916.0
-offset_top = -1016.0
-offset_right = -798.0
-offset_bottom = -962.0
-
-[node name="Jugador1" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=1132381933]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador1" unique_id=1297601638]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador1/HBoxContainer" unique_id=1358184118]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador1/HBoxContainer/MarginContainer" unique_id=284476018]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "Jugador 1"
-
-[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador1/HBoxContainer" unique_id=716443655]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador1/HBoxContainer/MarginContainer2" unique_id=561325241]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "HP"
-
-[node name="Jugador2" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=1138254578]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador2" unique_id=1048336119]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador2/HBoxContainer" unique_id=960627956]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador2/HBoxContainer/MarginContainer" unique_id=1350464796]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "Jugador 2"
-
-[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador2/HBoxContainer" unique_id=1054669045]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador2/HBoxContainer/MarginContainer2" unique_id=173504459]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "HP"
-
-[node name="Jugador3" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=2103990843]
-visible = false
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador3" unique_id=1377501152]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador3/HBoxContainer" unique_id=838734596]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador3/HBoxContainer/MarginContainer" unique_id=2093422673]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "Jugador 3"
-
-[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador3/HBoxContainer" unique_id=42470020]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador3/HBoxContainer/MarginContainer2" unique_id=482819176]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "HP"
-
-[node name="Jugador4" type="PanelContainer" parent="HUD/VBoxContainer" unique_id=2018296462]
-visible = false
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/Jugador4" unique_id=2088387667]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HUD/VBoxContainer/Jugador4/HBoxContainer" unique_id=1677046025]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador4/HBoxContainer/MarginContainer" unique_id=1844758088]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "Jugador 4"
-
-[node name="MarginContainer2" type="MarginContainer" parent="HUD/VBoxContainer/Jugador4/HBoxContainer" unique_id=1319867542]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 2
-
-[node name="Label" type="Label" parent="HUD/VBoxContainer/Jugador4/HBoxContainer/MarginContainer2" unique_id=1515386668]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "HP"
+[node name="MenuRadial" parent="HUD/HUDInferior" unique_id=1055766075 instance=ExtResource("13_gsowx")]
+layout_mode = 1
 
 [node name="MenuPausa" type="HBoxContainer" parent="HUD" unique_id=832009898]
 process_mode = 3
@@ -630,25 +952,6 @@ theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "No"
 
-[node name="Feedback" type="Label" parent="HUD" unique_id=2069663858]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -136.0
-offset_top = -276.0
-offset_right = 139.0
-offset_bottom = -244.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 25
-text = "Tirá el dado para comenzar."
-horizontal_alignment = 1
-
 [node name="Ajustes" type="PanelContainer" parent="HUD" unique_id=109946770]
 visible = false
 layout_mode = 1
@@ -859,346 +1162,6 @@ theme_override_font_sizes/font_size = 37
 action_mode = 0
 text = "Aceptar"
 
-[node name="Elementos" type="Control" parent="HUD" unique_id=851638192]
-layout_mode = 1
-anchor_top = -10.675
-anchor_right = 1.0
-anchor_bottom = -9.675
-grow_horizontal = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="RecursosDer" type="Control" parent="HUD/Elementos" unique_id=1014677604]
-layout_mode = 1
-anchor_left = 4.9
-anchor_top = -14.844999
-anchor_right = 14.020001
-anchor_bottom = -11.004999
-offset_top = 12.799988
-offset_right = -60.80005
-offset_bottom = -12.800049
-scale = Vector2(1.2, 1.2)
-pivot_offset_ratio = Vector2(0, 0.5)
-metadata/_edit_use_anchors_ = true
-
-[node name="Resplandor" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=1499445718]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.07626182
-anchor_top = -0.157552
-anchor_right = 1.0884229
-anchor_bottom = 1.196615
-offset_left = -826.14966
-offset_top = -202.22223
-offset_right = 6.1035156e-05
-offset_bottom = 202.22223
-scale = Vector2(0.3, 0.3)
-pivot_offset_ratio = Vector2(1, 0.5)
-texture = ExtResource("18_ohwqx")
-flip_h = true
-flip_v = true
-metadata/_edit_use_anchors_ = true
-
-[node name="RecursosDer" type="TextureRect" parent="HUD/Elementos/RecursosDer" unique_id=156705770]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0033842388
-anchor_top = -0.0012698174
-anchor_right = 1.0
-anchor_bottom = 0.9954096
-offset_top = -148.83746
-offset_right = 711.7339
-offset_bottom = 148.83745
-scale = Vector2(0.3, 0.3)
-pivot_offset_ratio = Vector2(0, 0.5)
-texture = ExtResource("14_iks2i")
-metadata/_edit_use_anchors_ = true
-
-[node name="RecursosIzq" type="Control" parent="HUD/Elementos" unique_id=36097867]
-layout_mode = 1
-anchor_left = -13.020001
-anchor_top = -14.844999
-anchor_right = -3.9000008
-anchor_bottom = -11.004999
-offset_left = 60.80005
-offset_top = 12.799988
-offset_right = 3.0517578e-05
-offset_bottom = -12.800049
-scale = Vector2(1.2, 1.2)
-pivot_offset_ratio = Vector2(1, 0.5)
-metadata/_edit_use_anchors_ = true
-
-[node name="Resplandor" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=79581593]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.07626182
-anchor_top = -0.157552
-anchor_right = 1.0884229
-anchor_bottom = 1.196615
-offset_left = -826.14966
-offset_top = -202.22223
-offset_right = 6.1035156e-05
-offset_bottom = 202.22223
-scale = Vector2(0.3, 0.3)
-pivot_offset_ratio = Vector2(1, 0.5)
-texture = ExtResource("18_ohwqx")
-flip_v = true
-metadata/_edit_use_anchors_ = true
-
-[node name="RecursosIzq" type="TextureRect" parent="HUD/Elementos/RecursosIzq" unique_id=1018539452]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -9.5568204e-05
-anchor_top = -0.0012109578
-anchor_right = 1.0032886
-anchor_bottom = 0.9954685
-offset_top = -61.844997
-offset_right = 711.7339
-offset_bottom = 235.82991
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(0, 88.35)
-texture = ExtResource("15_bojjk")
-metadata/_edit_use_anchors_ = true
-
-[node name="JugadorEnTurno" type="Control" parent="HUD/Elementos" unique_id=157153633]
-layout_mode = 1
-anchor_left = -2.4552817
-anchor_top = -30.189442
-anchor_right = -1.4552819
-anchor_bottom = -29.189442
-scale = Vector2(1.44, 1.44)
-metadata/_edit_use_anchors_ = true
-
-[node name="JugadorEnTurnoResplandor" type="TextureRect" parent="HUD/Elementos/JugadorEnTurno" unique_id=1488043817]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.8403438
-anchor_top = 9.630691
-anchor_right = 5.9596562
-anchor_bottom = 15.220691
-offset_left = -70.175
-offset_top = 0.3500061
-offset_right = 97.825
-offset_bottom = 120.75
-grow_horizontal = 2
-scale = Vector2(0.65, 0.65)
-pivot_offset = Vector2(200.5, -1)
-size_flags_horizontal = 4
-size_flags_vertical = 0
-texture = ExtResource("16_bojjk")
-metadata/_edit_use_anchors_ = true
-
-[node name="JugadorEnTurno" type="TextureRect" parent="HUD/Elementos/JugadorEnTurno" unique_id=155409841]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.1403434
-anchor_top = 10.080687
-anchor_right = 5.229656
-anchor_bottom = 14.3706875
-offset_left = -70.175
-offset_top = 0.3500061
-offset_right = 67.024994
-offset_bottom = 92.75
-grow_horizontal = 2
-scale = Vector2(0.65, 0.65)
-pivot_offset = Vector2(200.5, -1)
-size_flags_horizontal = 4
-size_flags_vertical = 0
-texture = ExtResource("12_gsowx")
-metadata/_edit_use_anchors_ = true
-
-[node name="IconoJugador" type="TextureRect" parent="HUD/Elementos" unique_id=1352185011]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.1451038
-anchor_top = -16.177084
-anchor_right = 2.1661365
-anchor_bottom = -10.84276
-offset_left = -73.19585
-offset_top = -117.916626
-offset_right = 73.19585
-offset_bottom = 117.91669
-scale = Vector2(0.475, 0.475)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("17_iks2i")
-stretch_mode = 3
-
-[node name="CantRecursos" type="Control" parent="HUD" unique_id=1493328901]
-layout_mode = 1
-anchor_top = -10.675
-anchor_right = 1.0
-anchor_bottom = -9.675
-offset_left = -145.0
-offset_top = 23.0
-offset_right = -145.0
-offset_bottom = 23.0
-grow_horizontal = 2
-
-[node name="Agua" type="Label" parent="HUD/CantRecursos" unique_id=772591299]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -288.0
-offset_top = -555.0
-offset_right = -280.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="Polen" type="Label" parent="HUD/CantRecursos" unique_id=1409556553]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -206.0
-offset_top = -555.0
-offset_right = -198.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="Propoleo" type="Label" parent="HUD/CantRecursos" unique_id=1806083869]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = -555.0
-offset_right = -118.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="Nectar" type="Label" parent="HUD/CantRecursos" unique_id=1271235822]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 408.0
-offset_top = -555.0
-offset_right = 416.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="Miel" type="Label" parent="HUD/CantRecursos" unique_id=1623621231]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 490.0
-offset_top = -555.0
-offset_right = 498.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="JaleaReal" type="Label" parent="HUD/CantRecursos" unique_id=780093425]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 569.0
-offset_top = -555.0
-offset_right = 577.0
-offset_bottom = -534.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-text = "0"
-
-[node name="MenuRadial" parent="HUD" unique_id=1055766075 node_paths=PackedStringArray("hud") instance=ExtResource("13_gsowx")]
-layout_mode = 1
-hud = NodePath("..")
-
-[node name="Codigo" type="TextEdit" parent="HUD" unique_id=573298322]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -253.33331
-offset_top = -528.0
-offset_right = 253.33331
-offset_bottom = -452.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 21
-placeholder_text = " INTRODUCIR ABEJA"
-
-[node name="Timers" type="Control" parent="HUD" unique_id=1628260154]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -723.5
-offset_top = -1016.0
-offset_right = 723.5
-offset_bottom = -961.0
-grow_horizontal = 2
-script = ExtResource("33_ohwqx")
-
-[node name="LabelTimerTurno" type="Label" parent="HUD/Timers" unique_id=1002019096]
-layout_mode = 1
-offset_right = 97.0
-offset_bottom = 46.0
-theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 6
-theme_override_fonts/font = ExtResource("33_vu10v")
-theme_override_font_sizes/font_size = 45
-text = "00:00"
-
-[node name="TimerTurno" type="Timer" parent="HUD/Timers" unique_id=1558110202]
-wait_time = 120.0
-
-[node name="LabelTimerPartida" type="Label" parent="HUD/Timers" unique_id=463321455]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -97.0
-offset_bottom = 46.0
-grow_horizontal = 0
-theme_override_colors/font_shadow_color = Color(0.37254903, 0.105882354, 0.24705882, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 0
-theme_override_constants/shadow_outline_size = 6
-theme_override_fonts/font = ExtResource("33_vu10v")
-theme_override_font_sizes/font_size = 45
-text = "00:00"
-
-[node name="TimerPartida" type="Timer" parent="HUD/Timers" unique_id=2012866865]
-wait_time = 3000.0
-one_shot = true
-
 [node name="PanelFueraDeJuego" type="PanelContainer" parent="HUD" unique_id=2046431668]
 visible = false
 layout_mode = 1
@@ -1277,6 +1240,23 @@ theme_override_font_sizes/font_size = 25
 action_mode = 0
 text = "No"
 
+[node name="Codigo" type="TextEdit" parent="HUD" unique_id=573298322]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.33331
+offset_top = -528.0
+offset_right = 253.33325
+offset_bottom = -452.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+placeholder_text = " INTRODUCIR ABEJA"
+
 [node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
 script = ExtResource("1_ap8h6")
 playerManager = NodePath("../PlayerManager")
@@ -1349,11 +1329,10 @@ tablero = NodePath("../Tablero")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=424439658]
 replication_config = SubResource("SceneReplicationConfig_2gfcn")
 
-[connection signal="pressed" from="HUD/Subdito/SubditoButton" to="HUD" method="InvocarSubdito"]
-[connection signal="pressed" from="HUD/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
+[connection signal="pressed" from="HUD/HUDInferior/Dado/DadoButton" to="HUD" method="MostrarResultadoDado"]
 [connection signal="pressed" from="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Ajustes/AjustesButton" to="HUD" method="Ajustes"]
 [connection signal="item_selected" from="HUD/Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles" to="HUD" method="CambiarModoDePantalla"]
 [connection signal="pressed" from="HUD/Ajustes/VBoxContainer/Margin4/Aceptar/AceptarButton" to="HUD" method="AceptarConfigAudio"]
-[connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]
 [connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton" to="HUD" method="OcultarPanelFueraDeJuego"]
 [connection signal="pressed" from="HUD/PanelFueraDeJuego/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton" to="HUD" method="IrAlMenuPrincipal"]
+[connection signal="text_changed" from="HUD/Codigo" to="PlayerManager" method="HacerMagia"]

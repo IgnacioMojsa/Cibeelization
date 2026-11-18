@@ -7,16 +7,21 @@ public partial class GameUI : UIBase {
 	[Export] public TroopsManager tropasManager;
 	[Export] public CeldasManager celdasManager; 
 	[Export] public AttackManager attackManager;
-	[Export] public Label feedback;
-	[Export] public PackedScene menuRadialPrefab;
-	public MenuRadial instanciaMenuRadial;
-	public Button botonPausa;
-	public TextureButton botonColmena;
+	//[Export] public Label feedback;
+	//[Export] public PackedScene menuRadialPrefab;
+	[Export] public HudSuperior hudSuperior;
+	[Export] public HudInferior hudInferior;
+	[Export] public PanelContainer panelFueraDeJuego;
+	[Export] public PlayerManager playerManager;
+
+	//public MenuRadial instanciaMenuRadial;
+	//public Button botonPausa;
+	//public TextureButton botonColmena;
 	public PanelContainer containerPausa;
 	public HBoxContainer uiPausa;
-	public Label resultadoDados;
-	public TextureButton botonDado;
-	public TextureButton botonAtacar;
+	//public Label resultadoDados;
+	//public TextureButton botonDado;
+	//public TextureButton botonAtacar;
 	public bool hayJugadorVictorioso = false;
 	public bool reinicioConfirmado = false;
 	public Button botonContinuar;
@@ -29,11 +34,10 @@ public partial class GameUI : UIBase {
 	public HBoxContainer MenuVictoria;
 	public Button botonSalirVictoria;
 	public Button botonReiniciarPartidaVictoria;
-	[Export] public PanelContainer panelFueraDeJuego;
 	private bool panelFueraDeJuegoMostrado = false;
-	public bool tocoBotonAtacarYDebeDesplegarseElMenu = false;
-	[Export] public PlayerManager playerManager;
-	public Control recursos;
+	//public bool tocoBotonAtacarYDebeDesplegarseElMenu = false;
+	
+	//public Control recursos;
 
 	public override void _Ready(){
 		ProcessMode = ProcessModeEnum.Always;
@@ -55,15 +59,6 @@ public partial class GameUI : UIBase {
 		}
 
 		GameManager.Instance.OnJugadorEliminadoPorDesconexion += EliminarVisualJugadorDesconectado;
-	}
-
-	private MenuRadial ObtenerMenuRadial(){
-		if (instanciaMenuRadial == null){
-			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
-			AddChild(instanciaMenuRadial);
-			instanciaMenuRadial.EstablecerHUD(this);
-		}
-		return instanciaMenuRadial;
 	}
 
 	private void OnPeerDisconnectedInGame(long id){
@@ -92,29 +87,32 @@ public partial class GameUI : UIBase {
 		GameManager.Instance.CamaraActual = root.GetNode<CamaraController>("Camara");
 		playerManager = root.GetNode<PlayerManager>("PlayerManager");
 		GameManager.Instance.SetTiles(GameManager.Instance.sizeTablero);
-		
+
 		InicializarGameUI();
+		hudSuperior.Inicializar(playerManager);
+		hudInferior.Inicializar(this, playerManager, tropasManager, celdasManager, attackManager);
+		
 		SuscribirAEventos();
-		MostrarDataDeJugadores();
+		hudSuperior.MostrarDataDeJugadores();
 		ActualizarUI();
 	}
 	
 	private void OnCambioDeTurno(object _) => ActualizarUI();
 	
 	private void InicializarGameUI(){
-		botonPausa = GetNode<Button>("Pausa/PausaButton");
-		containerPausa = GetNode<PanelContainer>("Pausa");
+		//botonPausa = GetNode<Button>("Pausa/PausaButton");
+		//containerPausa = GetNode<PanelContainer>("Pausa");
 		uiPausa = GetNode<HBoxContainer>("MenuPausa");
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 		panelFueraDeJuego = GetNode<PanelContainer>("PanelFueraDeJuego");
 
-		resultadoDados = GetNode<Label>("Dado/NumeroDado");
-		recursos = GetNode<Control>("CantRecursos");
-		feedback = GetNode<Label>("Feedback");
-		botonDado = GetNode<TextureButton>("Dado/DadoButton");
-		botonAtacar = GetNode<TextureButton>("Atacar/AtacarButton");
-		botonColmena = GetNode<TextureButton>("Colmena/ColmenaButton");
+		//resultadoDados = GetNode<Label>("Dado/NumeroDado");
+		////recursos = GetNode<Control>("CantRecursos");
+		//feedback = GetNode<Label>("Feedback");
+		//botonDado = GetNode<TextureButton>("Dado/DadoButton");
+		//botonAtacar = GetNode<TextureButton>("Atacar/AtacarButton");
+		//botonColmena = GetNode<TextureButton>("Colmena/ColmenaButton");
 
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
 		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
@@ -125,13 +123,13 @@ public partial class GameUI : UIBase {
 			contenedorReiniciarPausa.Visible = !GameManager.Instance.modoMultiplayer;
 		}
 
-		botonContinuar.Pressed += PausarPartida;
+		botonContinuar.Pressed += AlternarPausa;
 		botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
 		botonReiniciarPartida.Pressed += () => CambiarMenu(uiPausa, confirmacionReiniciar);
 
-		botonAtacar.Pressed += OnAtacarPressed;
-		botonColmena.Pressed += OnBotonColmenaPressed;
-		botonPausa.Pressed += PausarPartida;
+		//botonAtacar.Pressed += OnAtacarPressed;
+		//botonColmena.Pressed += OnBotonColmenaPressed;
+		//botonPausa.Pressed += PausarPartida;
 
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/Si/SiButton").Pressed += IrAlMenuPrincipal;
 		GetNode<Button>("ConfirmacionSalir/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionSalir, uiPausa);
@@ -143,32 +141,37 @@ public partial class GameUI : UIBase {
 		//_ExitTree();
 
 		var turnManager = GameManager.Instance.TurnManager;
-		EventosUI.OnMensajeAMostrar += ActualizarInstrucciones;
+		EventosUI.OnMensajeAMostrar += hudInferior.ActualizarInstrucciones;
 		if (turnManager != null){
 			turnManager.OnCambioDeTurnoJugador += OnCambioDeTurno;
 			turnManager.OnTurnoCambiado += ActualizarUI;
 		}
 
-		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAtaque;
-		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeAbsorcion;
-		GameManager.Instance.OnEstadoAccionesCambiado += AlternarEstadoDeTransformacion;
+		hudSuperior.OnPausaAlternada += AlternarPausa;
+		hudInferior.OnUIActualizacionRequerida += ActualizarUI;
+		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeAtaque;
+		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeAbsorcion;
+		GameManager.Instance.OnEstadoAccionesCambiado += hudInferior.AlternarEstadoDeTransformacion;
 		GameManager.Instance.OnEstadoAccionesCambiado += ActualizarUI;
 	}
 
 	public void ActualizarUI(){
-		MostrarJugadorEnTurno();
-		MostrarHPDeJugaores();
-		MostrarRecursosDeJugadorEnTurno();
-		DeshabilitarDado();
-		AlternarEstadoDeAtaque();
-		AlternarEstadoDeAbsorcion();
-		AlternarEstadoDeTransformacion();
-		MostrarMovimientosDisponibles();
-		ValidarTurnoLocalUI();
-		ActualizarUIAtaques();
+		hudSuperior.MostrarJugadorEnTurno();
+		hudSuperior.MostrarHPDeJugaores();
+		hudSuperior.MostrarRecursosDeJugadorEnTurno();
+
+		hudInferior.DeshabilitarDado();
+		hudInferior.AlternarEstadoDeAtaque();
+		hudInferior.AlternarEstadoDeAbsorcion();
+		hudInferior.AlternarEstadoDeTransformacion();
+		hudInferior.MostrarMovimientosDisponibles();
+		hudInferior.ValidarTurnoLocalUI();
+		hudInferior.ActualizarUIAtaques();
 		//AlternarComandoDeAtaque();
+		
 		VerificarJugadorFueraDeJuego();
 
+		var instanciaMenuRadial = hudInferior.instanciaMenuRadial;
 		if (instanciaMenuRadial != null && instanciaMenuRadial.ContenedorDeTransformaciones != null){
 			if(instanciaMenuRadial.ContenedorDeTransformaciones.Visible){
 				instanciaMenuRadial.OcultarTransformaciones();
@@ -178,31 +181,20 @@ public partial class GameUI : UIBase {
 		}
 	}
 
-	private void ActualizarInstrucciones(string texto){
-		if(feedback != null && IsInstanceValid(feedback)){
-		feedback.Text = texto;
-		}
-	}
-
-	private void PausarPartida(){
+	public void AlternarPausa(){
 		GetTree().Paused = !GetTree().Paused;
-	
 		uiPausa.Visible = GetTree().Paused;
 
-		AudioManager.Instance.PlaySound(UiSound1);
-
-		if (GetTree().Paused){
+		if(GetTree().Paused){
 			GD.Print("Pausa activada");
-			MostrarUIPanel(containerPausa, false);
-		}else{
+			MostrarUIPanel(hudSuperior.containerPausa, false);
+		} else {
 			GD.Print("Juego Reanudado");
-			MostrarUIPanel(containerPausa, true);
+			MostrarUIPanel(hudSuperior.containerPausa, true);
 		}
 	}
 
-	private void OcultarConfirmacionSalir(){
-		CambiarMenu(confirmacionSalir, uiPausa);
-	}
+	private void OcultarConfirmacionSalir() => CambiarMenu(confirmacionSalir, uiPausa);
 
 	private void Reiniciar(){
 		GetTree().Paused = false;
@@ -214,7 +206,7 @@ public partial class GameUI : UIBase {
 
 		if (confirmacionReiniciar != null) confirmacionReiniciar.Visible = false;
 		if (confirmacionReiniciarVictoria != null) confirmacionReiniciarVictoria.Visible = false;
-		if (containerPausa != null) containerPausa.Visible = true;
+		if (hudSuperior.containerPausa != null) hudSuperior.containerPausa.Visible = true;
 
 		GD.Print("Comienza nueva partida");
 		GetTree().ChangeSceneToFile("res://Scenes/escenaPrueba.tscn");
@@ -225,7 +217,7 @@ public partial class GameUI : UIBase {
 		ForzarDesconexionYLimpiezaTotal();
 		if (confirmacionSalir != null) confirmacionSalir.Visible = false;
 		if (confirmacionSalirVictoria != null) confirmacionSalirVictoria.Visible = false;
-		if (containerPausa != null) containerPausa.Visible = true;
+		if (hudSuperior.containerPausa != null) hudSuperior.containerPausa.Visible = true;
 		
 		GD.Print("Regresando al menú principal");
 
@@ -276,20 +268,7 @@ public partial class GameUI : UIBase {
 		var jugador = GameManager.Instance.jugadorEnTurno;
 		if (jugador == null) return false;
 		return Multiplayer.GetUniqueId() == jugador.Id;
-	}
-
-	private void ValidarTurnoLocalUI(){
-		bool esNuestroTurno = EsTurnoLocal();
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		bool turnoHabilitado = esNuestroTurno && jugador != null && jugador.TiroLosDados;
-		if (botonAtacar != null) botonAtacar.Disabled = !turnoHabilitado;
-		if (botonColmena != null) botonColmena.Disabled = !turnoHabilitado;
-		if (!esNuestroTurno && instanciaMenuRadial != null && instanciaMenuRadial.Activo){
-			instanciaMenuRadial.OcultarMenu();
-			if (instanciaMenuRadial.ContenedorDeTransformaciones != null)
-				instanciaMenuRadial.OcultarTransformaciones();
-		}
-	}
+	}	
 	
 	private void UIVictoria(){
 		MenuVictoria = GetNode<HBoxContainer>("MenuVictoria");
@@ -312,387 +291,6 @@ public partial class GameUI : UIBase {
 		GetNode<Button>("ConfirmacionReiniciarVictoria/MarginContainer/VBoxContainer/HBoxContainer/No/NoButton").Pressed += () => CambiarMenu(confirmacionReiniciarVictoria, MenuVictoria);
 	}
 
-	private void MostrarDataDeJugadores(){
-		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
-		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
-		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
-		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
-
-		jugador1.Visible = true;
-		jugador2.Visible = true;
-
-		if(GameManager.Instance.cantidadJugadores == 3){
-			jugador3.Visible = true;
-		}
-		else if(GameManager.Instance.cantidadJugadores == 4){
-			jugador3.Visible = true;
-			jugador4.Visible = true;
-		}
-	}
-
-	private void MostrarHPDeJugaores(){
-		var hpJ1 = GetNode<Label>("VBoxContainer/Jugador1/HBoxContainer/MarginContainer2/Label");
-		var hpJ2 = GetNode<Label>("VBoxContainer/Jugador2/HBoxContainer/MarginContainer2/Label");
-		var hpJ3 = GetNode<Label>("VBoxContainer/Jugador3/HBoxContainer/MarginContainer2/Label");
-		var hpJ4 = GetNode<Label>("VBoxContainer/Jugador4/HBoxContainer/MarginContainer2/Label");
-		
-		List<Label> HPJugadores = new List<Label>{ hpJ1, hpJ2, hpJ3, hpJ4};
-
-		for (int j = 0; j < GameManager.Instance.cantidadJugadores; j++){
-			HPJugadores[j].Text = GameManager.Instance.JugadoresEnPartida[j].HP + " HP";
-		}
-	}
-
-	private void MostrarJugadorEnTurno(){ 
-		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
-		TextureRect iconoJugadorEnTurno = GetNode<TextureRect>("Elementos/IconoJugador");
-
-		var jugador1 = GetNode<PanelContainer>("VBoxContainer/Jugador1");
-		var jugador2 = GetNode<PanelContainer>("VBoxContainer/Jugador2");
-		var jugador3 = GetNode<PanelContainer>("VBoxContainer/Jugador3");
-		var jugador4 = GetNode<PanelContainer>("VBoxContainer/Jugador4");
-
-		var colorJ1 = Color.FromHtml("#6a268f");
-		var colorJ2 = Color.FromHtml("#4c1dae");
-		var colorJ3 = Color.FromHtml("#b33671");
-		var colorJ4 = Color.FromHtml("#8260e5");
-
-		var iconoJ1 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina1Contorno.svg");
-		var iconoJ2 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina2Contorno.svg");
-		var iconoJ3 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina3Contorno.svg");
-		var iconoJ4 = GD.Load<CompressedTexture2D>("res://Assets/UI/AbejarReina4Contorno.svg");
-
-		List<PanelContainer> UIJugadores = new List<PanelContainer>{ jugador1, jugador2, jugador3, jugador4};
-		List<Color> ColorJugadores = new List<Color>{ colorJ1, colorJ2, colorJ3, colorJ4};
-		List<CompressedTexture2D> IconosJugadores = new List<CompressedTexture2D>{iconoJ1, iconoJ2, iconoJ3, iconoJ4};
-
-		for (int j = 0; j < GameManager.Instance.JugadoresEnPartida.Count; j++){
-			if( GameManager.Instance.JugadoresEnPartida[j] == jugadorEnTurno && !(GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego)){
-				UIJugadores[j].Modulate = ColorJugadores[j];
-				iconoJugadorEnTurno.Texture = IconosJugadores[j];
-			} else if (GameManager.Instance.JugadoresEnPartida[j].FueraDeJuego){
-				UIJugadores[j].Visible = false;
-			} else {
-				UIJugadores[j].Modulate = Color.FromHtml("#ffffff");
-			}
-		}
-
-		if (playerManager.VisualesJugadores.Count >= jugadorEnTurno.Id){
-			playerManager.VisualJugadorActual = playerManager.VisualesJugadores[jugadorEnTurno];
-			playerManager.vfxManager.OutlineJugadorEnTurno(playerManager.VisualJugadorActual);
-		}
-	}
-
-	public void MostrarRecursosDeJugadorEnTurno(){
-		AbejaReina jugadorEnTurno = GameManager.Instance.jugadorEnTurno;
-
-		if(GameManager.Instance.modoMultiplayer){
-			long idLocal = Multiplayer.GetUniqueId();
-			var jugadorLocal = GameManager.Instance.JugadoresEnPartida.Find(j => j.Id == idLocal);
-			if(jugadorLocal != null){
-				jugadorEnTurno = jugadorLocal;
-			}
-		}
-
-		if(jugadorEnTurno == null || jugadorEnTurno.ColmenaDeReina == null) return;
-		
-		var nodosHijos = recursos.GetChildren();
-		foreach (var hijo in nodosHijos){
-			if(hijo is Label hijoLabel){
-				hijoLabel.Text = "0";
-			}
-		}
-
-		//if(recursosActuales.Count == 0){
-		//}
-
-		HashSet<string> recursosActuales = new HashSet<string>();
-		foreach (var recurso in jugadorEnTurno.ColmenaDeReina.RecursosDeColmena){
-			if(recurso == null) continue; //break
-			recursosActuales.Add(recurso);
-		}
-
-		foreach (var recurso in recursosActuales){
-			var cantRecurso = recursos.GetNode<Label>(recurso);
-			if(cantRecurso != null){
-				cantRecurso.Text = jugadorEnTurno.ColmenaDeReina.CantidadTotalDeUnRecurso(recurso).ToString();
-			}
-		}
-	}
-
-	private void OnBotonColmenaPressed(){
-		if(!EsTurnoLocal()) return;
-		if (instanciaMenuRadial == null){
-			instanciaMenuRadial = menuRadialPrefab.Instantiate<MenuRadial>();
-			AddChild(instanciaMenuRadial);
-			instanciaMenuRadial.EstablecerHUD(this);
-		}
-		
-		instanciaMenuRadial.DesplegarEnPosicion(GetViewportRect().Size / 2);
-
-		AlternarEstadoDeInvocacion();
-		AlternarEstadoDeAbsorcion();
-		AlternarEstadoDeControl();
-		AlternarEstadoDeTransformacion();
-	}
-
-	public void OnControlarPressed(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(playerManager == null) return;
-
-		if(!jugador.MenteColmena){		
-			jugador.MenteColmena = true;
-			tropasManager.MostrarAbejasCercanas();
-		}
-		else{
-			if(jugador.MoviendoSubdito && tropasManager.SubditoActual != null){
-				if(tropasManager.SubditoActual is AbejaPolinizadora) jugador.MovimientosDisponibles /= 2;
-				if(tropasManager.SubditoActual is AbejaGuardiana) jugador.MovimientosDisponibles *= 2;
-				playerManager.TerminarControlDeSubdito();
-			}
-			jugador.MenteColmena = false;
-			tropasManager.OcultarAbejasCercanas();
-			
-		}
-	}
-
-	public void OnCurarPressed(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(playerManager == null) return;
-
-		if(!jugador.ModoAbsorcion){		
-			jugador.ModoAbsorcion = true;
-
-			if(tropasManager.PuedeAbsorberSubdito())
-			{
-				tropasManager.MostrarAbejasCercanas();
-				GD.Print("Modo de absorcion = " + jugador.ModoAbsorcion);
-			}
-		}
-		else if(jugador.ModoAbsorcion){
-			jugador.ModoAbsorcion = false;
-			tropasManager.OcultarAbejasCercanas();
-			GD.Print("Modo de absorcion = " + jugador.ModoAbsorcion);
-		}
-	}
-
-	private void OnAtacarPressed(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(playerManager == null || !EsTurnoLocal()) return;
-		tocoBotonAtacarYDebeDesplegarseElMenu = true;
-		ObtenerMenuRadial().DesplegarEnPosicion(GetViewportRect().Size / 2);
-		AlternarEstadoDeAtaque();
-		AudioManager.Instance.PlaySound(UiSound1);
-		GD.Print("Se desplegó el menu de ataque. Modo ataque:" + jugador.ModoAtaque.ToString());
-	}
-
-	public void AtaqueAObjetivo(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (!GameManager.Instance.PuedeAtacar()) return;
-
-		if (jugador.MoviendoSubdito && tropasManager.SubditoActual is AbejaGuardiana){
-			jugador.AtaqueAObjetivo = false;
-			attackManager.AtacarConGuardiana();
-			return;
-		}
-
-		bool subditoAdyacenteAJugador = (jugador.MenteColmena || jugador.MoviendoSubdito)
-			&& tropasManager.SubditoActual != null
-			&& GameManager.Instance.JugadoresEnPartida.Any(j => j != jugador && !j.FueraDeJuego && tropasManager.SubditoTieneAAlguienCerca(j));
-
-		if (attackManager.TieneObjetivosCerca() || subditoAdyacenteAJugador){
-			jugador.ModoAtaque = true;
-			playerManager.vfxManager.MostrarJugadoresObjetivo();
-			playerManager.vfxManager.MostrarAbejasObjetivo();
-			GameManager.Instance.PotenciarAtaqueDeJugadorEnTurno();
-			if (jugador.AtaquePotenciado){
-				playerManager.celdasManager.PintarCeldaDeAbejaBuffeada();
-			}
-		} else {
-			jugador.AtaqueAObjetivo = false;
-		}
-	}
-
-	public void DestruirCeldasReforzadas(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		var subdito = playerManager.tropasManager.SubditoActual;
-		if(subdito is AbejaObrera obrera) obrera.ModoDestruccion = true;
-		jugador.ModoAtaque = true;
-		celdasManager.MostrarCeldasReforzadasCercanas(tropasManager.SubditoActual);
-	}
-
-	private void AlternarEstadoDeAtaque(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-
-		bool modoAtaqueDisponible = !jugador.AccionConsumida
-			&& !jugador.AtaqueConsumido
-			&& !jugador.ModoInvocacion
-			&& !jugador.ModoAbsorcion
-			&& !jugador.ModoTransformacion;
-
-		bool controlValido = !jugador.MenteColmena || (jugador.MoviendoSubdito && tropasManager.SubditoActual != null);
-
-		bool puedeAtacar = GameManager.Instance.PuedeAtacar()
-			&& modoAtaqueDisponible
-			&& controlValido
-			&& attackManager.TieneObjetivosCerca();
-
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeAtacar, "AtacarButton", instanciaMenuRadial.ContenedorDeAtaque);
-	}
-
-	private void AlternarEstadoDeComandar(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-
-		bool modoAtaqueDisponible = !jugador.AccionConsumida
-			&& !jugador.AtaqueConsumido
-			&& !jugador.ModoInvocacion
-			&& !jugador.ModoAbsorcion
-			&& !jugador.ModoTransformacion;
-
-		bool puedeComandar = GameManager.Instance.PuedeAtacar()
-			&& modoAtaqueDisponible
-			&& attackManager.SubditoTieneSubditoEnemigoCerca();
-
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton", instanciaMenuRadial.ContenedorDeAtaque);
-	}
-
-	private void AlternarEstadoDeDestruccion(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
-		bool puedeDestruir = GameManager.Instance.PuedeAtacar() && modoAtaqueDisponible && tropasManager.SubditoActual is AbejaObrera && celdasManager.ExistenCeldasReforzadasCerca(tropasManager.SubditoActual);
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeDestruir, "DestruirButton", instanciaMenuRadial.ContenedorDeAtaque);
-	}
-
-	private void AlternarEstadoDeInvocacion(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		bool puedeInvocar = !jugador.AccionConsumida && !jugador.ModoAtaque && !jugador.ModoAbsorcion;;
-		if (instanciaMenuRadial != null){
-			instanciaMenuRadial.ActualizarEstadoBoton(puedeInvocar, "InvocarButton");
-		}
-	}
-
-	private void AlternarEstadoDeControl(){
-		if (playerManager == null || tropasManager == null || instanciaMenuRadial == null) return;
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		bool tieneSubditosCerca = tropasManager.TieneSubditosCerca() || jugador.MenteColmena;
-		bool puedeControlar = tieneSubditosCerca
-			&& !jugador.AccionConsumida
-			&& !jugador.ModoAtaque
-			&& !jugador.ModoAbsorcion
-			&& !jugador.ModoInvocacion;
-
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeControlar, "ControlarButton");
-	}
-
-	private void AlternarEstadoDeAbsorcion(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (playerManager == null) return;
-		bool puedeAbsorber = tropasManager.PuedeAbsorberSubdito() && !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAtaque;
-		if (instanciaMenuRadial != null){
-			instanciaMenuRadial.ActualizarEstadoBoton(puedeAbsorber, "CurarButton");
-		}
-	}
-
-	private void AlternarEstadoDeTransformacion(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (playerManager == null) return;
-		bool noEstaEnOtroModo = !jugador.ModoInvocacion && !jugador.ModoAtaque && !jugador.ModoAbsorcion;
-		bool puedeTransformar = tropasManager.ExistenSubditosTransformables() && !jugador.AccionConsumida && noEstaEnOtroModo;
-		if (instanciaMenuRadial != null){
-			instanciaMenuRadial.ActualizarEstadoBoton(puedeTransformar, "TransformarButton");
-		}
-	}
-
-	private void OnTirarDadoPressed(){	
-		int resultado = GameManager.Instance.TirarDado();
-		resultadoDados.Text = resultado.ToString();
-	}
-
-	private void DeshabilitarDado(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (jugador == null) return;
-
-		bool yaTiro = jugador.TiroLosDados || jugador.Estado == AbejaReina.EstadoTurno.EsperandoAccion;
-		bool esSuTurnoAhora = jugador.EsSuTurno && !yaTiro;
-
-		if(GameManager.Instance.modoMultiplayer){
-			long idLocal = Multiplayer.GetUniqueId();
-			botonDado.Disabled = !esSuTurnoAhora || (idLocal != jugador.Id);
-		} else {
-			botonDado.Disabled = !esSuTurnoAhora;
-		}
-	}
-
-	public void MostrarMovimientosDisponibles(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(jugador != null){
-			resultadoDados.Text = jugador.MovimientosDisponibles.ToString();
-			}
-	}
-
-	private void MostrarResultadoDado(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (botonDado.Disabled) return;
-		bool esTurnoLocal = !GameManager.Instance.modoMultiplayer || Multiplayer.GetUniqueId() == jugador.Id;
-		if (!esTurnoLocal) return;
-		int resultado = GameManager.Instance.TirarDado();
-
-		if (resultado != -1){
-			if (GameManager.Instance.modoMultiplayer){
-				playerManager.Rpc(nameof(PlayerManager.SincronizarDadoRpc), resultado);
-			}
-
-			resultadoDados.Text = resultado.ToString();
-			ActualizarInstrucciones("Debes moverte antes de atacar o invocar.");
-			botonDado.Disabled = true;
-			AudioManager.Instance.PlaySound(UiSound4);
-
-			ActualizarUI();
-		}
-	}
-
-	public void InvocarSubdito(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(jugador.TiroLosDados && !jugador.AccionConsumida 
-		&& !jugador.ModoInvocacion && !jugador.ModoAtaque){	
-			jugador.ModoInvocacion = true;
-
-			AlternarEstadoDeAtaque();
-			AlternarEstadoDeAbsorcion();
-			celdasManager.MostrarCeldasDisponiblesParaInvocar();
-		}else if(jugador.TiroLosDados && jugador.ModoInvocacion){
-			jugador.ModoInvocacion = false;
-
-			AlternarEstadoDeAtaque();
-			AlternarEstadoDeAbsorcion();
-			celdasManager.OcultarCeldasDisponiblesParaInvocar();
-		}
-
-		AudioManager.Instance.PlaySound(UiSound1);
-	}
-
-	public void ActualizarUIAtaques(){
-		AlternarEstadoDeAtaque();
-		AlternarEstadoDeComandar();
-		AlternarEstadoDeDestruccion();
-	}
-
-	public void ComandarAtaque(){
-		if(playerManager == null || attackManager == null || !EsTurnoLocal()) return;
-		attackManager.ComandarAtaque();
-	}
-
-	private void AlternarComandoDeAtaque(){
-		var jugador = GameManager.Instance.jugadorEnTurno;
-		if(playerManager == null || instanciaMenuRadial == null || attackManager == null) return;
-		bool modoAtaqueDisponible = !jugador.AccionConsumida && !jugador.ModoInvocacion && !jugador.ModoAbsorcion;
-		bool puedeComandar = GameManager.Instance.PuedeAtacar() && attackManager.SubditoTieneSubditoEnemigoCerca() && modoAtaqueDisponible;
-		instanciaMenuRadial.ActualizarEstadoBoton(puedeComandar, "ComandarButton");
-	}
-
 	private void VerificarJugadorFueraDeJuego(){
 		if (!GameManager.Instance.modoMultiplayer) return;
 		long idLocal = Multiplayer.GetUniqueId();
@@ -706,12 +304,12 @@ public partial class GameUI : UIBase {
 
 	private void MostrarPanelFueraDeJuego(){
 		MostrarUIPanel(panelFueraDeJuego, true);
-		//AudioManager.Instance.PlaySound();
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void OcultarPanelFueraDeJuego(){
 		MostrarUIPanel(panelFueraDeJuego, false);
-		//AudioManager.Instance.PlaySound();
+		AudioManager.Instance.PlaySound(UiSound1);
 	}
 
 	private void EliminarVisualJugadorDesconectado(AbejaReina jugador){
@@ -726,13 +324,22 @@ public partial class GameUI : UIBase {
 	}
 
 	public override void _ExitTree(){
-		GameManager.Instance.OnJugadorEliminadoPorDesconexion -= EliminarVisualJugadorDesconectado;
-		EventosUI.OnMensajeAMostrar -= ActualizarInstrucciones;
+		if(hudSuperior != null) hudSuperior.OnPausaAlternada -= AlternarPausa;
+
+		if(hudInferior != null){
+			EventosUI.OnMensajeAMostrar -= hudInferior.ActualizarInstrucciones;
+			hudInferior.OnUIActualizacionRequerida -= ActualizarUI;
+		}
 
 		if(GameManager.Instance != null){
-			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAtaque;
-			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeAbsorcion;
-			GameManager.Instance.OnEstadoAccionesCambiado -= AlternarEstadoDeTransformacion;
+			GameManager.Instance.OnJugadorEliminadoPorDesconexion -= EliminarVisualJugadorDesconectado;
+
+			if(hudInferior != null){
+				GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeAtaque;
+				GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeAbsorcion;
+				GameManager.Instance.OnEstadoAccionesCambiado -= hudInferior.AlternarEstadoDeTransformacion;
+			}
+
 			GameManager.Instance.OnEstadoAccionesCambiado -= ActualizarUI;
 
 			if(GameManager.Instance.TurnManager != null){
