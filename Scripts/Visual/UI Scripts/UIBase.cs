@@ -39,11 +39,32 @@ public partial class UIBase : Control{
 		GameManager.Instance.modoPantallaSeleccionado = indice;
 	}
 
+	public virtual void CambiarResolucionDePantalla(int indice){
+		
+		if (indice == 0)
+		{
+			GetTree().Root.Size = new Vector2I(1280, 720);
+		}
+		else if (indice == 1)
+		{
+			GetTree().Root.Size = new Vector2I(1920, 1080);
+		}
+		else if (indice == 2)
+		{
+			GetTree().Root.Size = new Vector2I(2560, 1440);
+		}
+
+		GameManager.Instance.resolucionSeleccionada = indice;
+	}
+
 	public virtual void ActualizarConfiguracionesGraficas()
 	{
-		var opciones = GetNodeOrNull<OptionButton>("Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles");
-    	if (opciones == null) return;
+		var opcionesModo = GetNodeOrNull<OptionButton>("Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin3/ModosDisponibles");
+		var opcionesResolucion = GetNodeOrNull<OptionButton>("Ajustes/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Margin5/ResolucionesDisponibles");
+    	
+		if (opcionesModo == null || opcionesResolucion == null) return;
 
-		opciones.Select(GameManager.Instance.modoPantallaSeleccionado);
+		opcionesModo.Select(GameManager.Instance.modoPantallaSeleccionado);
+		opcionesResolucion.Select(GameManager.Instance.resolucionSeleccionada);
 	}
 }
