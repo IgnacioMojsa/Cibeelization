@@ -31,6 +31,9 @@ public partial class Timers : Control{
 	public override void _Process(double delta){
 		labelTimerPartida.Text = TiempoRestanteDeTimer(timerPartida.TimeLeft);
 		labelTimerTurno.Text = TiempoRestanteDeTimer(timerTurno.TimeLeft);
+        if(!GameManager.Instance.modoMultiplayer){
+            PausarTimers();
+        }
 	}
 
 	private void OnTimerTurnoTimeout() => GameManager.Instance.ForzarFinDeTurnoPorTiempo();
@@ -96,6 +99,16 @@ public partial class Timers : Control{
                 GameManager.Instance.EstablecerJugadorGanador();
                 GetTree().ChangeSceneToFile("res://Scenes/pantallaVictoria.tscn");
             }
+        }
+    }
+
+    private void PausarTimers(){
+        if(GetTree().Paused){
+            timerPartida.Paused = true;
+            timerTurno.Paused = true;
+        } else {
+            timerPartida.Paused = false;
+            timerTurno.Paused = false;
         }
     }
 
