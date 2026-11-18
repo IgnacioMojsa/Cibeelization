@@ -406,13 +406,11 @@ public partial class PlayerManager : Node3D
 		int totalCeldas = tablero.Celdas.Count;
 
 		for (int i = 0; i < VisualesJugadores.Count; i++){
-			int indiceCelda = i * totalCeldas / VisualesJugadores.Count % totalCeldas;
-			
-			Celda celdaInicio = tablero.Celdas[indiceCelda]; 
+			Celda celdaInicio = tablero.ObtenerCeldaEsquina(i);
+			if (celdaInicio == null) continue;
 			
 			AbejaReina reinaJugador = GameManager.Instance.JugadoresEnPartida[i];
 			Node3D reinaVisual = VisualesJugadores[reinaJugador];
-			//Node3D reina = VisualesJugadores[GameManager.Instance.jugadorEnTurno];
 
 			Vector3 targetPos = celdaInicio.Tile.GlobalPosition;
 			targetPos.Y = reinaVisual.GlobalPosition.Y;
@@ -420,7 +418,6 @@ public partial class PlayerManager : Node3D
 			reinaVisual.GlobalPosition = targetPos;
 			CeldaActualPorJugador[reinaVisual] = celdaInicio;
 			reinaJugador.CeldaActual = celdaInicio;
-			//GameManager.Instance.JugadoresEnPartida[i].CeldaActual = celdaInicio;
 
 			GD.Print(
 				"Jugador " + i + " ubicado en " 

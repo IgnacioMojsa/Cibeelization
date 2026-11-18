@@ -157,6 +157,23 @@ public partial class Tablero : Node3D
 		return null;
 	}
 
+	public Celda ObtenerCeldaEsquina(int indiceEsquina)
+	{
+		int ultimaColumna = WidthRows - 1;
+		int ultimaFila = HeightRows - 1;
+
+		(int widthRow, int heightRow) = (indiceEsquina % 4) switch
+		{
+			0 => (0, 0),
+			1 => (ultimaColumna, ultimaFila),
+			2 => (ultimaColumna, 0),
+			_ => (0, ultimaFila)
+		};
+
+		int indice = widthRow * HeightRows + heightRow;
+		return (indice >= 0 && indice < Celdas.Count) ? Celdas[indice] : null;
+	}
+
 	// Obtener vecinos válidos de una celda
 	public List<Celda> ObtenerVecinos(Celda celdaActual)
 	{
