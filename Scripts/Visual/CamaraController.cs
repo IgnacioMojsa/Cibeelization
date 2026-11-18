@@ -100,7 +100,7 @@ public partial class CamaraController : Node3D
 	private bool EsTurnoLocal(){
 		if (!GameManager.Instance.modoMultiplayer) return true;
 		var jugador = GameManager.Instance.jugadorEnTurno;
-		if (jugador == null) return true;
+		if (jugador == null) return false;
 		return Multiplayer.GetUniqueId() == jugador.Id;
 	}
 
@@ -245,11 +245,12 @@ public partial class CamaraController : Node3D
 	}
 
 	public void ResetearCamaraAutomaticamente(Node3D jugadorActual){
-	    controlJugador = false;
-        enModoOrbita = false;
-        estaSiguiendo = false;
+	    camera3D ??= GetNodeOrNull<Camera3D>("Camera3D") ?? GetViewport()?.GetCamera3D();
+		controlJugador = false;
+		enModoOrbita = false;
+		estaSiguiendo = false;
 
-	    EnfocarNodo(jugadorActual, 1.0f, 1.0f); // vuelve a la lógica automática
+		EnfocarNodo(jugadorActual, 1.0f, 1.0f); // vuelve a la lógica automática
 	}
 
 	private void AplicarCamara(){
