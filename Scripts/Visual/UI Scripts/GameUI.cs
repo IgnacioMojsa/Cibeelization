@@ -219,14 +219,18 @@ public partial class GameUI : UIBase {
 	}
 
 	public void AlternarPausa(){
-		GetTree().Paused = !GetTree().Paused;
-		uiPausa.Visible = GetTree().Paused;
+		bool mostrarMenu = !uiPausa.Visible;
+		uiPausa.Visible = mostrarMenu;
 
-		if(GetTree().Paused){
-			GD.Print("Pausa activada");
+		if(!GameManager.Instance.modoMultiplayer){
+			GetTree().Paused = mostrarMenu;
+		}
+
+		if(mostrarMenu){
+			GD.Print("El juego se pausó en modo Online");
 			MostrarUIPanel(hudSuperior.containerPausa, false);
 		} else {
-			GD.Print("Juego Reanudado");
+			GD.Print("El juego se reanudó en modo Online");
 			MostrarUIPanel(hudSuperior.containerPausa, true);
 		}
 	}
