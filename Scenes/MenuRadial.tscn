@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://croqb2b1bnegk" path="res://Scripts/Visual/UI Scripts/MenuRadial.cs" id="1_g5qvg"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="2_p45bt"]
+[ext_resource type="Texture2D" uid="uid://niipdx781d48" path="res://Assets/UI/BotonAbejaObrera.svg" id="3_60503"]
+[ext_resource type="Texture2D" uid="uid://b8pyoymyi4hnw" path="res://Assets/UI/BotonAbejaPolinizadora.svg" id="4_aq4f4"]
+[ext_resource type="Texture2D" uid="uid://bv6e2eqpkd8ny" path="res://Assets/UI/BotonAbejaGuardiana.svg" id="5_wxkhd"]
+[ext_resource type="Texture2D" uid="uid://dc8p3q5iuvh8r" path="res://Assets/UI/BotonAbejaConstructora.svg" id="6_5t4ay"]
 
 [node name="MenuRadial" type="Control" unique_id=1055766075]
 layout_mode = 3
@@ -106,46 +110,30 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="AbejaObrera" type="Button" parent="ContenedorTransformaciones" unique_id=822463909]
-custom_minimum_size = Vector2(70, 70)
+[node name="AbejaObrera" type="TextureButton" parent="ContenedorTransformaciones" unique_id=1050556487]
 layout_mode = 0
-offset_right = 74.0
-offset_bottom = 50.0
+offset_right = 578.0
+offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_p45bt")
-text = "Abeja
-Obrera"
+texture_normal = ExtResource("3_60503")
 
-[node name="AbejaPolinizadora" type="Button" parent="ContenedorTransformaciones" unique_id=1667925978]
-custom_minimum_size = Vector2(70, 70)
+[node name="AbejaPolinizadora" type="TextureButton" parent="ContenedorTransformaciones" unique_id=651545113]
 layout_mode = 0
-offset_right = 74.0
-offset_bottom = 50.0
+offset_right = 578.0
+offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_p45bt")
-text = "Abeja
-Polinizadora"
+texture_normal = ExtResource("4_aq4f4")
 
-[node name="AbejaGuardiana" type="Button" parent="ContenedorTransformaciones" unique_id=758848345]
-custom_minimum_size = Vector2(70, 70)
+[node name="AbejaGuardiana" type="TextureButton" parent="ContenedorTransformaciones" unique_id=1923981804]
 layout_mode = 0
-offset_right = 90.0
-offset_bottom = 70.0
+offset_right = 578.0
+offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_p45bt")
-text = "Abeja
-Guardiana"
+texture_normal = ExtResource("5_wxkhd")
 
-[node name="AbejaConstructora" type="Button" parent="ContenedorTransformaciones" unique_id=1067586580]
-custom_minimum_size = Vector2(70, 70)
+[node name="AbejaConstructora" type="TextureButton" parent="ContenedorTransformaciones" unique_id=1566422166]
 layout_mode = 0
-offset_right = 90.0
-offset_bottom = 70.0
+offset_right = 578.0
+offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_p45bt")
-text = "Abeja
-Constructora"
+texture_normal = ExtResource("6_5t4ay")

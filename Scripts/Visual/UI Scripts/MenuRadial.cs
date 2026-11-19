@@ -13,6 +13,8 @@ public partial class MenuRadial : UIBase {
 	public Vector2 PosicionCentral;
 	public float Radio = 110f;
 	public float VelocidadAnimacion = 0.25f;
+	[Export] public float AnchoBotonTransformacion = 220f;  
+	[Export] public float RadioTransformaciones = 190f; 
 
 	public override void _Ready(){
 		ContenedorDeBotones = GetNode<Control>("%ContenedorBotones");
@@ -25,30 +27,40 @@ public partial class MenuRadial : UIBase {
 		ContenedorDeAtaque.Hide();
 
 		foreach (Node nodoHijo in ContenedorDeBotones.GetChildren()){
-			if(nodoHijo is Button boton){
+			if(nodoHijo is BaseButton boton){
 				ConfigurarBotonRadial(boton);
 			}
 		}
 
 		foreach (Node nodoHijo in ContenedorDeTransformaciones.GetChildren()){
-			if(nodoHijo is Button boton){
-				ConfigurarBotonRadial(boton);
+			if(nodoHijo is BaseButton boton){
+				ConfigurarBotonRadial(boton, true);
 			}
 		}
 
 		foreach (Node nodoHijo in ContenedorDeAtaque.GetChildren()){
-			if(nodoHijo is Button boton){
+			if(nodoHijo is BaseButton boton){
 				ConfigurarBotonRadial(boton);
 			}
 		}
 	}
 
-	private void ConfigurarBotonRadial(Button boton){
-		boton.PivotOffset = boton.Size / 2;
-		boton.Position = Vector2.Zero - (boton.Size / 2);
+	private void ConfigurarBotonRadial(BaseButton boton, bool esTransformacion = false){
+		Vector2 tamano = boton.Size;
+		if (tamano == Vector2.Zero) tamano = boton.GetCombinedMinimumSize();
+
+		float escalaFinal = 1f;
+		if (esTransformacion && tamano.X > 0f){
+			escalaFinal = AnchoBotonTransformacion / tamano.X;
+		}
+		boton.SetMeta("escala_final", escalaFinal);
+		
+		boton.PivotOffset = tamano  / 2;
+		boton.Position = Vector2.Zero - (tamano  / 2);
 		boton.Scale = Vector2.Zero;
 		boton.Pressed += () => SeleccionarOpcion(boton.Name);
 	}
+
 
 	public void DesplegarEnPosicion(Vector2 posicionGlobal){
 		var jugador = GameManager.Instance.jugadorEnTurno;
@@ -111,7 +123,7 @@ public partial class MenuRadial : UIBase {
 		ContenedorDeTransformaciones.Show();
 		Show();
 		MoveToFront();
-		AnimarAperturaContenedor(ContenedorDeTransformaciones, deshabilitarBotones: true);
+		AnimarAperturaContenedor(ContenedorDeTransformaciones, deshabilitarBotones: true, radioPersonalizado: RadioTransformaciones);
 
 		if(hud?.playerManager != null){
 			hud.playerManager.TransformacionSeleccionada = null;
@@ -154,25 +166,28 @@ public partial class MenuRadial : UIBase {
 		hud = hudInferior;
 	}
 
-	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false){
+	private void AnimarAperturaContenedor(Control contenedor, bool deshabilitarBotones = false, float? radioPersonalizado = null){
 		contenedoresCerrandose.Remove(contenedor);
 		
 		int cantidadDeBotones = contenedor.GetChildCount();
 		if (cantidadDeBotones == 0) return;
 
+		float radio = radioPersonalizado ?? Radio;
 		float espaciado = MathF.Tau / cantidadDeBotones;
 
 		for (int b = 0; b < cantidadDeBotones; b++){
-			if (contenedor.GetChild(b) is Button boton){
+			if (contenedor.GetChild(b) is BaseButton boton){
 				float angulo = b * espaciado;
-				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * Radio) - (boton.Size / 2);
+				Vector2 posicionObjetivo = (new Vector2(Mathf.Cos(angulo), Mathf.Sin(angulo)) * radio) - (boton.PivotOffset);
+
+				float escalaFinal = boton.HasMeta("escala_final") ? (float)boton.GetMeta("escala_final") : 1f;
 
 				Tween tween = CreateTween().SetParallel(true);
 				tween.TweenProperty(boton, "position", posicionObjetivo, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
 
-				tween.TweenProperty(boton, "scale", Vector2.One, VelocidadAnimacion)
+				tween.TweenProperty(boton, "scale", Vector2.One * escalaFinal, VelocidadAnimacion)
 					.SetTrans(Tween.TransitionType.Back)
 					.SetEase(Tween.EaseType.Out);
 
@@ -185,7 +200,7 @@ public partial class MenuRadial : UIBase {
 		contenedoresCerrandose.Add(contenedor);
 		
 		foreach (var hijo in contenedor.GetChildren()){
-			if (hijo is Button boton){
+			if (hijo is BaseButton boton){
 				Vector2 posicionCentroLocal = Vector2.Zero - (boton.Size / 2);
 				
 				Tween tween = CreateTween().SetParallel(true);
