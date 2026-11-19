@@ -547,7 +547,7 @@ theme_override_font_sizes/font_size = 45
 text = "00:00"
 
 [node name="TimerTurno" type="Timer" parent="HUD/HUDSuperior/Timers" unique_id=1558110202]
-wait_time = 120.0
+wait_time = 46.0
 
 [node name="LabelTimerPartida" type="Label" parent="HUD/HUDSuperior/Timers" unique_id=463321455]
 layout_mode = 1
@@ -568,7 +568,7 @@ theme_override_font_sizes/font_size = 45
 text = "00:00"
 
 [node name="TimerPartida" type="Timer" parent="HUD/HUDSuperior/Timers" unique_id=2012866865]
-wait_time = 3000.0
+wait_time = 601.0
 one_shot = true
 
 [node name="HUDInferior" type="Control" parent="HUD" unique_id=1757545072]
