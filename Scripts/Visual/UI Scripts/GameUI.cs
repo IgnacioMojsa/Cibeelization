@@ -1,14 +1,10 @@
 using Godot;
-using System.Collections.Generic;
-using System.Linq;
 
 public partial class GameUI : UIBase {
 	
 	[Export] public TroopsManager tropasManager;
 	[Export] public CeldasManager celdasManager; 
 	[Export] public AttackManager attackManager;
-	//[Export] public Label feedback;
-	//[Export] public PackedScene menuRadialPrefab;
 	[Export] public HudSuperior hudSuperior;
 	[Export] public HudInferior hudInferior;
 	[Export] public PanelContainer panelFueraDeJuego;
@@ -20,6 +16,7 @@ public partial class GameUI : UIBase {
 	public Button botonContinuar;
 	public Button botonReiniciarPartida;
 	public Button botonMenuPrincipal;
+	public Button botonTutorial;
 	public PanelContainer confirmacionSalir;
 	public PanelContainer confirmacionReiniciar;
 	public PanelContainer confirmacionSalirVictoria;
@@ -135,15 +132,19 @@ public partial class GameUI : UIBase {
 		confirmacionSalir = GetNode<PanelContainer>("ConfirmacionSalir");
 		confirmacionReiniciar = GetNode<PanelContainer>("ConfirmacionReiniciar");
 		panelFueraDeJuego = GetNode<PanelContainer>("PanelFueraDeJuego");
+		var tutorial = GetNodeOrNull<TutorialUI>("GuiaTutorial");
 
 		botonContinuar = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar/ContinuarButton");
 		botonMenuPrincipal = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/MenuPrincipal/MenuPrincipalButton");
 		botonReiniciarPartida = GetNode<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar/ReiniciarButton");
-		
+		botonTutorial = GetNodeOrNull<Button>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Tutorial/TutorialBoton");
+
 		var contenedorReiniciarPausa = GetNodeOrNull<Control>("MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Reiniciar");
 		if (contenedorReiniciarPausa != null){
 			contenedorReiniciarPausa.Visible = !GameManager.Instance.modoMultiplayer;
 		}
+
+		MostrarTutorial(tutorial);
 
 		botonContinuar.Pressed += AlternarPausa;
 		botonMenuPrincipal.Pressed += () => CambiarMenu(uiPausa, confirmacionSalir);
@@ -269,6 +270,36 @@ public partial class GameUI : UIBase {
 		GameManager.Instance.ResetearEstadoPartida();
 		if (GetTree().CurrentScene.SceneFilePath != "res://Scenes/SplashScreen.tscn"){
 			GetTree().ChangeSceneToFile("res://Scenes/SplashScreen.tscn");
+		}
+	}
+
+	private void MostrarTutorial(TutorialUI tutorial){
+		if(tutorial != null){
+			if(tutorial.SeMuestraAlComenzarPartida()){
+				tutorial.AbrirTutorial(TutorialUI.ModoTutorial.InicioPartida);
+			} else {
+				tutorial.Visible = false;
+			}
+
+			if(botonTutorial != null){
+				bool abiertoDesdePausa = false;
+
+				botonTutorial.Pressed += () =>
+				{
+					abiertoDesdePausa = true;
+					uiPausa.Visible = false;
+					tutorial.AbrirTutorial(TutorialUI.ModoTutorial.MenuPausa);
+				};
+
+				tutorial.OnTutorialCerrado += () =>
+				{
+					if(abiertoDesdePausa)
+					{
+						abiertoDesdePausa = false;
+						uiPausa.Visible = true;
+					}
+				};
+			}
 		}
 	}
 

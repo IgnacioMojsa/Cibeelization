@@ -1,5 +1,16 @@
 [gd_scene format=3 uid="uid://dmy12uh7vl5i5"]
 
+[ext_resource type="Script" uid="uid://brdvwfgu6cygx" path="res://Scripts/Visual/UI Scripts/TutorialUI.cs" id="1_mnnjn"]
+[ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="1_pe2yf"]
+[ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="2_mnnjn"]
+[ext_resource type="Texture2D" uid="uid://b6q3yiompieua" path="res://Assets/PNGS/flecha izq.jpg" id="2_ol6nw"]
+[ext_resource type="Texture2D" uid="uid://cw8dqd2pv4eya" path="res://Assets/PNGS/Tutorial1.png" id="2_v35tu"]
+[ext_resource type="Texture2D" uid="uid://dxebpfvih7nw7" path="res://Assets/PNGS/flecha der.png" id="3_0pgu7"]
+[ext_resource type="Texture2D" uid="uid://dmsnq3jveg3be" path="res://Assets/PNGS/Tutorial2.png" id="3_y2lvq"]
+[ext_resource type="Texture2D" uid="uid://c27v4dy8owrnx" path="res://Assets/PNGS/Tutorial3.png" id="4_8yjjk"]
+[ext_resource type="Texture2D" uid="uid://x64dcjnt0l1e" path="res://Assets/PNGS/Tutorial4.png" id="5_p0dxd"]
+[ext_resource type="Texture2D" uid="uid://bi7bsh56vvfh3" path="res://Assets/PNGS/PanalFondo.png" id="6_4vtf2"]
+
 [node name="GuiaTutorial" type="Control" unique_id=2013742959]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +18,102 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_mnnjn")
+Diapositivas = [ExtResource("2_v35tu"), ExtResource("3_y2lvq"), ExtResource("4_8yjjk"), ExtResource("5_p0dxd")]
+
+[node name="Fondo" type="TextureRect" parent="." unique_id=1973651467]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_4vtf2")
+
+[node name="Imagenes" type="TextureRect" parent="." unique_id=860442205]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -541.0
+offset_right = 960.0
+offset_bottom = 539.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 3
+
+[node name="Previo" type="TextureButton" parent="." unique_id=767160640]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.78900003
+anchor_top = 0.74200004
+anchor_right = 0.88000005
+anchor_bottom = 0.878
+offset_left = -0.88012695
+offset_top = -0.3600464
+offset_right = 1000.3999
+offset_bottom = 832.75995
+grow_vertical = 2
+scale = Vector2(0.15, 0.15)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_ol6nw")
+
+[node name="Siguiente" type="TextureButton" parent="." unique_id=1846057854]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.896
+anchor_top = 0.72700006
+anchor_right = 0.99000007
+anchor_bottom = 0.89400005
+offset_left = 0.67993164
+offset_top = -0.16003418
+offset_right = 180.19983
+offset_bottom = 179.47992
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_0pgu7")
+
+[node name="Omitir" type="Button" parent="." unique_id=1720442044]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 602.0
+offset_top = -104.0
+offset_right = 832.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("1_pe2yf")
+theme_override_font_sizes/font_size = 35
+text = "Cerrar Tutorial
+"
+
+[node name="NoVolverAMostrar" type="CheckBox" parent="." unique_id=1400250184]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 580.0
+offset_top = -50.0
+offset_right = 854.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("2_mnnjn")
+theme_override_font_sizes/font_size = 30
+text = "No volver a mostrar"

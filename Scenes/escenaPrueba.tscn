@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://w7ya46oq4vgs" path="res://Assets/UI/AbejarReina1Contorno.svg" id="17_iks2i"]
 [ext_resource type="Texture2D" uid="uid://bqdyacmbrecbj" path="res://Assets/UI/BotonAtaqueResplandor.svg" id="18_ohwqx"]
 [ext_resource type="Texture2D" uid="uid://bqqvegxejtmfk" path="res://Assets/UI/BotonAtaqueDeshabilitado.svg" id="19_qwcee"]
+[ext_resource type="PackedScene" uid="uid://dmy12uh7vl5i5" path="res://Scenes/GuiaTutorial.tscn" id="28_7liu7"]
 [ext_resource type="Script" uid="uid://dj7v4kfj6lp15" path="res://Scripts/Visual/UI Scripts/Timers.cs" id="33_ohwqx"]
 [ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="33_vu10v"]
 
@@ -91,7 +92,7 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
-size_flags_vertical = 8
+size_flags_vertical = 4
 script = ExtResource("4_2lok1")
 tropasManager = NodePath("../TroopsManager")
 celdasManager = NodePath("../CeldasManager")
@@ -774,17 +775,6 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 1
 
-[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
-layout_mode = 2
-
-[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
-process_mode = 3
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 28
-action_mode = 0
-text = "Continuar"
-
 [node name="Ajustes" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1048416280]
 layout_mode = 2
 
@@ -793,7 +783,17 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
-text = "Ajustes"
+text = "      Ajustes      "
+
+[node name="Tutorial" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1004500220]
+layout_mode = 2
+
+[node name="TutorialBoton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Tutorial" unique_id=10692785]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = "Tutorial"
 
 [node name="Reiniciar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1336349814]
 layout_mode = 2
@@ -815,6 +815,17 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Salir"
+
+[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
+layout_mode = 2
+
+[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+process_mode = 3
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = "Continuar"
 
 [node name="ConfirmacionReiniciar" type="PanelContainer" parent="HUD" unique_id=738415298]
 visible = false
@@ -1260,6 +1271,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 21
 placeholder_text = " INTRODUCIR ABEJA"
+
+[node name="GuiaTutorial" parent="HUD" unique_id=2013742959 instance=ExtResource("28_7liu7")]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -23.253
+anchor_top = -26.000002
+anchor_right = 24.538002
+offset_left = -9.880005
+offset_top = 0.00012207031
+offset_right = -0.52008057
 
 [node name="CeldasManager" type="Node3D" parent="." unique_id=1792488438 node_paths=PackedStringArray("playerManager", "tablero")]
 script = ExtResource("1_ap8h6")

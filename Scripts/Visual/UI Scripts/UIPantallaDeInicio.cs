@@ -6,7 +6,9 @@ public partial class UIPantallaDeInicio : UIBase {
 	private PanelContainer uiOpcionesOnline;
 	private PanelContainer uiComienzo;
 	private PanelContainer uiCreditos;
-	private PanelContainer uiTutorial;
+	//private PanelContainer uiTutorial;
+	private Control uiTutorial;
+	private TutorialUI carruselTutorial;
 	private PanelContainer uiAjustes;
 	private List<TextureButton> BotonesDeInicio; 
 	public bool hayJugadorVictorioso = false;
@@ -18,7 +20,8 @@ public partial class UIPantallaDeInicio : UIBase {
 		uiOpcionesOnline = GetNode<PanelContainer>("OpcionesModoOnline");
 		uiComienzo = GetNode<PanelContainer>("MenuComienzo");
 		uiCreditos = GetNode<PanelContainer>("PantallaCreditos");
-		uiTutorial = GetNode<PanelContainer>("Tutorial");
+		//uiTutorial = GetNode<PanelContainer>("Tutorial");
+		uiTutorial = GetNodeOrNull<Control>("GuiaTutorial");
 		uiAjustes = GetNode<PanelContainer>("Ajustes");
 
 		BotonesDeInicio = new List<TextureButton>{
@@ -28,6 +31,11 @@ public partial class UIPantallaDeInicio : UIBase {
 				GetNode<TextureButton>("BotonesMenuDeInicio/Credits"),
 				GetNode<TextureButton>("BotonesMenuDeInicio/Exit"),
 			};
+
+		carruselTutorial = uiTutorial as TutorialUI ?? uiTutorial?.GetNodeOrNull<TutorialUI>("GuiaTutorial");
+		if(carruselTutorial != null){
+			carruselTutorial.OnTutorialCerrado += OcultarTutorial;
+		}	
 
 		ActualizarConfiguracionesGraficas();
 	}
@@ -183,6 +191,7 @@ public partial class UIPantallaDeInicio : UIBase {
 
 	private void MostrarTutorial(){
 		MostrarUIPanel(uiTutorial, true);
+		carruselTutorial?.AbrirTutorial(TutorialUI.ModoTutorial.PantallaInicial);
 	}
 
 	private void OcultarTutorial(){
@@ -199,5 +208,12 @@ public partial class UIPantallaDeInicio : UIBase {
 	{
 		MostrarUIPanel(uiAjustes, false);
 		ConfigurarBoton("SettingButton", false);
+	}
+
+	public override void _ExitTree(){
+		if(carruselTutorial != null){
+			carruselTutorial.OnTutorialCerrado -= OcultarTutorial;
+		}
+		base._ExitTree();
 	}
 }
