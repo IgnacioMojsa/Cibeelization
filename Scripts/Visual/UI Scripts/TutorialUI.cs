@@ -38,10 +38,10 @@ public partial class TutorialUI : UIBase{
 
 	private void DetectarContextoInicial(){
 		string currentScene = GetTree().CurrentScene?.SceneFilePath ?? Owner?.SceneFilePath;
-        if(currentScene == "res://Scenes/pantallaInicial.tscn"){
-            CambiarModo(ModoTutorial.PantallaInicial);
-            ReiniciarCarrusel();
-        }
+		if(currentScene == "res://Scenes/pantallaInicial.tscn"){
+			CambiarModo(ModoTutorial.PantallaInicial);
+			ReiniciarCarrusel();
+		}
 	}
 
 	public void AbrirTutorial(ModoTutorial modo){
