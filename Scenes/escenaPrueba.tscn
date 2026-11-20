@@ -1293,7 +1293,6 @@ theme_override_font_sizes/font_size = 21
 placeholder_text = " INTRODUCIR ABEJA"
 
 [node name="GuiaTutorial" parent="HUD" unique_id=2013742959 instance=ExtResource("28_7liu7")]
-visible = false
 z_index = 5
 layout_mode = 1
 anchors_preset = -1
