@@ -324,6 +324,7 @@ action_mode = 0
 text = "No"
 
 [node name="Reconectarme" type="Button" parent="." unique_id=1519511474]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = 7
@@ -343,6 +344,7 @@ theme_override_font_sizes/font_size = 25
 text = "Reconectarme"
 
 [node name="LabelDesconexion" type="Label" parent="." unique_id=163810841]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = 8

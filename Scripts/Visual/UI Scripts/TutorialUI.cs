@@ -33,10 +33,10 @@ public partial class TutorialUI : UIBase{
 		botonSiguiente.Pressed += ImagenSiguiente;
 		botonOmitir.Pressed += CerrarTutorial;
 
-		DetectarContextoInicial();
+		DetectarEscenaInicial();
 	}
 
-	private void DetectarContextoInicial(){
+	private void DetectarEscenaInicial(){
 		string currentScene = GetTree().CurrentScene?.SceneFilePath ?? Owner?.SceneFilePath;
 		if(currentScene == "res://Scenes/pantallaInicial.tscn"){
 			CambiarModo(ModoTutorial.PantallaInicial);
