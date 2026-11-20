@@ -239,7 +239,7 @@ public partial class AttackManager : Node3D
 				AtacarJugadorRpc(indiceRival, indexSubditoAtacante);
 			}
 
-			playerManager.VidaDeReina[reinaObjetivo].Text = reinaObjetivo.HP.ToString();
+			//playerManager.VidaDeReina[reinaObjetivo].Text = reinaObjetivo.HP.ToString();
 			return true;
 		}
 
@@ -265,6 +265,8 @@ public partial class AttackManager : Node3D
 
 		if(jugador != null){
 			attackLogic.DaniarJugador(abejaAtacante, jugador);
+			playerManager.ActualizarLabelVida(jugador);
+			playerManager.gameUI?.ActualizarUI();
 			GD.Print("¡Ataque exitoso! Jugador " + jugador.Id + " ahora tiene " + jugador.HP + " puntos de vida");
 			GameManager.Instance.NotificarCambioDeEstado();
 		}

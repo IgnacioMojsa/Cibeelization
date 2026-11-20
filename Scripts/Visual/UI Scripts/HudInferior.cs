@@ -13,6 +13,7 @@ public partial class HudInferior : UIBase
 	[Export] public PackedScene menuRadialPrefab;
 	public MenuRadial instanciaMenuRadial;
 	public Label feedback;
+	public Label feedbackEspectador;
 	
 	public Label resultadoDados;
 	public TextureButton botonAtacar;
@@ -31,6 +32,7 @@ public partial class HudInferior : UIBase
 		resultadoDados = GetNode<Label>("Dado/NumeroDado");
 		//recursos = GetNode<Control>("CantRecursos");
 		feedback = GetNode<Label>("Feedback");
+		feedbackEspectador = GetNode<Label>("FeedbackEspectador");
 		botonDado = GetNode<TextureButton>("Dado/DadoButton");
 		botonAtacar = GetNode<TextureButton>("Atacar/AtacarButton");
 		botonColmena = GetNode<TextureButton>("Colmena/ColmenaButton");
@@ -38,6 +40,11 @@ public partial class HudInferior : UIBase
 		botonDado.Pressed += MostrarResultadoDado;
 		botonAtacar.Pressed += OnAtacarPressed;
 		botonColmena.Pressed += OnBotonColmenaPressed;
+
+		if(GameManager.Instance.modoEspectador){
+			feedback.Visible = false;
+			feedbackEspectador. Visible = true;
+		}
 	}
 
 	private void OnTirarDadoPressed(){	
