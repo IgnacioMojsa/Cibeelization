@@ -3,13 +3,15 @@
 [ext_resource type="Script" uid="uid://brdvwfgu6cygx" path="res://Scripts/Visual/UI Scripts/TutorialUI.cs" id="1_mnnjn"]
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="1_pe2yf"]
 [ext_resource type="FontFile" uid="uid://ef6gwpgjhw6x" path="res://Assets/Fonts/Times New Normal Regular.ttf" id="2_mnnjn"]
-[ext_resource type="Texture2D" uid="uid://b6q3yiompieua" path="res://Assets/PNGS/flecha izq.jpg" id="2_ol6nw"]
 [ext_resource type="Texture2D" uid="uid://cw8dqd2pv4eya" path="res://Assets/PNGS/Tutorial1.png" id="2_v35tu"]
-[ext_resource type="Texture2D" uid="uid://dxebpfvih7nw7" path="res://Assets/PNGS/flecha der.png" id="3_0pgu7"]
 [ext_resource type="Texture2D" uid="uid://dmsnq3jveg3be" path="res://Assets/PNGS/Tutorial2.png" id="3_y2lvq"]
 [ext_resource type="Texture2D" uid="uid://c27v4dy8owrnx" path="res://Assets/PNGS/Tutorial3.png" id="4_8yjjk"]
 [ext_resource type="Texture2D" uid="uid://x64dcjnt0l1e" path="res://Assets/PNGS/Tutorial4.png" id="5_p0dxd"]
 [ext_resource type="Texture2D" uid="uid://bi7bsh56vvfh3" path="res://Assets/PNGS/PanalFondo.png" id="6_4vtf2"]
+[ext_resource type="Texture2D" uid="uid://7v3gkwljbmj" path="res://Assets/UI/FlechaDer.png" id="7_4vtf2"]
+[ext_resource type="Texture2D" uid="uid://dknqrkotfo1te" path="res://Assets/UI/FlechaIzq.png" id="8_v35tu"]
+[ext_resource type="Texture2D" uid="uid://cdjk3yikwbm0g" path="res://Assets/UI/FlechaDerDeshab.png" id="8_y2lvq"]
+[ext_resource type="Texture2D" uid="uid://duobmo527au7m" path="res://Assets/UI/FlechaIzqDeshab.png" id="9_v35tu"]
 
 [node name="GuiaTutorial" type="Control" unique_id=2013742959]
 layout_mode = 3
@@ -54,15 +56,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -383.0
-offset_top = -355.00006
-offset_right = 793.0
-offset_bottom = 831.667
+offset_left = -422.99988
+offset_top = -294.99994
+offset_right = -151.99988
+offset_bottom = -38.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.8, 0.8)
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("2_ol6nw")
+texture_normal = ExtResource("7_4vtf2")
+texture_pressed = ExtResource("8_y2lvq")
+texture_disabled = ExtResource("8_y2lvq")
 
 [node name="Siguiente" type="TextureButton" parent="." unique_id=1846057854]
 custom_minimum_size = Vector2(50, 50)
@@ -72,15 +76,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -188.0
-offset_top = -356.0
-offset_right = 172.0
-offset_bottom = 4.0
+offset_left = -226.99988
+offset_top = -294.99994
+offset_right = 44.000122
+offset_bottom = -38.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.8, 0.8)
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_0pgu7")
+texture_normal = ExtResource("8_v35tu")
+texture_pressed = ExtResource("9_v35tu")
+texture_disabled = ExtResource("9_v35tu")
 
 [node name="Omitir" type="Button" parent="." unique_id=1720442044]
 layout_mode = 1
@@ -89,10 +95,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -305.0
-offset_top = -139.0
-offset_right = -75.0
-offset_bottom = -86.0
+offset_left = -333.0
+offset_top = -119.0
+offset_right = -103.0
+offset_bottom = -66.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_default_cursor_shape = 2
@@ -108,10 +114,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -333.0
-offset_top = -73.0
-offset_right = -59.0
-offset_bottom = -34.0
+offset_left = -357.0
+offset_top = -53.0
+offset_right = -83.0
+offset_bottom = -14.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_default_cursor_shape = 2

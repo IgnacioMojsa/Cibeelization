@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxebpfvih7nw7"
-path="res://.godot/imported/flecha der.png-f927b188aa40744c339debd12f9004c3.ctex"
+uid="uid://cdjk3yikwbm0g"
+path="res://.godot/imported/FlechaDerDeshab.png-fc74969d8fc77deb2213c81087d03609.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/PNGS/flecha der.png"
-dest_files=["res://.godot/imported/flecha der.png-f927b188aa40744c339debd12f9004c3.ctex"]
+source_file="res://Assets/UI/FlechaDerDeshab.png"
+dest_files=["res://.godot/imported/FlechaDerDeshab.png-fc74969d8fc77deb2213c81087d03609.ctex"]
 
 [params]
 

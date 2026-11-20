@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6q3yiompieua"
-path="res://.godot/imported/flecha izq.jpg-5abe71f56751eb4dbf36c304c640d4bf.ctex"
+uid="uid://dknqrkotfo1te"
+path="res://.godot/imported/FlechaIzq.png-ea1fc8f7bd8787e4cc0f53aa2f15c750.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/PNGS/flecha izq.jpg"
-dest_files=["res://.godot/imported/flecha izq.jpg-5abe71f56751eb4dbf36c304c640d4bf.ctex"]
+source_file="res://Assets/UI/FlechaIzq.png"
+dest_files=["res://.godot/imported/FlechaIzq.png-ea1fc8f7bd8787e4cc0f53aa2f15c750.ctex"]
 
 [params]
 
