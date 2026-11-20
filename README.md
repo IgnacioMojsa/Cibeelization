@@ -5,6 +5,7 @@
 - Marcos Monescao (Programación)
 - Maitena Pochyly (Programación)
 - Ignacio Mojsa (Programación)
+## Links
 - **[Game Design Document Actualizado](https://docs.google.com/document/d/1HQicnCwOzRY4aZMAUruPyfpq7V9P2ZZylnPrGp23W18/edit?usp=sharing)**
 - **[Backlog en Trello](https://trello.com/invite/b/6a9c0252d3f955b72d605526/ATTIf76f71789d58a034bc17964de8fee780C54C9140/programacion-de-videojuegos-ii)**
 
@@ -47,6 +48,8 @@ Cibeelization transcurre en un panal al aire libre, donde se ven enfrentadas dos
 
 #### Estilo visual y sonoro
 Estilo de Arte: 3D animado (mundo), 2D animado (interfaces). Colores saturados
+<img width="1907" height="946" alt="Captura de pantalla de 2026-11-20 02-51-53" src="https://github.com/user-attachments/assets/1cca71c9-d94a-4a5a-bade-598cfe70b5ce" />
+
 Interfaz de usuario: Minimalista, no diegética con algunos elementos espaciales.
 Audio:
 - Música: Gameplay y menú: Relajada, orquestal, sencilla
@@ -130,7 +133,7 @@ Click izquierdo y arrastre para mover la dirección de la cámara.
 <img width="1226" height="267" alt="Image" src="https://github.com/user-attachments/assets/f327d144-96cf-493e-a771-361ff502464a" />
  
 #### UML
-
+<img width="3185" height="1876" alt="Diagrama drawio" src="https://github.com/user-attachments/assets/fecf1611-ea4b-4c63-b0d1-b717ec49c2aa" />
 
 ## Patrones de diseño [^1]
 
