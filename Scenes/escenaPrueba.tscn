@@ -775,6 +775,17 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 1
 
+[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
+layout_mode = 2
+
+[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
+process_mode = 3
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cvlkt")
+theme_override_font_sizes/font_size = 28
+action_mode = 0
+text = "Continuar"
+
 [node name="Ajustes" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=1048416280]
 layout_mode = 2
 
@@ -815,17 +826,6 @@ theme_override_fonts/font = ExtResource("5_cvlkt")
 theme_override_font_sizes/font_size = 28
 action_mode = 0
 text = "Salir"
-
-[node name="Continuar" type="PanelContainer" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer" unique_id=262796824]
-layout_mode = 2
-
-[node name="ContinuarButton" type="Button" parent="HUD/MenuPausa/PausaBorder/MarginContainer/VBoxContainer/Continuar" unique_id=399575051]
-process_mode = 3
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cvlkt")
-theme_override_font_sizes/font_size = 28
-action_mode = 0
-text = "Continuar"
 
 [node name="ConfirmacionReiniciar" type="PanelContainer" parent="HUD" unique_id=738415298]
 visible = false
