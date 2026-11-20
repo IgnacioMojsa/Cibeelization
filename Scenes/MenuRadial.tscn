@@ -4,8 +4,20 @@
 [ext_resource type="FontFile" uid="uid://bkp5hwkukdvg6" path="res://Assets/Fonts/BLKCHCRY.TTF" id="2_p45bt"]
 [ext_resource type="Texture2D" uid="uid://niipdx781d48" path="res://Assets/UI/BotonAbejaObrera.svg" id="3_60503"]
 [ext_resource type="Texture2D" uid="uid://b8pyoymyi4hnw" path="res://Assets/UI/BotonAbejaPolinizadora.svg" id="4_aq4f4"]
+[ext_resource type="Texture2D" uid="uid://c1jl0dhnee0c4" path="res://Assets/UI/BotonAbejaObreraPresionado.svg" id="4_htulj"]
+[ext_resource type="Texture2D" uid="uid://dlqfh356tpylt" path="res://Assets/UI/BotonAbejaObreraSeleccionado.svg" id="5_7ow4r"]
 [ext_resource type="Texture2D" uid="uid://bv6e2eqpkd8ny" path="res://Assets/UI/BotonAbejaGuardiana.svg" id="5_wxkhd"]
 [ext_resource type="Texture2D" uid="uid://dc8p3q5iuvh8r" path="res://Assets/UI/BotonAbejaConstructora.svg" id="6_5t4ay"]
+[ext_resource type="Texture2D" uid="uid://ce5xjcklnmif2" path="res://Assets/UI/BotonAbejaObreraDeshabilitado.svg" id="6_tjtm0"]
+[ext_resource type="Texture2D" uid="uid://dokk87j8u6pwb" path="res://Assets/UI/BotonAbejaPolinizadoraPresionado.svg" id="8_6r2gb"]
+[ext_resource type="Texture2D" uid="uid://b48dem5rrhs51" path="res://Assets/UI/BotonAbejaPolinizadoraSeleccionado.svg" id="9_nah4o"]
+[ext_resource type="Texture2D" uid="uid://cxb3wkgf7mswk" path="res://Assets/UI/BotonAbejaPolinizadoraDeshabilitado.svg" id="10_jqtyn"]
+[ext_resource type="Texture2D" uid="uid://5whymffub66i" path="res://Assets/UI/BotonAbejaGuardianaPresionado.svg" id="12_mog1f"]
+[ext_resource type="Texture2D" uid="uid://cngctppdw003s" path="res://Assets/UI/BotonAbejaGuardianaSeleccionado.svg" id="13_ev8ra"]
+[ext_resource type="Texture2D" uid="uid://ux2ba4t7nm6y" path="res://Assets/UI/BotonAbejaGuardianaDeshabilitado.svg" id="14_htulj"]
+[ext_resource type="Texture2D" uid="uid://bafjyhyacrowm" path="res://Assets/UI/BotonAbejaConstructoraPresionado.svg" id="16_bfh73"]
+[ext_resource type="Texture2D" uid="uid://dkclhlglcqxac" path="res://Assets/UI/BotonAbejaConstructoraSeleccionado.svg" id="17_dmbek"]
+[ext_resource type="Texture2D" uid="uid://g3obvvj68p44" path="res://Assets/UI/BotonAbejaConstructoraDeshabilitado.svg" id="18_46url"]
 
 [node name="MenuRadial" type="Control" unique_id=1055766075]
 layout_mode = 3
@@ -116,6 +128,9 @@ offset_right = 578.0
 offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
 texture_normal = ExtResource("3_60503")
+texture_pressed = ExtResource("4_htulj")
+texture_hover = ExtResource("5_7ow4r")
+texture_disabled = ExtResource("6_tjtm0")
 
 [node name="AbejaPolinizadora" type="TextureButton" parent="ContenedorTransformaciones" unique_id=651545113]
 layout_mode = 0
@@ -123,6 +138,9 @@ offset_right = 578.0
 offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
 texture_normal = ExtResource("4_aq4f4")
+texture_pressed = ExtResource("8_6r2gb")
+texture_hover = ExtResource("9_nah4o")
+texture_disabled = ExtResource("10_jqtyn")
 
 [node name="AbejaGuardiana" type="TextureButton" parent="ContenedorTransformaciones" unique_id=1923981804]
 layout_mode = 0
@@ -130,6 +148,9 @@ offset_right = 578.0
 offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
 texture_normal = ExtResource("5_wxkhd")
+texture_pressed = ExtResource("12_mog1f")
+texture_hover = ExtResource("13_ev8ra")
+texture_disabled = ExtResource("14_htulj")
 
 [node name="AbejaConstructora" type="TextureButton" parent="ContenedorTransformaciones" unique_id=1566422166]
 layout_mode = 0
@@ -137,3 +158,6 @@ offset_right = 578.0
 offset_bottom = 374.0
 scale = Vector2(1e-05, 1e-05)
 texture_normal = ExtResource("6_5t4ay")
+texture_pressed = ExtResource("16_bfh73")
+texture_hover = ExtResource("17_dmbek")
+texture_disabled = ExtResource("18_46url")
